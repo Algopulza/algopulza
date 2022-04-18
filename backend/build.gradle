@@ -1,6 +1,7 @@
 plugins {
-    id 'org.springframework.boot' version '2.6.6'
+    id 'org.springframework.boot' version '2.5.7'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'com.ewerk.gradle.plugins.querydsl' version '1.0.10'
     id 'java'
 }
 
@@ -8,23 +9,54 @@ group = 'com.algopulza'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
+// QueryDSL
+def querydslDir = "$buildDir/generated/querydsl"
+
+querydsl {
+    jpa = true
+    querydslSourcesDir = querydslDir
+    library = 'com.querydsl:querydsl-apt'
+}
+
+sourceSets {
+    main.java.srcDir querydslDir
+}
+
+compileQuerydsl {
+    options.annotationProcessorPath = configurations.querydsl
+}
+
 configurations {
+    querydsl.extendsFrom compileClasspath
     compileOnly {
         extendsFrom annotationProcessor
     }
 }
+// End
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
+    // JPA
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
+    // MySQL
+    implementation 'mysql:mysql-connector-java'
+    // QueryDSL
+    implementation 'com.querydsl:querydsl-jpa'
+    // Lombok
     compileOnly 'org.projectlombok:lombok'
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
     annotationProcessor 'org.projectlombok:lombok'
+    // Validation
+    implementation 'org.springframework.boot:spring-boot-starter-validation:2.6.2'
+    // Security
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    // Swagger
+    implementation 'io.springfox:springfox-boot-starter:3.0.0'
+
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
 }
@@ -32,3 +64,4 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
+
