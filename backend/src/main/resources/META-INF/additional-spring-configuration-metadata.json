@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "amazonaws.sdk.disableEc2Metadata",
+      "type": "java.lang.String",
+      "description": "Description for amazonaws.sdk.disableEc2Metadata."
+  }
+] }
