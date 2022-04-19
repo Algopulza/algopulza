@@ -6,30 +6,30 @@ import javax.persistence.*;
 
 @Getter
 @Entity
-@Table(name = "member")
-public class Member extends BaseTimeEntity {
+@Table(name = "problem")
+public class Problem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "tier")
+    @JoinColumn(name = "level")
     private Tier tier;
 
     @Column
-    private String name;
+    private int baekjoonId;
 
     @Column
-    private String profileImage;
+    private String title;
 
     @Column
-    private int solveCount;
+    private boolean solvableFlag;
 
     @Column
-    private String email;
+    private int acceptedCount;
 
     @Column
-    private int daysCount;
+    private int averageTryCount;
 
 }
