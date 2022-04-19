@@ -1,6 +1,6 @@
 package com.algopulza.backend.api.controller;
 
-import com.algopulza.backend.api.request.member.UpdateMemberReq;
+import com.algopulza.backend.api.request.member.ModifyMemberReq;
 import com.algopulza.backend.api.service.MemberService;
 import com.algopulza.backend.common.model.BaseResponseBody;
 import com.algopulza.backend.db.entity.Member;
@@ -11,8 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.io.File;
 
 @Api(value = "회원관리 API", tags = { "member" })
 @RestController
@@ -36,8 +34,9 @@ public class MemberController {
 
     @PatchMapping("/update")
     @ApiOperation(value = "회원 정보 수정하기", notes = "회원 정보 수정하기 요청 API")
-    public ResponseEntity<? extends BaseResponseBody> UpdateMember(@RequestBody UpdateMemberReq updateMemberReq) {
-       return null;
+    public ResponseEntity<? extends BaseResponseBody> ModifyMember(@RequestBody ModifyMemberReq modifyMemberReq) {
+        memberService.modifyMember(modifyMemberReq);
+       return ResponseEntity.status(200).body(BaseResponseBody.of(HttpStatus.OK,"SUCCESS"));
     }
 
 

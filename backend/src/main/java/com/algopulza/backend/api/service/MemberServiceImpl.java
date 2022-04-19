@@ -1,5 +1,6 @@
 package com.algopulza.backend.api.service;
 
+import com.algopulza.backend.api.request.member.ModifyMemberReq;
 import com.algopulza.backend.db.entity.Member;
 import com.algopulza.backend.db.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,9 @@ public class MemberServiceImpl implements MemberService {
 
     @Autowired
     private MemberRepository memberRepository;
+
+    @Autowired
+    private S3Service s3Service;
 
     @Override
     public Member GetMember(int memberId) {
@@ -28,5 +32,14 @@ public class MemberServiceImpl implements MemberService {
         });
 
         return member;
+    }
+
+    @Override
+    public void modifyMember(ModifyMemberReq modifyMemberReq) {
+        Optional<Member> getMember =  memberRepository.findById((long)modifyMemberReq.getId());
+        getMember.ifPresent(selectMember->{
+           selectMember.setProfileImage(s3Service.uploadToMember(modifyMemberReq.getProfileImage()));
+           memberRepository.save(selectMember);
+        });
     }
 }
