@@ -42,7 +42,7 @@ const Navbar = () => {
         <Title onClick={() => navigate("/")}>알고 풀자</Title>
       <TabContainer>
         <NavItem 
-                url="/recommand"
+                url="/recommend"
                 name="추천"
                 onClick={onClick}
                 isSelected={isSelected}

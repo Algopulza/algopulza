@@ -5,7 +5,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: row;
   height: 10rem;
-  margin-top:3rem;
+  margin-top:auto;
 `;
 
 const LeftContainer = styled.div`
@@ -121,7 +121,7 @@ const Footer = () => {
 
             <RightSitemap>
               <RightSitemapLeft>
-                <Text><a href="/recommand">추천</a></Text>
+                <Text><a href="/recommend">추천</a></Text>
                 <Text><a href="/category">카테고리</a></Text>
               </RightSitemapLeft>
               <RightSitemapRight>
