@@ -5,13 +5,15 @@ import { Outlet } from "react-router-dom";
 import styled from "styled-components";
 
 const Container = styled.div`
-  display: grid;
+  display: flex;
 `;
 
 const SubContainer = styled.div`
   display: flex;
+  width: 100vw;
+  height: 100vh;
+  overflow-x: hidden;
   flex-direction: column;
-  width: 100%;
 `;
 
 const Home = () => {

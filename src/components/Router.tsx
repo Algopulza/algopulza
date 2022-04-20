@@ -6,7 +6,7 @@ import {
   } from "react-router-dom";
   import Home from "routes/Home";
 import Landing from "routes/Landing";
-import Recommand from "routes/Recommand";
+import Recommend from "routes/Recommend";
 import Random from "routes/Random";
 import Category from "routes/Category";
 import Analysis from "routes/Analysis";
@@ -18,7 +18,7 @@ const AppRouter = () => {
             <Routes>
                 <Route path="" element={<Landing />} />
                 <Route path="/" element={<Home />}>
-                <Route path="/recommand" element={<Recommand />} />
+                <Route path="/recommend" element={<Recommend />} />
                 <Route path="/random" element={<Random />} />
                 <Route path="/category" element={<Category />} />
                 <Route path="/analysis" element={<Analysis />} />
