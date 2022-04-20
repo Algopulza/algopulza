@@ -13,6 +13,11 @@ const SubContainer = styled.div`
   margin-top: 1rem;
 `
 
+const Cards = styled.div`
+  display: flex;
+  flex-direction: row;
+`
+
 const Title = styled.div`
   font-size: 2rem;
   margin-top: 2rem;
@@ -24,15 +29,45 @@ const Recommend = () => {
         <RecommendCarousel />
       <SubContainer>
       <Title>취약한 태그에 속하는 문제들을 추천해 드려요!</Title>
+      <Cards>
       <Card />
+      <Card />
+      <Card />
+      <Card />
+      <Card />
+      </Cards>
       <Title>취약한 태그에 속하는 문제들을 추천해 드려요!</Title>
+      <Cards>
       <Card />
+      <Card />
+      <Card />
+      <Card />
+      <Card />
+      </Cards>
       <Title>취약한 태그에 속하는 문제들을 추천해 드려요!</Title>
+      <Cards>
       <Card />
+      <Card />
+      <Card />
+      <Card />
+      <Card />
+      </Cards>
       <Title>취약한 태그에 속하는 문제들을 추천해 드려요!</Title>
+      <Cards>
       <Card />
+      <Card />
+      <Card />
+      <Card />
+      <Card />
+      </Cards>
       <Title>취약한 태그에 속하는 문제들을 추천해 드려요!</Title>
+      <Cards>
       <Card />
+      <Card />
+      <Card />
+      <Card />
+      <Card />
+      </Cards>
       </SubContainer>
         </Container>
     );

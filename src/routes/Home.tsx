@@ -12,7 +12,6 @@ const SubContainer = styled.div`
   display: flex;
   width: 100vw;
   height: 100vh;
-  overflow-x: hidden;
   flex-direction: column;
 `;
 
