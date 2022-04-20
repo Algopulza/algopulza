@@ -1,19 +1,18 @@
 package com.algopulza.backend.common.exception.handler;
 
+import com.algopulza.backend.common.model.ResponseMessage;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum ErrorCode {
 
     // Common
-    INVALID_INPUT_VALUE(400, "C001", "Invalid Input Value"),
-    DUPLICATE_INPUT_VALUE(400, "C002", "Duplicate Input Value"),
-    // User
-    REFRESH_TOKEN_INVALID(403, "U001", "Invalid Refresh Token"),
-    MEMBER_NOT_FOUND(404, "U002", "Member Not Found"),
-    ACCESS_DENIED(403, "U003", "Access Denied"),
-    // Search
-    SEARCH_INVALID_VALUE(400, "H001", "Invalid Search Value");
+    BAD_REQUEST(400, "C001", ResponseMessage.BAD_REQUEST),
+    DUPLICATE_INPUT_VALUE(400, "C002", ResponseMessage.DUPLICATE_INPUT_VALUE),
+    // Auth
+    INVALID_REFRESH_TOKEN(401, "M001", ResponseMessage.INVALID_REFRESH_TOKEN),
+    NOT_FOUND_MEMBER(404, "M002", ResponseMessage.NOT_FOUND_MEMBER),
+    ACCESS_DENIED(403, "M003", ResponseMessage.ACCESS_DENIED);
 
     private int status;
     private final String code;

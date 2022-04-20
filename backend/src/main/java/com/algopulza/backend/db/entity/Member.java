@@ -1,11 +1,15 @@
 package com.algopulza.backend.db.entity;
 
 import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 
 @Getter
+@Setter
 @Entity
+@ToString
 @Table(name = "member")
 public class Member extends BaseTimeEntity {
 
@@ -31,5 +35,8 @@ public class Member extends BaseTimeEntity {
 
     @Column
     private int daysCount;
+
+    @Column
+    private  String solvedacToken;
 
 }

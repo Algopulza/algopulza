@@ -1,11 +1,13 @@
 package com.algopulza.backend.db.entity;
 
 import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Getter
+@Setter
 @Entity
 @Table(name = "solving_log")
 public class SolvingLog extends BaseTimeEntity {
