@@ -9,13 +9,12 @@ import RecommendCarousel3 from "assets/img/RecommendCarousel3.jpg"
 import RecommendCarousel4 from "assets/img/RecommendCarousel4.jpg"
 
 const Container = styled.div`
-  margin-bottom: 48px;
+  margin-bottom: 96px;
   width: 100vw;
-  height: 400px;
 `
 
 const Img = styled.img`
-  width: 100vw;
+  width: 100%;
 `
 
 // infinite: 무한 display
