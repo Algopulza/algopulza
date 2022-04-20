@@ -13,5 +13,6 @@ public class ResponseMessage {
 
     // Problem
     public static final String GET_PROBLEM_LIST = "문제 목록 조회 성공";
+    public static final String PUT_PROBLEMS = "문제 목록 수집 성공";
 
 }
