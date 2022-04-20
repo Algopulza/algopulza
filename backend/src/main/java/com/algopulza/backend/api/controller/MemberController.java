@@ -4,57 +4,59 @@ import com.algopulza.backend.api.request.member.ModifyMemberReq;
 import com.algopulza.backend.api.service.MemberService;
 import com.algopulza.backend.common.exception.handler.ErrorResponse;
 import com.algopulza.backend.common.model.BaseResponseBody;
+import com.algopulza.backend.common.model.ResponseMessage;
 import com.algopulza.backend.db.entity.Member;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@Api(value = "회원관리 API", tags = { "member" })
+@Api(value = "회원관리 API", tags = {"member"})
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/member")
+@RequestMapping("/api/members")
 public class MemberController {
     private final MemberService memberService;
 
-    @PostMapping("/signin")
-    @ApiOperation(value = "로그인", notes = "로그인 요청 API")
-    @ApiResponses({ @ApiResponse(code = 201, message = "성공", response = ErrorResponse.class),
-            @ApiResponse(code = 401, message = "인증 실패", response = ErrorResponse.class),
-            @ApiResponse(code = 404, message = "게시글 없음", response = ErrorResponse.class),
-            @ApiResponse(code = 500, message = "서버 오류", response = ErrorResponse.class) })
-    public ResponseEntity<? extends BaseResponseBody> addMember(@RequestBody String solvedacToken) throws JsonProcessingException {
+    @PostMapping("")
+    @ApiOperation(value = "로그인", notes = "로그인 요청 API 입니다. 첫 로그인이라면 회원정보 저장도 진행합니다.")
+    @ApiResponses({@ApiResponse(code = 201, message = ResponseMessage.LOGIN_SUCCESS),
+            @ApiResponse(code = 400, message = ResponseMessage.BAD_REQUEST, response = ErrorResponse.class),
+            @ApiResponse(code = 401, message = ResponseMessage.UNAUTHORIZED, response = ErrorResponse.class),
+            @ApiResponse(code = 403, message = ResponseMessage.ACCESS_DENIED, response = ErrorResponse.class),
+            @ApiResponse(code = 404, message = ResponseMessage.NOT_FOUND, response = ErrorResponse.class)})
+    public ResponseEntity<BaseResponseBody> addMember(@RequestBody String solvedacToken) throws JsonProcessingException {
+        // TODO: solvedacToken http header에 담아서 처리
+
+        // 회원정보 저장
         memberService.addMember(solvedacToken);
-        return null;
+        return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.CREATED, ResponseMessage.LOGIN_SUCCESS));
     }
 
     @GetMapping("/{memberId}")
-    @ApiOperation(value = "회원 정보 가져오기", notes = "id값에 따른 회원 정보 가져오기 요청 API")
-    @ApiResponses({ @ApiResponse(code = 200, message = "성공", response = ErrorResponse.class),
-            @ApiResponse(code = 401, message = "인증 실패", response = ErrorResponse.class),
-            @ApiResponse(code = 404, message = "게시글 없음", response = ErrorResponse.class),
-            @ApiResponse(code = 500, message = "서버 오류", response = ErrorResponse.class) })
-    public ResponseEntity<? extends  BaseResponseBody> detailMember(@PathVariable("memberId") @ApiParam(value = "유저의 id값", required = true) int memberId){
+    @ApiOperation(value = "회원 정보 가져오기", notes = "회원 id 값으로 회원 정보 조회 API 입니다.")
+    @ApiResponses({@ApiResponse(code = 200, message = ResponseMessage.GET_MEMBER_INFO_SUCCESS, response = ErrorResponse.class),
+            @ApiResponse(code = 400, message = ResponseMessage.BAD_REQUEST, response = ErrorResponse.class),
+            @ApiResponse(code = 401, message = ResponseMessage.UNAUTHORIZED, response = ErrorResponse.class),
+            @ApiResponse(code = 403, message = ResponseMessage.ACCESS_DENIED, response = ErrorResponse.class),
+            @ApiResponse(code = 404, message = ResponseMessage.NOT_FOUND, response = ErrorResponse.class)})
+    public ResponseEntity<BaseResponseBody> detailMember(@PathVariable("memberId") @ApiParam(value = "회원 id 값", required = true) int memberId) {
         Member member = memberService.getMember(memberId);
-        return ResponseEntity.status(200).body(BaseResponseBody.of(HttpStatus.OK,"SUCCESS",member));
+        return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, ResponseMessage.GET_MEMBER_INFO_SUCCESS, member));
     }
 
-    @PatchMapping("/update")
-    @ApiOperation(value = "회원 정보 수정하기", notes = "회원 정보 수정하기 요청 API")
-    @ApiResponses({ @ApiResponse(code = 200, message = "성공", response = ErrorResponse.class),
-            @ApiResponse(code = 401, message = "인증 실패", response = ErrorResponse.class),
-            @ApiResponse(code = 404, message = "게시글 없음", response = ErrorResponse.class),
-            @ApiResponse(code = 500, message = "서버 오류", response = ErrorResponse.class) })
-    public ResponseEntity<? extends BaseResponseBody> modifyMember(@RequestBody ModifyMemberReq modifyMemberReq) {
+    @PatchMapping("")
+    @ApiOperation(value = "회원 정보 수정하기", notes = "회원 정보 수정 API 입니다.")
+    @ApiResponses({@ApiResponse(code = 200, message = ResponseMessage.MODIFY_MEMBER_INFO_SUCCESS, response = ErrorResponse.class),
+            @ApiResponse(code = 400, message = ResponseMessage.BAD_REQUEST, response = ErrorResponse.class),
+            @ApiResponse(code = 401, message = ResponseMessage.UNAUTHORIZED, response = ErrorResponse.class),
+            @ApiResponse(code = 403, message = ResponseMessage.ACCESS_DENIED, response = ErrorResponse.class),
+            @ApiResponse(code = 404, message = ResponseMessage.NOT_FOUND, response = ErrorResponse.class)})
+    public ResponseEntity<BaseResponseBody> modifyMember(@RequestBody ModifyMemberReq modifyMemberReq) {
         memberService.modifyMember(modifyMemberReq);
-        return ResponseEntity.status(200).body(BaseResponseBody.of(HttpStatus.OK,"SUCCESS"));
+        return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, ResponseMessage.MODIFY_MEMBER_INFO_SUCCESS));
     }
-
-
-
-
 
 }
