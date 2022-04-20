@@ -1,6 +1,6 @@
+import { Outlet } from "react-router-dom"
 import Navbar from "components/layout/Navbar"
 import Footer from "components/layout/Footer"
-import { Outlet } from "react-router-dom"
 import styled from "styled-components"
 
 // 랜덤, 카테고리 탭에 아직 내용을 채우지 않았기 때문에
@@ -10,6 +10,7 @@ const Container = styled.div`
   flex-direction: column;
   width: 100vw;
   height: 100vh;
+  overflow: overlay;
 `
 
 const Home = () => {
