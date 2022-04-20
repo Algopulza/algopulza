@@ -1,5 +1,7 @@
 import styled from "styled-components";
 
+// 현재 코드라인이 100줄이 넘어가므로 세분화가 필요할 듯
+// 아래 Item 부분에 대한 세분화가 가능할 듯
 const Container = styled.div`
   display: flex;
   flex-direction: column;
