@@ -1,32 +1,24 @@
-import Navbar from "components/layout/Navbar";
-import Footer from "components/layout/Footer";
-import React from "react";
-import { Outlet } from "react-router-dom";
-import styled from "styled-components";
+import { Outlet } from "react-router-dom"
+import Navbar from "components/layout/Navbar"
+import Footer from "components/layout/Footer"
+import styled from "styled-components"
 
 const Container = styled.div`
   display: flex;
-`;
-
-const SubContainer = styled.div`
-  display: flex;
+  flex-direction: column;
   width: 100vw;
   height: 100vh;
-  flex-direction: column;
-`;
+  overflow: overlay;
+`
 
 const Home = () => {
-    return (
-        <>
-        <Container>
-          <SubContainer>
-            <Navbar />
-            <Outlet />
-            <Footer />
-          </SubContainer>
-        </Container>
-      </>
-    );
-};
+  return (
+    <Container>
+      <Navbar />
+      <Outlet />
+      <Footer />
+    </Container>
+  )
+}
 
-export default Home;
+export default Home
