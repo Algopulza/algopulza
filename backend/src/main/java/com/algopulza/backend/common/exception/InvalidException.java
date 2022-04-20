@@ -6,7 +6,7 @@ public class InvalidException extends BusinessException {
     private ErrorCode errorCode;
 
     public InvalidException() {
-        super(ErrorCode.INVALID_INPUT_VALUE);
+        super(ErrorCode.BAD_REQUEST);
     }
 
     public InvalidException(String message) {
