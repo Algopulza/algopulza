@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TierRepository extends JpaRepository<Tier, Long> {
+    Tier findByLevel(long level);
 }

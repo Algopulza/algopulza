@@ -1,10 +1,12 @@
 package com.algopulza.backend.db.entity;
 
 import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Getter
+@Setter
 @Entity
 @Table(name = "member_has_organization")
 public class MemberHasOrganization extends BaseTimeEntity {
