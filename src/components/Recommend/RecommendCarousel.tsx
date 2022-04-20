@@ -10,7 +10,7 @@ import RecommendCarousel4 from "assets/img/RecommendCarousel4.jpg"
 
 const Container = styled.div`
   width:100vw;
-  height: 240px;
+  height: 480px;
   margin-bottom: 1rem;
 `
 const Img = styled.img`
@@ -28,14 +28,15 @@ const RecommendCarousel = () => {
     autoplay: true,
     autoplaySpeed: 5000,
     touchMove: true,
+    arrows: false,
   };
   return (
     <Container>
       <Slider {...settings}>
-          <Img src={RecommendCarousel1} alt="이미지1" />
-          <Img src={RecommendCarousel2} alt="이미지2" />
-          <Img src={RecommendCarousel3} alt="이미지3" />
-          <Img src={RecommendCarousel4} alt="이미지4" />
+          <a href="/analysis"><Img src={RecommendCarousel1} alt="이미지1"/></a>
+          <a href="/analysis"><Img src={RecommendCarousel2} alt="이미지2"/></a>
+          <a href="/analysis"><Img src={RecommendCarousel3} alt="이미지3"/></a>
+          <a href="/analysis"><Img src={RecommendCarousel4} alt="이미지4"/></a>
       </Slider>
     </Container>
   );
