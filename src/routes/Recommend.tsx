@@ -13,7 +13,7 @@ const SubContainer = styled.div`
 `
 
 const Title = styled.div`
-  margin-bottom: 16px;
+  margin-bottom: 32px;
   font-size: 1.6vw;
 `
 

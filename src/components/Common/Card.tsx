@@ -3,122 +3,101 @@ import styled from "styled-components";
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 1rem 1rem 1rem 1rem;
-  width: 15vw;
-  height: 220px;
-  border-radius: 15px;
+  margin: 0 0.5vw;
+  width: 17vw;
   border: 1px solid #c4c4c4;
-`;
+  border-radius: 15px;
+`
 
 const TopContainer = styled.div`
   color: white;
   background-color: black;
-  height:140px;
   border-radius: 15px 15px 0 0;
-  padding: 1rem;
-`;
+  padding: 16px;
+`
 
 const Tag = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: left;
-  align-items: flex-start;
-  width: 100%;
-  height: 16px;
-`;
+  margin-bottom: 8px;
+`
 
 const TagTitle = styled.div`
-    font-size: 1rem;
-    margin-right: 1rem;
+  font-size: 0.8vw;
+  margin-right: 16px;
 `
 
 const Id = styled.div`
-    display: flex;
-    justify-content: flex-end;
-    font-size: 1rem;
-  height: 16px;
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 16px;
+  font-size: 0.8vw;
 `
 
 const Title = styled.div`
-display: flex;
-justify-content: center;
-overflow: hidden;
-text-overflow: ellipsis;
-    font-size: 2rem;
-    margin-top:1.5rem;
+  padding: 0 8px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 1.7vw;
 `
 
 const TextContainer = styled.div`
-  padding: 0.5rem 1rem 0rem 1rem;
-  height:80px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-`;
-
-const Level = styled.div`
-display: flex;
-flex-direction: column;
-justify-content: space-around;
-height: 100%;
-text-align: center;
+  text-align: center;
+  padding: 16px 16px;
 `
 
-const LevelTop = styled.div``
-const LevelBottom = styled.div``
-const Try = styled.div`
-display: flex;
-flex-direction: column;
-justify-content: space-around;
-height: 100%;
-text-align: center;
+const Item = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
 `
 
-const TryTop = styled.div``
-const TryBottom = styled.div``
-const Answer = styled.div`
-display: flex;
-flex-direction: column;
-justify-content: space-around;
-height: 100%;
-text-align: center;
+const ItemValue = styled.div`
+  margin-bottom: 8px;
+  font-size: 1vw;
 `
 
-const AnswerTop = styled.div``
-const AnswerBottom = styled.div``
+const ItemTitle = styled.div`
+  font-size: 0.8vw;
+`
 
 const Card = () => {
   return (
     <Container>
       <TopContainer>
-          <Tag>
-        <TagTitle>#Tag1</TagTitle>
-        <TagTitle>#Tag2</TagTitle>
-        <TagTitle>#Tag3</TagTitle>
+        <Tag>
+          <TagTitle>#Tag1</TagTitle>
+          <TagTitle>#Tag2</TagTitle>
+          <TagTitle>#Tag3</TagTitle>
         </Tag>
         <Id>id</Id>
-        <Title>Title</Title>
+        <Title>It has a very long title</Title>
       </TopContainer>
+
       <TextContainer>
-        <Level>
-          <LevelTop>Gold3</LevelTop>
-          <LevelBottom>레벨</LevelBottom>
-        </Level>
-        
-        <Try>
-          <TryTop>30</TryTop>
-          <TryBottom>평균 시도 횟수</TryBottom>
-        </Try>
+        <Item>
+          <ItemValue>Gold3</ItemValue>
+          <ItemTitle>레벨</ItemTitle>
+        </Item>
 
-        <Answer>
-          <AnswerTop>1005</AnswerTop>
-          <AnswerBottom>맞힌 사람 수</AnswerBottom>
-        </Answer>
+        <Item>
+          <ItemValue>30</ItemValue>
+          <ItemTitle>평균 시도 횟수</ItemTitle>
+        </Item>
 
+        <Item>
+          <ItemValue>1005</ItemValue>
+          <ItemTitle>맞힌 사람 수</ItemTitle>
+        </Item>
       </TextContainer>
     </Container>
-  );
-};
+  )
+}
 
-export default Card;
+export default Card
