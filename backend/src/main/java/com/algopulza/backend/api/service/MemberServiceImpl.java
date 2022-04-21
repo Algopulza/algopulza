@@ -24,11 +24,11 @@ public class MemberServiceImpl implements MemberService {
 
     private final MemberRepository memberRepository;
     private final LoginLogRepository loginLogRepository;
-    private  final TierRepository tierRepository;
-    private  final OrganizationRepository organizationRepository;
-    private  final MemberHasOrganizationRepository memberHasOrganizationRepository;
-    private  final ProblemRepository problemRepository;
-    private  final SolvingLogRepository solvingLogRepository;
+    private final TierRepository tierRepository;
+    private final OrganizationRepository organizationRepository;
+    private final MemberHasOrganizationRepository memberHasOrganizationRepository;
+    private final ProblemRepository problemRepository;
+    private final SolvingLogRepository solvingLogRepository;
     private final S3Service s3Service;
 
     @Override
@@ -50,7 +50,6 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public void modifyMember(ModifyMemberReq modifyMemberReq) {
         Member member = memberRepository.findById(modifyMemberReq.getMemberId()).orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND_MEMBER));
-
 
         member.setProfileImage(s3Service.uploadToMember(modifyMemberReq.getProfileImage()));
         memberRepository.save(member);
@@ -139,7 +138,7 @@ public class MemberServiceImpl implements MemberService {
 
     private void addSolvingLog(String name, int problemId, String status) {
         Problem problem = problemRepository.findByBojId(problemId);
-        Optional<Member> member = memberRepository.findByName(name);
+        Optional<Member> member = Optional.ofNullable(memberRepository.findByName(name));
         member.ifPresent(selectMember->{
             SolvingLog solvingLog = new SolvingLog();
             solvingLog.setMember(selectMember);
@@ -168,7 +167,7 @@ public class MemberServiceImpl implements MemberService {
        },()->{
            System.out.println("new organization");
            Organization newOrganiation = new Organization();
-           newOrganiation.setBaekjoonId(organizationId);
+           newOrganiation.setBojId(organizationId);
            newOrganiation.setName(organizationName);
            newOrganiation.setTypeFlag(typeFlag);
            organizationRepository.save(newOrganiation);
