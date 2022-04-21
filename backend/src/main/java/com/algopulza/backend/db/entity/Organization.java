@@ -16,7 +16,7 @@ public class Organization extends BaseTimeEntity {
     private Long id;
 
     @Column
-    private int baekjoonId;
+    private int bojId;
 
     @Column
     private String name;

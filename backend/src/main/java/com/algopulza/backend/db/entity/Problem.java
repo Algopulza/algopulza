@@ -22,7 +22,7 @@ public class Problem {
     private Tier tier;
 
     @Column
-    private int baekjoonId;
+    private int bojId;
 
     @Column
     private String title;
