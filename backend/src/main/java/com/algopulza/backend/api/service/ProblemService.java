@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface ProblemService {
 
-    public List<SolvedAcProblemRes> getProblemListFromSolvedac(int start, int end);
+    void getAndAddProblemList(int start, int end);
 
 }

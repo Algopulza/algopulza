@@ -13,8 +13,6 @@ public class SolvedAcProblemRes {
 
     private String titleKo;
 
-    private List<SolvedAcProblemTitleRes> titles;
-
     private Boolean isSolvable;
 
     private Boolean isPartial;
