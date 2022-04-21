@@ -138,8 +138,8 @@ public class MemberServiceImpl implements MemberService {
     }
 
     private void addSolvingLog(String name, int problemId, String status) {
-        Problem problem = problemRepository.findByBaekjoonId(problemId);
-        Optional<Member> member = Optional.ofNullable(memberRepository.findByName(name));
+        Problem problem = problemRepository.findByBojId(problemId);
+        Optional<Member> member = memberRepository.findByName(name);
         member.ifPresent(selectMember->{
             SolvingLog solvingLog = new SolvingLog();
             solvingLog.setMember(selectMember);
@@ -161,7 +161,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     private void addOrganization(int organizationId, String organizationName, boolean typeFlag) {
-       Optional<Organization> organization =  organizationRepository.findByBaekjoonId(organizationId);
+       Optional<Organization> organization =  organizationRepository.findByBojId(organizationId);
        //이미 존재하는 organization이면 pass, 아니면 새로 등록
        organization.ifPresentOrElse(selectorganization->{
            System.out.println("organization already exist!!");
