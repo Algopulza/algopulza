@@ -38,6 +38,7 @@ public class MemberServiceImpl implements MemberService {
             member.setTier(selectMember.getTier());
             member.setDaysCount(selectMember.getDaysCount());
             member.setSolveCount(selectMember.getSolveCount());
+            member.setSolvedacToken(selectMember.getSolvedacToken());
         });
 
         return member;
