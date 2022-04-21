@@ -89,7 +89,6 @@ public class MemberServiceImpl implements MemberService {
         //이미 등록된 회원이면 solvedac token만 업데이트, 아니면 새 회원으로 등록
         JsonNode finalJsonNode = jsonNode;
         member.ifPresentOrElse(selectMember -> {
-            //TODO : 이미 등록된 회원이라해도 정보 갱신을 위해 로그인 해주면 데이터 업데이트 해주어야하는데,, dayscount 빼고 다 업데이트 해줘야하나?
             System.out.println("member already exist!!");
             selectMember.setSolvedacToken(solvedacToken);
             memberRepository.save(selectMember);
@@ -118,7 +117,7 @@ public class MemberServiceImpl implements MemberService {
             //organization 등록
             int organizationId = Integer.parseInt(jsonNode.get("user").get("organizations").get(i).get("organizationId").toString());
             String organizationName = jsonNode.get("user").get("organizations").get(i).get("name").toString();
-            //TODO : typeFlag 왜 boolean 값인건지 궁금해효 혜지박사님~!~!~!~!
+
             boolean typeFlag = true;
             addOrganization(organizationId, organizationName, typeFlag);
             //memberHasOrganization 등록
