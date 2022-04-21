@@ -1,28 +1,22 @@
 package com.algopulza.backend.db.entity;
 
 import lombok.*;
-import org.hibernate.Hibernate;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 @Getter
 @Setter
-@ToString
-@Builder
-@AllArgsConstructor
-@RequiredArgsConstructor
 @Entity
 @Table(name = "problem")
 public class Problem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
-    private Integer id;
+    private Long id;
 
-    @Column
-    private Integer level;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "level")
+    private Tier tier;
 
     @Column
     private int bojId;
@@ -31,24 +25,12 @@ public class Problem {
     private String title;
 
     @Column
-    private Boolean solvableFlag = false;
+    private boolean solvableFlag;
 
     @Column
-    private Integer acceptedCount;
+    private int acceptedCount;
 
     @Column
-    private Double averageTryCount;
+    private double averageTryCount;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Problem problem = (Problem) o;
-        return id != null && Objects.equals(id, problem.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }
 }

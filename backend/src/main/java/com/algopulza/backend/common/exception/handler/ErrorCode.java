@@ -12,7 +12,9 @@ public enum ErrorCode {
     // Auth
     INVALID_REFRESH_TOKEN(401, "M001", ResponseMessage.INVALID_REFRESH_TOKEN),
     NOT_FOUND_MEMBER(404, "M002", ResponseMessage.NOT_FOUND_MEMBER),
-    ACCESS_DENIED(403, "M003", ResponseMessage.ACCESS_DENIED);
+    ACCESS_DENIED(403, "M003", ResponseMessage.ACCESS_DENIED),
+    // Problem
+    NOT_FOUND_PROBLEM(404, "P001", ResponseMessage.NOT_FOUND_PROBLEM);
 
     private int status;
     private final String code;
