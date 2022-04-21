@@ -25,7 +25,7 @@ public class Problem {
     private Integer level;
 
     @Column
-    private Integer baekjoonId;
+    private int bojId;
 
     @Column
     private String title;

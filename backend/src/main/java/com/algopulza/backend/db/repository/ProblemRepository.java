@@ -5,8 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ProblemRepository extends JpaRepository<Problem, Long>, ProblemRepositoryCustom {
-
-    Problem findByBaekjoonId(int baekjoonId);
-
+public interface ProblemRepository extends JpaRepository<Problem, Long> {
+    Problem findByBojId(int bojId);
 }

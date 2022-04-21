@@ -24,11 +24,11 @@ public class MemberServiceImpl implements MemberService {
 
     private final MemberRepository memberRepository;
     private final LoginLogRepository loginLogRepository;
-    private  final TierRepository tierRepository;
-    private  final OrganizationRepository organizationRepository;
-    private  final MemberHasOrganizationRepository memberHasOrganizationRepository;
-    private  final ProblemRepository problemRepository;
-    private  final SolvingLogRepository solvingLogRepository;
+    private final TierRepository tierRepository;
+    private final OrganizationRepository organizationRepository;
+    private final MemberHasOrganizationRepository memberHasOrganizationRepository;
+    private final ProblemRepository problemRepository;
+    private final SolvingLogRepository solvingLogRepository;
     private final S3Service s3Service;
 
     @Override
@@ -50,7 +50,6 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public void modifyMember(ModifyMemberReq modifyMemberReq) {
         Member member = memberRepository.findById(modifyMemberReq.getMemberId()).orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND_MEMBER));
-
 
         member.setProfileImage(s3Service.uploadToMember(modifyMemberReq.getProfileImage()));
         memberRepository.save(member);
@@ -89,7 +88,6 @@ public class MemberServiceImpl implements MemberService {
         //이미 등록된 회원이면 solvedac token만 업데이트, 아니면 새 회원으로 등록
         JsonNode finalJsonNode = jsonNode;
         member.ifPresentOrElse(selectMember -> {
-            //TODO : 이미 등록된 회원이라해도 정보 갱신을 위해 로그인 해주면 데이터 업데이트 해주어야하는데,, dayscount 빼고 다 업데이트 해줘야하나?
             System.out.println("member already exist!!");
             selectMember.setSolvedacToken(solvedacToken);
             memberRepository.save(selectMember);
@@ -118,7 +116,7 @@ public class MemberServiceImpl implements MemberService {
             //organization 등록
             int organizationId = Integer.parseInt(jsonNode.get("user").get("organizations").get(i).get("organizationId").toString());
             String organizationName = jsonNode.get("user").get("organizations").get(i).get("name").toString();
-            //TODO : typeFlag 왜 boolean 값인건지 궁금해효 혜지박사님~!~!~!~!
+
             boolean typeFlag = true;
             addOrganization(organizationId, organizationName, typeFlag);
             //memberHasOrganization 등록
@@ -139,7 +137,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     private void addSolvingLog(String name, int problemId, String status) {
-        Problem problem = problemRepository.findByBaekjoonId(problemId);
+        Problem problem = problemRepository.findByBojId(problemId);
         Optional<Member> member = Optional.ofNullable(memberRepository.findByName(name));
         member.ifPresent(selectMember->{
             SolvingLog solvingLog = new SolvingLog();
@@ -162,14 +160,14 @@ public class MemberServiceImpl implements MemberService {
     }
 
     private void addOrganization(int organizationId, String organizationName, boolean typeFlag) {
-       Optional<Organization> organization =  organizationRepository.findByBaekjoonId(organizationId);
+       Optional<Organization> organization =  organizationRepository.findByBojId(organizationId);
        //이미 존재하는 organization이면 pass, 아니면 새로 등록
        organization.ifPresentOrElse(selectorganization->{
            System.out.println("organization already exist!!");
        },()->{
            System.out.println("new organization");
            Organization newOrganiation = new Organization();
-           newOrganiation.setBaekjoonId(organizationId);
+           newOrganiation.setBojId(organizationId);
            newOrganiation.setName(organizationName);
            newOrganiation.setTypeFlag(typeFlag);
            organizationRepository.save(newOrganiation);
