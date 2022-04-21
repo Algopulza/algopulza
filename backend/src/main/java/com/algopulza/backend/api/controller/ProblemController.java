@@ -11,14 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-
-
-@CrossOrigin(origins = {"*"}, methods = {RequestMethod.GET,
-        RequestMethod.POST,
-        RequestMethod.PUT,
-        RequestMethod.PATCH,
-        RequestMethod.DELETE,
-        RequestMethod.OPTIONS})
 @Api(value = "문제관리 API", tags = {"problem"})
 @RestController
 @RequiredArgsConstructor
@@ -35,8 +27,6 @@ public class ProblemController {
             @ApiResponse(code = 403, message = ResponseMessage.ACCESS_DENIED, response = ErrorResponse.class),
             @ApiResponse(code = 404, message = ResponseMessage.NOT_FOUND, response = ErrorResponse.class)})
     public ResponseEntity<BaseResponseBody> addProblems() throws JsonProcessingException {
-
-
         return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, ResponseMessage.PUT_PROBLEM_LIST_SUCCESS, problemService.addProblems(0, 0)));
     }
 
