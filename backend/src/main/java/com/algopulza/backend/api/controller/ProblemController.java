@@ -4,7 +4,6 @@ import com.algopulza.backend.api.service.ProblemService;
 import com.algopulza.backend.common.exception.handler.ErrorResponse;
 import com.algopulza.backend.common.model.BaseResponseBody;
 import com.algopulza.backend.common.model.ResponseMessage;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -26,8 +25,9 @@ public class ProblemController {
             @ApiResponse(code = 401, message = ResponseMessage.UNAUTHORIZED, response = ErrorResponse.class),
             @ApiResponse(code = 403, message = ResponseMessage.ACCESS_DENIED, response = ErrorResponse.class),
             @ApiResponse(code = 404, message = ResponseMessage.NOT_FOUND, response = ErrorResponse.class)})
-    public ResponseEntity<BaseResponseBody> addProblems() throws JsonProcessingException {
-        return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, ResponseMessage.PUT_PROBLEM_LIST_SUCCESS, problemService.addProblems(0, 0)));
+    public ResponseEntity<BaseResponseBody> addProblemList(@RequestParam int startProblemNumber, @RequestParam int endProblemNumber) {
+        problemService.getProblemListFromSolvedac(startProblemNumber, endProblemNumber);
+        return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, ResponseMessage.PUT_PROBLEM_LIST_SUCCESS));
     }
 
 

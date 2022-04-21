@@ -1,7 +1,7 @@
 solvedac:
+  baseurl: https://solved.ac/api/v3/
   problems:
     get:
-      url: https://solved.ac/api/v3/problem/lookup?problemIds=
       size: 100
       defaultStart: 1000
       defaultEnd: 1300

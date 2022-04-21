@@ -1,13 +1,14 @@
-package com.algopulza.backend.common.model;
+package com.algopulza.backend.api.response;
 
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
-@ApiModel("SaTagDisplayNameResponse")
+@ApiModel("SolvedAcTagDisplayNameRes")
 @Data
-public class SaTagDisplayNameResponse {
+public class SolvedAcTagDisplayNameRes {
 
     private String language;
 
     private String name;
+
 }

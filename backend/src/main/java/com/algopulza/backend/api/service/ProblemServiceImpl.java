@@ -1,11 +1,7 @@
 package com.algopulza.backend.api.service;
 
-import com.algopulza.backend.common.model.SaProblemsResponse;
+import com.algopulza.backend.api.response.SolvedAcProblemRes;
 import com.algopulza.backend.db.repository.ProblemRepository;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
@@ -15,65 +11,70 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import java.nio.charset.Charset;
+import java.util.LinkedList;
 import java.util.List;
 
 @RequiredArgsConstructor
 @Transactional
 @Service
-public class ProblemServiceImpl implements ProblemService{
+public class ProblemServiceImpl implements ProblemService {
 
     private final ProblemRepository problemRepository;
 
     @Value("${solvedac.problems.get.defaultStart}")
-    private Integer ProblemsStartNumber;
+    private int ProblemsStartNumber;
 
     @Value("${solvedac.problems.get.defaultEnd}")
-    private Integer ProblemsEndNumber;
+    private int ProblemsEndNumber;
 
     @Value("${solvedac.problems.get.size}")
-    private Integer ProblemsSolvedacGetSize;
+    private int ProblemsSolvedacGetSize;
 
-    @Value("${solvedac.problems.get.url}")
-    private String SovledacGetProblemsUrl;
+    @Value("${solvedac.baseurl}")
+    private String SolvedacBaseUrl;
 
     @Override
-    public String addProblems(Integer start, Integer end) throws JsonProcessingException {
-
-        if (start == 0) start = ProblemsStartNumber;
-        if (end == 0) end = ProblemsEndNumber;
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(new MediaType("application", "json",
-                                    Charset.forName("UTF-8")));
-
+    public List<SolvedAcProblemRes> getProblemListFromSolvedac(int start, int end) {
+        // TODO: HttpComponentsClientHttpRequestFactory를 통한 timeout 설정
         RestTemplate restTemplate = new RestTemplate();
         StringBuilder result = new StringBuilder();
+        // 정보를 요청할 문제들의 ID값
+        StringBuilder problemIdList = new StringBuilder();
+        // 정보를 요청할 API URL
+        StringBuilder requestUrl = new StringBuilder();
+        List<SolvedAcProblemRes> solvedAcProblemResList = new LinkedList<>();
 
-        for (int i = start; i <= end; i += ProblemsSolvedacGetSize) {
-            StringBuilder sb = new StringBuilder();
-
-            for (int j = 0; j < ProblemsSolvedacGetSize; j++) {
-                sb.append(i + j).append(",");
-            }
-
-            String problemIds = sb.toString().substring(0, sb.length() - 1);
-
-            // 여러개 받는
-            String resp = restTemplate.getForObject(SovledacGetProblemsUrl + problemIds,
-                    String.class);
-
-            // 여러개 받는
-            ObjectMapper objectMapper = new ObjectMapper();
-            objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-            List<SaProblemsResponse> problemList = objectMapper.readValue(resp, new TypeReference<List<SaProblemsResponse>>() {});
-
-            problemList.forEach(s -> System.out.println(s.getProblemId()));
-
-            result.append(resp);
-
+        // 유효하지 않은 범위로 요청 시에는 기본 범위로 조회
+        if (end > 0 && start <= end) {
+            ProblemsStartNumber = start;
+            ProblemsEndNumber = end;
         }
 
-        return result.toString();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
+
+        start = ProblemsStartNumber;
+        while (start <= ProblemsEndNumber) { // 요청 범위의 마지막 번호까지 수집
+            for (int i = 0; i < ProblemsSolvedacGetSize; i++) { // 100개씩 수집
+                problemIdList.append(start + i).append(",");
+                if (start + i == ProblemsEndNumber) {
+                    break;
+                }
+            }
+
+            // 맨 뒤에 붙은 쉼표(,) 제거
+            problemIdList.setLength(problemIdList.length() - 1);
+
+            requestUrl.append(SolvedacBaseUrl).append("problem/lookup?problemIds=").append(problemIdList.toString());
+            solvedAcProblemResList.addAll(restTemplate.getForObject(requestUrl.toString(), List.class));
+
+            problemIdList.setLength(0);
+            requestUrl.setLength(0);
+
+            start += ProblemsSolvedacGetSize;
+        }
+
+        return solvedAcProblemResList;
     }
 
 }

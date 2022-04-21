@@ -1,8 +1,11 @@
 package com.algopulza.backend.api.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.algopulza.backend.api.response.SolvedAcProblemRes;
+
+import java.util.List;
 
 public interface ProblemService {
 
-    public String addProblems(Integer start, Integer end) throws JsonProcessingException;
+    public List<SolvedAcProblemRes> getProblemListFromSolvedac(int start, int end);
+
 }
