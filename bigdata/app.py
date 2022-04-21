@@ -1,6 +1,6 @@
 from flask import Flask
 from flask_cors import CORS
-from recomm import vulnerability
+from recomm import vulnerability, user_vulnerability
 
 app = Flask(__name__)
 CORS(app)
@@ -9,6 +9,13 @@ CORS(app)
 def hello_world():
     return "<p>Hello, World!</p>"
 
+# @app.route('/vulnerability/<userid>')
+@app.route('/user/vulnerability')
+def user_vul():
+    res = user_vulnerability.user_vulnerability()
+    return res
+
+# @app.route('/recomm/<userid>/vulnerability')
 @app.route('/recomm/vulnerability')
 def recomm_vul():
     res = vulnerability.recomm_vulnerability()

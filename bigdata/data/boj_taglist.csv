@@ -1,0 +1,186 @@
+﻿,key,isMeta,bojTagId,problemCount,tag_name,tag_short
+0,arithmetic,False,121,585,사칙연산,사칙연산
+1,implementation,False,102,3456,구현,구현
+2,math,False,124,3849,수학,수학
+3,geometry,False,100,843,기하학,기하학
+4,dp,False,25,2415,다이나믹 프로그래밍,다이나믹 프로그래밍
+5,graphs,False,7,2261,그래프 이론,그래프 이론
+6,topological_sorting,False,78,109,위상 정렬,위상 정렬
+7,bruteforcing,False,125,1301,브루트포스 알고리즘,브루트포스 알고리즘
+8,combinatorics,False,6,493,조합론,조합론
+9,bfs,False,126,655,너비 우선 탐색,너비 우선 탐색
+10,dfs,False,127,530,깊이 우선 탐색,깊이 우선 탐색
+11,graph_traversal,False,11,1239,그래프 탐색,그래프 탐색
+12,regex,False,63,21,정규 표현식,정규 표현식
+13,string,False,158,1554,문자열,문자열
+14,bitmask,False,14,391,비트마스킹,비트마스킹
+15,dp_bitfield,False,87,178,비트필드를 이용한 다이나믹 프로그래밍,비트필드를 이용한 다이나믹 프로그래밍
+16,flow,False,45,195,최대 유량,최대 유량
+17,sorting,False,97,1046,정렬,정렬
+18,number_theory,False,95,841,정수론,정수론
+19,primality_test,False,9,198,소수 판정,소수 판정
+20,sieve,False,67,129,에라토스테네스의 체,에라토스테네스의 체
+21,bipartite_matching,False,13,123,이분 매칭,이분 매칭
+22,data_structures,False,175,2218,자료 구조,자료 구조
+23,deque,False,73,64,덱,덱
+24,greedy,False,33,1334,그리디 알고리즘,그리디 알고리즘
+25,divide_and_conquer,False,24,284,분할 정복,분할 정복
+26,recursion,False,62,149,재귀,재귀
+27,euclidean,False,26,108,유클리드 호제법,유클리드 호제법
+28,ad_hoc,False,109,503,애드 혹,애드 혹
+29,arbitrary_precision,False,117,170,임의 정밀도 / 큰 수 연산,임의 정밀도 / 큰 수 연산
+30,backtracking,False,5,303,백트래킹,백트래킹
+31,parsing,False,96,316,파싱,파싱
+32,disjoint_set,False,81,291,분리 집합,분리 집합
+33,mitm,False,46,64,중간에서 만나기,중간에서 만나기
+34,mst,False,49,119,최소 스패닝 트리,최소 스패닝 트리
+35,line_intersection,False,42,56,선분 교차 판정,선분 교차 판정
+36,sweeping,False,106,280,스위핑,스위핑
+37,prefix_sum,False,139,480,누적 합,누적 합
+38,simulation,False,141,575,시뮬레이션,시뮬레이션
+39,binary_search,False,12,749,이분 탐색,이분 탐색
+40,dijkstra,False,22,364,다익스트라,다익스트라
+41,floyd_warshall,False,31,103,플로이드–와샬,플로이드–와샬
+42,priority_queue,False,59,254,우선순위 큐,우선순위 큐
+43,convex_hull,False,20,97,볼록 껍질,볼록 껍질
+44,pythagoras,False,60,43,피타고라스 정리,피타고라스 정리
+45,fft,False,28,85,고속 푸리에 변환,고속 푸리에 변환
+46,trees,False,120,830,트리,트리
+47,case_work,False,137,410,많은 조건 분기,많은 조건 분기
+48,mfmc,False,167,46,최대 유량 최소 컷 정리,최대 유량 최소 컷 정리
+49,eulerian_path,False,93,41,오일러 경로,오일러 경로
+50,point_in_convex_polygon,False,56,23,볼록 다각형 내부의 점 판정,볼록 다각형 내부의 점 판정
+51,polygon_area,False,3,21,다각형의 넓이,다각형의 넓이
+52,ternary_search,False,101,40,삼분 탐색,삼분 탐색
+53,probability,False,177,136,확률론,확률론
+54,kmp,False,40,63,KMP,KMP
+55,knapsack,False,148,123,배낭 문제,배낭 문제
+56,hash_set,False,136,276,해시를 사용한 집합과 맵,해시를 사용한 집합과 맵
+57,scc,False,76,101,강한 연결 요소,강한 연결 요소
+58,parametric_search,False,170,136,매개 변수 탐색,매개 변수 탐색
+59,exponentiation_by_squaring,False,39,166,분할 정복을 이용한 거듭제곱,분할 정복을 이용한 거듭제곱
+60,dp_tree,False,92,226,트리에서의 다이나믹 프로그래밍,트리에서의 다이나믹 프로그래밍
+61,dp_connection_profile,False,107,18,커넥션 프로파일을 이용한 다이나믹 프로그래밍,커넥션 프로파일을 이용한 다이나믹 프로그래밍
+62,geometry_3d,False,131,63,3차원 기하학,3차원 기하학
+63,queue,False,72,39,큐,큐
+64,hashing,False,8,112,해싱,해싱
+65,heuristics,False,142,36,휴리스틱,휴리스틱
+66,precomputation,False,172,120,런타임 전의 전처리,런타임 전의 전처리
+67,trie,False,79,85,트라이,트라이
+68,segtree,False,65,823,세그먼트 트리,세그먼트 트리
+69,cactus,False,143,35,선인장,선인장
+70,biconnected_component,False,153,27,이중 연결 요소,이중 연결 요소
+71,constructive,False,128,471,구성적,구성적
+72,calculus,False,111,63,미적분학,미적분학
+73,numerical_analysis,False,122,14,수치해석,수치해석
+74,2_sat,False,1,40,2-sat,2-sat
+75,coordinate_compression,False,161,112,값 / 좌표 압축,값 / 좌표 압축
+76,lazyprop,False,66,184,느리게 갱신되는 세그먼트 트리,느리게 갱신되는 세그먼트 트리
+77,lis,False,43,53,가장 긴 증가하는 부분 수열: O(n log n),가장 긴 증가하는 부분 수열: O(n log n)
+78,stack,False,71,231,스택,스택
+79,bellman_ford,False,10,25,벨만–포드,벨만–포드
+80,extended_euclidean,False,27,24,확장 유클리드 호제법,확장 유클리드 호제법
+81,two_pointer,False,80,222,두 포인터,두 포인터
+82,mcmf,False,48,63,최소 비용 최대 유량,최소 비용 최대 유량
+83,0_1_bfs,False,176,23,0-1 너비 우선 탐색,0-1 너비 우선 탐색
+84,tree_set,False,74,257,트리를 사용한 집합과 맵,트리를 사용한 집합과 맵
+85,duality,False,180,8,쌍대성,쌍대성
+86,hungarian,False,36,7,헝가리안,헝가리안
+87,linear_programming,False,103,10,선형 계획법,선형 계획법
+88,sliding_window,False,68,62,슬라이딩 윈도우,슬라이딩 윈도우
+89,rotating_calipers,False,64,20,회전하는 캘리퍼스,회전하는 캘리퍼스
+90,pigeonhole_principle,False,189,10,비둘기집 원리,비둘기집
+91,crt,False,19,31,중국인의 나머지 정리,중국인의 나머지 정리
+92,mobius_inversion,False,51,16,뫼비우스 반전 공식,뫼비우스 반전 공식
+93,discrete_log,False,146,7,이산 로그,이산 로그
+94,lca,False,41,115,최소 공통 조상,최소 공통 조상
+95,pbs,False,54,22,병렬 이분 탐색,병렬 이분 탐색
+96,linked_list,False,154,19,연결 리스트,연결 리스트
+97,inclusion_and_exclusion,False,38,95,포함 배제의 원리,포함 배제의 원리
+98,modular_multiplicative_inverse,False,164,29,모듈로 곱셈 역원,모듈로 곱셈 역원
+99,game_theory,False,140,178,게임 이론,게임 이론
+100,gaussian_elimination,False,32,49,가우스 소거법,가우스 소거법
+101,linear_algebra,False,144,100,선형대수학,선형대수학
+102,sprague_grundy,False,70,58,스프라그–그런디 정리,스프라그–그런디 정리
+103,rabin_karp,False,61,19,라빈–카프,라빈–카프
+104,suffix_array,False,77,68,접미사 배열과 LCP 배열,접미사 배열과 LCP 배열
+105,sparse_table,False,84,88,희소 배열,희소 배열
+106,multi_segtree,False,166,22,다차원 세그먼트 트리,다차원 세그먼트 트리
+107,point_in_non_convex_polygon,False,57,9,오목 다각형 내부의 점 판정,오목 다각형 내부의 점 판정
+108,articulation,False,4,44,단절점과 단절선,단절점과 단절선
+109,planar_graph,False,168,24,평면 그래프,평면 그래프
+110,smaller_to_larger,False,169,68,작은 집합에서 큰 집합으로 합치는 테크닉,작은 집합에서 큰 집합으로 합치는 테크닉
+111,miller_rabin,False,47,12,밀러–라빈 소수 판별법,밀러–라빈 소수 판별법
+112,pollard_rho,False,58,12,폴라드 로,폴라드 로
+113,dancing_links,False,173,3,춤추는 링크,춤추는 링크
+114,knuth_x,False,174,3,크누스 X,크누스 X
+115,stoer_wagner,False,75,5,스토어–바그너,스토어–바그너
+116,permutation_cycle_decomposition,False,171,42,순열 사이클 분할,순열 사이클 분할
+117,cht,False,89,64,볼록 껍질을 이용한 최적화,볼록 껍질을 이용한 최적화
+118,link_cut_tree,False,98,19,링크/컷 트리,링크/컷 트리
+119,tsp,False,138,17,외판원 순회 문제,외판원 순회 문제
+120,offline_queries,False,123,157,오프라인 쿼리,오프라인 쿼리
+121,berlekamp_massey,False,110,22,벌래캠프–매시,벌래캠프–매시
+122,kitamasa,False,112,7,키타마사,키타마사
+123,min_enclosing_circle,False,162,7,최소 외접원,최소 외접원
+124,tree_isomorphism,False,145,14,트리 동형 사상,트리 동형 사상
+125,dp_deque,False,108,16,덱을 이용한 다이나믹 프로그래밍,덱을 이용한 다이나믹 프로그래밍
+126,bidirectional_search,False,129,5,양방향 탐색,양방향 탐색
+127,randomization,False,115,62,무작위화,무작위화
+128,simulated_annealing,False,184,5,담금질 기법,담금질 기법
+129,aho_corasick,False,2,23,아호-코라식,아호-코라식
+130,euler_tour_technique,False,150,56,오일러 경로 테크닉,오일러 경로 테크닉
+131,splay_tree,False,69,26,스플레이 트리,스플레이 트리
+132,mo,False,50,29,mo's,Mo's
+133,hld,False,35,55,Heavy-light 분할,Heavy-light 분할
+134,pst,False,55,38,퍼시스턴트 세그먼트 트리,퍼시스턴트 세그먼트 트리
+135,euler_characteristic,False,119,22,오일러 지표 (χ=V-E+F),오일러 지표
+136,dual_graph,False,181,10,쌍대 그래프,쌍대 그래프
+137,physics,False,116,34,물리학,물리학
+138,manacher,False,44,16,매내처,매내처
+139,half_plane_intersection,False,190,6,반평면 교집합,반평면 교집합
+140,slope_trick,False,157,16,함수 개형을 이용한 최적화,함수 개형을 이용한 최적화
+141,voronoi,False,82,8,보로노이 다이어그램,보로노이 다이어그램
+142,euler_phi,False,151,24,오일러 피 함수,오일러 피 함수
+143,stable_marriage,False,192,5,안정 결혼 문제,안정 결혼
+144,a_star,False,186,1,a*,a*
+145,bitset,False,152,40,비트 집합,비트 집합
+146,burnside,False,16,8,번사이드 보조정리,번사이드 보조정리
+147,matroid,False,104,9,매트로이드,매트로이드
+148,flt,False,29,25,페르마의 소정리,페르마의 소정리
+149,interpreter,False,156,11,인터프리터,인터프리터
+150,delaunay,False,21,2,델로네 삼각분할,델로네 삼각분할
+151,divide_and_conquer_optimization,False,91,25,분할 정복을 사용한 최적화,분할 정복을 사용한 최적화
+152,rope,False,159,5,로프,로프
+153,centroid,False,188,49,센트로이드,센트로이드
+154,centroid_decomposition,False,18,45,센트로이드 분할,센트로이드 분할
+155,sqrt_decomposition,False,130,61,제곱근 분할법,제곱근 분할법
+156,pick,False,187,2,픽의 정리,픽
+157,merge_sort_tree,False,155,22,머지 소트 트리,머지 소트 트리
+158,hirschberg,False,163,4,히르쉬버그,히르쉬버그
+159,dominator_tree,False,135,6,도미네이터 트리,도미네이터 트리
+160,hall,False,34,11,홀의 결혼 정리,홀의 결혼 정리
+161,knuth,False,90,7,크누스 최적화,크누스 최적화
+162,linearity_of_expectation,False,179,23,기댓값의 선형성,기댓값의 선형성
+163,directed_mst,False,23,3,유향 최소 신장 트리,유향 최소 신장 트리
+164,green,False,183,2,그린 정리,그린
+165,bipartite_graph,False,197,11,이분 그래프,이분 그래프
+166,palindrome_tree,False,53,6,회문 트리,회문 트리
+167,statistics,False,178,7,통계학,통계학
+168,geometry_hyper,False,132,4,4차원 이상의 기하학,4차원 이상의 기하학
+169,majority_vote,False,160,2,보이어–무어 다수결 투표,보이어–무어 다수결 투표
+170,lucas,False,113,8,뤼카 정리,뤼카 정리
+171,offline_dynamic_connectivity,False,52,12,오프라인 동적 연결성 판정,오프라인 동적 연결성 판정
+172,monotone_queue_optimization,False,165,6,단조 큐를 이용한 최적화,단조 큐를 이용한 최적화
+173,circulation,False,191,3,서큘레이션,서큘레이션
+174,general_matching,False,15,7,일반적인 매칭,일반적인 매칭
+175,z,False,83,7,z,Z
+176,bayes,False,114,4,베이즈 정리,베이즈 정리
+177,suffix_tree,False,182,4,접미사 트리,접미사 트리
+178,alien,False,134,12,Aliens 트릭,aliens 트릭
+179,tree_compression,False,193,2,트리 압축,트리 압축
+180,utf8,False,199,2,utf-8 입력 처리,utf-8
+181,rb_tree,False,94,1,레드-블랙 트리,레드-블랙 트리
+182,discrete_sqrt,False,147,4,이산 제곱근,이산 제곱근
+183,top_tree,False,105,2,탑 트리,탑 트리
+184,generating_function,False,198,2,생성 함수,생성 함수
