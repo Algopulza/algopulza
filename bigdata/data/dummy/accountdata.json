@@ -1,0 +1,367 @@
+{
+  "user": {
+    "handle": "dw3624",
+    "bio": "",
+    "organizations": [
+      
+    ],
+    "badge": null,
+    "background": {
+      "backgroundId": "abstract_001_light",
+      "backgroundImageUrl": "https://static.solved.ac/profile_bg/abstract_001/abstract_001_light.png",
+      "author": "shiftpsh",
+      "authorUrl": "https://shiftpsh.com/",
+      "unlockedUserCount": 0,
+      "displayName": "아이콘",
+      "displayDescription": "solved.ac 아이콘",
+      "hiddenConditions": false
+    },
+    "profileImageUrl": "https://static.solved.ac/uploads/profile/dw3624-picture-1630940198476.png",
+    "solvedCount": 79,
+    "voteCount": 0,
+    "class": 2,
+    "classDecoration": "silver",
+    "tier": 9,
+    "rating": 601,
+    "ratingByProblemsSum": 494,
+    "ratingByClass": 50,
+    "ratingBySolvedCount": 57,
+    "ratingByVoteCount": 0,
+    "exp": 522052,
+    "rivalCount": 0,
+    "reverseRivalCount": 0,
+    "maxStreak": 4,
+    "settings": {
+      
+    },
+    "coins": 0,
+    "stardusts": 2810,
+    "email": "dw3624@gmail.com"
+  },
+  "solved": [
+    {
+      "id": 1000,
+      "status": "solved"
+    },
+    {
+      "id": 2525,
+      "status": "solved"
+    },
+    {
+      "id": 7287,
+      "status": "solved"
+    },
+    {
+      "id": 10699,
+      "status": "solved"
+    },
+    {
+      "id": 14889,
+      "status": "solved"
+    },
+    {
+      "id": 14890,
+      "status": "solved"
+    },
+    {
+      "id": 1244,
+      "status": "solved"
+    },
+    {
+      "id": 1010,
+      "status": "solved"
+    },
+    {
+      "id": 1018,
+      "status": "solved"
+    },
+    {
+      "id": 10869,
+      "status": "solved"
+    },
+    {
+      "id": 2588,
+      "status": "solved"
+    },
+    {
+      "id": 3046,
+      "status": "solved"
+    },
+    {
+      "id": 2163,
+      "status": "solved"
+    },
+    {
+      "id": 2675,
+      "status": "solved"
+    },
+    {
+      "id": 2914,
+      "status": "solved"
+    },
+    {
+      "id": 9498,
+      "status": "solved"
+    },
+    {
+      "id": 2935,
+      "status": "solved"
+    },
+    {
+      "id": 5355,
+      "status": "solved"
+    },
+    {
+      "id": 2530,
+      "status": "tried"
+    },
+    {
+      "id": 11021,
+      "status": "solved"
+    },
+    {
+      "id": 11022,
+      "status": "solved"
+    },
+    {
+      "id": 1065,
+      "status": "solved"
+    },
+    {
+      "id": 1085,
+      "status": "solved"
+    },
+    {
+      "id": 1181,
+      "status": "solved"
+    },
+    {
+      "id": 1259,
+      "status": "solved"
+    },
+    {
+      "id": 1436,
+      "status": "solved"
+    },
+    {
+      "id": 1654,
+      "status": "solved"
+    },
+    {
+      "id": 1874,
+      "status": "solved"
+    },
+    {
+      "id": 1920,
+      "status": "solved"
+    },
+    {
+      "id": 1929,
+      "status": "solved"
+    },
+    {
+      "id": 9372,
+      "status": "solved"
+    },
+    {
+      "id": 1966,
+      "status": "solved"
+    },
+    {
+      "id": 10828,
+      "status": "solved"
+    },
+    {
+      "id": 15649,
+      "status": "solved"
+    },
+    {
+      "id": 2292,
+      "status": "solved"
+    },
+    {
+      "id": 9663,
+      "status": "solved"
+    },
+    {
+      "id": 11399,
+      "status": "solved"
+    },
+    {
+      "id": 1931,
+      "status": "solved"
+    },
+    {
+      "id": 1260,
+      "status": "solved"
+    },
+    {
+      "id": 11650,
+      "status": "solved"
+    },
+    {
+      "id": 18111,
+      "status": "solved"
+    },
+    {
+      "id": 2667,
+      "status": "solved"
+    },
+    {
+      "id": 2606,
+      "status": "solved"
+    },
+    {
+      "id": 1012,
+      "status": "solved"
+    },
+    {
+      "id": 1780,
+      "status": "solved"
+    },
+    {
+      "id": 2504,
+      "status": "solved"
+    },
+    {
+      "id": 1107,
+      "status": "solved"
+    },
+    {
+      "id": 13460,
+      "status": "solved"
+    },
+    {
+      "id": 10773,
+      "status": "solved"
+    },
+    {
+      "id": 7576,
+      "status": "solved"
+    },
+    {
+      "id": 1764,
+      "status": "solved"
+    },
+    {
+      "id": 1182,
+      "status": "solved"
+    },
+    {
+      "id": 11651,
+      "status": "solved"
+    },
+    {
+      "id": 11724,
+      "status": "solved"
+    },
+    {
+      "id": 1978,
+      "status": "solved"
+    },
+    {
+      "id": 2108,
+      "status": "solved"
+    },
+    {
+      "id": 2164,
+      "status": "solved"
+    },
+    {
+      "id": 2231,
+      "status": "solved"
+    },
+    {
+      "id": 2609,
+      "status": "solved"
+    },
+    {
+      "id": 2751,
+      "status": "solved"
+    },
+    {
+      "id": 2775,
+      "status": "solved"
+    },
+    {
+      "id": 2798,
+      "status": "solved"
+    },
+    {
+      "id": 11050,
+      "status": "solved"
+    },
+    {
+      "id": 4153,
+      "status": "solved"
+    },
+    {
+      "id": 10250,
+      "status": "solved"
+    },
+    {
+      "id": 2869,
+      "status": "solved"
+    },
+    {
+      "id": 10814,
+      "status": "solved"
+    },
+    {
+      "id": 9012,
+      "status": "solved"
+    },
+    {
+      "id": 2805,
+      "status": "solved"
+    },
+    {
+      "id": 10989,
+      "status": "solved"
+    },
+    {
+      "id": 10816,
+      "status": "solved"
+    },
+    {
+      "id": 10845,
+      "status": "solved"
+    },
+    {
+      "id": 10866,
+      "status": "solved"
+    },
+    {
+      "id": 11866,
+      "status": "solved"
+    },
+    {
+      "id": 1620,
+      "status": "solved"
+    },
+    {
+      "id": 1676,
+      "status": "solved"
+    },
+    {
+      "id": 11723,
+      "status": "solved"
+    },
+    {
+      "id": 1003,
+      "status": "solved"
+    },
+    {
+      "id": 17219,
+      "status": "tried"
+    },
+    {
+      "id": 15829,
+      "status": "solved"
+    },
+    {
+      "id": 2839,
+      "status": "solved"
+    }
+  ]
+}
