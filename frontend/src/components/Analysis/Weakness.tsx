@@ -1,5 +1,6 @@
 import ApexCharts from "react-apexcharts";
 import styled from "styled-components";
+import { getWeek } from "api/weakness";
 
 const Container = styled.div`
 width: 90%;
@@ -16,6 +17,7 @@ const Title = styled.div`
 `
 
 const Weakness = () => {
+  getWeek().then((res) => console.log(res)).catch((err) => console.log(err))
     return (
         <Container>
             <Title>취약점</Title>
