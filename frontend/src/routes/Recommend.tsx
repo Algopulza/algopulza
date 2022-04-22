@@ -1,6 +1,7 @@
 import RecommendCarousel from "components/Recommend/RecommendCarousel"
 import Card from "components/Common/Card"
 import styled from "styled-components";
+import { getRecommend } from "api/recommend";
 
 const Container = styled.div`
   display: flex;
@@ -26,6 +27,7 @@ const Cards = styled.div`
 
 // 반복되는 Card Tag에 대한 refactoring이 필요함
 const Recommend = () => {
+  getRecommend().then((res) => console.log(res)).catch((err) => console.log(err))
   return (
     <Container>
       <RecommendCarousel />
