@@ -17,7 +17,7 @@ const Title = styled.div`
 const Solved = () => {
     return (
         <Container>
-          <Title>태그 별 해결 문제</Title>
+          <Title>태그 별 해결 문제 수</Title>
         <ApexCharts
           type="bar"
           series= {[
