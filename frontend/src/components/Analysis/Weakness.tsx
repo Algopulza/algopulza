@@ -50,9 +50,9 @@ const Weakness = () => {
                 },
                 plotOptions: {
                     radar: {
-                      size: 160,
+                      size: 110,
                       offsetX: 0,
-                      offsetY: 5,
+                      offsetY: 0,
                       polygons: {
                         strokeColors: '#e8e8e8',
                         connectorColors: '#e8e8e8',
