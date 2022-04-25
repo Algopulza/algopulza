@@ -8,17 +8,15 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 @SpringBootApplication
 public class BackendApplication {
 
-    public static final String APPLICATION_LOCATION = "spring.config.location="
+    public static final String APPLICATION_LOCATION
+            = "spring.config.location="
             + "classpath:application.properties,"
             + "classpath:aws.yml,"
             + "classpath:solvedac.yml";
 
     public static void main(String[] args) {
-
         // SpringApplication.run(BackendApplication.class, args);
-        new SpringApplicationBuilder(BackendApplication.class)
-                .properties(APPLICATION_LOCATION)
-                .run(args);
+        new SpringApplicationBuilder(BackendApplication.class).properties(APPLICATION_LOCATION).run(args);
     }
 
 }

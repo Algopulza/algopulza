@@ -1,4 +1,4 @@
-solvedac:
+﻿solvedac:
   baseurl: https://solved.ac/api/v3/
   problems:
     get:
