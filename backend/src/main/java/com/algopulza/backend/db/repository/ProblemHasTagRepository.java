@@ -6,4 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ProblemHasTagRepository extends JpaRepository<ProblemHasTag, Long> {
+
+    ProblemHasTag findByProblemIdAndTagId(Long problemId, Long tagId);
+
 }

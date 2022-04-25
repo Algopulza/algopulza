@@ -10,7 +10,8 @@ public class BackendApplication {
 
     public static final String APPLICATION_LOCATION = "spring.config.location="
             + "classpath:application.properties,"
-            + "classpath:aws.yml";
+            + "classpath:aws.yml,"
+            + "classpath:solvedac.yml";
 
     public static void main(String[] args) {
 

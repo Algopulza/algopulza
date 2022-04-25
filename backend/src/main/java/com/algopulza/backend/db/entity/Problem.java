@@ -1,14 +1,11 @@
 package com.algopulza.backend.db.entity;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Getter
 @Setter
-@ToString
 @Entity
 @Table(name = "problem")
 public class Problem {
@@ -34,6 +31,6 @@ public class Problem {
     private int acceptedCount;
 
     @Column
-    private int averageTryCount;
+    private double averageTryCount;
 
 }

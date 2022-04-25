@@ -28,5 +28,7 @@ public class ResponseMessage {
 
     // Problem
     public static final String GET_PROBLEM_LIST_SUCCESS = "문제 목록 조회 성공";
+    public static final String PUT_PROBLEM_LIST_SUCCESS = "문제 목록 수집 성공";
+    public static final String NOT_FOUND_PROBLEM = "존재하지 않는 문제";
 
 }

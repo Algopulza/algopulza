@@ -1,10 +1,11 @@
 package com.algopulza.backend.db.entity;
 
-import lombok.Getter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Getter
+@Setter
 @Entity
 @Table(name = "tag")
 public class Tag extends BaseTimeEntity {
@@ -17,7 +18,7 @@ public class Tag extends BaseTimeEntity {
     private int bojTagId;
 
     @Column
-    private String key;
+    private String bojKey;
 
     @Column
     private String name;

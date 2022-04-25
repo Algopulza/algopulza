@@ -137,7 +137,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     private void addSolvingLog(String name, int problemId, String status) {
-        Problem problem = problemRepository.findByBojId(problemId);
+        Problem problem = problemRepository.findByBojId(problemId).orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND_PROBLEM));
         Optional<Member> member = Optional.ofNullable(memberRepository.findByName(name));
         member.ifPresent(selectMember->{
             SolvingLog solvingLog = new SolvingLog();
