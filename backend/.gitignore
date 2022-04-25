@@ -17,6 +17,19 @@ bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
 
+### Eclipse ###
+.metadata
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.settings/
+.loadpath
+.recommenders
+
 ### IntelliJ IDEA ###
 .idea
 *.iws
