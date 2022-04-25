@@ -53,7 +53,7 @@ const SearchInput = ({ onClick, url, isSelected }:UserProps) => {
   return (
     <SearchContainer>
       <Input 
-        placeholder=" search in result"
+        placeholder="알고리즘 문제를 검색해주세요."
         value={word || ''}
         type="text"
         onChange={onChange}
