@@ -45,12 +45,15 @@ const Title = styled.div`
 `
 
 const TextContainer = styled.div`
+  background-color: white;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   text-align: center;
   padding: 16px 16px;
+  color: black;
+  border-radius: 0 0 15px 15px;
 `
 
 const Item = styled.div`
