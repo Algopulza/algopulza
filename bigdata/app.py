@@ -54,6 +54,15 @@ def create_app(test_config = None):
         # return f"<p>Hello, This is test page!</p>"
         return tmp2
 
+    @app.route("/")
+    def save_data():
+        data_problem = app.mysql_db.execute(text("""
+            SELECT * FROM problem
+        """)).fetchall()
+        data_tag = app.mysql_db.execute(text("""
+            SELECT * FROM tag
+        """)).fetchall()
+
     # @app.route('/vulnerability/<userid>')
     @app.route('/user/vulnerability')
     def user_vul():
