@@ -1,14 +1,14 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
-import Landing from "routes/Landing"
-import Home from "routes/Home"
-import Recommend from "routes/Recommend"
-import Random from "routes/Random"
-import Category from "routes/Category"
-import Analysis from "routes/Analysis"
-import Search from "routes/Search"
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Landing from "routes/Landing";
+import Home from "routes/Home";
+import Recommend from "routes/Recommend";
+import Random from "routes/Random";
+import Category from "routes/Category";
+import Analysis from "routes/Analysis";
+import Search from "routes/Search";
 
 const AppRouter = () => {
-  return(
+  return (
     <Router>
       <Routes>
         <Route path="" element={<Landing />} />
@@ -21,7 +21,7 @@ const AppRouter = () => {
         </Route>
       </Routes>
     </Router>
-  )
-}
+  );
+};
 
-export default AppRouter
+export default AppRouter;

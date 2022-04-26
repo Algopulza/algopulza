@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const Container = styled.div<{co:boolean}>`
+const Container = styled.div<{ co: boolean }>`
   cursor: pointer;
   color: ${(props) => (props.co ? "#FFB305" : "black")};
   font-size: 1.2rem;
@@ -8,24 +8,24 @@ const Container = styled.div<{co:boolean}>`
   text-align: center;
 
   &:hover {
-    color: #FFB305;
+    color: #ffb305;
   }
 `;
 
 type UserProps = {
-  onClick(url:string): void
-  url : string
-  name: string
-  isSelected : string
-}
+  onClick(url: string): void;
+  url: string;
+  name: string;
+  isSelected: string;
+};
 
-const NavItem = ({ onClick, url, name, isSelected }:UserProps) => {
+const NavItem = ({ onClick, url, name, isSelected }: UserProps) => {
   return (
     <Container
       onClick={() => onClick(url)}
       co={isSelected === url ? true : false}
     >
-          {name}
+      {name}
     </Container>
   );
 };
