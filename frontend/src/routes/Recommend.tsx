@@ -1,8 +1,8 @@
 import RecommendCarousel from "components/Recommend/RecommendCarousel";
 import Card from "components/Common/Card";
 import styled from "styled-components";
-// import { getRecommend } from "api/recommend";
-// import { useEffect, useState } from "react";
+import { getRecommend } from "api/recommend";
+import { useEffect, useState } from "react";
 
 const Container = styled.div`
   display: flex;
@@ -28,15 +28,16 @@ const Cards = styled.div`
 
 // 반복되는 Card Tag에 대한 refactoring이 필요함
 const Recommend = () => {
-  // const [data, setData] = useState<any>();
-  // useEffect(() => {
-  //   getRecommend()
-  //     .then((res) => {
-  //       console.log(res);
-  //       setData(res.data);
-  //     })
-  //     .catch((err) => console.log(err));
-  // }, []);
+  const [data, setData] = useState<any>();
+  useEffect(() => {
+    getRecommend()
+      .then((res) => {
+        console.log(res);
+        console.log(res.data);
+        setData(res.data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   return (
     <Container>
@@ -45,7 +46,7 @@ const Recommend = () => {
       <SubContainer>
         <Title>취약한 태그에 속하는 문제들을 추천해 드려요!</Title>
         <Cards>
-          {/* {data &&
+          {data &&
             data.map((item: any) => (
               <Card
                 key={item.problemId}
@@ -56,7 +57,7 @@ const Recommend = () => {
                 average={item.averageTries}
                 accept={item.acceptedUserCount}
               />
-            ))} */}
+            ))}
         </Cards>
 
         <Title>최근 자주 풀었던 태그에 속하는 문제들을 추천해 드려요!</Title>
