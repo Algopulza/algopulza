@@ -1,29 +1,77 @@
-from flask import Flask
+from json import JSONEncoder
+from flask import Flask, jsonify
 from flask_cors import CORS
+from sqlalchemy import create_engine, text
 from recomm import vulnerability, user_vulnerability
 
-app = Flask(__name__)
-CORS(app)
+# Default JSON encoder는 set를 JSON으로 변환 불가
+# set을 list로 변환 후 JSON으로 변환할 수 있도록 커스텀 엔코더 작성
+class CustomJSONEncoder(JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, set):
+            return list(obj)
 
-@app.route("/")
-def hello_world():
-    return "<p>Hello, World!</p>"
+        return JSONEncoder.default(self, obj)
 
-# @app.route('/vulnerability/<userid>')
-@app.route('/user/vulnerability')
-def user_vul():
-    res = user_vulnerability.user_vulnerability()
-    return res
+def create_app(test_config = None):
+    # create_app 함수 자동으로 factory 함수로 인식, flask 실행
+	# test_config: 단위 테스트 실행시 테스트용 db 등 테스트 설정정보 적용하기 위함
+    app = Flask(__name__)
+    CORS(app)
+    app.config['JSON_AS_ASCII'] = False
+    app.json_encoder = CustomJSONEncoder
 
-# @app.route('/recomm/<userid>/vulnerability')
-@app.route('/recomm/vulnerability')
-def recomm_vul():
-    res = vulnerability.recomm_vulnerability()
-    return res
+
+	# test_config가 None인 경우 config.py에서 설정 가져옴
+    if test_config is None:
+        app.config.from_pyfile("config.py")
+    else:
+        app.config.update(test_config)
+
+    
+    # create_engine 함수 사용에 db 연결
+    database = create_engine(app.config['DB_URL'], encoding = 'utf-8', max_overflow = 0)
+		# engine 객체를 flask 객체에 저장, create_app 함수 외부에서도 db 사용할 수 있도록 설정
+    app.mysql_db = database
+
+
+
+    @app.route("/")
+    def test():
+        tmp = app.mysql_db.execute(text("""
+            SELECT *
+            FROM problem
+            WHERE id <= 320
+        """)).fetchall()
+        print(tmp)
+
+        tmp2 = [{
+            'id': t['id'],
+            'name': t['title'],
+        } for t in tmp]
+        tmp2 = jsonify(tmp2)
+
+        # return f"<p>Hello, This is test page!</p>"
+        return tmp2
+
+    # @app.route('/vulnerability/<userid>')
+    @app.route('/user/vulnerability')
+    def user_vul():
+        res = user_vulnerability.user_vulnerability()
+        return res
+
+    # @app.route('/recomm/<userid>/vulnerability')
+    @app.route('/recomm/vulnerability')
+    def recomm_vul():
+        res = vulnerability.recomm_vulnerability()
+        return res
+
+    return app
+
 
 if __name__ == '__main__':
+    # python app.py 혹은 flask run으로 실행
+    ## flask run의 경우 개발자모드 비활성화
+    app = create_app()
     app.debug = True # 개발자 모드
     app.run()
-
-# python app.py 혹은 flask run으로 실행
-## flask run의 경우 개발자모드 비활성화
