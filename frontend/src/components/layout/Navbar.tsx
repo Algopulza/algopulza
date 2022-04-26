@@ -27,7 +27,6 @@ const Navbar = () => {
   const location = useLocation();
   const [isSelected, setIsSelected] = useState("/");
   const navigate = useNavigate();
-
   const onClick = (url: string) => {
     navigate(url);
     setIsSelected(url);
