@@ -1,5 +1,5 @@
 import Title from 'components/Category/Title'
-import Table from 'components/Category/Table'
+import CategoryTable from 'components/Category/CategoryTable'
 import styled from "styled-components"
 
 const Container = styled.section`
@@ -10,7 +10,7 @@ const Category = () => {
   return (
     <Container>
       <Title />
-      <Table />
+      <CategoryTable />
     </Container>
   )
 }

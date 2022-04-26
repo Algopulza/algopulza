@@ -1,6 +1,8 @@
 import styled from "styled-components"
 
 const Container = styled.section`
+  margin-bottom: 50px;
+
   text-align: center;
   font-size: 2vw;
 `
