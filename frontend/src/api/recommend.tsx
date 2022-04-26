@@ -1,6 +1,5 @@
-import {api} from "api/api"
-import axios from "axios"
+import { api } from "api/api";
 
 export const getRecommend = async () => {
-    return await api.get('/recomm/vulnerability').then().catch();
-}
+  return await api.get("/recomm/vulnerability").then().catch();
+};

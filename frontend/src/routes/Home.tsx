@@ -1,7 +1,7 @@
-import { Outlet } from "react-router-dom"
-import Navbar from "components/layout/Navbar"
-import Footer from "components/layout/Footer"
-import styled from "styled-components"
+import { Outlet } from "react-router-dom";
+import Navbar from "components/layout/Navbar";
+import Footer from "components/layout/Footer";
+import styled from "styled-components";
 
 const Container = styled.div`
   display: flex;
@@ -9,7 +9,7 @@ const Container = styled.div`
   width: 100vw;
   height: 100vh;
   overflow: overlay;
-`
+`;
 
 const Home = () => {
   return (
@@ -18,7 +18,7 @@ const Home = () => {
       <Outlet />
       <Footer />
     </Container>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

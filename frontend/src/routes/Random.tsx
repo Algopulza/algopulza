@@ -8,7 +8,7 @@ const Container = styled.div`
 `;
 
 const SubContainer = styled.div`
-margin-top: 3rem;
+  margin-top: 3rem;
   margin-bottom: 16px;
   padding: 0 3vw;
 `;
