@@ -1,15 +1,15 @@
 import styled from "styled-components"
 
 const Container = styled.section`
-  padding: 5vw;
+
 `
 
-const Category = () => {
+const Table = () => {
   return (
     <Container>
-      category 화면 영역입니다.
+      테이블 영역: MUI Table 삽입 예정
     </Container>
   )
 }
 
-export default Category
+export default Table
