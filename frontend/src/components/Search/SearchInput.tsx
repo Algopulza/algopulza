@@ -1,5 +1,4 @@
 import { useState } from "react";
-// import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import reading_glasses from "assets/img/reading_glasses.png";
 
@@ -30,18 +29,10 @@ const ReadingGlassesImg = styled.img`
   width: 1.5rem;
   height: 1.5rem;
 `;
-// type UserProps = {
-//   onClick(url: string): void;
-//   url: string;
-//   isSelected: string;
-// };
 
-// const SearchInput = ({ onClick, url, isSelected }: UserProps) => {
 const SearchInput = () => {
-  const [word, setWord] = useState(null); // api
-  // const navigate = useNavigate();
+  const [word, setWord] = useState(null);
 
-  // 검색어 input
   const onChange = (e: any) => {
     setWord(e.target.value);
   };
