@@ -7,6 +7,7 @@ import com.algopulza.backend.db.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -151,6 +152,11 @@ public class ProblemServiceImpl implements ProblemService {
         }
 
         return new ProblemAndTag(problem, problemHasTagList);
+    }
+
+    @Override
+    public List<ProblemRes> getProblemList(Long memberId, Pageable pageable) {
+        return problemRepository.findAllByPagination(memberId, pageable);
     }
 
 }

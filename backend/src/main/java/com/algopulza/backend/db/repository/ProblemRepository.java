@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface ProblemRepository extends JpaRepository<Problem, Long> {
+public interface ProblemRepository extends JpaRepository<Problem, Long>, ProblemRepositoryCustom {
 
     Optional<Problem> findByBojId(int bojId);
 
