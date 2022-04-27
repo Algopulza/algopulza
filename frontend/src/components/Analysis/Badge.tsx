@@ -22,7 +22,6 @@ const Image = styled.img`
   height: 7rem;
   width: 7rem;
   margin-left: 2rem;
-  cursor: pointer;
 `;
 
 const RightContainer = styled.div`
