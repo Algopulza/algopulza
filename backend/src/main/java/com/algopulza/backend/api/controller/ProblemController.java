@@ -6,9 +6,12 @@ import com.algopulza.backend.common.model.BaseResponseBody;
 import com.algopulza.backend.common.model.ResponseMessage;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 @Api(value = "문제관리 API", tags = {"problem"})
 @RestController
@@ -30,5 +33,17 @@ public class ProblemController {
         return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, ResponseMessage.PUT_PROBLEM_LIST_SUCCESS));
     }
 
+    @GetMapping("")
+    @ApiOperation(value = "문제 리스트 조회", notes = "문제 리스트를 조회하는 API 입니다.")
+    @ApiImplicitParams({@ApiImplicitParam(name = "page", dataType = "integer", paramType = "query", defaultValue = "0")})
+    @ApiResponses({@ApiResponse(code = 200, message = ResponseMessage.GET_PROBLEM_LIST_SUCCESS, response = ErrorResponse.class),
+            @ApiResponse(code = 400, message = ResponseMessage.BAD_REQUEST, response = ErrorResponse.class),
+            @ApiResponse(code = 401, message = ResponseMessage.UNAUTHORIZED, response = ErrorResponse.class),
+            @ApiResponse(code = 403, message = ResponseMessage.ACCESS_DENIED, response = ErrorResponse.class),
+            @ApiResponse(code = 404, message = ResponseMessage.NOT_FOUND, response = ErrorResponse.class)})
+    public ResponseEntity<BaseResponseBody> listProblem(@ApiIgnore @PageableDefault(size = 20) Pageable pageable) {
+        Long memberId = 1L;
+        return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, ResponseMessage.GET_PROBLEM_LIST_SUCCESS, problemService.getProblemList(memberId, pageable)));
+    }
 
 }
