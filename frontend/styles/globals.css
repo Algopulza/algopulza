@@ -3,10 +3,11 @@ body {
   padding: 0;
   margin: 0;
   font-family: 'Noto Sans KR', sans-serif;
+  font-size: 1.5vw;
 }
 
 a {
-  color: inherit;
+  color: #0d47a1;
   text-decoration: none;
 }
 
