@@ -28,13 +28,13 @@ const Cards = styled.div`
 
 // 반복되는 Card Tag에 대한 refactoring이 필요함
 const Recommend = () => {
-  const [data, setData] = useState<any>();
+  const [data, setData] = useState<any>([]);
   useEffect(() => {
     getRecommend()
       .then((res) => {
         console.log(res);
-        console.log(res.data);
-        setData(res.data);
+        console.log(res.data.slice(0,5));
+        setData(res.data.slice(0,5));
       })
       .catch((err) => console.log(err));
   }, []);
