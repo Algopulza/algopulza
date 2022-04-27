@@ -156,7 +156,15 @@ public class ProblemServiceImpl implements ProblemService {
 
     @Override
     public List<ProblemRes> getProblemList(Long memberId, Pageable pageable) {
-        return problemRepository.findAllByPagination(memberId, pageable);
+        // Problem List 조회
+        List<ProblemRes> problemResList = problemRepository.findAllByPagination(memberId, pageable);
+
+        // Problem별로 Tag List 조회
+        for (ProblemRes problemRes : problemResList) {
+            problemRes.setTagList(tagRepository.findByProblemId(problemRes.getProblemId()));
+        }
+
+        return problemResList;
     }
 
 }

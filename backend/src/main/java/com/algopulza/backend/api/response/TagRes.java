@@ -18,7 +18,7 @@ public class TagRes {
     private int bojTagId;
 
     @ApiModelProperty(name = "solved.ac의 태그 아이디", example = "arbitrary_precision")
-    private String key;
+    private String bojKey;
 
     @ApiModelProperty(name = "태그 이름", example = "임의 정밀도 / 큰 수 연산")
     private String name;
