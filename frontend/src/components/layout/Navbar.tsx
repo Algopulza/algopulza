@@ -13,6 +13,7 @@ const Container = styled.div`
 const Title = styled.div`
   font-size: 2rem;
   font-family: "GmarketSansBold";
+  cursor: pointer;
 `;
 
 const TabContainer = styled.div`

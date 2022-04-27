@@ -74,7 +74,7 @@ const Landing = () => {
             실력을 분석하고 문제를 추천해드립니다. 문제. 추천. 성공. 합격.
           </Text>
         </Sub>
-        <Button>로그인</Button>
+        <a href="/recommend"><Button>로그인</Button></a>
         <Text>
           확장기능 <a href="/recommend">설치</a>하기
         </Text>
