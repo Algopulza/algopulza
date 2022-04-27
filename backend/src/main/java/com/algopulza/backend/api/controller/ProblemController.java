@@ -41,7 +41,7 @@ public class ProblemController {
             @ApiResponse(code = 401, message = ResponseMessage.UNAUTHORIZED, response = ErrorResponse.class),
             @ApiResponse(code = 403, message = ResponseMessage.ACCESS_DENIED, response = ErrorResponse.class),
             @ApiResponse(code = 404, message = ResponseMessage.NOT_FOUND, response = ErrorResponse.class)})
-    public ResponseEntity<BaseResponseBody> listProblem(@ApiIgnore @PageableDefault(size = 5) Pageable pageable) {
+    public ResponseEntity<BaseResponseBody> listProblem(@ApiIgnore @PageableDefault(size = 20) Pageable pageable) {
         Long memberId = 1L;
         return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, ResponseMessage.GET_PROBLEM_LIST_SUCCESS, problemService.getProblemList(memberId, pageable)));
     }
