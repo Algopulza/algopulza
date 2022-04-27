@@ -51,6 +51,7 @@ const Button = styled.button`
   font-family: GmarketSansMedium;
   border: none;
   cursor: pointer;
+  box-shadow: 0 4px 20px 0 rgba(0,0,0,0.25);
 `;
 
 const Banner = () => {
@@ -62,11 +63,11 @@ const Banner = () => {
       <Text2>하루 한 문제 습관 들이기!!</Text2>
       <Present>
         <SubPresent>
-          {visibleBlue ? <Card /> : <Img src={Blue} alt="blue" />}
+          {visibleBlue ? <Card /> : <Img src={Blue} alt="blue" onClick={() => {setVisibleBlue(true);}}/>}
           <Button onClick={() => {setVisibleBlue(true);}}>수준을 고려해서 추천 받아보고 싶다면</Button>
         </SubPresent>
         <SubPresent>
-          {visibleRed ? <Card /> : <Img src={Red} alt="red" />}
+          {visibleRed ? <Card /> : <Img src={Red} alt="red" onClick={() => {setVisibleRed(true);}}/>}
           <Button onClick={() => {setVisibleRed(true);}}>수준을 고려해서 추천 받아보고 싶다면</Button>
         </SubPresent>
       </Present>
