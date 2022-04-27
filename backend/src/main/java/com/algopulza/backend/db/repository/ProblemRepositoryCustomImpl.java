@@ -1,5 +1,6 @@
 package com.algopulza.backend.db.repository;
 
+import com.algopulza.backend.api.response.ProblemAndStatusRes;
 import com.algopulza.backend.api.response.ProblemRes;
 import com.algopulza.backend.db.entity.*;
 import com.querydsl.core.QueryResults;
@@ -20,8 +21,8 @@ public class ProblemRepositoryCustomImpl implements ProblemRepositoryCustom {
     QTier qTier = QTier.tier;
 
     @Override
-    public List<ProblemRes> findAllByPagination(Long memberId, Pageable pageable) {
-        QueryResults<ProblemRes> queryResults = jpaQueryFactory.select(Projections.constructor(ProblemRes.class,
+    public List<ProblemAndStatusRes> findAllByPagination(Long memberId, Pageable pageable) {
+        QueryResults<ProblemAndStatusRes> queryResults = jpaQueryFactory.select(Projections.constructor(ProblemAndStatusRes.class,
                                                       qProblem.id,
                                                       qProblem.bojId,
                                                       qProblem.title,
@@ -32,14 +33,33 @@ public class ProblemRepositoryCustomImpl implements ProblemRepositoryCustom {
                                                       qProblem.averageTryCount,
                                                       qProblem.solvableFlag
                                                 ))
-                                                .from(qProblem)
-                                                .join(qTier).on(qProblem.tier.eq(qTier))
-                                                .leftJoin(qSolvingLog).on(qProblem.eq(qSolvingLog.problem))
-                                                .orderBy(qProblem.bojId.asc())
-                                                .offset(pageable.getOffset())
-                                                .limit(pageable.getPageSize())
-                                                .fetchResults();
+                                                                        .from(qProblem)
+                                                                        .join(qTier).on(qProblem.tier.eq(qTier))
+                                                                        .leftJoin(qSolvingLog).on(qProblem.eq(qSolvingLog.problem))
+                                                                        .orderBy(qProblem.bojId.asc())
+                                                                        .offset(pageable.getOffset())
+                                                                        .limit(pageable.getPageSize())
+                                                                        .fetchResults();
         return queryResults.getResults();
+    }
+
+    @Override
+    public List<ProblemRes> findByTitleLike(String keyword) {
+        return jpaQueryFactory.select(Projections.constructor(ProblemRes.class,
+                    qProblem.id,
+                    qProblem.bojId,
+                    qProblem.title,
+                    qTier.level,
+                    qTier.name,
+                    qProblem.acceptedCount,
+                    qProblem.averageTryCount,
+                    qProblem.solvableFlag
+                ))
+                .from(qProblem)
+                .join(qTier).on(qProblem.tier.eq(qTier))
+                .where(qProblem.title.contains(keyword))
+                .orderBy(qProblem.bojId.asc())
+                .fetch();
     }
 
 }
