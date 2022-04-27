@@ -2,7 +2,7 @@ from json import JSONEncoder
 from flask import Flask, jsonify
 from flask_cors import CORS
 from sqlalchemy import create_engine, text
-from recomm import vulnerability, user_vulnerability
+from recomm import vulnerability, user_vulnerability, save_data
 
 # Default JSON encoder는 set를 JSON으로 변환 불가
 # set을 list로 변환 후 JSON으로 변환할 수 있도록 커스텀 엔코더 작성
@@ -39,14 +39,12 @@ def create_app(test_config = None):
     def hello():
         return f'<p> hello </p>'
 
+    # sql data fetch test
     @app.route("/test")
     def sql_test():
         tmp = app.mysql_db.execute(text("""
-            SELECT *
-            FROM problem
-            WHERE id <= 320
+            SELECT * FROM problem WHERE id <= 320
         """)).fetchall()
-        print(tmp)
 
         tmp2 = [{
             'id': t['id'],
@@ -58,13 +56,18 @@ def create_app(test_config = None):
 
     # 전체 문제 갱신 후 저장
     @app.route("/save-data")
-    def save_data():
-        data_problem = app.mysql_db.execute(text("""
-            SELECT * FROM problem
-        """)).fetchall()
-        data_tag = app.mysql_db.execute(text("""
-            SELECT * FROM tag
-        """)).fetchall()
+    def save_dat():
+        tmp = save_data.save_data(app)
+        # data_problem = app.mysql_db.execute(text("""
+        #     SELECT * FROM problem limit 0, 5
+        # """)).fetchall()
+        # data_tag = app.mysql_db.execute(text("""
+        #     SELECT * FROM tag
+        # """)).fetchall()
+        tmp2 = [{
+            'title': t['title']
+        } for t in tmp]
+        return jsonify(tmp2)
 
     # 유저 취약태그 분석
     # @app.route('/vulnerability/<userid>')
