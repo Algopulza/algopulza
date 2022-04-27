@@ -13,6 +13,7 @@ class CustomJSONEncoder(JSONEncoder):
 
         return JSONEncoder.default(self, obj)
 
+
 def create_app(test_config = None):
     # create_app 함수 자동으로 factory 함수로 인식, flask 실행
 	# test_config: 단위 테스트 실행시 테스트용 db 등 테스트 설정정보 적용하기 위함
@@ -31,13 +32,15 @@ def create_app(test_config = None):
     
     # create_engine 함수 사용에 db 연결
     database = create_engine(app.config['DB_URL'], encoding = 'utf-8', max_overflow = 0)
-		# engine 객체를 flask 객체에 저장, create_app 함수 외부에서도 db 사용할 수 있도록 설정
+	# engine 객체를 flask 객체에 저장, create_app 함수 외부에서도 db 사용할 수 있도록 설정
     app.mysql_db = database
 
+    @app.route('/')
+    def hello():
+        return f'<p> hello </p>'
 
-
-    @app.route("/")
-    def test():
+    @app.route("/test")
+    def sql_test():
         tmp = app.mysql_db.execute(text("""
             SELECT *
             FROM problem
@@ -51,10 +54,10 @@ def create_app(test_config = None):
         } for t in tmp]
         tmp2 = jsonify(tmp2)
 
-        # return f"<p>Hello, This is test page!</p>"
         return tmp2
 
-    @app.route("/")
+    # 전체 문제 갱신 후 저장
+    @app.route("/save-data")
     def save_data():
         data_problem = app.mysql_db.execute(text("""
             SELECT * FROM problem
@@ -63,12 +66,14 @@ def create_app(test_config = None):
             SELECT * FROM tag
         """)).fetchall()
 
+    # 유저 취약태그 분석
     # @app.route('/vulnerability/<userid>')
     @app.route('/user/vulnerability')
     def user_vul():
         res = user_vulnerability.user_vulnerability()
         return res
 
+    # 유저 취약태그 문제 추천
     # @app.route('/recomm/<userid>/vulnerability')
     @app.route('/recomm/vulnerability')
     def recomm_vul():
