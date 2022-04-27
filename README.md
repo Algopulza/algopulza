@@ -5,7 +5,7 @@
 <br>
 
 ```
-💡 처음으로 Next.js를 사용해 보면서 고통 받은 날들의 기록입니다.
+💡 처음 만난 Next.js.. 고통받은 나날들의 기록
 ```
 
 <br>
@@ -42,7 +42,20 @@ bash 창에 `http://localhost:3000`이 출력될 것이다. 해당 url에 접속
 
 <br>
 
-#### 002. 프로젝트 구조
+#### 002. Routing
 
 <br>
 
+Next.js는 별도의 라이브러리를 설치하지 않아도 파일 시스템에 기반한 자체 router를 제공한다. `pages` 디렉터리의 파일 구조에 따라 route가 형성되는 방식이다.
+
+<br>
+
+```
+page/index.js 👉 '/'
+page/home/index.js 👉 '/home'
+page/analysis/class.js 👉 '/analysis/class'
+```
+
+<br>
+
+<br>

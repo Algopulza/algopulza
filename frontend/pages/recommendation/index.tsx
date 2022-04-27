@@ -1,5 +1,7 @@
 import Link from 'next/link'
-import Recommendation from '../../components/recommendation/Subject'
+import { ReactElement } from 'react'
+import Layout from '../../components/common/Layout'
+import Subject from '../../components/recommendation/Subject'
 import styled from 'styled-components'
 
 const Container = styled.section`
@@ -10,16 +12,16 @@ const Title = styled.div`
   margin: 0;
 `
 
-function Home() {
+export default function Recommendation() {
   return (
     <Container>
       <Title>This is a Recommendation Page.</Title>
 
-      <Recommendation />
-      <Recommendation />
-      <Recommendation />
-      <Recommendation />
-      <Recommendation />
+      <Subject />
+      <Subject />
+      <Subject />
+      <Subject />
+      <Subject />
 
       <Link href="/">
         <a>뒤로 가기(랜딩페이지)</a>
@@ -28,4 +30,8 @@ function Home() {
   )
 }
 
-export default Home
+Recommendation.getLayout = function getLayout(recommendation: ReactElement) {
+  return (
+    <Layout>{recommendation}</Layout>
+  )
+}

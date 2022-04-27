@@ -1,4 +1,6 @@
 import Link from 'next/link'
+import { ReactElement } from 'react'
+import Layout from '../../components/common/Layout'
 import styled from 'styled-components'
 
 const Container = styled.section`
@@ -9,7 +11,7 @@ const Title = styled.div`
   margin: 0;
 `
 
-function List() {
+export default function List() {
   return (
     <Container>
       <Title>This is a List Page.</Title>
@@ -21,4 +23,8 @@ function List() {
   )
 }
 
-export default List
+List.getLayout = function getLayout(list: ReactElement) {
+  return (
+    <Layout>{list}</Layout>
+  )
+}

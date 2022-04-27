@@ -1,4 +1,6 @@
 import Link from 'next/link'
+import { ReactElement } from 'react'
+import Layout from '../../components/common/Layout'
 import styled from 'styled-components'
 
 const Container = styled.section`
@@ -9,7 +11,7 @@ const Title = styled.div`
   margin: 0;
 `
 
-function Analysis() {
+export default function Analysis() {
   return (
     <Container>
       <Title>This is an Analysis Page.</Title>
@@ -21,4 +23,8 @@ function Analysis() {
   )
 }
 
-export default Analysis
+Analysis.getLayout = function getLayout(analysis: ReactElement) {
+  return (
+    <Layout>{analysis}</Layout>
+  )
+}
