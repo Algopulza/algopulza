@@ -1,5 +1,6 @@
 package com.algopulza.backend.api.controller;
 
+import com.algopulza.backend.api.request.member.ModifyMemberReq;
 import com.algopulza.backend.api.request.member.ModifyProfileImageReq;
 import com.algopulza.backend.api.response.MemberRes;
 import com.algopulza.backend.api.service.MemberService;
@@ -40,9 +41,9 @@ public class MemberController {
             @ApiResponse(code = 401, message = ResponseMessage.UNAUTHORIZED, response = ErrorResponse.class),
             @ApiResponse(code = 403, message = ResponseMessage.ACCESS_DENIED, response = ErrorResponse.class),
             @ApiResponse(code = 404, message = ResponseMessage.NOT_FOUND, response = ErrorResponse.class)})
-    public ResponseEntity<BaseResponseBody> modifyMember(@RequestBody String memberName) throws JsonProcessingException {
+    public ResponseEntity<BaseResponseBody> modifyMember(@RequestBody ModifyMemberReq modifyMemberReq) throws JsonProcessingException {
         // 회원정보 갱신
-        memberService.modifyMember(memberName);
+        memberService.modifyMember(modifyMemberReq);
         return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.CREATED, ResponseMessage.LOGIN_SUCCESS));
     }
 

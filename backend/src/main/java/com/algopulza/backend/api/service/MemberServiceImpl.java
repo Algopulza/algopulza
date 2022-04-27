@@ -1,5 +1,6 @@
 package com.algopulza.backend.api.service;
 
+import com.algopulza.backend.api.request.member.ModifyMemberReq;
 import com.algopulza.backend.api.request.member.ModifyProfileImageReq;
 import com.algopulza.backend.api.response.MemberRes;
 import com.algopulza.backend.common.exception.NotFoundException;
@@ -35,15 +36,15 @@ public class MemberServiceImpl implements MemberService {
     public MemberRes getMember(Long memberId) {
         Member member = memberRepository.findById(memberId).orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND_MEMBER));
         MemberRes memberRes = MemberRes.builder()
-                                       .memberId(member.getId())
-                                       .memberName(member.getName())
-                                       .profileImage(member.getProfileImage())
-                                       .email(member.getEmail())
-                                       .level(member.getTier().getLevel())
-                                       .tierName(member.getTier().getName())
-                                       .solveCount(member.getSolveCount())
-                                       .daysCount(member.getDaysCount())
-                                       .build();
+                .memberId(member.getId())
+                .memberName(member.getName())
+                .profileImage(member.getProfileImage())
+                .email(member.getEmail())
+                .level(member.getTier().getLevel())
+                .tierName(member.getTier().getName())
+                .solveCount(member.getSolveCount())
+                .daysCount(member.getDaysCount())
+                .build();
         return memberRes;
     }
 
@@ -58,32 +59,14 @@ public class MemberServiceImpl implements MemberService {
     public void addMember(String solvedacToken) {
 
         // 1. solvedac API 활용해서 member 정보 받아오기
-//        getMember
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.set("Cookie", "solvedacToken=" + solvedacToken);
+        JsonNode finalJsonNode = getMemberBysolvedacToken(solvedacToken);
 
-        HttpEntity<String> entity = new HttpEntity<String>("", headers);
-
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<String> memberInfo
-                = restTemplate.exchange("https://solved.ac/api/v3/account/verify_credentials", HttpMethod.GET, entity, String.class);
-
-        ObjectMapper objectMapper = new ObjectMapper();
-        JsonNode jsonNode = null;
-        try {
-            jsonNode = objectMapper.readTree(memberInfo.getBody());
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-
-        String name = jsonNode.get("user").get("handle").toString().substring(1, jsonNode.get("user").get("handle").toString().length() - 1);
+        String name = finalJsonNode.get("user").get("handle").toString().substring(1, finalJsonNode.get("user").get("handle").toString().length() - 1);
 
         // 2. solvedacToken으로 받아온 name을 가지고 DB에서 회원 검색
         Optional<Member> member = Optional.ofNullable(memberRepository.findByName(name));
 
-        JsonNode finalJsonNode = jsonNode;
         member.ifPresentOrElse(selectMember -> {
             // 3-1. DB에 있는 회원이면 정보 갱신
             System.out.println("member already exist!!");
@@ -118,10 +101,48 @@ public class MemberServiceImpl implements MemberService {
 
     }
 
-    @Override
-    public void modifyMember(String memberName) {
-        Optional<Member> member = Optional.ofNullable(memberRepository.findByName(memberName));
+    private JsonNode getMemberBysolvedacToken(String solvedacToken) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("Cookie", "solvedacToken=" + solvedacToken);
 
+        HttpEntity<String> entity = new HttpEntity<String>("", headers);
+
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> memberInfo
+                = restTemplate.exchange("https://solved.ac/api/v3/account/verify_credentials", HttpMethod.GET, entity, String.class);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode jsonNode = null;
+        try {
+            jsonNode = objectMapper.readTree(memberInfo.getBody());
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        return jsonNode;
+    }
+
+    @Override
+    public void modifyMember(ModifyMemberReq modifyMemberReq) {
+
+        String name = modifyMemberReq.getName();
+        String solvedacToken = modifyMemberReq.getSolvedacToken();
+
+        Optional<Member> member = Optional.ofNullable(memberRepository.findByName(name));
+        JsonNode finalJsonNode = getMemberBysolvedacToken(solvedacToken);
+
+        member.ifPresent(selectMember->{
+            // 기존의 solveCount랑 로그인할 당시 solveCount의 개수 다르면
+            if(selectMember.getSolveCount()!=finalJsonNode.get("solved").size()){
+                int prevCount = selectMember.getSolveCount();
+                int curCount = finalJsonNode.get("solved").size();
+                // solveCount랑 solving_log 갱신
+                selectMember.setSolveCount(curCount);
+                memberRepository.save(selectMember);
+                modifySolvingLog(prevCount, curCount, finalJsonNode, name);
+            }
+        });
     }
 
     private void addNewMember(JsonNode finalJsonNode, String name, String solvedacToken) {

@@ -6,7 +6,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
-@ApiModel("ModifyMemberReq")
+@ApiModel("ModifyProfileImageReq")
 @Data
 public class ModifyProfileImageReq {
 
