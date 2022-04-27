@@ -1,13 +1,13 @@
 import styled from 'styled-components'
 
 const Container = styled.section`
-  background: #90caf9;
+  background: #009688;
 `
 
 function Footer() {
   return (
     <Container>
-      <p>These are problems regarding a subject</p>
+      <p>This is a footer.</p>
     </Container>
   )
 }

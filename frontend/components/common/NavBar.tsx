@@ -1,15 +1,15 @@
 import styled from 'styled-components'
 
 const Container = styled.section`
-  background: #90caf9;
+  background: #009688;
 `
 
-function Subject() {
+function NavBar() {
   return (
     <Container>
-      <p>These are problems regarding a subject</p>
+      <p>This is a navigation bar.</p>
     </Container>
   )
 }
 
-export default Subject
+export default NavBar
