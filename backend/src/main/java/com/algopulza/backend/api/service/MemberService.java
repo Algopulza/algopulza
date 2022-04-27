@@ -10,7 +10,7 @@ public interface MemberService {
 
     void modifyProfileImage(ModifyProfileImageReq modifyProfileImageReq);
 
-    void addMember(String solvedacToken);
+    String addMember(String solvedacToken);
 
     void modifyMember(ModifyMemberReq modifyMemberReq);
 }

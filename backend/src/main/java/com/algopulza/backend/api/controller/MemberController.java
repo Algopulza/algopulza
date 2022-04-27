@@ -30,8 +30,8 @@ public class MemberController {
             @ApiResponse(code = 404, message = ResponseMessage.NOT_FOUND, response = ErrorResponse.class)})
     public ResponseEntity<BaseResponseBody> addMember(@RequestHeader String solvedacToken) throws JsonProcessingException {
         // 회원정보 저장
-        memberService.addMember(solvedacToken);
-        return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.CREATED, ResponseMessage.LOGIN_SUCCESS));
+        String algopulzaToken = memberService.addMember(solvedacToken);
+        return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.CREATED, ResponseMessage.LOGIN_SUCCESS, algopulzaToken));
     }
 
     @PostMapping("/renewal")

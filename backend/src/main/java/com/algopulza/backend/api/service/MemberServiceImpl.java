@@ -5,6 +5,7 @@ import com.algopulza.backend.api.request.member.ModifyProfileImageReq;
 import com.algopulza.backend.api.response.MemberRes;
 import com.algopulza.backend.common.exception.NotFoundException;
 import com.algopulza.backend.common.exception.handler.ErrorCode;
+import com.algopulza.backend.config.JwtTokenProvider;
 import com.algopulza.backend.db.entity.*;
 import com.algopulza.backend.db.repository.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -31,6 +32,7 @@ public class MemberServiceImpl implements MemberService {
     private final ProblemRepository problemRepository;
     private final SolvingLogRepository solvingLogRepository;
     private final S3Service s3Service;
+    private final JwtTokenProvider jwtTokenProvider;
 
     @Override
     public MemberRes getMember(Long memberId) {
@@ -56,7 +58,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public void addMember(String solvedacToken) {
+    public String addMember(String solvedacToken) {
 
         // 1. solvedac API 활용해서 member 정보 받아오기
 
@@ -74,6 +76,8 @@ public class MemberServiceImpl implements MemberService {
             // solvedacToken 갱신
             selectMember.setSolvedacToken(solvedacToken);
 
+            System.out.println(selectMember.getSolveCount() + " , " + finalJsonNode.get("solved").size());
+
             // 기존의 solveCount랑 로그인할 당시 solveCount의 개수 다르면
             if(selectMember.getSolveCount()!=finalJsonNode.get("solved").size()){
                 int prevCount = selectMember.getSolveCount();
@@ -84,9 +88,18 @@ public class MemberServiceImpl implements MemberService {
                 modifySolvingLog(prevCount, curCount, finalJsonNode, name);
             }
 
+            // 기존 tier와 다르면
+            Long tier = Long.parseLong(finalJsonNode.get("user").get("tier").toString());
+            Tier curTier = tierRepository.findByLevel(tier);
+
+            if(selectMember.getTier()!=curTier){
+                selectMember.setTier(curTier);
+            }
+
         }, ()->{
             // 3-2. DB에 없는 회원이면 새로 등록
             System.out.println("new member!!");
+
 
             // member 추가
             addNewMember(finalJsonNode, name, solvedacToken);
@@ -99,7 +112,10 @@ public class MemberServiceImpl implements MemberService {
         // 4. login_log 추가 (db 유무 상관없이 해야함)
         addLoginlog(name);
 
+        return jwtTokenProvider.createToken(name, null);
+
     }
+
 
     private JsonNode getMemberBysolvedacToken(String solvedacToken) {
         HttpHeaders headers = new HttpHeaders();
@@ -125,6 +141,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public void modifyMember(ModifyMemberReq modifyMemberReq) {
+        System.out.println("회원 정보 갱신");
 
         String name = modifyMemberReq.getName();
         String solvedacToken = modifyMemberReq.getSolvedacToken();
@@ -142,15 +159,26 @@ public class MemberServiceImpl implements MemberService {
                 memberRepository.save(selectMember);
                 modifySolvingLog(prevCount, curCount, finalJsonNode, name);
             }
+
+            // 기존 tier와 다르면
+            Long tier = Long.parseLong(finalJsonNode.get("user").get("tier").toString());
+            Tier curTier = tierRepository.findByLevel(tier);
+
+            if(selectMember.getTier()!=curTier){
+                selectMember.setTier(curTier);
+            }
         });
     }
 
     private void addNewMember(JsonNode finalJsonNode, String name, String solvedacToken) {
+        System.out.println("add New Member");
+
         String profileImage = finalJsonNode.get("user").get("profileImageUrl").toString();
         String email = finalJsonNode.get("user").get("email").toString();
 
         Long tier = Long.parseLong(finalJsonNode.get("user").get("tier").toString());
         Tier getTier = tierRepository.findByLevel(tier);
+
 
         // member table 에 저장
         Member newMember = new Member();
@@ -159,12 +187,14 @@ public class MemberServiceImpl implements MemberService {
         newMember.setProfileImage(profileImage.substring(1,profileImage.length()-1));
         newMember.setSolveCount(finalJsonNode.get("solved").size());
         newMember.setEmail(email.substring(1,email.length()-1));
-        newMember.setDaysCount(0);
+        newMember.setDaysCount(0); // TODO : dayscount 어떻게 할건지?
         newMember.setSolvedacToken(solvedacToken);
         memberRepository.save(newMember);
     }
 
     private void addSolvingLog(JsonNode finalJsonNode, String name) {
+        System.out.println("add Solving Log");
+
         int solvedSize = finalJsonNode.get("solved").size();
         for (int i = 0; i < solvedSize; i++) {
             int problemId = Integer.parseInt(finalJsonNode.get("solved").get(i).get("id").toString());
@@ -242,4 +272,5 @@ public class MemberServiceImpl implements MemberService {
             addProblem(name,problemId, status);
         }
     }
+    
 }
