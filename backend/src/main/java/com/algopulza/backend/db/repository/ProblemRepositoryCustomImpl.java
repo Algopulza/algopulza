@@ -35,6 +35,7 @@ public class ProblemRepositoryCustomImpl implements ProblemRepositoryCustom {
                                                 .from(qProblem)
                                                 .join(qTier).on(qProblem.tier.eq(qTier))
                                                 .leftJoin(qSolvingLog).on(qProblem.eq(qSolvingLog.problem))
+                                                .orderBy(qProblem.bojId.asc())
                                                 .offset(pageable.getOffset())
                                                 .limit(pageable.getPageSize())
                                                 .fetchResults();
