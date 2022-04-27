@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useLocation, useNavigate } from "react-router-dom";
-import SearchInput from "components/Search/SearchInput";
 import NavItem from "components/layout/NavItem";
 
 const Container = styled.div`
@@ -14,6 +13,7 @@ const Container = styled.div`
 const Title = styled.div`
   font-size: 2rem;
   font-family: "GmarketSansBold";
+  cursor: pointer;
 `;
 
 const TabContainer = styled.div`
@@ -65,11 +65,6 @@ const Navbar = () => {
           isSelected={isSelected}
         />
       </TabContainer>
-      <SearchInput
-      // url = {"/search"}
-      // onClick={onClick}
-      // isSelected={isSelected}
-      />
     </Container>
   );
 };
