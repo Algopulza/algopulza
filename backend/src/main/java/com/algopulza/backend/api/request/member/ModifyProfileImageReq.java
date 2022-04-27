@@ -8,7 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @ApiModel("ModifyMemberReq")
 @Data
-public class ModifyMemberReq {
+public class ModifyProfileImageReq {
 
     @ApiModelProperty(value = "회원 아이디", required = true)
     private Long memberId;

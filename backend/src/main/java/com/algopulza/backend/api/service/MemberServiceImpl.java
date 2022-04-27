@@ -1,6 +1,6 @@
 package com.algopulza.backend.api.service;
 
-import com.algopulza.backend.api.request.member.ModifyMemberReq;
+import com.algopulza.backend.api.request.member.ModifyProfileImageReq;
 import com.algopulza.backend.api.response.MemberRes;
 import com.algopulza.backend.common.exception.NotFoundException;
 import com.algopulza.backend.common.exception.handler.ErrorCode;
@@ -48,17 +48,18 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public void modifyMember(ModifyMemberReq modifyMemberReq) {
-        Member member = memberRepository.findById(modifyMemberReq.getMemberId()).orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND_MEMBER));
-
-        member.setProfileImage(s3Service.uploadToMember(modifyMemberReq.getProfileImage()));
+    public void modifyProfileImage(ModifyProfileImageReq modifyProfileImageReq) {
+        Member member = memberRepository.findById(modifyProfileImageReq.getMemberId()).orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND_MEMBER));
+        member.setProfileImage(s3Service.uploadToMember(modifyProfileImageReq.getProfileImage()));
         memberRepository.save(member);
     }
 
     @Override
     public void addMember(String solvedacToken) {
 
-        //solvedac API 활용해서 member 정보 받아오기
+        // 1. solvedac API 활용해서 member 정보 받아오기
+//        getMember
+
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.set("Cookie", "solvedacToken=" + solvedacToken);
@@ -69,7 +70,6 @@ public class MemberServiceImpl implements MemberService {
         ResponseEntity<String> memberInfo
                 = restTemplate.exchange("https://solved.ac/api/v3/account/verify_credentials", HttpMethod.GET, entity, String.class);
 
-
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode jsonNode = null;
         try {
@@ -78,65 +78,81 @@ public class MemberServiceImpl implements MemberService {
             e.printStackTrace();
         }
 
-        System.out.println(jsonNode);
-
         String name = jsonNode.get("user").get("handle").toString().substring(1, jsonNode.get("user").get("handle").toString().length() - 1);
 
-        //회원 검색
+        // 2. solvedacToken으로 받아온 name을 가지고 DB에서 회원 검색
         Optional<Member> member = Optional.ofNullable(memberRepository.findByName(name));
 
-        //이미 등록된 회원이면 solvedac token만 업데이트, 아니면 새 회원으로 등록
         JsonNode finalJsonNode = jsonNode;
         member.ifPresentOrElse(selectMember -> {
+            // 3-1. DB에 있는 회원이면 정보 갱신
             System.out.println("member already exist!!");
+
+            // solvedacToken 갱신
             selectMember.setSolvedacToken(solvedacToken);
-            memberRepository.save(selectMember);
+
+            // 기존의 solveCount랑 로그인할 당시 solveCount의 개수 다르면
+            if(selectMember.getSolveCount()!=finalJsonNode.get("solved").size()){
+                int prevCount = selectMember.getSolveCount();
+                int curCount = finalJsonNode.get("solved").size();
+                // solveCount랑 solving_log 갱신
+                selectMember.setSolveCount(curCount);
+                memberRepository.save(selectMember);
+                modifySolvingLog(prevCount, curCount, finalJsonNode, name);
+            }
+
         }, ()->{
+            // 3-2. DB에 없는 회원이면 새로 등록
             System.out.println("new member!!");
 
-            String profileImage = finalJsonNode.get("user").get("profileImageUrl").toString();
-            String email = finalJsonNode.get("user").get("email").toString();
-            Long tier = Long.parseLong(finalJsonNode.get("user").get("tier").toString());
-
-            Tier getTier = tierRepository.findByLevel(tier);
-
-            Member newMember = new Member();
-            newMember.setTier(getTier);
-            newMember.setName(name);
-            newMember.setProfileImage(profileImage.substring(1,profileImage.length()-1));
-            newMember.setSolveCount(Integer.parseInt(finalJsonNode.get("user").get("solvedCount").toString()));
-            newMember.setEmail(email.substring(1,email.length()-1));
-            newMember.setDaysCount(0);
-            newMember.setSolvedacToken(solvedacToken);
-            memberRepository.save(newMember);
+            // member 추가
+            addNewMember(finalJsonNode, name, solvedacToken);
+            // solving_log 추가
+            addSolvingLog(finalJsonNode, name);
+            // organization & memberHasOrganization 추가
+            // addMemberOrganizaton(finalJsonNode, name);
         });
 
-        int organizationSize = jsonNode.get("user").get("organizations").size();
-        for (int i = 0; i < organizationSize; i++) {
-            //organization 등록
-            int organizationId = Integer.parseInt(jsonNode.get("user").get("organizations").get(i).get("organizationId").toString());
-            String organizationName = jsonNode.get("user").get("organizations").get(i).get("name").toString();
-
-            boolean typeFlag = true;
-            addOrganization(organizationId, organizationName, typeFlag);
-            //memberHasOrganization 등록
-            addMemberHasOrganization(name, organizationName);
-        }
-
-        int solvedSize = jsonNode.get("solved").size();
-        for (int i = 0; i < solvedSize; i++) {
-            //solving_log 등록
-            int problemId = Integer.parseInt(jsonNode.get("solved").get(i).get("id").toString());
-            String status = jsonNode.get("solved").get(i).get("status").toString();
-            addSolvingLog(name,problemId, status);
-        }
-
-        //login_log 등록
+        // 4. login_log 추가 (db 유무 상관없이 해야함)
         addLoginlog(name);
 
     }
 
-    private void addSolvingLog(String name, int problemId, String status) {
+    @Override
+    public void modifyMember(String memberName) {
+        Optional<Member> member = Optional.ofNullable(memberRepository.findByName(memberName));
+
+    }
+
+    private void addNewMember(JsonNode finalJsonNode, String name, String solvedacToken) {
+        String profileImage = finalJsonNode.get("user").get("profileImageUrl").toString();
+        String email = finalJsonNode.get("user").get("email").toString();
+
+        Long tier = Long.parseLong(finalJsonNode.get("user").get("tier").toString());
+        Tier getTier = tierRepository.findByLevel(tier);
+
+        // member table 에 저장
+        Member newMember = new Member();
+        newMember.setTier(getTier);
+        newMember.setName(name);
+        newMember.setProfileImage(profileImage.substring(1,profileImage.length()-1));
+        newMember.setSolveCount(finalJsonNode.get("solved").size());
+        newMember.setEmail(email.substring(1,email.length()-1));
+        newMember.setDaysCount(0);
+        newMember.setSolvedacToken(solvedacToken);
+        memberRepository.save(newMember);
+    }
+
+    private void addSolvingLog(JsonNode finalJsonNode, String name) {
+        int solvedSize = finalJsonNode.get("solved").size();
+        for (int i = 0; i < solvedSize; i++) {
+            int problemId = Integer.parseInt(finalJsonNode.get("solved").get(i).get("id").toString());
+            String status = finalJsonNode.get("solved").get(i).get("status").toString();
+            addProblem(name,problemId, status);
+        }
+    }
+
+    private void addProblem(String name, int problemId, String status) {
         Problem problem = problemRepository.findByBojId(problemId).orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND_PROBLEM));
         Optional<Member> member = Optional.ofNullable(memberRepository.findByName(name));
         member.ifPresent(selectMember->{
@@ -145,6 +161,35 @@ public class MemberServiceImpl implements MemberService {
             solvingLog.setProblem(problem);
             solvingLog.setStatus(status);
             solvingLogRepository.save(solvingLog);
+        });
+    }
+
+    private void addMemberOrganizaton(JsonNode finalJsonNode, String name) {
+        int organizationSize = finalJsonNode.get("user").get("organizations").size();
+        for (int i = 0; i < organizationSize; i++) {
+            //organization 등록
+            int organizationId = Integer.parseInt(finalJsonNode.get("user").get("organizations").get(i).get("organizationId").toString());
+            String organizationName = finalJsonNode.get("user").get("organizations").get(i).get("name").toString();
+
+            boolean typeFlag = true;
+            addOrganization(organizationId, organizationName, typeFlag);
+            //memberHasOrganization 등록
+            addMemberHasOrganization(name, organizationName);
+        }
+    }
+
+    private void addOrganization(int organizationId, String organizationName, boolean typeFlag) {
+        Optional<Organization> organization =  organizationRepository.findByBojId(organizationId);
+        //이미 존재하는 organization이면 pass, 아니면 새로 등록
+        organization.ifPresentOrElse(selectorganization->{
+            System.out.println("organization already exist!!");
+        },()->{
+            System.out.println("new organization");
+            Organization newOrganiation = new Organization();
+            newOrganiation.setBojId(organizationId);
+            newOrganiation.setName(organizationName);
+            newOrganiation.setTypeFlag(typeFlag);
+            organizationRepository.save(newOrganiation);
         });
     }
 
@@ -159,20 +204,6 @@ public class MemberServiceImpl implements MemberService {
         });
     }
 
-    private void addOrganization(int organizationId, String organizationName, boolean typeFlag) {
-       Optional<Organization> organization =  organizationRepository.findByBojId(organizationId);
-       //이미 존재하는 organization이면 pass, 아니면 새로 등록
-       organization.ifPresentOrElse(selectorganization->{
-           System.out.println("organization already exist!!");
-       },()->{
-           System.out.println("new organization");
-           Organization newOrganiation = new Organization();
-           newOrganiation.setBojId(organizationId);
-           newOrganiation.setName(organizationName);
-           newOrganiation.setTypeFlag(typeFlag);
-           organizationRepository.save(newOrganiation);
-       });
-    }
 
     private void addLoginlog(String name) {
         Optional<Member> member = Optional.ofNullable(memberRepository.findByName(name));
@@ -181,5 +212,13 @@ public class MemberServiceImpl implements MemberService {
             loginLog.setMember(selectMember);
             loginLogRepository.save(loginLog);
         });
+    }
+
+    private void modifySolvingLog(int prevCount, int curCount, JsonNode finalJsonNode, String name) {
+        for (int i = prevCount; i < curCount; i++) {
+            int problemId = Integer.parseInt(finalJsonNode.get("solved").get(i).get("id").toString());
+            String status = finalJsonNode.get("solved").get(i).get("status").toString();
+            addProblem(name,problemId, status);
+        }
     }
 }
