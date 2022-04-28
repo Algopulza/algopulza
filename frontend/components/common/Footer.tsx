@@ -1,14 +1,20 @@
 import styled from 'styled-components'
 
 const Container = styled.section`
-  background: #009688;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 5vh;
+  background: #FBC02D;
+
+  font-size: 1.3vw;
+  color: #000000;
 `
 
 function Footer() {
   return (
-    <Container>
-      <p>This is a footer.</p>
-    </Container>
+    <Container>A408</Container>
   )
 }
 
