@@ -5,7 +5,6 @@ import com.algopulza.backend.api.request.member.ModifyProfileImageReq;
 import com.algopulza.backend.api.response.MemberRes;
 import com.algopulza.backend.common.exception.NotFoundException;
 import com.algopulza.backend.common.exception.handler.ErrorCode;
-import com.algopulza.backend.common.model.ResponseMessage;
 import com.algopulza.backend.config.JwtTokenProvider;
 import com.algopulza.backend.db.entity.*;
 import com.algopulza.backend.db.repository.*;
@@ -20,7 +19,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @Slf4j
 @Service("memberService")
@@ -89,8 +92,16 @@ public class MemberServiceImpl implements MemberService {
                 int curCount = finalJsonNode.get("solved").size();
                 // solveCount랑 solving_log 갱신
                 selectMember.setSolveCount(curCount);
-                memberRepository.save(selectMember);
+
                 modifySolvingLog(prevCount, curCount, finalJsonNode, name);
+
+                //dayscount 갱신
+                if(checkDay(prevCount, curCount, name)) {
+                    int curDaysCount = selectMember.getDaysCount();
+                    selectMember.setDaysCount(curDaysCount+1);
+                }
+
+                memberRepository.save(selectMember);
             }
 
             // 기존 tier와 다르면
@@ -158,8 +169,16 @@ public class MemberServiceImpl implements MemberService {
                 int curCount = finalJsonNode.get("solved").size();
                 // solveCount랑 solving_log 갱신
                 selectMember.setSolveCount(curCount);
-                memberRepository.save(selectMember);
+
                 modifySolvingLog(prevCount, curCount, finalJsonNode, name);
+
+                //dayscount 갱신
+                if(checkDay(prevCount, curCount, name)) {
+                    int curDaysCount = selectMember.getDaysCount();
+                    selectMember.setDaysCount(curDaysCount+1);
+                }
+
+                memberRepository.save(selectMember);
             }
 
             // 기존 tier와 다르면
@@ -187,7 +206,7 @@ public class MemberServiceImpl implements MemberService {
         newMember.setProfileImage(profileImage.substring(1,profileImage.length()-1));
         newMember.setSolveCount(finalJsonNode.get("solved").size());
         newMember.setEmail(email.substring(1,email.length()-1));
-        newMember.setDaysCount(0); // TODO : dayscount 어떻게 할건지?
+        newMember.setDaysCount(0); // 신규회원은 0으로 시작
         newMember.setSolvedacToken(solvedacToken);
         memberRepository.save(newMember);
     }
@@ -209,6 +228,7 @@ public class MemberServiceImpl implements MemberService {
             solvingLog.setMember(selectMember);
             solvingLog.setProblem(problem);
             solvingLog.setStatus(status);
+            solvingLog.setCreatedTime(LocalDateTime.now());
             solvingLogRepository.save(solvingLog);
         });
     }
@@ -233,7 +253,7 @@ public class MemberServiceImpl implements MemberService {
         organization.ifPresentOrElse(selectorganization->{
             log.info("organization already exist!!");
         },()->{
-            log.info("ew organization");
+            log.info("new organization");
             Organization newOrganiation = new Organization();
             newOrganiation.setBojId(organizationId);
             newOrganiation.setName(organizationName);
@@ -270,5 +290,24 @@ public class MemberServiceImpl implements MemberService {
             addProblem(name,problemId, status);
         }
     }
-    
+
+    private boolean checkDay(int prevCount, int curCount, String name) {
+        Optional<Member> member = Optional.ofNullable(memberRepository.findByName(name));
+        AtomicBoolean flag = new AtomicBoolean(false);
+        member.ifPresent(selectMember->{
+            List<SolvingLog> solvingLogList = solvingLogRepository.findByName(selectMember);
+
+            LocalDateTime prevSolve = solvingLogList.get(prevCount-1).getCreatedTime();
+            LocalDateTime curSolve = solvingLogList.get(curCount-1).getCreatedTime();
+
+            String prevSolveTime = prevSolve.getYear() + ""+prevSolve.getMonthValue() + "" + prevSolve.getDayOfMonth()+"";
+            String curSolveTime = curSolve.getYear() + ""+curSolve.getMonthValue() + "" + (curSolve.getDayOfMonth()+1)+"";
+
+            // 날짜 같으면 0, curSolveTime이 더 크면 -1
+            if(prevSolveTime.compareTo(curSolveTime)==-1){
+                flag.set(true);
+            }
+        });
+        return flag.get();
+    }
 }
