@@ -12,10 +12,8 @@ const Container = styled.section`
   color: #000000;
 `
 
-function Footer() {
+export default function Footer() {
   return (
     <Container>A408</Container>
   )
 }
-
-export default Footer
