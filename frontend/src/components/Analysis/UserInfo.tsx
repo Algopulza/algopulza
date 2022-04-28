@@ -14,10 +14,10 @@ const Container = styled.div`
 `;
 
 const ProfileImage = styled.div`
-display: flex;
-justify-content: center;
-align-items: center;
-margin-right: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 3rem;
 `;
 
 const Image = styled.img`
@@ -32,7 +32,7 @@ const RightContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-`
+`;
 
 const NickName = styled.div`
   display: flex;
@@ -70,12 +70,12 @@ const UserInfo = () => {
         <Image src={RecommendCarousel1} alt="이미지를 찾을 수 없습니다." />
       </ProfileImage>
       <RightContainer>
-      <NickName>
-        <Tier>5</Tier>
-        <ConfirmNickName>runkey</ConfirmNickName>
-      </NickName>
+        <NickName>
+          <Tier>5</Tier>
+          <ConfirmNickName>runkey</ConfirmNickName>
+        </NickName>
 
-      <Email>runkey@gmail.com</Email>
+        <Email>runkey@gmail.com</Email>
       </RightContainer>
     </Container>
   );

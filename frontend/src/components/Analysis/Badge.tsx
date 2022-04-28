@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import Seed from "assets/img/seed.png";
 
@@ -13,9 +12,9 @@ const Container = styled.div`
 `;
 
 const ProfileImage = styled.div`
-display: flex;
-justify-content: center;
-align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Image = styled.img`
@@ -30,7 +29,7 @@ const RightContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-`
+`;
 
 const NickName = styled.div`
   display: flex;
@@ -53,9 +52,9 @@ const Badge = () => {
         <Image src={Seed} alt="이미지를 찾을 수 없습니다." />
       </ProfileImage>
       <RightContainer>
-      <NickName>
-        <Title>현재 새싹 등급이에요!</Title>
-      </NickName>
+        <NickName>
+          <Title>현재 새싹 등급이에요!</Title>
+        </NickName>
       </RightContainer>
     </Container>
   );
