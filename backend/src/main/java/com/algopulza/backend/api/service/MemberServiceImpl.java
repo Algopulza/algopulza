@@ -5,6 +5,7 @@ import com.algopulza.backend.api.request.member.ModifyProfileImageReq;
 import com.algopulza.backend.api.response.MemberRes;
 import com.algopulza.backend.common.exception.NotFoundException;
 import com.algopulza.backend.common.exception.handler.ErrorCode;
+import com.algopulza.backend.common.model.ResponseMessage;
 import com.algopulza.backend.config.JwtTokenProvider;
 import com.algopulza.backend.db.entity.*;
 import com.algopulza.backend.db.repository.*;
@@ -12,6 +13,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +22,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.Optional;
 
+@Slf4j
 @Service("memberService")
 @Transactional
 @RequiredArgsConstructor
@@ -33,6 +37,9 @@ public class MemberServiceImpl implements MemberService {
     private final SolvingLogRepository solvingLogRepository;
     private final S3Service s3Service;
     private final JwtTokenProvider jwtTokenProvider;
+
+    @Value("${solvedac.baseurl}")
+    private String SolvedacBaseUrl;
 
     @Override
     public MemberRes getMember(Long memberId) {
@@ -71,12 +78,10 @@ public class MemberServiceImpl implements MemberService {
 
         member.ifPresentOrElse(selectMember -> {
             // 3-1. DB에 있는 회원이면 정보 갱신
-            System.out.println("member already exist!!");
+            log.info("member already exist!!");
 
             // solvedacToken 갱신
             selectMember.setSolvedacToken(solvedacToken);
-
-            System.out.println(selectMember.getSolveCount() + " , " + finalJsonNode.get("solved").size());
 
             // 기존의 solveCount랑 로그인할 당시 solveCount의 개수 다르면
             if(selectMember.getSolveCount()!=finalJsonNode.get("solved").size()){
@@ -98,8 +103,7 @@ public class MemberServiceImpl implements MemberService {
 
         }, ()->{
             // 3-2. DB에 없는 회원이면 새로 등록
-            System.out.println("new member!!");
-
+            log.info("new member!!");
 
             // member 추가
             addNewMember(finalJsonNode, name, solvedacToken);
@@ -126,7 +130,7 @@ public class MemberServiceImpl implements MemberService {
 
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> memberInfo
-                = restTemplate.exchange("https://solved.ac/api/v3/account/verify_credentials", HttpMethod.GET, entity, String.class);
+                = restTemplate.exchange(SolvedacBaseUrl+"account/verify_credentials", HttpMethod.GET, entity, String.class);
 
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode jsonNode = null;
@@ -141,8 +145,6 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public void modifyMember(ModifyMemberReq modifyMemberReq) {
-        System.out.println("회원 정보 갱신");
-
         String name = modifyMemberReq.getName();
         String solvedacToken = modifyMemberReq.getSolvedacToken();
 
@@ -171,8 +173,6 @@ public class MemberServiceImpl implements MemberService {
     }
 
     private void addNewMember(JsonNode finalJsonNode, String name, String solvedacToken) {
-        System.out.println("add New Member");
-
         String profileImage = finalJsonNode.get("user").get("profileImageUrl").toString();
         String email = finalJsonNode.get("user").get("email").toString();
 
@@ -193,8 +193,6 @@ public class MemberServiceImpl implements MemberService {
     }
 
     private void addSolvingLog(JsonNode finalJsonNode, String name) {
-        System.out.println("add Solving Log");
-
         int solvedSize = finalJsonNode.get("solved").size();
         for (int i = 0; i < solvedSize; i++) {
             int problemId = Integer.parseInt(finalJsonNode.get("solved").get(i).get("id").toString());
@@ -233,9 +231,9 @@ public class MemberServiceImpl implements MemberService {
         Optional<Organization> organization =  organizationRepository.findByBojId(organizationId);
         //이미 존재하는 organization이면 pass, 아니면 새로 등록
         organization.ifPresentOrElse(selectorganization->{
-            System.out.println("organization already exist!!");
+            log.info("organization already exist!!");
         },()->{
-            System.out.println("new organization");
+            log.info("ew organization");
             Organization newOrganiation = new Organization();
             newOrganiation.setBojId(organizationId);
             newOrganiation.setName(organizationName);
