@@ -21,9 +21,6 @@ public class ProblemRes {
     @ApiModelProperty(name = "문제 제목", example = "1")
     private String title;
 
-    @ApiModelProperty(name = "로그인한 유저의 풀이상태", example = "solved")
-    private String status;
-
     @ApiModelProperty(name = "티어 레벨", example = "1")
     private Long tierLevel;
 
@@ -42,11 +39,10 @@ public class ProblemRes {
     @ApiModelProperty(name = "태그")
     private List<TagRes> tagList;
 
-    public ProblemRes(Long problemId, int bojId, String title, String status, Long tierLevel, String tierName, int acceptedCount, double averageTryCount, boolean solvableFlag) {
+    public ProblemRes(Long problemId, int bojId, String title, Long tierLevel, String tierName, int acceptedCount, double averageTryCount, boolean solvableFlag) {
         this.problemId = problemId;
         this.bojId = bojId;
         this.title = title;
-        this.status = status;
         this.tierLevel = tierLevel;
         this.tierName = tierName;
         this.acceptedCount = acceptedCount;
