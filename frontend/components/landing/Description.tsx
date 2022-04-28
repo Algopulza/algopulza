@@ -1,15 +1,17 @@
+import ServiceName from './description/ServiceName'
+import ServiceDescription from './description/ServiceDescription'
 import styled from 'styled-components'
 
 const Container = styled.section`
   
 `
 
-function Description() {
+export default function Description() {
   return (
     <Container>
-      <p>This is a description area.</p>
+      <ServiceName />
+      <ServiceDescription />
+      <p>This is a login area.</p>
     </Container>
   )
 }
-
-export default Description
