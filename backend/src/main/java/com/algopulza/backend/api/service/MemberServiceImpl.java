@@ -301,7 +301,7 @@ public class MemberServiceImpl implements MemberService {
             LocalDateTime curSolve = solvingLogList.get(curCount-1).getCreatedTime();
 
             String prevSolveTime = prevSolve.getYear() + ""+prevSolve.getMonthValue() + "" + prevSolve.getDayOfMonth()+"";
-            String curSolveTime = curSolve.getYear() + ""+curSolve.getMonthValue() + "" + (curSolve.getDayOfMonth()+1)+"";
+            String curSolveTime = curSolve.getYear() + ""+curSolve.getMonthValue() + "" + curSolve.getDayOfMonth()+"";
 
             // 날짜 같으면 0, curSolveTime이 더 크면 -1
             if(prevSolveTime.compareTo(curSolveTime)==-1){
