@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import styled from 'styled-components'
 
-const Title = styled.section`
+const Title = styled.span`
   padding-left: 40px;
   font-size: 1.7vw;
   font-weight: 700;
