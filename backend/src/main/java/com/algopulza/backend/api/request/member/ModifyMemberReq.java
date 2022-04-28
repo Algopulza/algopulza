@@ -1,6 +1,5 @@
 package com.algopulza.backend.api.request.member;
 
-
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -10,10 +9,10 @@ import org.springframework.web.multipart.MultipartFile;
 @Data
 public class ModifyMemberReq {
 
-    @ApiModelProperty(value = "회원 아이디", required = true)
-    private Long memberId;
+    @ApiModelProperty(value = "회원 이름(백준 아이디)", required = true)
+    private String name;
 
-    @ApiModelProperty(value = "변경할 프로필 사진", required = true)
-    private MultipartFile profileImage;
+    @ApiModelProperty(value = "solvedacToken", required = true)
+    private String solvedacToken;
 
 }
