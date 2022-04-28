@@ -7,8 +7,9 @@ body {
 }
 
 a {
-  color: #1565c0;
+  color: #FFC94D;
   text-decoration: none;
+  cursor: pointer;
 }
 
 * {

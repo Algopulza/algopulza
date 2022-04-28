@@ -9,13 +9,13 @@ const Button = styled.button`
   border-radius: 10px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 
-  font-size: 1.6vw;
+  font-size: 1.5vw;
   font-weight: 700;
   color: white;
   
   cursor: pointer;
   &:hover {
-    background-color: #dca03a;
+    background-color: #DCA03A;
   }
 `
 
