@@ -17,19 +17,16 @@ const Pages = styled.div`
   padding: 0 60px;
 `
 
-export type Route = {
-  name: string,
-  path: string
-}
+export type Route = { name: string, path: string }
+const routes = [
+  { name: '추천', path: '/recommendation' },
+  { name: '랜덤', path: '/random' },
+  { name: '검색', path: '/list' },
+  { name: '분석', path: '/analysis' }
+]
 
 export default function NavBar() {
   const [isSelected, setIsSelected] = useState('/recommendation')
-  const [routes, setRoutes] = useState<Route[]>([
-    { name: '추천', path: '/recommendation' },
-    { name: '랜덤', path: '/random' },
-    { name: '검색', path: '/list' },
-    { name: '분석', path: '/analysis' }
-  ])
   const onClick = (path: string) => setIsSelected(path)
 
   return (

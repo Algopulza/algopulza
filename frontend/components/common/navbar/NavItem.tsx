@@ -23,8 +23,8 @@ export default function NavItem({ route, isSelected, onClick }: RouteProps) {
     <Link href={path}>
       <a>
         <Text
-          onClick={() => onClick(path)}
           cond={isSelected == path ? true : false}
+          onClick={() => onClick(path)}
         >
           {name}
         </Text>
