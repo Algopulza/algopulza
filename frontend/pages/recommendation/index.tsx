@@ -1,27 +1,25 @@
 import { ReactElement } from 'react'
 import Layout from '../../components/common/Layout'
+import Carousel from '../../components/recommendation/Carousel'
 import Subject from '../../components/recommendation/Subject'
+import _ from 'lodash'
 import styled from 'styled-components'
 
 const Container = styled.section`
   padding: 0vw 5vw;
 `
 
-const Title = styled.div`
-  margin: 0;
-`
-
 export default function Recommendation() {
-  return (
-    <Container>
-      <Title>This is a Recommendation Page.</Title>
+  const range = _.range(4)
 
-      <Subject />
-      <Subject />
-      <Subject />
-      <Subject />
-      <Subject />
-    </Container>
+  return (
+    <>
+      <Carousel />
+
+      <Container>
+        {range.map(index => <Subject key={index} />)}
+      </Container>
+    </>
   )
 }
 
