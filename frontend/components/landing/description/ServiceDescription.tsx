@@ -15,7 +15,7 @@ const Text = styled.p`
 export default function ServiceDescription() {
   return (
     <Container>
-      <Text>알고리즘 문제풀이 능력은 필수</Text>
+      <Text>알고리즘 문제풀이 능력은 취업에 필수!</Text>
       <Text>막 풀지 말고 알고 푸세요</Text>
       <Text>저희가 알려드릴게요</Text>
     </Container>
