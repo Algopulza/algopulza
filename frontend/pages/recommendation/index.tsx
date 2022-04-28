@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import { ReactElement } from 'react'
 import Layout from '../../components/common/Layout'
 import Subject from '../../components/recommendation/Subject'
@@ -22,10 +21,6 @@ export default function Recommendation() {
       <Subject />
       <Subject />
       <Subject />
-
-      <Link href="/">
-        <a>뒤로 가기(랜딩페이지)</a>
-      </Link>
     </Container>
   )
 }
