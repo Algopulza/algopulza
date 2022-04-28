@@ -6,7 +6,7 @@ const Container = styled.section`
   align-items: center;
 
   height: 5vh;
-  background: #FBC02D;
+  background: #FFC94D;
 
   font-size: 1.3vw;
   color: #000000;
