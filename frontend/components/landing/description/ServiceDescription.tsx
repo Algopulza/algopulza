@@ -7,6 +7,7 @@ const Container = styled.section`
 
 const Text = styled.p`
   margin: 0;
+  text-align: center;
   line-height: 2;
   color: #999999;
 `

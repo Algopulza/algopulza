@@ -1,7 +1,10 @@
+import { useRouter } from 'next/router'
 import styled from 'styled-components'
 
 const Button = styled.button`
   display: block;
+  margin-bottom: 20px;
+
   width: 13vw;
   height: 70px;
   background: #FFC94D;
@@ -20,7 +23,12 @@ const Button = styled.button`
 `
 
 export default function LoginButton() {
+  const router = useRouter()
+  function moveToRecommendation() {
+    router.push('/recommendation')
+  }
+
   return (
-    <Button>로그인</Button>
+    <Button onClick={moveToRecommendation}>로그인</Button>
   )
 }

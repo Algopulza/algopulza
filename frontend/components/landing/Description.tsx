@@ -5,17 +5,24 @@ import ExtensionLink from './description/ExtensionLink'
 import styled from 'styled-components'
 
 const Container = styled.section`
-  
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
 `
 
 export default function Description() {
   return (
     <Container>
-      <ServiceName />
-      <ServiceDescription />
+      <div>
+        <ServiceName />
+        <ServiceDescription />
+      </div>
 
-      <LoginButton />
-      <ExtensionLink />
+      <div>
+        <LoginButton />
+        <ExtensionLink />
+      </div>
     </Container>
   )
 }

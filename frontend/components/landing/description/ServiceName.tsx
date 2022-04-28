@@ -3,13 +3,15 @@ import styled from 'styled-components'
 const Container = styled.section`
   display: flex;
   flex-direction: column;
+  margin-bottom: 80px;
 `
 
 const Title = styled.p`
   margin: 0;
+  text-align: center;
+  line-height: 1.3;
   font-size: 5vw;
   font-weight: 700;
-  line-height: 1.3;
 `
 
 export default function ServiceName() {
