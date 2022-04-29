@@ -64,25 +64,19 @@ def create_app(test_config = None):
     # 전체 문제 갱신 후 저장
     @app.route("/save-data")
     def save_dat():
-        problem_tag_data = save_data.save_data(app)
-        problem_tag_json = json.loads(problem_tag_data)
-        collection = mongodb.problem_tag
-        collection.delete_many({})
-        collection.insert_many(problem_tag_json)
-        return '<p>data updated</p>'
+        problem_tag_data = save_data.save_data(app, mongodb)
+        return '<p>data saved</p>'
 
     # 유저 취약태그 분석
-    # @app.route('/vulnerability/<userid>')
-    @app.route('/user/vulnerability')
-    def user_vul():
-        res = user_vulnerability.user_vulnerability()
+    @app.route('/<userid>/vulnerability')
+    def user_vul(userid):
+        res = user_vulnerability.user_vulnerability(app, mongodb, userid)
         return res
 
     # 유저 취약태그 문제 추천
-    # @app.route('/recomm/<userid>/vulnerability')
-    @app.route('/recomm/vulnerability')
-    def recomm_vul():
-        res = vulnerability.recomm_vulnerability()
+    @app.route('/<userid>/recomm/vulnerability')
+    def recomm_vul(userid):
+        res = vulnerability.recomm_vulnerability(app, mongodb, userid)
         return res
 
     return app
