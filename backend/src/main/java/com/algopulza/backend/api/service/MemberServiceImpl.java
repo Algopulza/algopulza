@@ -21,7 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -164,6 +163,21 @@ public class MemberServiceImpl implements MemberService {
         JsonNode finalJsonNode = getMemberBysolvedacToken(solvedacToken);
 
         member.ifPresent(selectMember->{
+            // 푼 문제 중 solved한 개수
+            int prevSolveCount = selectMember.getSolveCount();
+            int curSolveCount = Integer.parseInt(finalJsonNode.get("user").get("solvedCount").toString());
+            // 푼 문제 전체 개수 (solved+tried)
+            int prevTotalCount = solvingLogRepository.findByName(selectMember).size();
+            int curTotalCount = finalJsonNode.get("solved").size();
+
+            if(prevSolveCount==curSolveCount && prevTotalCount==curTotalCount){
+                // 변화 없음
+                log.info("no update solve problem");
+            }else if(prevSolveCount==curSolveCount && prevTotalCount!=curTotalCount){
+                // 새로 푼 문제 tried 상태
+
+            }
+
             // 기존의 solveCount랑 로그인할 당시 solveCount의 개수 다르면
             if(selectMember.getSolveCount()!=finalJsonNode.get("solved").size()){
                 int prevCount = selectMember.getSolveCount();
@@ -239,7 +253,7 @@ public class MemberServiceImpl implements MemberService {
         newMember.setTier(getTier);
         newMember.setName(name);
         newMember.setProfileImage(profileImage.substring(1,profileImage.length()-1));
-        newMember.setSolveCount(finalJsonNode.get("solved").size());
+        newMember.setSolveCount(Integer.parseInt(finalJsonNode.get("user").get("solvedCount").toString()));
         newMember.setEmail(email.substring(1,email.length()-1));
         newMember.setDaysCount(0); // 신규회원은 0으로 시작
         newMember.setSolvedacToken(solvedacToken);
