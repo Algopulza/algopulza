@@ -46,6 +46,9 @@ public class Member extends BaseTimeEntity implements UserDetails {
     @Column
     private  String solvedacToken;
 
+    @Column
+    private String refreshToken;
+
     @ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default
     private List<String> roles = new ArrayList<>();
@@ -86,4 +89,5 @@ public class Member extends BaseTimeEntity implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 }
