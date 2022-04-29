@@ -1,16 +1,15 @@
 import styled from 'styled-components'
 
-const Container = styled.section`
-  display: flex;
-  margin-bottom: 80px;
-  height: 53vh;
-  background: #FFC94D;
+const Button = styled.button`
+
 `
 
-export default function Gift() {
+type TextProps = {
+  children: string,
+}
+
+export default function GiftButton({ children }: TextProps) {
   return (
-    <Container>
-      Gift
-    </Container>
+    <Button>{children}</Button>
   )
 }

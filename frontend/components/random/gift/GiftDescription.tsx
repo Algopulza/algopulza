@@ -1,18 +1,23 @@
 import styled from 'styled-components'
 
 const Container = styled.section`
-  padding: 20px 3vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 13vh;
+  padding: 0 3vw;
   color: #FFFFFF;
 `
 
 const Text = styled.p`
   margin: 0;
+  font-size: 1.2vw;
 `
 
 const Title = styled.p`
   margin: 0;
   padding: 5px 0;
-  font-size: 2.8vw;
+  font-size: 2.5vw;
 `
 
 export default function GiftDescription() {
