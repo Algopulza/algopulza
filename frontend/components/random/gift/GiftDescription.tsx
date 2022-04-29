@@ -16,7 +16,6 @@ const Text = styled.p`
 
 const Title = styled.p`
   margin: 0;
-  padding: 5px 0;
   font-size: 2.5vw;
 `
 

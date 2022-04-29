@@ -11,7 +11,8 @@ const Container = styled.section`
 `
 
 const Canvas = styled.div`
-  width: 15vw;
+  width: 13vw;
+  cursor: pointer;
 `
 
 type TextProps = {
