@@ -13,11 +13,12 @@ const Button = styled.button`
 `
 
 type TextProps = {
+  onClick(): void
   children: string,
 }
 
-export default function GiftButton({ children }: TextProps) {
+export default function GiftButton({ onClick, children }: TextProps) {
   return (
-    <Button>{children}</Button>
+    <Button onClick={onClick}>{children}</Button>
   )
 }
