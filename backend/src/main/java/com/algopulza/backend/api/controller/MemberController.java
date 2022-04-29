@@ -11,13 +11,15 @@ import com.algopulza.backend.common.exception.handler.ErrorResponse;
 import com.algopulza.backend.common.model.BaseResponseBody;
 import com.algopulza.backend.common.model.ResponseMessage;
 import com.algopulza.backend.config.jwt.JwtTokenProvider;
-import com.algopulza.backend.db.entity.Member;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.algopulza.backend.common.model.ResponseMessage.REFRESH_TOKEN;
 
@@ -38,14 +40,17 @@ public class MemberController {
             @ApiResponse(code = 404, message = ResponseMessage.NOT_FOUND, response = ErrorResponse.class)})
     public ResponseEntity<BaseResponseBody> addMember(@RequestHeader String solvedacToken) throws JsonProcessingException {
         // 회원정보 저장
-        Member member = memberService.addMember(solvedacToken);
+        MemberRes memberRes = memberService.addMember(solvedacToken);
 
         // jwt token 발급
-        String token = memberService.createToken(member.getId(), null);
-        String refreshToken = memberService.createRefreshToken(member.getId());
+        String token = memberService.createToken(memberRes.getMemberId(), null);
+        String refreshToken = memberService.createRefreshToken(memberRes.getMemberId());
         TokenRes tokenRes = new TokenRes(token, refreshToken);
 
-        return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.CREATED, ResponseMessage.LOGIN_SUCCESS, tokenRes));
+        Map<String, Object> result = new HashMap<>();
+        result.put("member",memberRes);
+        result.put("token", tokenRes);
+        return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.CREATED, ResponseMessage.LOGIN_SUCCESS, result));
     }
 
     @ApiOperation(value = "로그아웃",notes = "토큰을 만료 시킨 후 로그아웃한다.")

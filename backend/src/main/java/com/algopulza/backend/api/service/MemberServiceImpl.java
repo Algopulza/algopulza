@@ -21,7 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -70,7 +69,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public Member addMember(String solvedacToken) {
+    public MemberRes addMember(String solvedacToken) {
 
         // 1. solvedac API 활용해서 member 정보 받아오기
 
@@ -129,7 +128,10 @@ public class MemberServiceImpl implements MemberService {
         // 4. login_log 추가 (db 유무 상관없이 해야함)
         addLoginlog(name);
 
-        return memberRepository.findByName(name);
+        Optional<Member> mem = Optional.ofNullable(memberRepository.findByName(name));
+        MemberRes memberRes = getMember(mem.get().getId());
+
+        return memberRes;
     }
 
 
