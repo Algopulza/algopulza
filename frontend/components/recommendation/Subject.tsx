@@ -5,7 +5,7 @@ import _ from 'lodash'
 import styled from 'styled-components'
 
 const Container = styled.section`
-  margin-bottom: 50px;
+  margin-bottom: 80px;
 `
 
 const Cards = styled.div`
@@ -18,7 +18,7 @@ type TitleProps = {
 }
 
 export default function Subject({ title }: TitleProps) {
-  const range = _.range(4)
+  const range = _.range(5)
 
   return (
     <Container>
