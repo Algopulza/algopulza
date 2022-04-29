@@ -68,13 +68,13 @@ def create_app(test_config = None):
         return '<p>data saved</p>'
 
     # 유저 취약태그 분석
-    @app.route('/<userid>/vulnerability')
+    @app.route('/vulnerability/<userid>')
     def user_vul(userid):
         res = user_vulnerability.user_vulnerability(app, mongodb, userid)
         return res
 
     # 유저 취약태그 문제 추천
-    @app.route('/<userid>/recomm/vulnerability')
+    @app.route('/recomm/vulnerability/<userid>')
     def recomm_vul(userid):
         res = vulnerability.recomm_vulnerability(app, mongodb, userid)
         return res
