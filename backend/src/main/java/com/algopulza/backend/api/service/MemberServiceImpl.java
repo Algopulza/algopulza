@@ -3,9 +3,10 @@ package com.algopulza.backend.api.service;
 import com.algopulza.backend.api.request.member.ModifyMemberReq;
 import com.algopulza.backend.api.request.member.ModifyProfileImageReq;
 import com.algopulza.backend.api.response.MemberRes;
+import com.algopulza.backend.api.response.TokenRes;
 import com.algopulza.backend.common.exception.NotFoundException;
 import com.algopulza.backend.common.exception.handler.ErrorCode;
-import com.algopulza.backend.config.JwtTokenProvider;
+import com.algopulza.backend.config.jwt.JwtTokenProvider;
 import com.algopulza.backend.db.entity.*;
 import com.algopulza.backend.db.repository.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -31,6 +32,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
 
+    private final JwtTokenProvider tokenProvider;
     private final MemberRepository memberRepository;
     private final LoginLogRepository loginLogRepository;
     private final TierRepository tierRepository;
@@ -68,7 +70,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public String addMember(String solvedacToken) {
+    public Member addMember(String solvedacToken) {
 
         // 1. solvedac API 활용해서 member 정보 받아오기
 
@@ -127,8 +129,7 @@ public class MemberServiceImpl implements MemberService {
         // 4. login_log 추가 (db 유무 상관없이 해야함)
         addLoginlog(name);
 
-        return jwtTokenProvider.createToken(name, null);
-
+        return memberRepository.findByName(name);
     }
 
 
@@ -189,6 +190,40 @@ public class MemberServiceImpl implements MemberService {
                 selectMember.setTier(curTier);
             }
         });
+    }
+
+    @Override
+    public String createToken(Long id, List<String> roles) {
+        return tokenProvider.createToken(id.toString(),roles);
+    }
+
+    @Override
+    public String createRefreshToken(Long id) {
+        Member member = memberRepository.findById(id).orElse(null);
+        String refreshToken = tokenProvider.createRefreshToken();
+        member.setRefreshToken(refreshToken);
+        memberRepository.save(member);
+
+        return tokenProvider.createRefreshToken();
+    }
+
+    /*
+   refreshToken으로 accessToken 재발급
+    */
+    public TokenRes refreshAccessToken(Long id, String refreshToken) {
+        return new TokenRes(tokenProvider.createToken(String.valueOf(id),null),refreshToken);
+    }
+
+    /*
+    로그아웃
+     */
+    @Override
+    public void logout(Long id) {
+        // refreshToken 초기화
+        Member member = memberRepository.findById(id).orElse(null);
+        member.setRefreshToken(null);
+        memberRepository.save(member);
+
     }
 
     private void addNewMember(JsonNode finalJsonNode, String name, String solvedacToken) {
