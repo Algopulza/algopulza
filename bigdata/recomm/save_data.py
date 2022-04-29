@@ -46,8 +46,7 @@ def save_data(app):
     tag_df = pd.read_json(tag)
 
 
-    merged_df = pd.merge(problem_tag_df, problem_df, how='left')
-    merged_df = pd.merge(merged_df, tag_df, how='left')
-    
+    merged_df = pd.merge(problem_tag_df, tag_df, how='left')
+    merged_df = pd.merge(problem_df, merged_df, how='left')
     merged_json = merged_df.to_json(orient='records', force_ascii=False)
     return merged_json

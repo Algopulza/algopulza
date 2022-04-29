@@ -72,14 +72,14 @@ def create_app(test_config = None):
         return '<p>data updated</p>'
 
     # 유저 취약태그 분석
-    # @app.route('/vulnerability/<userid>')
-    @app.route('/user/vulnerability')
-    def user_vul():
-        res = user_vulnerability.user_vulnerability()
+    @app.route('/<userid>/vulnerability')
+    # @app.route('/user/vulnerability')
+    def user_vul(userid):
+        res = user_vulnerability.user_vulnerability(app, mongodb, userid)
         return res
 
     # 유저 취약태그 문제 추천
-    # @app.route('/recomm/<userid>/vulnerability')
+    # @app.route('<userid>/recomm/vulnerability')
     @app.route('/recomm/vulnerability')
     def recomm_vul():
         res = vulnerability.recomm_vulnerability()
