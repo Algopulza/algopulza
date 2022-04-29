@@ -2,7 +2,7 @@ from sqlalchemy import text
 import pandas as pd
 import json
 
-def save_data(app):
+def save_data(app, mongodb):
     # 문제정보
     data_problem = app.mysql_db.execute(text("""
         SELECT * FROM problem
@@ -45,8 +45,28 @@ def save_data(app):
     tag = json.dumps(tag, ensure_ascii=False)
     tag_df = pd.read_json(tag)
 
+    # 문제-태그 정보 저장
+    merged_df1 = pd.merge(problem_tag_df, tag_df, how='left')
+    merged_df2 = pd.merge(problem_df, merged_df1, how='left')
+    merged_json = merged_df2.to_json(orient='records', force_ascii=False)
+    
+    merged_json = json.loads(merged_json)
+    collection = mongodb.problem_tag
+    collection.delete_many({})
+    collection.insert_many(merged_json)
 
-    merged_df = pd.merge(problem_tag_df, tag_df, how='left')
-    merged_df = pd.merge(problem_df, merged_df, how='left')
-    merged_json = merged_df.to_json(orient='records', force_ascii=False)
-    return merged_json
+    # nested 태그 문제 정보 저장
+    problem_list = problem_df.to_dict('records')
+    for p in problem_list:
+        tmp_df = merged_df1.loc[merged_df1['problem_id']==p['problem_id']]
+        tmp_df = tmp_df[['problem_id', 'name']]
+        tmp_list = tmp_df.to_dict('records')
+        p['tags'] = tmp_list
+    
+    problem_tag_nest = json.dumps(problem_list, ensure_ascii=False)
+    problem_tag_nest = json.loads(problem_tag_nest)
+    collection = mongodb.problem_tag_nest
+    collection.delete_many({})
+    collection.insert_many(problem_tag_nest)
+    
+    return 
