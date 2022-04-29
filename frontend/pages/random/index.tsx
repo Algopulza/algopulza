@@ -10,10 +10,13 @@ const Container = styled.section`
 
 export default function Random() {
   return (
-    <Container>
+    <>
       <Gift />
-      <Subject />
-    </Container>
+      
+      <Container>
+        <Subject />
+      </Container>
+    </>
   )
 }
 
