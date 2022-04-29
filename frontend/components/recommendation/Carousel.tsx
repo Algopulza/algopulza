@@ -13,7 +13,7 @@ const Container = styled.section`
   flex-direction: column;
   justify-content: center;
   margin-bottom: 80px;
-  height: 58vh;
+  height: 53vh;
   background: #FFC94D;
 `
 

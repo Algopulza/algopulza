@@ -4,7 +4,7 @@ import Footer from './Footer'
 import styled from 'styled-components'
 
 const Container = styled.section`
-  height: 188vh;
+  height: 288vh;
 `
 
 type Props = {
