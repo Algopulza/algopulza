@@ -10,7 +10,7 @@ const Container = styled.section`
 
 const Cards = styled.div`
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
 `
 
 type TitleProps = {
