@@ -202,7 +202,7 @@ public class ProblemServiceImpl implements ProblemService {
      * 랜덤 페이지의 모든 종류의 랜덤 문제 리스트를 반환
      */
     @Override
-    public RandomListRes getRandomProblemList(Pageable pageable) {
+    public RandomListRes getRandomProblemList() {
         return RandomListRes.builder()
                             .simulationList(getRandomProblemListByCondition(0, tagMap.get("simulation"), 5))
                             .dpList(getRandomProblemListByCondition(0, tagMap.get("dp"), 5))
@@ -229,9 +229,6 @@ public class ProblemServiceImpl implements ProblemService {
     public List<ProblemRes> getRandomProblemListByCondition(int type, int condition, int count) {
         List<Long> problemIdList = new ArrayList<>();
         Set<Long> problemIdSet = new HashSet<>();
-        // TODO: tagList set
-        // TODO: pageable 제거
-
 
         if (type == 0) {
             // Tag Id가 condition에 해당하는 문제 Id 조회
@@ -252,7 +249,14 @@ public class ProblemServiceImpl implements ProblemService {
             problemIdSet.add(problemIdList.get(index));
         }
 
-        return problemRepository.findProblemResByIdSet(problemIdSet);
+        // Problem 목록 조회
+        List<ProblemRes> problemResList = problemRepository.findProblemResByIdSet(problemIdSet);
+        // Problem별 Tag 목록 조회
+        for (ProblemRes problemRes : problemResList) {
+            problemRes.setTagList(tagRepository.findByProblemId(problemRes.getProblemId()));
+        }
+
+        return problemResList;
     }
 
 }
