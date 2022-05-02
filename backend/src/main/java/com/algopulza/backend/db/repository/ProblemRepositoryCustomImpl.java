@@ -91,7 +91,7 @@ public class ProblemRepositoryCustomImpl implements ProblemRepositoryCustom {
         return jpaQueryFactory.select(qProblem.id)
                               .from(qProblem)
                               .join(qTier).on(qProblem.tier.eq(qTier))
-                              .where(qTier.level.between(levelStartValue, levelStartValue + 5))
+                              .where(qTier.level.between(levelStartValue, levelStartValue + 4))
                               .fetch();
     }
 
