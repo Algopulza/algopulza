@@ -18,4 +18,6 @@ public interface ProblemService {
 
     List<ProblemRes> getProblemListByKeyword(String keyword);
 
+    ProblemRes getOneRandomProblem();
+
 }
