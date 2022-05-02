@@ -21,18 +21,18 @@ public class ProblemRepositoryCustomImpl implements ProblemRepositoryCustom {
     QTier qTier = QTier.tier;
 
     @Override
-    public List<ProblemAndStatusRes> findAllByPagination(Long memberId, Pageable pageable) {
+    public List<ProblemAndStatusRes> findProblemAndStatusResByMemberId(Long memberId, Pageable pageable) {
         QueryResults<ProblemAndStatusRes> queryResults = jpaQueryFactory.select(Projections.constructor(ProblemAndStatusRes.class,
-                                                      qProblem.id,
-                                                      qProblem.bojId,
-                                                      qProblem.title,
-                                                      qSolvingLog.status,
-                                                      qTier.level,
-                                                      qTier.name,
-                                                      qProblem.acceptedCount,
-                                                      qProblem.averageTryCount,
-                                                      qProblem.solvableFlag
-                                                ))
+                                                                              qProblem.id,
+                                                                              qProblem.bojId,
+                                                                              qProblem.title,
+                                                                              qSolvingLog.status,
+                                                                              qTier.level,
+                                                                              qTier.name,
+                                                                              qProblem.acceptedCount,
+                                                                              qProblem.averageTryCount,
+                                                                              qProblem.solvableFlag
+                                                                        ))
                                                                         .from(qProblem)
                                                                         .join(qTier).on(qProblem.tier.eq(qTier))
                                                                         .leftJoin(qSolvingLog).on(qProblem.eq(qSolvingLog.problem))
@@ -44,22 +44,45 @@ public class ProblemRepositoryCustomImpl implements ProblemRepositoryCustom {
     }
 
     @Override
-    public List<ProblemRes> findByTitleLike(String keyword) {
+    public List<ProblemRes> findProblemResByTitleLike(String keyword) {
         return jpaQueryFactory.select(Projections.constructor(ProblemRes.class,
-                    qProblem.id,
-                    qProblem.bojId,
-                    qProblem.title,
-                    qTier.level,
-                    qTier.name,
-                    qProblem.acceptedCount,
-                    qProblem.averageTryCount,
-                    qProblem.solvableFlag
-                ))
-                .from(qProblem)
-                .join(qTier).on(qProblem.tier.eq(qTier))
-                .where(qProblem.title.contains(keyword))
-                .orderBy(qProblem.bojId.asc())
-                .fetch();
+                                      qProblem.id,
+                                      qProblem.bojId,
+                                      qProblem.title,
+                                      qTier.level,
+                                      qTier.name,
+                                      qProblem.acceptedCount,
+                                      qProblem.averageTryCount,
+                                      qProblem.solvableFlag
+                              ))
+                              .from(qProblem)
+                              .join(qTier).on(qProblem.tier.eq(qTier))
+                              .where(qProblem.title.contains(keyword))
+                              .orderBy(qProblem.bojId.asc())
+                              .fetch();
+    }
+
+    @Override
+    public List<Long> findAllId() {
+        return jpaQueryFactory.select(qProblem.id).from(qProblem).fetch();
+    }
+
+    @Override
+    public ProblemRes findProblemResById(Long id) {
+        return jpaQueryFactory.select(Projections.constructor(ProblemRes.class,
+                                      qProblem.id,
+                                      qProblem.bojId,
+                                      qProblem.title,
+                                      qTier.level,
+                                      qTier.name,
+                                      qProblem.acceptedCount,
+                                      qProblem.averageTryCount,
+                                      qProblem.solvableFlag
+                              ))
+                              .from(qProblem)
+                              .join(qTier).on(qProblem.tier.eq(qTier))
+                              .where(qProblem.id.eq(id))
+                              .fetchOne();
     }
 
 }

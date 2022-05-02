@@ -8,8 +8,12 @@ import java.util.List;
 
 public interface ProblemRepositoryCustom {
 
-    List<ProblemAndStatusRes> findAllByPagination(Long memberId, Pageable pageable);
+    List<ProblemAndStatusRes> findProblemAndStatusResByMemberId(Long memberId, Pageable pageable);
 
-    List<ProblemRes> findByTitleLike(String keyword);
+    List<ProblemRes> findProblemResByTitleLike(String keyword);
+
+    List<Long> findAllId();
+
+    ProblemRes findProblemResById(Long id);
 
 }
