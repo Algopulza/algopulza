@@ -8,4 +8,4 @@ mysql_db = {
 
 DB_URL = f"mysql+mysqlconnector://{mysql_db['user']}:{mysql_db['password']}@{mysql_db['host']}:{mysql_db['port']}/{mysql_db['database']}?charset=utf8"
 
-MONGODB_PORT = 27017
+MONGODB_PORT = 27027
