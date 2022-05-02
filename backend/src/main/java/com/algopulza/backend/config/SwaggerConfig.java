@@ -46,8 +46,8 @@ public class SwaggerConfig {
                 title,
                 "헤더 토큰 값 : [Bearer 토큰값]",
                 version,
-                "algopulza.com",
-                new Contact("contact me","algopulza.com","algopulza.com"),
+                "algopulza.day",
+                new Contact("contact me","algopulza.day","algopulza.day"),
                 "",
                 "",
                 new ArrayList<>());

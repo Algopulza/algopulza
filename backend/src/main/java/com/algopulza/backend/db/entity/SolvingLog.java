@@ -1,5 +1,6 @@
 package com.algopulza.backend.db.entity;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,6 +10,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Entity
+@Data
 @Table(name = "solving_log")
 public class SolvingLog extends BaseTimeEntity {
 
@@ -29,5 +31,9 @@ public class SolvingLog extends BaseTimeEntity {
 
     @Column
     private LocalDateTime solvingTime;
+
+    @Column
+    private LocalDateTime createdTime;
+
 
 }
