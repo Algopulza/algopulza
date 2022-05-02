@@ -5,6 +5,7 @@ import com.algopulza.backend.api.response.ProblemRes;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Set;
 
 public interface ProblemRepositoryCustom {
 
@@ -15,5 +16,9 @@ public interface ProblemRepositoryCustom {
     List<Long> findAllId();
 
     ProblemRes findProblemResById(Long id);
+
+    List<Long> findProblemIdByLevelRange(int levelStartValue);
+
+    List<ProblemRes> findProblemResByIdSet(Set<Long> idSet);
 
 }

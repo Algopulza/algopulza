@@ -20,4 +20,8 @@ public interface ProblemService {
 
     ProblemRes getOneRandomProblem();
 
+    RandomListRes getRandomProblemList(Pageable pageable);
+
+    List<ProblemRes> getRandomProblemListByCondition(int type, int condition, int count);
+
 }

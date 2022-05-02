@@ -2,14 +2,14 @@ package com.algopulza.backend.api.response;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
 @ApiModel("RandomListRes")
 @Getter
 @Setter
+@Builder
 public class RandomListRes {
 
     @ApiModelProperty(name = "구현 문제 리스트")
@@ -25,7 +25,7 @@ public class RandomListRes {
     private List<ProblemRes> greedyList;
 
     @ApiModelProperty(name = "정렬 문제 리스트")
-    private List<ProblemRes> sortList;
+    private List<ProblemRes> sortingList;
 
     @ApiModelProperty(name = "너비 우선 탐색 문제 리스트")
     private List<ProblemRes> bfsList;
