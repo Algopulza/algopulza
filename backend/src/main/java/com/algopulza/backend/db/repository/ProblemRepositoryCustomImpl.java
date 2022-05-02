@@ -25,29 +25,28 @@ public class ProblemRepositoryCustomImpl implements ProblemRepositoryCustom {
 
     @Override
     public List<ProblemAndStatusRes> findProblemAndStatusResByMemberId(Long memberId, Pageable pageable) {
-        QueryResults<ProblemAndStatusRes> queryResults = jpaQueryFactory.select(Projections.constructor(ProblemAndStatusRes.class,
-                                                                              qProblem.id,
-                                                                              qProblem.bojId,
-                                                                              qProblem.title,
-                                                                              qSolvingLog.status,
-                                                                              qTier.level,
-                                                                              qTier.name,
-                                                                              qProblem.acceptedCount,
-                                                                              qProblem.averageTryCount,
-                                                                              qProblem.solvableFlag
-                                                                        ))
-                                                                        .from(qProblem)
-                                                                        .join(qTier).on(qProblem.tier.eq(qTier))
-                                                                        .leftJoin(qSolvingLog).on(qProblem.eq(qSolvingLog.problem))
-                                                                        .orderBy(qProblem.bojId.asc())
-                                                                        .offset(pageable.getOffset())
-                                                                        .limit(pageable.getPageSize())
-                                                                        .fetchResults();
-        return queryResults.getResults();
+        return jpaQueryFactory.select(Projections.constructor(ProblemAndStatusRes.class,
+                                      qProblem.id,
+                                      qProblem.bojId,
+                                      qProblem.title,
+                                      qSolvingLog.status,
+                                      qTier.level,
+                                      qTier.name,
+                                      qProblem.acceptedCount,
+                                      qProblem.averageTryCount,
+                                      qProblem.solvableFlag
+                              ))
+                              .from(qProblem)
+                              .join(qTier).on(qProblem.tier.eq(qTier))
+                              .leftJoin(qSolvingLog).on(qProblem.eq(qSolvingLog.problem))
+                              .orderBy(qProblem.bojId.asc())
+                              .offset(pageable.getOffset())
+                              .limit(pageable.getPageSize())
+                              .fetch();
     }
 
     @Override
-    public List<ProblemRes> findProblemResByTitleLike(String keyword) {
+    public List<ProblemRes> findProblemResByTitleLike(String keyword, Pageable pageable) {
         return jpaQueryFactory.select(Projections.constructor(ProblemRes.class,
                                       qProblem.id,
                                       qProblem.bojId,
@@ -62,6 +61,8 @@ public class ProblemRepositoryCustomImpl implements ProblemRepositoryCustom {
                               .join(qTier).on(qProblem.tier.eq(qTier))
                               .where(qProblem.title.contains(keyword))
                               .orderBy(qProblem.bojId.asc())
+                              .offset(pageable.getOffset())
+                              .limit(pageable.getPageSize())
                               .fetch();
     }
 

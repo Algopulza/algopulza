@@ -187,8 +187,14 @@ public class ProblemServiceImpl implements ProblemService {
     }
 
     @Override
-    public List<ProblemRes> getProblemListByKeyword(String keyword) {
-        return problemRepository.findProblemResByTitleLike(keyword);
+    public List<ProblemRes> getProblemListByKeyword(String keyword, Pageable pageable) {
+        // 제목으로 Problem 검색
+        List<ProblemRes> problemResList = problemRepository.findProblemResByTitleLike(keyword, pageable);
+        // 각 Problem별 Tag List 조회
+        for (ProblemRes problemRes : problemResList) {
+            problemRes.setTagList(tagRepository.findByProblemId(problemRes.getProblemId()));
+        }
+        return problemResList;
     }
 
     @Override
