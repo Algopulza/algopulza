@@ -4,7 +4,7 @@ from pymongo import MongoClient
 from flask import Flask, jsonify
 from flask_cors import CORS
 from sqlalchemy import create_engine, text
-from recomm import vulnerability, user_vulnerability, freq_tag, user_freq_tag, save_data
+from recomm import vulnerability, user_vulnerability, freq_tag, user_freq_tag, save_data, random_level
 
 # Default JSON encoder는 set를 JSON으로 변환 불가
 # set을 list로 변환 후 JSON으로 변환할 수 있도록 커스텀 엔코더 작성
@@ -66,6 +66,12 @@ def create_app(test_config = None):
     def save_dat():
         problem_tag_data = save_data.save_data(app, mongodb)
         return '<p>data saved</p>'
+
+    # 자신 티어 +-1 level 문제 1개 랜덤추천
+    @app.route('/random-level/<userid>')
+    def rand_lv(userid):
+        rand_problem = random_level.random_one(app, mongodb, userid)
+        return rand_problem
 
     # 유저 취약태그 분석
     @app.route('/vulnerability/<userid>')

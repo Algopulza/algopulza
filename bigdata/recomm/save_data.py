@@ -10,7 +10,8 @@ def save_data(app, mongodb):
     
     problem = [{
         'level': p['level'],
-        'problem_id': p['boj_id'],
+        'problem_id': p['id'],
+        'boj_id': p['boj_id'],
         'title': p['title'],
         'accepted_count': p['accepted_count'],
         'average_try_count': p['average_try_count'],
@@ -38,7 +39,8 @@ def save_data(app, mongodb):
     """)).fetchall()
 
     tag = [{
-        'tag_id': t['boj_tag_id'],
+        'tag_id': t['id'],
+        'boj_tag_id': t['boj_tag_id'],
         'boj_key': t['boj_key'],
         'name': t['name'],
     } for t in data_tag]
