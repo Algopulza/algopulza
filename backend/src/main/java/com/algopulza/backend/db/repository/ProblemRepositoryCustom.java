@@ -10,7 +10,7 @@ public interface ProblemRepositoryCustom {
 
     List<ProblemAndStatusRes> findProblemAndStatusResByMemberId(Long memberId, Pageable pageable);
 
-    List<ProblemRes> findProblemResByTitleLike(String keyword);
+    List<ProblemRes> findProblemResByTitleLike(String keyword, Pageable pageable);
 
     List<Long> findAllId();
 

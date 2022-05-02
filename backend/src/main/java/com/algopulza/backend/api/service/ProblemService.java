@@ -16,7 +16,7 @@ public interface ProblemService {
 
     List<ProblemAndStatusRes> getProblemList(Long memberId, Pageable pageable);
 
-    List<ProblemRes> getProblemListByKeyword(String keyword);
+    List<ProblemRes> getProblemListByKeyword(String keyword, Pageable pageable);
 
     ProblemRes getOneRandomProblem();
 
