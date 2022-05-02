@@ -229,11 +229,22 @@ public class ProblemServiceImpl implements ProblemService {
     public List<ProblemRes> getRandomProblemListByCondition(int type, int condition, int count) {
         List<Long> problemIdList = new ArrayList<>();
         Set<Long> problemIdSet = new HashSet<>();
+        // TODO: tagList set
+        // TODO: pageable 제거
+
 
         if (type == 0) {
-            return null;
+            // Tag Id가 condition에 해당하는 문제 Id 조회
+            Set<Long> problemIdSetByTag = new HashSet<>(problemRepository.findProblemIdByBojTagId(condition));
+            // Bronze 5 ~ Platinum 1 범위에 해당하는 문제 Id 조회
+            Set<Long> problemIdSetByLevel = Set.copyOf(problemRepository.findProblemIdByLevelRange(
+                    levelMap.get("bronze"), levelMap.get("platinum") + 4
+            ));
+            // 두 조건을 모두 만족하는 문제 Id 조회
+            problemIdSetByTag.retainAll(problemIdSetByLevel);
+            problemIdList = List.copyOf(problemIdSetByTag);
         } else if (type == 1) {
-            problemIdList = problemRepository.findProblemIdByLevelRange(condition);
+            problemIdList = problemRepository.findProblemIdByLevelRange(condition, condition + 4);
         }
 
         while (problemIdSet.size() < count) {

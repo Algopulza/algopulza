@@ -20,6 +20,8 @@ public class ProblemRepositoryCustomImpl implements ProblemRepositoryCustom {
     QProblem qProblem = QProblem.problem;
     QSolvingLog qSolvingLog = QSolvingLog.solvingLog;
     QTier qTier = QTier.tier;
+    QProblemHasTag qProblemHasTag = QProblemHasTag.problemHasTag;
+    QTag qTag = QTag.tag;
 
     @Override
     public List<ProblemAndStatusRes> findProblemAndStatusResByMemberId(Long memberId, Pageable pageable) {
@@ -87,11 +89,21 @@ public class ProblemRepositoryCustomImpl implements ProblemRepositoryCustom {
     }
 
     @Override
-    public List<Long> findProblemIdByLevelRange(int levelStartValue) {
+    public List<Long> findProblemIdByLevelRange(int levelStartValue, int levelEndValue) {
         return jpaQueryFactory.select(qProblem.id)
                               .from(qProblem)
                               .join(qTier).on(qProblem.tier.eq(qTier))
-                              .where(qTier.level.between(levelStartValue, levelStartValue + 4))
+                              .where(qTier.level.between(levelStartValue, levelEndValue))
+                              .fetch();
+    }
+
+    @Override
+    public List<Long> findProblemIdByBojTagId(int bojTagId) {
+        return jpaQueryFactory.select(qProblemHasTag.problem.id)
+                              .distinct()
+                              .from(qProblemHasTag)
+                              .leftJoin(qTag).on(qProblemHasTag.tag.eq(qTag))
+                              .where(qTag.bojTagId.eq(bojTagId))
                               .fetch();
     }
 

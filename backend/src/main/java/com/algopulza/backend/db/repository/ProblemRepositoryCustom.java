@@ -17,7 +17,9 @@ public interface ProblemRepositoryCustom {
 
     ProblemRes findProblemResById(Long id);
 
-    List<Long> findProblemIdByLevelRange(int levelStartValue);
+    List<Long> findProblemIdByLevelRange(int levelStartValue, int levelEndValue);
+
+    List<Long> findProblemIdByBojTagId(int bojTagId);
 
     List<ProblemRes> findProblemResByIdSet(Set<Long> idSet);
 
