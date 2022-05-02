@@ -157,7 +157,7 @@ public class ProblemServiceImpl implements ProblemService {
     @Override
     public List<ProblemAndStatusRes> getProblemList(Long memberId, Pageable pageable) {
         // Problem List 조회
-        List<ProblemAndStatusRes> problemAndStatusResList = problemRepository.findAllByPagination(memberId, pageable);
+        List<ProblemAndStatusRes> problemAndStatusResList = problemRepository.findProblemAndStatusResByMemberId(memberId, pageable);
 
         // Problem별로 Tag List 조회
         for (ProblemAndStatusRes problemAndStatusRes : problemAndStatusResList) {
@@ -169,7 +169,14 @@ public class ProblemServiceImpl implements ProblemService {
 
     @Override
     public List<ProblemRes> getProblemListByKeyword(String keyword) {
-        return problemRepository.findByTitleLike(keyword);
+        return problemRepository.findProblemResByTitleLike(keyword);
+    }
+
+    @Override
+    public ProblemRes getOneRandomProblem() {
+        List<Long> problemIdList = problemRepository.findAllId();
+        int index = (int) (Math.random() * problemIdList.size());
+        return problemRepository.findProblemResById(problemIdList.get(index));
     }
 
 }
