@@ -186,19 +186,7 @@ public class MemberServiceImpl implements MemberService {
             if(selectMember.getTier()!=curTier){
                 selectMember.setTier(curTier);
             }
-
-            // 로그인 로그 확인 -> 오늘 첫 방문이면 +2 , 오늘첫방문+어제도방문이면 +3
-            switch (checkDay(bojId)){
-                case "first" :
-                    selectMember.setExp(selectMember.getExp()+2);
-                    break;
-                case "visited" :
-                    selectMember.setExp(selectMember.getExp()+3);
-                    break;
-                case "second" :
-                    break;
-            }
-
+            
         });
     }
 
