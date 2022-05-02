@@ -37,8 +37,8 @@ def create_app(test_config = None):
 	# engine 객체를 flask 객체에 저장, create_app 함수 외부에서도 db 사용할 수 있도록 설정
     app.mysql_db = database
 
-    client = MongoClient('localhost', 27027)
-    # client = MongoClient('localhost', 27017)
+    # client = MongoClient('localhost', 27027)
+    client = MongoClient('localhost', 27017)
     mongodb = client.algopulza_test
     
 
