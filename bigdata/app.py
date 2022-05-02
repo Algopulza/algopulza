@@ -4,7 +4,7 @@ from pymongo import MongoClient
 from flask import Flask, jsonify
 from flask_cors import CORS
 from sqlalchemy import create_engine, text
-from recomm import vulnerability, user_vulnerability, save_data
+from recomm import vulnerability, user_vulnerability, freq_tag, user_freq_tag, save_data
 
 # Default JSON encoder는 set를 JSON으로 변환 불가
 # set을 list로 변환 후 JSON으로 변환할 수 있도록 커스텀 엔코더 작성
@@ -37,8 +37,8 @@ def create_app(test_config = None):
 	# engine 객체를 flask 객체에 저장, create_app 함수 외부에서도 db 사용할 수 있도록 설정
     app.mysql_db = database
 
-    # client = MongoClient('localhost', 27027)
-    client = MongoClient('localhost', 27017)
+    client = MongoClient('localhost', 27027)
+    # client = MongoClient('localhost', 27017)
     mongodb = client.algopulza_test
     
 
@@ -73,10 +73,22 @@ def create_app(test_config = None):
         res = user_vulnerability.user_vulnerability(app, mongodb, userid)
         return res
 
+    # 태그별 해결 문제 수
+    @app.route('/freq-tag/<userid>')
+    def user_freq(userid):
+        res = user_freq_tag.user_freq_tag(app, mongodb, userid)
+        return res
+
     # 유저 취약태그 문제 추천
     @app.route('/recomm/vulnerability/<userid>')
     def recomm_vul(userid):
         res = vulnerability.recomm_vulnerability(app, mongodb, userid)
+        return res
+
+    # 유저 많이 푼 태그 문제 추천
+    @app.route('/recomm/freq-tag/<userid>')
+    def recomm_freq(userid):
+        res = freq_tag.recomm_freq_tag(app, mongodb, userid)
         return res
 
     return app
