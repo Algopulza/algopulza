@@ -7,7 +7,7 @@ const Container = styled.section`
   display: grid;
   grid-template-columns: 30vw 40vw 30vw;
   align-items: center;
-  height: 7vh;
+  height: 8vh;
   background: #FFFFFF;
 `
 
