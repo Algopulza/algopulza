@@ -10,8 +10,4 @@ public class ModifyMemberReq {
 
     @ApiModelProperty(value = "백준 아이디", required = true)
     private String bojId;
-
-    @ApiModelProperty(value = "solvedacToken", required = true)
-    private String solvedacToken;
-
 }

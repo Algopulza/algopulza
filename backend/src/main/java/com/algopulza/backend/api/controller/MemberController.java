@@ -38,9 +38,9 @@ public class MemberController {
             @ApiResponse(code = 401, message = ResponseMessage.UNAUTHORIZED, response = ErrorResponse.class),
             @ApiResponse(code = 403, message = ResponseMessage.ACCESS_DENIED, response = ErrorResponse.class),
             @ApiResponse(code = 404, message = ResponseMessage.NOT_FOUND, response = ErrorResponse.class)})
-    public ResponseEntity<BaseResponseBody> addMember(@RequestHeader String solvedacToken) throws JsonProcessingException {
+    public ResponseEntity<BaseResponseBody> addMember(@RequestHeader String bojId) throws JsonProcessingException {
         // 회원정보 저장
-        MemberRes memberRes = memberService.addMember(solvedacToken);
+        MemberRes memberRes = memberService.addMember(bojId);
 
         // jwt token 발급
         String token = memberService.createToken(memberRes.getMemberId(), null);
