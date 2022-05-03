@@ -1,5 +1,7 @@
 package com.algopulza.backend.api.service;
 
+import com.algopulza.backend.api.request.member.AddSolvedProblemReq;
+import com.algopulza.backend.api.request.member.AddTriedProblemReq;
 import com.algopulza.backend.api.request.member.ModifyMemberReq;
 import com.algopulza.backend.api.request.member.ModifyProfileImageReq;
 import com.algopulza.backend.api.response.MemberRes;
@@ -23,6 +25,7 @@ import org.springframework.web.client.RestTemplate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.StringTokenizer;
 import java.util.concurrent.atomic.AtomicReference;
 
 @Slf4j
@@ -200,6 +203,30 @@ public class MemberServiceImpl implements MemberService {
         member.setRefreshToken(null);
         memberRepository.save(member);
 
+    }
+
+    @Override
+    public void addSolvedProblem(AddSolvedProblemReq addSolvedProblemReq) {
+        String bojId = addSolvedProblemReq.getBojId();
+        String problems = addSolvedProblemReq.getProblems();
+
+        StringTokenizer st = new StringTokenizer(problems, " ");
+        while (st.hasMoreTokens()){
+            int problemId = Integer.parseInt(st.nextToken());
+            addProblem(bojId, problemId, "solved");
+        }
+    }
+
+    @Override
+    public void addTriedProblem(AddTriedProblemReq addTriedProblemReq) {
+        String bojId = addTriedProblemReq.getBojId();
+        String problems = addTriedProblemReq.getProblems();
+
+        StringTokenizer st = new StringTokenizer(problems, " ");
+        while (st.hasMoreTokens()){
+            int problemId = Integer.parseInt(st.nextToken());
+            addProblem(bojId, problemId, "tried");
+        }
     }
 
     private void addNewMember(JsonNode finalJsonNode, String bojId) {

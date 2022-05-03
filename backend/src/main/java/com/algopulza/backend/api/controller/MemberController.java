@@ -1,5 +1,7 @@
 package com.algopulza.backend.api.controller;
 
+import com.algopulza.backend.api.request.member.AddSolvedProblemReq;
+import com.algopulza.backend.api.request.member.AddTriedProblemReq;
 import com.algopulza.backend.api.request.member.ModifyMemberReq;
 import com.algopulza.backend.api.request.member.ModifyProfileImageReq;
 import com.algopulza.backend.api.response.MemberRes;
@@ -115,5 +117,29 @@ public class MemberController {
     public ResponseEntity<BaseResponseBody> modifyProfileImage(@RequestBody ModifyProfileImageReq modifyProfileImageReq) {
         memberService.modifyProfileImage(modifyProfileImageReq);
         return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, ResponseMessage.MODIFY_MEMBER_INFO_SUCCESS));
+    }
+
+    @PostMapping("/solved")
+    @ApiOperation(value = "solved 문제 등록하기", notes = "solved 문제 등록 요청 API 입니다.")
+    @ApiResponses({@ApiResponse(code = 201, message = ResponseMessage.POST_SOLVED_PROBLEM_SUCCESS),
+            @ApiResponse(code = 400, message = ResponseMessage.BAD_REQUEST, response = ErrorResponse.class),
+            @ApiResponse(code = 401, message = ResponseMessage.UNAUTHORIZED, response = ErrorResponse.class),
+            @ApiResponse(code = 403, message = ResponseMessage.ACCESS_DENIED, response = ErrorResponse.class),
+            @ApiResponse(code = 404, message = ResponseMessage.NOT_FOUND, response = ErrorResponse.class)})
+    public ResponseEntity<BaseResponseBody> addSolvedProblem(@RequestBody AddSolvedProblemReq addSolvedProblemReq){
+        memberService.addSolvedProblem(addSolvedProblemReq);
+        return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, ResponseMessage.POST_SOLVED_PROBLEM_SUCCESS));
+    }
+
+    @PostMapping("/tried")
+    @ApiOperation(value = "tried 문제 등록하기", notes = "tried 문제 등록 요청 API 입니다.")
+    @ApiResponses({@ApiResponse(code = 201, message = ResponseMessage.POST_TRIED_PROBLEM_SUCCESS),
+            @ApiResponse(code = 400, message = ResponseMessage.BAD_REQUEST, response = ErrorResponse.class),
+            @ApiResponse(code = 401, message = ResponseMessage.UNAUTHORIZED, response = ErrorResponse.class),
+            @ApiResponse(code = 403, message = ResponseMessage.ACCESS_DENIED, response = ErrorResponse.class),
+            @ApiResponse(code = 404, message = ResponseMessage.NOT_FOUND, response = ErrorResponse.class)})
+    public ResponseEntity<BaseResponseBody> addTriedProblem(@RequestBody AddTriedProblemReq addTriedProblemReq){
+        memberService.addTriedProblem(addTriedProblemReq);
+        return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, ResponseMessage.POST_TRIED_PROBLEM_SUCCESS));
     }
 }
