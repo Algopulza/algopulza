@@ -1,5 +1,5 @@
-import TopHeader from './TopHeader'
-import TopBody from './TopBody'
+import ProblemTag from './problem/ProblemTag'
+import ProblemName from './problem/ProblemName'
 import styled from 'styled-components'
 
 const Container = styled.section`
@@ -8,11 +8,11 @@ const Container = styled.section`
   border-radius: 15px 15px 0 0;
 `
 
-export default function CardTop() {
+export default function Problem() {
   return (
     <Container>
-      <TopHeader />
-      <TopBody />
+      <ProblemTag />
+      <ProblemName />
     </Container>
   )
 }

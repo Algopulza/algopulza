@@ -22,7 +22,8 @@ export default function Subject({ title }: TitleProps) {
 
   return (
     <Container>
-      <SubjectTitle>{title.name}</SubjectTitle>
+      <SubjectTitle>{title.title}</SubjectTitle>
+      
       <Cards>
         {range.map(index => <Card key={index} />)}
       </Cards>

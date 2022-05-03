@@ -9,7 +9,7 @@ type ValueProps = {
   value: string,
 }
 
-export default function BottomData({ value }: ValueProps) {
+export default function InfoKey({ value }: ValueProps) {
   return (
     <Container>{value}</Container>
   )

@@ -1,5 +1,5 @@
-import BottomTitle from './BottomTitle'
-import BottomData from './BottomData'
+import InfoKey from './info/InfoKey'
+import InfoValue from './info/InfoValue'
 import _ from 'lodash'
 import styled from 'styled-components'
 
@@ -15,7 +15,7 @@ const Item = styled.div`
   justify-content: space-around;
 `
 
-export default function CardBottom() {
+export default function ProblemInfo() {
   const range = _.range(3)
   const titles = ['티어', '평균 시도', '해결']
   const data = ['Gold 5', '1.5', '13,645']
@@ -24,8 +24,8 @@ export default function CardBottom() {
     <Container>
       {range.map(index =>
         <Item key={index}>
-          <BottomTitle title={titles[index]} />
-          <BottomData value={data[index]} />
+          <InfoKey title={titles[index]} />
+          <InfoValue value={data[index]} />
         </Item>)
       }
     </Container>

@@ -2,28 +2,18 @@ import styled from 'styled-components'
 
 const Container = styled.section`
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  height: 20px;
-  padding: 1vw 1vw 0vw 1vw;
+  height: 100px;
 
-  font-size: 1vw;
+  font-size: 1.8vw;
   color: white;
 `
 
-const Tags = styled.div`
-    display: flex;
-    align-items: center;
-`
-
-export default function TopHeader() {
+export default function ProblemName() {
   return (
     <Container>
-      <Tags>
-        <span>#구현ㅤ</span>
-        <span>#시뮬레이션ㅤ</span>
-      </Tags>
-      <span>14503</span>
+      로봇 청소기
     </Container>
   )
 }

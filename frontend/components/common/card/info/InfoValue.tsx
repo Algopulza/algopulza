@@ -10,7 +10,7 @@ type TitleProps = {
   title: string,
 }
 
-export default function BottomTitle({ title }: TitleProps) {
+export default function InfoValue({ title }: TitleProps) {
   return (
     <Container>{title}</Container>
   )

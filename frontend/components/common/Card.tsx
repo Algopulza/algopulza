@@ -1,5 +1,5 @@
-import CardTop from './card/CardTop'
-import CardBottom from './card/CardBottom' 
+import Problem from './card/Problem'
+import ProblemInfo from './card/ProblemInfo'
 import styled from 'styled-components'
 
 const Container = styled.section`
@@ -13,8 +13,8 @@ const Container = styled.section`
 export default function Card() {
   return (
     <Container>
-      <CardTop />
-      <CardBottom />
+      <Problem />
+      <ProblemInfo />
     </Container>
   )
 }
