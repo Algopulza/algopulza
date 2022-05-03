@@ -25,6 +25,7 @@ const Button = styled.button`
 export default function LoginButton() {
   const router = useRouter()
   function moveToRecommendation() {
+    window.open("https://solved.ac/login?prev=%2F")
     router.push('/recommendation')
   }
 
