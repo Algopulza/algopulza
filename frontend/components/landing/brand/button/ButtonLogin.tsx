@@ -7,7 +7,7 @@ const Container = styled.section`
 `
 
 const Button = styled.button`
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 
   width: 10vw;
   height: 55px;
