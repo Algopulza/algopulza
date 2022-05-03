@@ -3,7 +3,7 @@ import styled from 'styled-components'
 const Container = styled.section`
   display: flex;
   flex-direction: column;
-  margin-bottom: 80px;
+  margin-bottom: 70px;
 `
 
 const Title = styled.p`
