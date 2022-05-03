@@ -8,12 +8,13 @@ import styled from 'styled-components'
 const Container = styled.section`
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: end;
   align-items: center;
-  height: 40vh;
+  height: 35vh;
 `
 
 const Canvas = styled.div`
+  margin-bottom: 20px;
   width: 13vw;
   cursor: pointer;
 `
@@ -28,7 +29,12 @@ export default function GiftBox({ text, img }: TextProps) {
 
   return (
     <Container>
-      {isToggled ? <Card /> : <Canvas onClick={() => setIsToggled(!isToggled)}><Image src={img} layout="responsive" alt="gift box image" /></Canvas>}
+      {isToggled ?
+        <Card /> :
+        <Canvas onClick={() => setIsToggled(true)}>
+          <Image src={img} layout="responsive" alt="gift box image" />
+        </Canvas>
+      }
       
       <GiftButton onClick={() => setIsToggled(!isToggled)}>{text}</GiftButton>
     </Container>
