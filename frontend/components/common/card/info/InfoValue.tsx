@@ -2,16 +2,15 @@ import styled from 'styled-components'
 
 const Container = styled.section`
   text-align: center;
-  font-size: 1.2vw;
-  font-weight: 700;
+  font-size: 1vw;
 `
 
-type TitleProps = {
-  title: string,
+type ValueProps = {
+  value: string,
 }
 
-export default function InfoValue({ title }: TitleProps) {
+export default function InfoValue({ value }: ValueProps) {
   return (
-    <Container>{title}</Container>
+    <Container>{value}</Container>
   )
 }

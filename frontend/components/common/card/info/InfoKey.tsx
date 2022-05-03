@@ -2,15 +2,16 @@ import styled from 'styled-components'
 
 const Container = styled.section`
   text-align: center;
-  font-size: 1vw;
+  font-size: 1.1vw;
+  font-weight: 700;
 `
 
-type ValueProps = {
-  value: string,
+type ItemProps = {
+  item: string,
 }
 
-export default function InfoKey({ value }: ValueProps) {
+export default function InfoKey({ item }: ItemProps) {
   return (
-    <Container>{value}</Container>
+    <Container>{item}</Container>
   )
 }

@@ -17,15 +17,15 @@ const Item = styled.div`
 
 export default function ProblemInfo() {
   const range = _.range(3)
-  const titles = ['티어', '평균 시도', '해결']
-  const data = ['Gold 5', '1.5', '13,645']
+  const items = ['티어', '평균 시도', '해결']
+  const values = ['Gold 5', '1.5', '13,645']
 
   return (
     <Container>
       {range.map(index =>
         <Item key={index}>
-          <InfoKey title={titles[index]} />
-          <InfoValue value={data[index]} />
+          <InfoKey item={items[index]} />
+          <InfoValue value={values[index]} />
         </Item>)
       }
     </Container>
