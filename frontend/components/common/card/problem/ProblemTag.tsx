@@ -20,9 +20,10 @@ export default function ProblemTag() {
   return (
     <Container>
       <Tags>
-        <span>#구현ㅤ</span>
-        <span>#시뮬레이션ㅤ</span>
+        <span style={{marginRight: 5}}>#구현</span>
+        <span style={{marginRight: 5}}>#시뮬레이션</span>
       </Tags>
+      
       <span>14503</span>
     </Container>
   )

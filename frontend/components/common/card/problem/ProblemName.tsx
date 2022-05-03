@@ -1,10 +1,10 @@
 import styled from 'styled-components'
 
-const Container = styled.section`
+const Title = styled.section`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100px;
+  height: 110px;
 
   font-size: 1.8vw;
   color: white;
@@ -12,8 +12,6 @@ const Container = styled.section`
 
 export default function ProblemName() {
   return (
-    <Container>
-      로봇 청소기
-    </Container>
+    <Title>로봇 청소기</Title>
   )
 }
