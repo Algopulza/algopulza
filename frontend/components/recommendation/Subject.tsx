@@ -5,7 +5,7 @@ import _ from 'lodash'
 import styled from 'styled-components'
 
 const Container = styled.section`
-  margin-bottom: 80px;
+  margin-bottom: 70px;
 `
 
 const Cards = styled.div`
