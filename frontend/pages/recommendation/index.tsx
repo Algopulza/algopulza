@@ -8,11 +8,11 @@ const Container = styled.section`
   padding: 0vw 3vw;
 `
 
-export type Title = { title: string }
+export type Title = { title: string, englishTitle: string }
 const titles = [
-  { title: '취약한 태그에 속하는 문제들을 추천해 드려요!' },
-  { title: '최근 자주 풀었던 태그들에 속하는 문제들을 추천해 드려요!' },
-  { title: '비슷한 실력의 다른 유저들이 많이 푼 문제들을 추천해 드려요!' },
+  { title: '취약한 태그에 속하는 문제들을 추천해 드려요!', englishTitle: "" },
+  { title: '최근 자주 풀었던 태그들에 속하는 문제들을 추천해 드려요!', englishTitle: "" },
+  { title: '비슷한 실력의 다른 유저들이 많이 푼 문제들을 추천해 드려요!', englishTitle: "" },
 ]
 
 export default function Recommendation() {

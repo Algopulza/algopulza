@@ -3,7 +3,7 @@ import NavBar from './NavBar'
 import styled from 'styled-components'
 
 const Container = styled.section`
-  height: 592vh;
+  height: 442vh;
 `
 
 type Props = {
