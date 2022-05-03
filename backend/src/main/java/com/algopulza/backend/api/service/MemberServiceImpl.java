@@ -82,10 +82,16 @@ public class MemberServiceImpl implements MemberService {
             log.info("member already exist!!");
 
             // 기존 tier와 다르면
-            Long tier = Long.parseLong(finalJsonNode.get("user").get("tier").toString());
+            Long tier = Long.parseLong(finalJsonNode.get("tier").toString());
             Tier curTier = tierRepository.findByLevel(tier);
             if(selectMember.getTier()!=curTier){
                 selectMember.setTier(curTier);
+            }
+
+            // 기존 solveCount와 다르면
+            int curSolveCount = Integer.parseInt(finalJsonNode.get("solvedCount").toString());
+            if(selectMember.getSolveCount()!=curSolveCount){
+                selectMember.setSolveCount(curSolveCount);
             }
 
             // 로그인 로그 확인 -> 오늘 첫 방문이면 +2 , 오늘첫방문+어제도방문이면 +3
