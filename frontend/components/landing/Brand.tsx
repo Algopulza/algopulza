@@ -1,7 +1,7 @@
-import ServiceName from './description/ServiceName'
-import ServiceDescription from './description/ServiceDescription'
-import LoginButton from './description/LoginButton'
-import ExtensionLink from './description/ExtensionLink'
+import ServiceName from './brand/service/ServiceName'
+import ServiceDescription from './brand/service/ServiceCatchphrase'
+import LoginButton from './brand/ButtonLogin'
+import ExtensionLink from './brand/button/ButtonExtension'
 import styled from 'styled-components'
 
 const Container = styled.section`
@@ -11,7 +11,7 @@ const Container = styled.section`
   align-items: center;
 `
 
-export default function Description() {
+export default function Brand() {
   return (
     <Container>
       <div>
