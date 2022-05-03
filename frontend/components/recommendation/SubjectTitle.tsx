@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-const Container = styled.section`
+const Title = styled.section`
   margin-bottom: 30px;
 
   font-size: 1.8vw;
@@ -13,6 +13,6 @@ type TitleProps = {
 
 export default function SubjectTitle({children}: TitleProps) {
   return (
-    <Container>{children}</Container>
+    <Title>{children}</Title>
   )
 }

@@ -1,6 +1,5 @@
 import { ReactElement } from 'react'
 import NavBar from './NavBar'
-import Footer from './Footer'
 import styled from 'styled-components'
 
 const Container = styled.section`
@@ -18,7 +17,6 @@ export default function Layout({ children }: Props) {
       <main>
         <Container>{children}</Container>
       </main>
-      <Footer />
     </>
   )
 }
