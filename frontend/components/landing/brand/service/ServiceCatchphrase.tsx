@@ -7,17 +7,18 @@ const Container = styled.section`
 
 const Text = styled.p`
   margin: 0;
-  text-align: center;
   line-height: 2;
-  color: #999999;
+
+  text-align: center;
+  font-size: 1.7vw;
+  color: #616161;
 `
 
 export default function ServiceCatchphrase() {
   return (
     <Container>
-      <Text>알고리즘 문제풀이 능력은 취업에 필수!</Text>
-      <Text>막 풀지 말고 알고 푸세요</Text>
-      <Text>저희가 알려드릴게요</Text>
+      <Text>개발자라면 알고리즘 풀이역량은 필수!</Text>
+      <Text>막 풀지 말고, 알고 풀자</Text>
     </Container>
   )
 }

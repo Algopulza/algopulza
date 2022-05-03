@@ -8,8 +8,9 @@ const Container = styled.section`
 
 const Title = styled.p`
   margin: 0;
+  line-height: 1.2;
+
   text-align: center;
-  line-height: 1.3;
   font-size: 5vw;
   font-weight: 700;
 `

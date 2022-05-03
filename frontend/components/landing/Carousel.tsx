@@ -1,16 +1,17 @@
 import Image from 'next/image'
 import Slider from 'react-slick'
 import Slide001 from '../../public/carousel/landing/slide_001.jpg'
-import Slide002 from '../../public/carousel/landing/slide_001.jpg'
+import Slide002 from '../../public/carousel/landing/slide_002.jpg'
 import styled from 'styled-components'
 import "slick-carousel/slick/slick.css"
 import "slick-carousel/slick/slick-theme.css"
 
 const Container = styled.section`
   display: flex;
-  align-items: center;
-  height: 92vh;
-  background: #B28C35;
+  flex-direction: column;
+  justify-content: center;
+  height: 100vh;
+  background: #FFC94D;
 `
 
 export default function Carousel() {
@@ -18,9 +19,9 @@ export default function Carousel() {
     arrows: false,
     fade: true,
     autoplay: true,
-    autoplaySpeed: 4000,
+    autoplaySpeed: 5000,
     infinite: true,
-    speed: 750
+    speed: 1000
   }
 
   return (

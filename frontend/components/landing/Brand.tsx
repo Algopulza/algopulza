@@ -7,7 +7,7 @@ import styled from 'styled-components'
 const Container = styled.section`
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: space-around;
   align-items: center;
 `
 
