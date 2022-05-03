@@ -28,6 +28,25 @@ public class ProblemServiceImpl implements ProblemService {
     private final ProblemHasTagRepository problemHasTagRepository;
     private final TagRepository tagRepository;
 
+    // 구현, DP, 그래프, 그리디, 정렬, BFS, DFS, 조합론 태그의 맵 {boj_key : boj_tag_id}
+    private Map<String, Integer> tagMap = new HashMap<>() {{
+        put("simulation", 141);
+        put("dp", 25);
+        put("graphs", 7);
+        put("greedy", 33);
+        put("sorting", 97);
+        put("bfs", 126);
+        put("dfs", 127);
+        put("combinatorics", 6);
+    }};
+    // 티어별 레벨 시작값 맵 {tier name : level start value}
+    private Map<String, Integer> levelMap = new HashMap<>() {{
+        put("bronze", 1);
+        put("silver", 6);
+        put("gold", 11);
+        put("platinum", 16);
+    }};
+
     @Value("${solvedac.problems.get.defaultStart}")
     private int ProblemsStartNumber;
 
@@ -157,7 +176,7 @@ public class ProblemServiceImpl implements ProblemService {
     @Override
     public List<ProblemAndStatusRes> getProblemList(Long memberId, Pageable pageable) {
         // Problem List 조회
-        List<ProblemAndStatusRes> problemAndStatusResList = problemRepository.findAllByPagination(memberId, pageable);
+        List<ProblemAndStatusRes> problemAndStatusResList = problemRepository.findProblemAndStatusResByMemberId(memberId, pageable);
 
         // Problem별로 Tag List 조회
         for (ProblemAndStatusRes problemAndStatusRes : problemAndStatusResList) {
@@ -168,8 +187,82 @@ public class ProblemServiceImpl implements ProblemService {
     }
 
     @Override
-    public List<ProblemRes> getProblemListByKeyword(String keyword) {
-        return problemRepository.findByTitleLike(keyword);
+    public List<ProblemRes> getProblemListByKeyword(String keyword, Pageable pageable) {
+        // 제목으로 Problem 검색
+        List<ProblemRes> problemResList = problemRepository.findProblemResByTitleLike(keyword, pageable);
+        // 각 Problem별 Tag List 조회
+        for (ProblemRes problemRes : problemResList) {
+            problemRes.setTagList(tagRepository.findByProblemId(problemRes.getProblemId()));
+        }
+        return problemResList;
+    }
+
+    @Override
+    public ProblemRes getOneRandomProblem() {
+        List<Long> problemIdList = problemRepository.findAllId();
+        int index = (int) (Math.random() * problemIdList.size());
+        return problemRepository.findProblemResById(problemIdList.get(index));
+    }
+
+    /**
+     * 랜덤 페이지의 모든 종류의 랜덤 문제 리스트를 반환
+     */
+    @Override
+    public RandomListRes getRandomProblemList() {
+        return RandomListRes.builder()
+                            .simulationList(getRandomProblemListByCondition(0, tagMap.get("simulation"), 5))
+                            .dpList(getRandomProblemListByCondition(0, tagMap.get("dp"), 5))
+                            .graphList(getRandomProblemListByCondition(0, tagMap.get("graphs"), 5))
+                            .greedyList(getRandomProblemListByCondition(0, tagMap.get("greedy"), 5))
+                            .sortingList(getRandomProblemListByCondition(0, tagMap.get("sorting"), 5))
+                            .bfsList(getRandomProblemListByCondition(0, tagMap.get("bfs"), 5))
+                            .dfsList(getRandomProblemListByCondition(0, tagMap.get("dfs"), 5))
+                            .combinationList(getRandomProblemListByCondition(0, tagMap.get("combinatorics"), 5))
+                            .bronzeList(getRandomProblemListByCondition(1, levelMap.get("bronze"), 5))
+                            .silverList(getRandomProblemListByCondition(1, levelMap.get("silver"), 5))
+                            .goldList(getRandomProblemListByCondition(1, levelMap.get("gold"), 5))
+                            .platinumList(getRandomProblemListByCondition(1, levelMap.get("platinum"), 5))
+                            .build();
+    }
+
+    /**
+     * 한 종류의 랜덤 문제 리스트를 반환
+     * type: 종류 (0: 태그별, 1: 레벨별)
+     * condition: 조회 조건 (type이 0이면 태그의 boj_tag_id, 1이면 tier table의 level column 시작값)
+     * count: 조회할 개수
+     */
+    @Override
+    public List<ProblemRes> getRandomProblemListByCondition(int type, int condition, int count) {
+        List<Long> problemIdList = new ArrayList<>();
+        Set<Long> problemIdSet = new HashSet<>();
+
+        if (type == 0) {
+            // Tag Id가 condition에 해당하는 문제 Id 조회
+            Set<Long> problemIdSetByTag = new HashSet<>(problemRepository.findProblemIdByBojTagId(condition));
+            // Bronze 5 ~ Platinum 1 범위에 해당하는 문제 Id 조회
+            Set<Long> problemIdSetByLevel = Set.copyOf(problemRepository.findProblemIdByLevelRange(
+                    levelMap.get("bronze"), levelMap.get("platinum") + 4
+            ));
+            // 두 조건을 모두 만족하는 문제 Id 조회
+            problemIdSetByTag.retainAll(problemIdSetByLevel);
+            problemIdList = List.copyOf(problemIdSetByTag);
+        } else if (type == 1) {
+            problemIdList = problemRepository.findProblemIdByLevelRange(condition, condition + 4);
+        }
+
+        while (problemIdSet.size() < count) {
+            int index = (int) (Math.random() * problemIdList.size());
+            problemIdSet.add(problemIdList.get(index));
+        }
+
+        // Problem 목록 조회
+        List<ProblemRes> problemResList = problemRepository.findProblemResByIdSet(problemIdSet);
+        // Problem별 Tag 목록 조회
+        for (ProblemRes problemRes : problemResList) {
+            problemRes.setTagList(tagRepository.findByProblemId(problemRes.getProblemId()));
+        }
+
+        return problemResList;
     }
 
 }
