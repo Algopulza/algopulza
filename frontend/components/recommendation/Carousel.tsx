@@ -30,7 +30,7 @@ export default function Carousel() {
       <Slider {...settings}>
         <Image src={Slide001} layout="responsive" alt="Carousel Image at Recommendation Page 001" />
         <Image src={Slide002} layout="responsive" alt="Carousel Image at Recommendation Page 002" />
-        <Image src={Slide003} layout="responsive" alt="Carousel Image at Recommendation Page 002" />
+        <Image src={Slide003} layout="responsive" alt="Carousel Image at Recommendation Page 003" />
       </Slider>
     </Container>
   )
