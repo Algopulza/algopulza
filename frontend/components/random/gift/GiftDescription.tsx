@@ -5,18 +5,19 @@ const Container = styled.section`
   flex-direction: column;
   justify-content: center;
   height: 13vh;
-  padding: 0 3vw;
+  padding: 0 4vw;
   color: #FFFFFF;
-`
-
-const Text = styled.p`
-  margin: 0;
-  font-size: 1.2vw;
 `
 
 const Title = styled.p`
   margin: 0;
-  font-size: 2.5vw;
+  font-size: 2.2vw;
+  font-weight: 700;
+`
+
+const Text = styled.p`
+  margin: 0;
+  font-size: 1.1vw;
 `
 
 export default function GiftDescription() {

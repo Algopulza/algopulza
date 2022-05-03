@@ -10,7 +10,7 @@ const Container = styled.section`
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  height: 40vh;
+  height: 35vh;
 `
 
 const Canvas = styled.div`
