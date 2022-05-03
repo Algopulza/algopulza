@@ -168,6 +168,7 @@ public class MemberServiceImpl implements MemberService {
             if(selectMember.getSolveCount()!=curSolveCount){
                 selectMember.setSolveCount(curSolveCount);
             }
+
         });
     }
 
@@ -246,25 +247,33 @@ public class MemberServiceImpl implements MemberService {
         memberRepository.save(newMember);
     }
 
-    private void addSolvingLog(JsonNode finalJsonNode, String bojId) {
-        int solvedSize = finalJsonNode.get("solved").size();
-        for (int i = 0; i < solvedSize; i++) {
-            int problemId = Integer.parseInt(finalJsonNode.get("solved").get(i).get("id").toString());
-            String status = finalJsonNode.get("solved").get(i).get("status").toString();
-            addProblem(bojId,problemId, status);
-        }
-    }
-
     private void addProblem(String bojId, int problemId, String status) {
         Problem problem = problemRepository.findByBojId(problemId).orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND_PROBLEM));
         Optional<Member> member = Optional.ofNullable(memberRepository.findByBojId(bojId));
         member.ifPresent(selectMember->{
-            SolvingLog solvingLog = new SolvingLog();
-            solvingLog.setMember(selectMember);
-            solvingLog.setProblem(problem);
-            solvingLog.setStatus(status);
-            solvingLog.setCreatedTime(LocalDateTime.now());
-            solvingLogRepository.save(solvingLog);
+            // member가 푼 문제 리스트
+            List<Problem> problemList = solvingLogRepository.findByMember(selectMember);
+
+            // 안 풀었던 문제였다면 새로 추가
+            if(!problemList.contains(problem)) {
+                SolvingLog solvingLog = new SolvingLog();
+                solvingLog.setMember(selectMember);
+                solvingLog.setProblem(problem);
+                solvingLog.setStatus(status);
+                solvingLog.setCreatedTime(LocalDateTime.now());
+                solvingLogRepository.save(solvingLog);
+            }
+            // 이미 풀었던 문제라면
+            else{
+                Problem solvedProblem = problemList.get(problemList.indexOf(problem));
+                SolvingLog solvingLog = solvingLogRepository.findByProblem(selectMember, solvedProblem);
+                if(status.equals("solved") && solvingLog.getStatus().equals("tried")){
+                    solvingLog.setStatus("solved");
+                }
+                else if (status.equals("tried") && solvingLog.getStatus().equals("solved")) {
+                    solvingLog.setStatus("tried");
+                }
+            }
         });
     }
 
@@ -275,14 +284,6 @@ public class MemberServiceImpl implements MemberService {
             loginLog.setMember(selectMember);
             loginLogRepository.save(loginLog);
         });
-    }
-
-    private void modifySolvingLog(int prevCount, int curCount, JsonNode finalJsonNode, String bojId) {
-        for (int i = prevCount; i < curCount; i++) {
-            int problemId = Integer.parseInt(finalJsonNode.get("solved").get(i).get("id").toString());
-            String status = finalJsonNode.get("solved").get(i).get("status").toString();
-            addProblem(bojId,problemId, status);
-        }
     }
 
     private String checkDay(String bojId) {
