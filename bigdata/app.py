@@ -4,6 +4,7 @@ from flask import Flask, jsonify
 from flask_cors import CORS
 from sqlalchemy import create_engine, text
 from recomm import vulnerability, user_vulnerability, freq_tag, user_freq_tag, save_data, random_level
+from recomm.mf import train
 
 
 # set을 list로 변환 후 JSON으로 변환할 수 있도록 커스텀 엔코더 작성
@@ -14,7 +15,7 @@ class CustomJSONEncoder(JSONEncoder):
         return JSONEncoder.default(self, obj)
 
 
-def create_app(test_config = None):
+def create_app(test_config=None):
     
     #################
     # flask setting #
@@ -46,7 +47,8 @@ def create_app(test_config = None):
     app.mysql_db = database
 
     # MongoDB
-    client = MongoClient('localhost', app.config['MONGODB_PORT'])
+    # client = MongoClient('localhost', app.config['MONGODB_PORT'])
+    client = MongoClient('localhost', 27027)
     mongodb = client.algopulza_test
     
 
@@ -75,6 +77,12 @@ def create_app(test_config = None):
     def save_dat():
         problem_tag_data = save_data.save_data(app, mongodb)
         return '<p>data saved</p>'
+
+    # 유사티어 유저 mf 모델 저장
+    @app.route("/save-mf-models")
+    def save_mf_model():
+        res = train.train_level(app, mongodb)
+        return res
 
     # 자신 티어 +-1 level 문제 1개 랜덤추천
     @app.route('/random-level/<userid>')

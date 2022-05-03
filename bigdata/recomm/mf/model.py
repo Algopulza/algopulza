@@ -144,7 +144,7 @@ def train_mf(res_dir, R_train, R_valid, max_iter=50, lambda_u=1, lambda_v=100, d
     parameter 설정 안할경우 default로 셋팅
     """
     model = MF(res_dir)
-    model.setData(R_train, R_valid, K=dimension, alpha=0.01, beta=0.01, num_iterations=max_iter)
+    model.setData(R_train, R_valid, K=dimension, alpha=0.01, beta=0.01, iterations=max_iter)
     training_process = model.train()
     model.load_best()
     R_predicted = model.U.dot(model.V.T) 
@@ -158,8 +158,8 @@ def train_mf(res_dir, R_train, R_valid, max_iter=50, lambda_u=1, lambda_v=100, d
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("-i", "--input_path", type=str, default='./data/tiny', help="Path input data pickle")
-    parser.add_argument("-o", "--output_path", type=str, default='./', help="Output path")
+    parser.add_argument("-i", "--input_path", type=str, default='./data/input', help="Path input data pickle")
+    parser.add_argument("-o", "--output_path", type=str, default='./data/output', help="Output path")
     parser.add_argument("-m", "--max_iter", type=int, help="Max Iteration (default: 200)", default=200)
     parser.add_argument("-d", "--dim", type=int, help="Size of latent dimension (default: 50)", default=50)
     args = parser.parse_args()
