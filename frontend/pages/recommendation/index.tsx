@@ -2,7 +2,6 @@ import { ReactElement } from 'react'
 import Layout from '../../components/common/Layout'
 import Carousel from '../../components/recommendation/Carousel'
 import Subject from '../../components/recommendation/Subject'
-import axios from 'axios'
 import styled from 'styled-components'
 
 const Container = styled.section`
