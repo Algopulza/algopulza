@@ -14,7 +14,7 @@ const Button = styled.button`
   background: #FFC94D;
   border: none;
   border-radius: 15px;
-  box-shadow: 0px 2px 10px 5px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 2px 10px 7px rgba(0, 0, 0, 0.25);
 
   font-size: 1.5vw;
   font-weight: 700;
