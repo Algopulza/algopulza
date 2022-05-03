@@ -13,7 +13,7 @@ public interface MemberService {
 
     void modifyProfileImage(ModifyProfileImageReq modifyProfileImageReq);
 
-    MemberRes addMember(String solvedacToken);
+    MemberRes addMember(String bojId);
 
     void modifyMember(ModifyMemberReq modifyMemberReq);
 
