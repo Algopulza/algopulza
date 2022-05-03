@@ -47,8 +47,8 @@ def create_app(test_config=None):
     app.mysql_db = database
 
     # MongoDB
-    # client = MongoClient('localhost', app.config['MONGODB_PORT'])
-    client = MongoClient('localhost', 27027)
+    client = MongoClient('localhost', app.config['MONGODB_PORT'])
+    # client = MongoClient('localhost', 27027)
     mongodb = client.algopulza_test
     
 
