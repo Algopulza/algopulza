@@ -3,7 +3,7 @@ import styled from 'styled-components'
 const Title = styled.section`
   margin-bottom: 30px;
 
-  font-size: 1.7vw;
+  font-size: 1.8vw;
   font-weight: 700;
 `
 
