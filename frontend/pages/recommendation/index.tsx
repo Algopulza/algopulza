@@ -2,6 +2,7 @@ import { ReactElement } from 'react'
 import Layout from '../../components/common/Layout'
 import Carousel from '../../components/recommendation/Carousel'
 import Subject from '../../components/recommendation/Subject'
+import axios from 'axios'
 import styled from 'styled-components'
 
 const Container = styled.section`
@@ -27,6 +28,22 @@ export default function Recommendation() {
     </>
   )
 }
+
+const myToken = 's%3AeyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJoYW5kbGUiOiJjb3RpZzciLCJpYXQiOjE2NTE1NTE0NjZ9.LjKOuHVHRLaznXxi8yno9pZUU_yHBh8jonxyxeakGxQ.Gs7e%2Fe3PdE3KtsBD7KjfR2ZAcCpF%2BeA5bn1H79aCalM'
+axios({
+  method: 'get',
+  url: 'https://solved.ac/api/v3/user/show',
+  headers: {
+    "Cookie": `${myToken}`,
+  },
+  // withCredentials: true
+})
+  .then((res) => {
+    console.log(res)
+  })
+  .catch((error) => {
+    console.log(error)
+  })
 
 Recommendation.getLayout = function getLayout(recommendation: ReactElement) {
   return (
