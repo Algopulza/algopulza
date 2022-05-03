@@ -23,7 +23,7 @@ const Button = styled.button`
   }
 `
 
-export default function LoginButton() {
+export default function ButtonLogin() {
   const router = useRouter()
   function moveToRecommendation() {
     window.open("https://solved.ac/login?prev=%2F")

@@ -1,7 +1,7 @@
 import ServiceName from './brand/service/ServiceName'
-import ServiceDescription from './brand/service/ServiceCatchphrase'
-import LoginButton from './brand/ButtonLogin'
-import ExtensionLink from './brand/button/ButtonExtension'
+import ServiceCatchphrase from './brand/service/ServiceCatchphrase'
+import ButtonLogin from './brand/button/ButtonLogin'
+import ButtonExtension from './brand/button/ButtonExtension'
 import styled from 'styled-components'
 
 const Container = styled.section`
@@ -16,12 +16,12 @@ export default function Brand() {
     <Container>
       <div>
         <ServiceName />
-        <ServiceDescription />
+        <ServiceCatchphrase />
       </div>
 
       <div>
-        <LoginButton />
-        <ExtensionLink />
+        <ButtonLogin />
+        <ButtonExtension />
       </div>
     </Container>
   )

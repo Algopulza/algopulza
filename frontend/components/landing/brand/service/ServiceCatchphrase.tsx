@@ -12,7 +12,7 @@ const Text = styled.p`
   color: #999999;
 `
 
-export default function ServiceDescription() {
+export default function ServiceCatchphrase() {
   return (
     <Container>
       <Text>알고리즘 문제풀이 능력은 취업에 필수!</Text>

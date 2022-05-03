@@ -7,7 +7,7 @@ const Text = styled.div`
   color: #999999;
 `
 
-export default function ExtensionLink() {
+export default function ButtonExtension() {
   return (
     <Text>
       익스텐션 <Link href="/recommendation"><a>설치</a></Link>하기
