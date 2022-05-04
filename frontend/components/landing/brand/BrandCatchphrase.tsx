@@ -7,6 +7,7 @@ const Text = styled.p`
   text-align: center;
   font-size: 1.7vw;
   color: #616161;
+  margin-bottom: 50px;
 `
 
 export default function BrandCatchphrase() {
