@@ -1,4 +1,4 @@
-import ServiceCatchphrase from './brand/BrandCatchphrase'
+import ServiceCatchphrase from './content/BrandCatchphrase'
 import ButtonLogin from '../common/button/ButtonRouting'
 import ButtonExtension from '../common/button/ButtonSubmitting'
 import styled from 'styled-components'
