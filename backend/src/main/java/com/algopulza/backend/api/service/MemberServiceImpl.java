@@ -1,5 +1,7 @@
 package com.algopulza.backend.api.service;
 
+import com.algopulza.backend.api.request.member.AddSolvedProblemReq;
+import com.algopulza.backend.api.request.member.AddTriedProblemReq;
 import com.algopulza.backend.api.request.member.ModifyMemberReq;
 import com.algopulza.backend.api.request.member.ModifyProfileImageReq;
 import com.algopulza.backend.api.response.MemberRes;
@@ -23,6 +25,7 @@ import org.springframework.web.client.RestTemplate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.StringTokenizer;
 import java.util.concurrent.atomic.AtomicReference;
 
 @Slf4j
@@ -165,6 +168,7 @@ public class MemberServiceImpl implements MemberService {
             if(selectMember.getSolveCount()!=curSolveCount){
                 selectMember.setSolveCount(curSolveCount);
             }
+
         });
     }
 
@@ -202,6 +206,30 @@ public class MemberServiceImpl implements MemberService {
 
     }
 
+    @Override
+    public void addSolvedProblem(AddSolvedProblemReq addSolvedProblemReq) {
+        String bojId = addSolvedProblemReq.getBojId();
+        String problems = addSolvedProblemReq.getProblems();
+
+        StringTokenizer st = new StringTokenizer(problems, " ");
+        while (st.hasMoreTokens()){
+            int problemId = Integer.parseInt(st.nextToken());
+            addProblem(bojId, problemId, "solved");
+        }
+    }
+
+    @Override
+    public void addTriedProblem(AddTriedProblemReq addTriedProblemReq) {
+        String bojId = addTriedProblemReq.getBojId();
+        String problems = addTriedProblemReq.getProblems();
+
+        StringTokenizer st = new StringTokenizer(problems, " ");
+        while (st.hasMoreTokens()){
+            int problemId = Integer.parseInt(st.nextToken());
+            addProblem(bojId, problemId, "tried");
+        }
+    }
+
     private void addNewMember(JsonNode finalJsonNode, String bojId) {
         String profileImage = finalJsonNode.get("profileImageUrl").toString();
 
@@ -219,25 +247,33 @@ public class MemberServiceImpl implements MemberService {
         memberRepository.save(newMember);
     }
 
-    private void addSolvingLog(JsonNode finalJsonNode, String bojId) {
-        int solvedSize = finalJsonNode.get("solved").size();
-        for (int i = 0; i < solvedSize; i++) {
-            int problemId = Integer.parseInt(finalJsonNode.get("solved").get(i).get("id").toString());
-            String status = finalJsonNode.get("solved").get(i).get("status").toString();
-            addProblem(bojId,problemId, status);
-        }
-    }
-
     private void addProblem(String bojId, int problemId, String status) {
         Problem problem = problemRepository.findByBojId(problemId).orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND_PROBLEM));
         Optional<Member> member = Optional.ofNullable(memberRepository.findByBojId(bojId));
         member.ifPresent(selectMember->{
-            SolvingLog solvingLog = new SolvingLog();
-            solvingLog.setMember(selectMember);
-            solvingLog.setProblem(problem);
-            solvingLog.setStatus(status);
-            solvingLog.setCreatedTime(LocalDateTime.now());
-            solvingLogRepository.save(solvingLog);
+            // member가 푼 문제 리스트
+            List<Problem> problemList = solvingLogRepository.findByMember(selectMember);
+
+            // 안 풀었던 문제였다면 새로 추가
+            if(!problemList.contains(problem)) {
+                SolvingLog solvingLog = new SolvingLog();
+                solvingLog.setMember(selectMember);
+                solvingLog.setProblem(problem);
+                solvingLog.setStatus(status);
+                solvingLog.setCreatedTime(LocalDateTime.now());
+                solvingLogRepository.save(solvingLog);
+            }
+            // 이미 풀었던 문제라면
+            else{
+                Problem solvedProblem = problemList.get(problemList.indexOf(problem));
+                SolvingLog solvingLog = solvingLogRepository.findByProblem(selectMember, solvedProblem);
+                if(status.equals("solved") && solvingLog.getStatus().equals("tried")){
+                    solvingLog.setStatus("solved");
+                }
+                else if (status.equals("tried") && solvingLog.getStatus().equals("solved")) {
+                    solvingLog.setStatus("tried");
+                }
+            }
         });
     }
 
@@ -248,14 +284,6 @@ public class MemberServiceImpl implements MemberService {
             loginLog.setMember(selectMember);
             loginLogRepository.save(loginLog);
         });
-    }
-
-    private void modifySolvingLog(int prevCount, int curCount, JsonNode finalJsonNode, String bojId) {
-        for (int i = prevCount; i < curCount; i++) {
-            int problemId = Integer.parseInt(finalJsonNode.get("solved").get(i).get("id").toString());
-            String status = finalJsonNode.get("solved").get(i).get("status").toString();
-            addProblem(bojId,problemId, status);
-        }
     }
 
     private String checkDay(String bojId) {
