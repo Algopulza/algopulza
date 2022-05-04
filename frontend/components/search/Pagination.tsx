@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 
 const Container = styled.section`
+  height: 15vh;
   background: #FFC94D;
 `
 

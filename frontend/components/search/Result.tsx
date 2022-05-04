@@ -3,6 +3,7 @@ import Row from './result/Row'
 import styled from 'styled-components'
 
 const Container = styled.section`
+  height: 65vh;
   background: #FFC94D;
 `
 
