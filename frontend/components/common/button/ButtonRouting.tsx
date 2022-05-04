@@ -26,7 +26,7 @@ const CustomButton = styled.button`
   }
 `
 
-export default function ButtonLogin() {
+export default function ButtonRouting() {
   const router = useRouter()
 
   function moveToRecommendation() {

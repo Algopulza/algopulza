@@ -9,7 +9,7 @@ const Word = styled.span`
   }
 `
 
-export default function ButtonSignup() {
+export default function ButtonToggling() {
   return (
     <Word>회원 가입</Word>
   )
