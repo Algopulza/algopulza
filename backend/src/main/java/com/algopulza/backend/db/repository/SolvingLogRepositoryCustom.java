@@ -10,5 +10,5 @@ public interface SolvingLogRepositoryCustom {
     List<Problem> findByMember(Member member);
 
 
-    SolvingLog findByProblem(Member member, Problem problem);
+    List<SolvingLog> findByProblem(Member member, Problem problem);
 }

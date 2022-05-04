@@ -1,9 +1,6 @@
 package com.algopulza.backend.api.service;
 
-import com.algopulza.backend.api.request.member.AddSolvedProblemReq;
-import com.algopulza.backend.api.request.member.AddTriedProblemReq;
-import com.algopulza.backend.api.request.member.ModifyMemberReq;
-import com.algopulza.backend.api.request.member.ModifyProfileImageReq;
+import com.algopulza.backend.api.request.member.*;
 import com.algopulza.backend.api.response.MemberRes;
 import com.algopulza.backend.api.response.TokenRes;
 
@@ -30,5 +27,7 @@ public interface MemberService {
     void addSolvedProblem(AddSolvedProblemReq addSolvedProblemReq);
 
     void addTriedProblem(AddTriedProblemReq addTriedProblemReq);
+
+    void addDetailSolvedProblem(AddDetailSolvedProblem addDetailSolvedProblem);
 }
 
