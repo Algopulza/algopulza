@@ -30,6 +30,18 @@ public class SolvingLog extends BaseTimeEntity {
     private String status;
 
     @Column
+    private int memory;
+
+    @Column
+    private int time;
+
+    @Column
+    private String language;
+
+    @Column
+    private int codeLength;
+
+    @Column
     private LocalDateTime solvingTime;
 
     @Column
