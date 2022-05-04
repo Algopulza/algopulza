@@ -14,7 +14,7 @@ public interface ProblemService {
 
     ProblemAndTag getEntitiesFromSolvedAcProblemRes(SolvedAcProblemRes solvedAcProblemRes, HashMap<Integer, Tag> tagMapBybojTagId);
 
-    List<ProblemAndStatusRes> getProblemList(Long memberId, Pageable pageable);
+    List<ProblemAndStatusRes> getProblemList(Long memberId, String tierName, Integer tierLevel, String status, Pageable pageable);
 
     List<ProblemRes> getProblemListByKeyword(String keyword, Pageable pageable);
 
@@ -22,6 +22,6 @@ public interface ProblemService {
 
     RandomListRes getRandomProblemList();
 
-    List<ProblemRes> getRandomProblemListByCondition(int type, int condition, int count);
+    List<ProblemRes> getRandomProblemListByCondition(int type, Object condition, int count);
 
 }

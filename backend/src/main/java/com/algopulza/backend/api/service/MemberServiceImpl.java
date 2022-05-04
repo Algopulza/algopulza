@@ -53,7 +53,7 @@ public class MemberServiceImpl implements MemberService {
                 .bojId(member.getBojId())
                 .profileImage(member.getProfileImage())
                 .email(member.getEmail())
-                .level(member.getTier().getLevel())
+                .level(member.getTier().getId())
                 .tierName(member.getTier().getName())
                 .solveCount(member.getSolveCount())
                 .exp(member.getExp())
