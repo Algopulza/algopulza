@@ -21,22 +21,32 @@ const Canvas = styled.div`
 
 type TextProps = {
   text: string,
-  img: StaticImageData
+  img: StaticImageData,
+  data: any,
+  random: any,
 }
 
-export default function GiftBox({ text, img }: TextProps) {
+export default function GiftBox({ text, img, data, random }: TextProps) {
   const [isToggled, setIsToggled] = useState(false)
 
   return (
     <Container>
       {isToggled ?
-        <Card /> :
+        <Card
+        key={data.problemId}
+        tags={data.tagList}
+        id={data.problemId}
+        title={data.title}
+        level={data.tierLevel}
+        average={data.averageTryCount}
+        accept={data.acceptedCount}
+        /> :
         <Canvas onClick={() => setIsToggled(true)}>
           <Image src={img} layout="responsive" alt="gift box image" />
         </Canvas>
       }
       
-      <GiftButton onClick={() => setIsToggled(!isToggled)}>{text}</GiftButton>
+      <GiftButton onClick={() => {random(), setIsToggled(!isToggled)}}>{text}</GiftButton>
     </Container>
   )
 }

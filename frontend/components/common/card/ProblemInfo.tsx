@@ -15,10 +15,17 @@ const Item = styled.div`
   justify-content: space-around;
 `
 
-export default function ProblemInfo() {
+type CardProps = {
+  key: number,
+  level: number,
+  average: number,
+  accept: number,
+}
+
+export default function ProblemInfo({key, level, average, accept}:CardProps) {
   const range = _.range(3)
   const items = ['티어', '평균 시도', '해결']
-  const values = ['Gold 5', '1.5', '13,645']
+  const values = [level, average, accept]
 
   return (
     <Container>
