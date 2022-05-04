@@ -1,9 +1,8 @@
 import styled from 'styled-components'
 
-const Word = styled.span`
+const Container = styled.section`
   margin-right: 1vw;
-  color: #8F8B82;
-  cursor: pointer;
+  color: #545454;
   &:hover {
     color: #FFC94D;
   }
@@ -11,6 +10,6 @@ const Word = styled.span`
 
 export default function ButtonToggling() {
   return (
-    <Word>회원 가입</Word>
+    <Container>회원 가입</Container>
   )
 }
