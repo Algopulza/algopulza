@@ -10,7 +10,7 @@ const Container = styled.section`
   align-items: center;
 `
 
-export default function Form() {
+export default function Content() {
   return (
     <Container>
       <div>

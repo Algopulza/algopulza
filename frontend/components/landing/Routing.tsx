@@ -9,7 +9,7 @@ const Container = styled.section`
   height: 10vh;
 `
 
-export default function Tab() {
+export default function Routing() {
   return (
     <Container>
       <ButtonStranger />
