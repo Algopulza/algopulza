@@ -7,12 +7,18 @@ const Container = styled.section`
   background: #EC9A00;
   border-radius: 15px 15px 0 0;
 `
+type CardProps = {
+  key: number,
+  tags: any,
+  id:number,
+  title:string,
+}
 
-export default function Problem() {
+export default function Problem({key, tags, id, title}:CardProps) {
   return (
     <Container>
-      <ProblemTag />
-      <ProblemName />
+      <ProblemTag key={key} tags={tags} id={id} />
+      <ProblemName key={key} title={title}/>
     </Container>
   )
 }
