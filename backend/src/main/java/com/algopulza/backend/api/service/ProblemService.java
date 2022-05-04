@@ -4,13 +4,14 @@ import com.algopulza.backend.api.response.*;
 import com.algopulza.backend.db.entity.ProblemAndTag;
 import com.algopulza.backend.db.entity.Tag;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.server.ServerErrorException;
 
 import java.util.HashMap;
 import java.util.List;
 
 public interface ProblemService {
 
-    void getAndAddProblemList(int start, int end);
+    void getAndAddProblemList(int start, int end) throws InterruptedException, ServerErrorException;
 
     ProblemAndTag getEntitiesFromSolvedAcProblemRes(SolvedAcProblemRes solvedAcProblemRes, HashMap<Integer, Tag> tagMapBybojTagId);
 

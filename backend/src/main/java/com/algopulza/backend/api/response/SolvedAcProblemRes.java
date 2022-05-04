@@ -19,7 +19,7 @@ public class SolvedAcProblemRes {
 
     private Integer acceptedUserCount;
 
-    private Integer level;
+    private Long level;
 
     private Integer votedUserCount;
 

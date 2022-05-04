@@ -1,5 +1,5 @@
 ﻿solvedac:
-  baseurl: https://solved.ac/api/v3/
+  baseurl: https://solved.ac/api/v3
   problems:
     get:
       size: 100

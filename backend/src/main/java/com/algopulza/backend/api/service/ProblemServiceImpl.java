@@ -1,6 +1,8 @@
 package com.algopulza.backend.api.service;
 
 import com.algopulza.backend.api.response.*;
+import com.algopulza.backend.common.exception.NotFoundException;
+import com.algopulza.backend.common.exception.handler.ErrorCode;
 import com.algopulza.backend.common.model.ResponseMessage;
 import com.algopulza.backend.db.entity.*;
 import com.algopulza.backend.db.repository.*;
@@ -11,9 +13,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Mono;
+import reactor.core.publisher.Flux;
+import reactor.core.scheduler.Schedulers;
 
 import java.util.*;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -23,6 +28,7 @@ import java.util.stream.IntStream;
 @Service
 public class ProblemServiceImpl implements ProblemService {
 
+    private final WebClient webClient;
     private final ProblemRepository problemRepository;
     private final TierRepository tierRepository;
     private final ProblemHasTagRepository problemHasTagRepository;
@@ -49,13 +55,8 @@ public class ProblemServiceImpl implements ProblemService {
     @Value("${solvedac.problems.get.size}")
     private int ProblemsSolvedacGetSize;
 
-    @Value("${solvedac.baseurl}")
-    private String SolvedacBaseUrl;
-
     @Override
-    public void getAndAddProblemList(int start, int end) {
-        // 1. Solved.ac API로부터 문제 정보 수집
-
+    public void getAndAddProblemList(int start, int end) throws InterruptedException {
         // 정보를 요청할 문제들의 ID값을 만드는 StringBuilder
         StringBuilder problemIdBuilder = new StringBuilder();
         // 정보를 요청할 문제들의 ID값 String List
@@ -84,51 +85,129 @@ public class ProblemServiceImpl implements ProblemService {
             start += ProblemsSolvedacGetSize;
         }
 
-        final List<Mono<List<SolvedAcProblemRes>>> responses = IntStream.range(0, problemIdList.size())
-                                                                        .mapToObj(index -> WebClient.create(SolvedacBaseUrl + "problem/lookup?problemIds=" + problemIdList.get(index))
-                                                                                                    .get().retrieve().bodyToFlux(SolvedAcProblemRes.class)
-                                                                                                    .collectList()).collect(Collectors.toList()); // create iterable of mono of network calls
+        // 문제 정보 리스트
+        List<Problem> problemList = new LinkedList<>();
+        // 문제의 태그 정보 리스트
+        List<ProblemHasTag> problemHasTagList = new LinkedList<>();
+        // <BojTagId, Tag> 구조의 태그 리스트 (중복 태그 삽입 방지를 위해 HashMap 사용)
+        HashMap<Integer, Tag> tagMapByBojTagId = new HashMap<>();
 
-        Mono.zip(responses, Arrays::asList) // make parallel network calls and collect it to a list
-            .flatMapIterable(objects -> objects) // make flux of objects
-            .doOnComplete(() -> {
-                log.info("{} ~ {} {}", ProblemsStartNumber, ProblemsEndNumber, ResponseMessage.PUT_PROBLEM_LIST_SUCCESS);
-            }) // doOnComplete: 모든 요청들이 끝나면 실행
-            .subscribe(response -> {
-                List<Problem> problemList = new LinkedList<>();
-                List<ProblemHasTag> problemHasTagList = new LinkedList<>();
-                // 중복 태그 삽입 방지를 위해 HashMap 사용
-                HashMap<Integer, Tag> tagMapBybojTagId = new HashMap<>();
+        log.info("{} ~ {} 문제 수집 시작", ProblemsStartNumber, ProblemsEndNumber);
 
-                for (SolvedAcProblemRes solvedAcProblemRes : (List<SolvedAcProblemRes>) response) {
-                    // 2. 수집한 정보로 Entity 생성
-                    ProblemAndTag problemAndTag = getEntitiesFromSolvedAcProblemRes(solvedAcProblemRes, tagMapBybojTagId);
+        // 1. Solved.ac API로부터 문제 정보 수집
+        final List<Flux<SolvedAcProblemRes>> responses = problemIdList.stream()
+                                                                      .map(problemIds -> webClient.mutate().build().get()
+                                                                                         .uri(uriBuilder -> uriBuilder.path("/problem/lookup")
+                                                                                                                      .queryParam("problemIds", problemIds)
+                                                                                                                      .build())
+                                                                                         .retrieve()
+                                                                                         .bodyToFlux(SolvedAcProblemRes.class))
+                                                                                         .collect(Collectors.toList());
 
-                    problemList.add(problemAndTag.getProblem());
-                    problemHasTagList.addAll(problemAndTag.getProblemHasTagList());
-                }
-                // 3. DB에 저장
-                problemRepository.saveAll(problemList);
-                tagRepository.saveAll(tagMapBybojTagId.values());
-                problemHasTagRepository.saveAll(problemHasTagList);
 
-                log.info("{}개 문제 {}", problemList.size(), ResponseMessage.PUT_PROBLEM_LIST_SUCCESS);
-            }) // subscribe: 각 요청이 끝나면 실행 (100개씩 DB에 저장)
-        ;
+        // 실제로 정보를 받아온 문제 개수
+        log.info("문제 개수 측정 시작");
+        int[] realProblemCount = { 0 };
+        for (Flux<SolvedAcProblemRes> response : responses) {
+            realProblemCount[0] += response.collectList().block().size();
+        }
+        log.info("문제 개수 측정 종료 {}", realProblemCount[0]);
+
+        // 비동기 처리가 완료되면 DB에 데이터를 저장하기 위한 CountDownLatch
+        CountDownLatch countDownLatch = new CountDownLatch(realProblemCount[0]);
+
+        for (Flux<SolvedAcProblemRes> response : responses) {
+            response.parallel()
+                    .runOn(Schedulers.parallel())
+                    .subscribe(solvedAcProblemRes -> {
+                        log.info("{} 시작", solvedAcProblemRes.getProblemId());
+
+                        // 2. 수집한 정보로 Entity 생성
+                        ProblemAndTag problemAndTag = getEntitiesFromSolvedAcProblemRes(solvedAcProblemRes, tagMapByBojTagId);
+
+                        if (problemAndTag.getProblem() == null) {
+                            log.debug("problem: {} {}", solvedAcProblemRes.getProblemId(), problemAndTag.getProblem());
+                        }
+
+                        problemList.add(problemAndTag.getProblem());
+                        problemHasTagList.addAll(problemAndTag.getProblemHasTagList());
+
+                        countDownLatch.countDown();
+                    });
+        }
+
+        countDownLatch.await();
+        log.info("수집 종료 {}", problemList.size());
+//        for (String problemIds : problemIdList) {
+//            // 1. Solved.ac API로부터 문제 정보 수집
+//            log.info("{} 수집 시작", problemIds);
+//            webClient.mutate().build()
+//                     .get()
+//                     .uri(uriBuilder -> uriBuilder.path("/problem/lookup").queryParam("problemIds", problemIds).build())
+//                     .retrieve()
+//                     .bodyToFlux(SolvedAcProblemRes.class)
+//                     .parallel().runOn(Schedulers.parallel())
+//                     .subscribe(solvedAcProblemRes -> {
+//                         log.info("{} 시작", solvedAcProblemRes.getProblemId());
+//
+//                         // 2. 수집한 정보로 Entity 생성
+//                         ProblemAndTag problemAndTag = getEntitiesFromSolvedAcProblemRes(solvedAcProblemRes, tagMapByBojTagId);
+//
+//                         if (problemAndTag.getProblem() == null) {
+//                             log.debug("problem: {} {}", solvedAcProblemRes.getProblemId(), problemAndTag.getProblem());
+//                         }
+//
+//                         problemList.add(problemAndTag.getProblem());
+//                         problemHasTagList.addAll(problemAndTag.getProblemHasTagList());
+//
+//                         notExistProblemCount[0]--;
+//                         countDownLatch.countDown();
+//                         log.info("{} 종료 problemCount: {} problem: {}", solvedAcProblemRes.getProblemId(), problemList.size(), problemAndTag.getProblem());
+//                     }, throwable -> {
+//                         countDownLatch.countDown();
+//                         log.error("flux error {}, countDownLatch: {}", throwable, countDownLatch.getCount());
+//                     });
+//            log.info("{} 수집 종료", problemIds);
+//        }
+//
+//        // 비동기 처리가 모두 끝날때까지 대기
+//        boolean result = countDownLatch.await(15, TimeUnit.SECONDS);
+//        log.info("@@@@@@@ {} {}", countDownLatch.getCount(), result);
+//        // 결과를 받지 못한 문제수만큼 countdown
+//        for (int i = 0; i < notExistProblemCount[0]; i++) {
+//            countDownLatch.countDown();
+//        }
+//        result = countDownLatch.await(15, TimeUnit.SECONDS);
+//        log.info("!!!!!!! {} {}", countDownLatch.getCount(), result);
+//
+//        // 3. 수집한 정보 DB에 저장
+//        log.info("{} {} {} 저장 시작", problemList.size(), tagMapByBojTagId.values().size(), problemHasTagList.size());
+//        for (Problem problem : problemList) {
+//            if (problem == null) {
+//                log.info("null problem!!!");
+//            }
+//            log.info("problem {}", problem);
+//        }
+//        problemRepository.saveAll(problemList);
+//        tagRepository.saveAll(tagMapByBojTagId.values());
+//        problemHasTagRepository.saveAll(problemHasTagList);
+//
+//        log.info("{}개 문제 ({} {}) {}", problemList.size(), tagMapByBojTagId.values().size(), problemHasTagList.size(), ResponseMessage.PUT_PROBLEM_LIST_SUCCESS);
     }
 
     @Override
-    public ProblemAndTag getEntitiesFromSolvedAcProblemRes(SolvedAcProblemRes solvedAcProblemRes, HashMap<Integer, Tag> tagMapBybojTagId) {
+    public ProblemAndTag getEntitiesFromSolvedAcProblemRes(SolvedAcProblemRes solvedAcProblemRes, HashMap<Integer, Tag> tagMapByBojTagId) {
         Problem problem = problemRepository.findByBojId(solvedAcProblemRes.getProblemId()).orElseGet(Problem::new);
         List<ProblemHasTag> problemHasTagList = new LinkedList<>();
 
         // Problem Entity 설정
-        problem.setTier(tierRepository.findByLevel(solvedAcProblemRes.getLevel()));
+        problem.setTier(tierRepository.findById(solvedAcProblemRes.getLevel()).orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND_TIER)));
         problem.setBojId(solvedAcProblemRes.getProblemId());
         problem.setTitle(solvedAcProblemRes.getTitleKo());
         problem.setSolvableFlag(solvedAcProblemRes.getIsSolvable());
         problem.setAcceptedCount(solvedAcProblemRes.getAcceptedUserCount());
         problem.setAverageTryCount(solvedAcProblemRes.getAverageTries());
+        log.info("problem: {}", problem);
 
         // Tag, ProblemHasTag Entity 설정
         for (SolvedAcTagRes solvedAcTagRes : solvedAcProblemRes.getTags()) { // Tag별로 반복
@@ -137,13 +216,13 @@ public class ProblemServiceImpl implements ProblemService {
 
             // 해당 Tag 정보가 DB에 없고, DB Insert List에 없다면 Insert
             Tag tag = tagRepository.findByBojTagId(solvedAcTagRes.getBojTagId()).orElseGet(Tag::new);
-            if (tag.getId() == null && !tagMapBybojTagId.containsKey(solvedAcTagRes.getBojTagId())) {
+            if (tag.getId() == null && !tagMapByBojTagId.containsKey(solvedAcTagRes.getBojTagId())) {
                 tag.setBojTagId(solvedAcTagRes.getBojTagId());
                 tag.setBojKey(solvedAcTagRes.getKey());
                 tag.setName(tagDisplayName.getName());
                 tag.setShortName(tagDisplayName.getName());
 
-                tagMapBybojTagId.put(solvedAcTagRes.getBojTagId(), tag);
+                tagMapByBojTagId.put(solvedAcTagRes.getBojTagId(), tag);
             }
 
             // ProblemHasTag 정보가 DB에 없다면 Insert
@@ -154,12 +233,8 @@ public class ProblemServiceImpl implements ProblemService {
                 problemHasTag.setProblem(problem);
                 problemHasTagList.add(problemHasTag);
 
-                // tag.getId() == null 조건으로 if문 진입했다면 태그 정보는 tagMapBybojTagId 에 있다.
-                if (tagMapBybojTagId.containsKey(solvedAcTagRes.getBojTagId())) {
-                    problemHasTag.setTag(tagMapBybojTagId.get(solvedAcTagRes.getBojTagId()));
-                } else {
-                    problemHasTag.setTag(tag);
-                }
+                // tag.getId() == null 조건으로 if문 진입했다면 태그 정보는 tagMapByBojTagId 에 있다.
+                problemHasTag.setTag(tagMapByBojTagId.getOrDefault(solvedAcTagRes.getBojTagId(), tag));
             }
         }
 
