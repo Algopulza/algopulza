@@ -29,7 +29,7 @@ public class ProblemServiceImpl implements ProblemService {
     private final TagRepository tagRepository;
 
     // 구현, DP, 그래프, 그리디, 정렬, BFS, DFS, 조합론 태그의 맵 {boj_key : boj_tag_id}
-    private Map<String, Integer> tagMap = new HashMap<>() {{
+    private final Map<String, Integer> tagMap = new HashMap<>() {{
         put("simulation", 141);
         put("dp", 25);
         put("graphs", 7);
@@ -38,13 +38,6 @@ public class ProblemServiceImpl implements ProblemService {
         put("bfs", 126);
         put("dfs", 127);
         put("combinatorics", 6);
-    }};
-    // 티어별 레벨 시작값 맵 {tier name : level start value}
-    private Map<String, Integer> levelMap = new HashMap<>() {{
-        put("bronze", 1);
-        put("silver", 6);
-        put("gold", 11);
-        put("platinum", 16);
     }};
 
     @Value("${solvedac.problems.get.defaultStart}")
@@ -174,9 +167,9 @@ public class ProblemServiceImpl implements ProblemService {
     }
 
     @Override
-    public List<ProblemAndStatusRes> getProblemList(Long memberId, Pageable pageable) {
+    public List<ProblemAndStatusRes> getProblemList(Long memberId, String tierName, Integer tierLevel, String status, Pageable pageable) {
         // Problem List 조회
-        List<ProblemAndStatusRes> problemAndStatusResList = problemRepository.findProblemAndStatusResByMemberId(memberId, pageable);
+        List<ProblemAndStatusRes> problemAndStatusResList = problemRepository.findProblemAndStatusRes(memberId, tierName, tierLevel, status, pageable);
 
         // Problem별로 Tag List 조회
         for (ProblemAndStatusRes problemAndStatusRes : problemAndStatusResList) {
@@ -218,10 +211,10 @@ public class ProblemServiceImpl implements ProblemService {
                             .bfsList(getRandomProblemListByCondition(0, tagMap.get("bfs"), 5))
                             .dfsList(getRandomProblemListByCondition(0, tagMap.get("dfs"), 5))
                             .combinationList(getRandomProblemListByCondition(0, tagMap.get("combinatorics"), 5))
-                            .bronzeList(getRandomProblemListByCondition(1, levelMap.get("bronze"), 5))
-                            .silverList(getRandomProblemListByCondition(1, levelMap.get("silver"), 5))
-                            .goldList(getRandomProblemListByCondition(1, levelMap.get("gold"), 5))
-                            .platinumList(getRandomProblemListByCondition(1, levelMap.get("platinum"), 5))
+                            .bronzeList(getRandomProblemListByCondition(1, "Bronze", 5))
+                            .silverList(getRandomProblemListByCondition(1, "Silver", 5))
+                            .goldList(getRandomProblemListByCondition(1, "Gold", 5))
+                            .platinumList(getRandomProblemListByCondition(1, "Platinum", 5))
                             .build();
     }
 
@@ -232,22 +225,26 @@ public class ProblemServiceImpl implements ProblemService {
      * count: 조회할 개수
      */
     @Override
-    public List<ProblemRes> getRandomProblemListByCondition(int type, int condition, int count) {
+    public List<ProblemRes> getRandomProblemListByCondition(int type, Object condition, int count) {
         List<Long> problemIdList = new ArrayList<>();
         Set<Long> problemIdSet = new HashSet<>();
+        Set<String> tierNameSet = new HashSet<>();
 
         if (type == 0) {
             // Tag Id가 condition에 해당하는 문제 Id 조회
-            Set<Long> problemIdSetByTag = new HashSet<>(problemRepository.findProblemIdByBojTagId(condition));
+            Set<Long> problemIdSetByTag = new HashSet<>(problemRepository.findProblemIdByBojTagId((Integer) condition));
             // Bronze 5 ~ Platinum 1 범위에 해당하는 문제 Id 조회
-            Set<Long> problemIdSetByLevel = Set.copyOf(problemRepository.findProblemIdByLevelRange(
-                    levelMap.get("bronze"), levelMap.get("platinum") + 4
-            ));
+            tierNameSet.add("Bronze");
+            tierNameSet.add("Silver");
+            tierNameSet.add("Gold");
+            tierNameSet.add("Platinum");
+            Set<Long> problemIdSetByLevel = Set.copyOf(problemRepository.findProblemIdByTierNameSet(tierNameSet));
             // 두 조건을 모두 만족하는 문제 Id 조회
             problemIdSetByTag.retainAll(problemIdSetByLevel);
             problemIdList = List.copyOf(problemIdSetByTag);
         } else if (type == 1) {
-            problemIdList = problemRepository.findProblemIdByLevelRange(condition, condition + 4);
+            tierNameSet.add((String) condition);
+            problemIdList = problemRepository.findProblemIdByTierNameSet(tierNameSet);
         }
 
         while (problemIdSet.size() < count) {

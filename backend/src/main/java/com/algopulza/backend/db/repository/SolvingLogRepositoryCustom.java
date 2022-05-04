@@ -1,10 +1,14 @@
 package com.algopulza.backend.db.repository;
 
 import com.algopulza.backend.db.entity.Member;
+import com.algopulza.backend.db.entity.Problem;
 import com.algopulza.backend.db.entity.SolvingLog;
 
 import java.util.List;
 
 public interface SolvingLogRepositoryCustom {
-    List<SolvingLog> findByName(Member member);
+    List<Problem> findByMember(Member member);
+
+
+    List<SolvingLog> findByProblem(Member member, Problem problem);
 }
