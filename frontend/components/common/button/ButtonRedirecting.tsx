@@ -1,41 +1,20 @@
-import { useRouter } from 'next/router'
 import styled from 'styled-components'
 
-const Container = styled.section`
-  display: flex;
-  justify-content: center;
-`
-
-const CustomButton = styled.button`
-  margin-bottom: 25px;
-
-  width: 10vw;
-  height: 55px;
-  background: #FFC94D;
-  border: none;
-  border-radius: 15px;
-  box-shadow: 0px 4px 10px 6px rgba(0, 0, 0, 0.25);
-
-  font-size: 1.5vw;
-  font-weight: 700;
-  color: white;
-  
+const Container = styled.span`
+  margin-right: 1vw;
+  color: #8F8B82;
   cursor: pointer;
   &:hover {
-    background-color: #ffd370;
+    color: #FFC94D;
   }
 `
 
-export default function ButtonExtension() {
-  const router = useRouter()
-
-  function moveToRecommendation() {
-    router.push('/recommendation')
+export default function ButtonRedirecting() {
+  function clickHandler () {
+    const url = 'https://chrome.google.com/webstore/category/extensions?hl=ko'
+    window.open(url)
   }
-
   return (
-    <Container>
-      <CustomButton onClick={moveToRecommendation}>로그인</CustomButton>
-    </Container>
+    <Container onClick={clickHandler}>알고풀자 익스텐션을 설치해보세요</Container>
   )
 }

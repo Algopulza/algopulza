@@ -1,17 +1,7 @@
-import Link from 'next/link'
+import { useRouter } from 'next/router'
 import styled from 'styled-components'
 
-const Word = styled.span`
-  margin-right: 1vw;
-  color: #8F8B82;
-  cursor: pointer;
-  &:hover {
-    color: #FFC94D;
-  }
-`
-const CustomButton = styled.button`
-  margin-bottom: 25px;
-
+const Button = styled.button`
   width: 10vw;
   height: 55px;
   background: #FFC94D;
@@ -25,11 +15,16 @@ const CustomButton = styled.button`
   
   cursor: pointer;
   &:hover {
-    background-color: #ffd370;
+    background-color: #1A4568;
   }
 `
-export default function ButtonStranger() {
+export default function ButtonSubmitting() {
+  const router = useRouter()
+  function moveToRecommendation() {
+    router.push('/recommendation')
+  }
+
   return (
-    <Link href="/recommendation"><a><Word>비회원 로그인</Word></a></Link>
+    <Button onClick={moveToRecommendation}>로그인</Button>
   )
 }
