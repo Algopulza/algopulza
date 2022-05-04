@@ -3,8 +3,8 @@ from pymongo import MongoClient
 from flask import Flask, jsonify
 from flask_cors import CORS
 from sqlalchemy import create_engine, text
-from recomm import vulnerability, user_vulnerability, freq_tag, user_freq_tag, save_data, random_level
-from recomm.mf import train
+from recomm import vulnerability, user_vulnerability, freq_tag, user_freq_tag, save_data, random, random_level
+from recomm.mf import train, recomm_mf
 
 
 # set을 list로 변환 후 JSON으로 변환할 수 있도록 커스텀 엔코더 작성
@@ -47,8 +47,8 @@ def create_app(test_config=None):
     app.mysql_db = database
 
     # MongoDB
-    client = MongoClient('localhost', app.config['MONGODB_PORT'])
-    # client = MongoClient('localhost', 27027)
+    # client = MongoClient('localhost', app.config['MONGODB_PORT'])
+    client = MongoClient('localhost', 27027)
     mongodb = client.algopulza_test
     
 
@@ -75,7 +75,8 @@ def create_app(test_config=None):
     # 전체 문제데이터 변형 후 저장
     @app.route("/save-data")
     def save_dat():
-        problem_tag_data = save_data.save_data(app, mongodb)
+        res_problem_tag_data = save_data.save_data(app, mongodb)
+        res_mf_data = save_mf_model()
         return '<p>data saved</p>'
 
     # 유사티어 유저 mf 모델 저장
@@ -83,11 +84,26 @@ def create_app(test_config=None):
     def save_mf_model():
         res = train.train_level(app, mongodb)
         return res
+    
+    # 유사티어 유저 문제 추천
+    @app.route("/recomm/mf-model/<userid>")
+    def recomm_mf_model(userid):
+        res = recomm_mf.recomm_mf(app, mongodb, userid)
+        if res == 'empty':
+            print('empty mf recomm problems list')
+            return rand(userid)
+        return res
 
     # 자신 티어 +-1 level 문제 1개 랜덤추천
     @app.route('/random-level/<userid>')
     def rand_lv(userid):
         rand_problem = random_level.random_one(app, mongodb, userid)
+        return rand_problem
+
+    # 아직 안 푼 자신 티어 +-1 level 문제 10개 랜덤추천
+    @app.route('/random/<userid>')
+    def rand(userid):
+        rand_problem = random.recomm_random(app, mongodb, userid)
         return rand_problem
 
     # 유저 취약태그 분석
