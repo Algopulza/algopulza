@@ -5,10 +5,9 @@
 - mf 모델을 생성, 결괏값 산출 후 mongoDB 저장
 - 함수 구조
   - save_mf_model : app.py에서 실행되는 함수
-    - train.train_level : 각 티어별 모델 생성 및 데이터 fetch
-      - train.train_model : 모델 학습을 위한 데이터 전처리
-        - model.train_mf : 모델 학습
-          - model.MF : Maxtrix Factorization 관련 class 및 함수
+    - train.train_level : 각 티어별 모델 생성, 데이터 fetch 및 전처리
+      - model.train_mf : 모델 학습
+        - model.MF : Maxtrix Factorization 관련 class 및 함수
 - 데이터 저장 형태
 ```
 {
