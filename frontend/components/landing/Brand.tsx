@@ -1,7 +1,8 @@
-import ServiceName from './brand/service/ServiceName'
-import ServiceCatchphrase from './brand/service/ServiceCatchphrase'
-import ButtonLogin from './brand/button/ButtonLogin'
-import ButtonExtension from './brand/button/ButtonExtension'
+import Tab from './Tab'
+import BrandName from './brand/BrandName'
+import BrandCatchphrase from './brand/BrandCatchphrase'
+import Button from '../common/account/Button'
+import ButtonLink from '../common/account/ButtonLink'
 import styled from 'styled-components'
 
 const Container = styled.section`
@@ -14,14 +15,15 @@ const Container = styled.section`
 export default function Brand() {
   return (
     <Container>
+      <Tab />
       <div>
-        <ServiceName />
-        <ServiceCatchphrase />
+        <BrandName />
+        <BrandCatchphrase />
       </div>
 
       <div>
-        <ButtonLogin />
-        <ButtonExtension />
+        <Button />
+        <ButtonLink />
       </div>
     </Container>
   )

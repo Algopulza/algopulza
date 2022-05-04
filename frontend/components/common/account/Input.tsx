@@ -11,7 +11,7 @@ const Words = styled.span`
   cursor: pointer;
 `
 
-export default function ButtonExtension() {
+export default function Input() {
   const handleClick = () => {
     window.open("https://chrome.google.com/webstore/category/extensions?hl=ko")
   }

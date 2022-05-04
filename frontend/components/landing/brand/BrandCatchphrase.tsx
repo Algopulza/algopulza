@@ -9,7 +9,7 @@ const Text = styled.p`
   color: #616161;
 `
 
-export default function ServiceCatchphrase() {
+export default function BrandCatchphrase() {
   return (
     <Text>막 풀지 말고, 알고 풀자!</Text>
   )

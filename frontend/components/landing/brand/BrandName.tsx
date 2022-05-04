@@ -15,7 +15,7 @@ const Title = styled.p`
   font-weight: 700;
 `
 
-export default function ServiceName() {
+export default function BrandName() {
   return (
     <Container>
       <Title>알고ㅤ</Title>

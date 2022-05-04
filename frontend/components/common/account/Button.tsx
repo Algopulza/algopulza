@@ -6,7 +6,7 @@ const Container = styled.section`
   justify-content: center;
 `
 
-const Button = styled.button`
+const CustomButton = styled.button`
   margin-bottom: 25px;
 
   width: 10vw;
@@ -26,7 +26,7 @@ const Button = styled.button`
   }
 `
 
-export default function ButtonLogin() {
+export default function Button() {
   const router = useRouter()
 
   function moveToRecommendation() {
@@ -35,7 +35,7 @@ export default function ButtonLogin() {
 
   return (
     <Container>
-      <Button onClick={moveToRecommendation}>로그인</Button>
+      <CustomButton onClick={moveToRecommendation}>로그인</CustomButton>
     </Container>
   )
 }
