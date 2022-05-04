@@ -5,7 +5,7 @@ import Subject from '../../components/recommendation/Subject'
 import styled from 'styled-components'
 
 const Container = styled.section`
-  padding: 0vw 3vw;
+  padding: 0vw 5vw;
 `
 
 export type Title = { title: string, englishTitle: string }
