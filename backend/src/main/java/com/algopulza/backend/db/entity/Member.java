@@ -44,9 +44,6 @@ public class Member extends BaseTimeEntity implements UserDetails {
     private int exp;
 
     @Column
-    private  String solvedacToken;
-
-    @Column
     private String refreshToken;
 
     @ElementCollection(fetch = FetchType.EAGER)
