@@ -8,10 +8,12 @@ const Container = styled.section`
   align-items: center;
 `
 
+export type RoutingAttr = { url: string, text: string }
+
 export default function Routing() {
   return (
     <Container>
-      <ButtonRouting />
+      <ButtonRouting routingAttr={{url: '/recommendation', text: '비회원 로그인'}}  />
       <ButtonToggling />
     </Container>
   )

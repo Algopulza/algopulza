@@ -1,12 +1,9 @@
 import styled from 'styled-components'
 
-const Container = styled.span`
-  margin-right: 1vw;
-  color: #8F8B82;
+const Container = styled.section`
+  text-align: center;
+  color: #545454;
   cursor: pointer;
-  &:hover {
-    color: #FFC94D;
-  }
 `
 
 export default function ButtonRedirecting() {
@@ -15,6 +12,8 @@ export default function ButtonRedirecting() {
     window.open(url)
   }
   return (
-    <Container onClick={clickHandler}>알고풀자 익스텐션을 설치해보세요</Container>
+    <Container onClick={clickHandler}>
+      알고풀자 <span style={{color: '#000000', fontWeight: 700}}>익스텐션</span>을 설치해보세요
+    </Container>
   )
 }

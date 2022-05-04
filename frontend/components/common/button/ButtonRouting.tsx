@@ -1,21 +1,25 @@
 import { useRouter } from 'next/router'
+import { RoutingAttr } from '../../landing/Routing'
 import styled from 'styled-components'
 
 const Container = styled.section`
   margin-right: 1vw;
   color: #545454;
+  cursor: pointer;
   &:hover {
     color: #FFC94D;
   }
 `
 
-export default function ButtonRouting() {
+type routingProps = { routingAttr: RoutingAttr }
+
+export default function ButtonRouting({ routingAttr }: routingProps) {
   const router = useRouter()
-  function moveToRecommendation() {
-    router.push('/recommendation')
+  function clickHandler() {
+    router.push(routingAttr.url)
   }
 
   return (
-    <Container onClick={moveToRecommendation}>비회원 로그인</Container>
+    <Container onClick={clickHandler}>{routingAttr.text}</Container>
   )
 }
