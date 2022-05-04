@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 const Container = styled.section`
   margin-bottom: 30px;
-  width: 17.5vw;
+  width: 17vw;
   height: 210px;
   background: #FFFFFF;
   border-radius: 15px;

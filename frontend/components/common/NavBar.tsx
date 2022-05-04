@@ -21,7 +21,7 @@ export type Route = { name: string, path: string }
 const routes = [
   { name: '추천', path: '/recommendation' },
   { name: '랜덤', path: '/random' },
-  { name: '검색', path: '/list' },
+  { name: '검색', path: '/search' },
   { name: '분석', path: '/analysis' }
 ]
 
