@@ -28,14 +28,14 @@ public class SolvingLogRepositoryCustomImpl implements  SolvingLogRepositoryCust
     }
 
     @Override
-    public SolvingLog findByProblem(Member member, Problem problem) {
-        SolvingLog solvingLog =
+    public List<SolvingLog> findByProblem(Member member, Problem problem) {
+        List<SolvingLog> solvingLog =
                 jpaQueryFactory
                         .select(qSolvingLog)
                         .from(qSolvingLog)
                         .where(qSolvingLog.member.eq(member))
                         .where(qSolvingLog.problem.eq(problem))
-                        .fetchOne();
+                        .fetch();
         return solvingLog;
     }
 }
