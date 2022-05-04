@@ -13,7 +13,7 @@ public class ProblemAndStatusRes extends ProblemRes {
     @ApiModelProperty(name = "로그인한 유저의 풀이상태", example = "solved")
     private String status;
 
-    public ProblemAndStatusRes(Long problemId, int bojId, String title, String status, Long tierLevel, String tierName, int acceptedCount, double averageTryCount, boolean solvableFlag) {
+    public ProblemAndStatusRes(Long problemId, int bojId, String title, String status, int tierLevel, String tierName, int acceptedCount, double averageTryCount, boolean solvableFlag) {
         super(problemId, bojId, title, tierLevel, tierName, acceptedCount, averageTryCount, solvableFlag);
         this.status = status;
     }
