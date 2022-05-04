@@ -1,5 +1,7 @@
 package com.algopulza.backend.api.service;
 
+import com.algopulza.backend.api.request.member.AddSolvedProblemReq;
+import com.algopulza.backend.api.request.member.AddTriedProblemReq;
 import com.algopulza.backend.api.request.member.ModifyMemberReq;
 import com.algopulza.backend.api.request.member.ModifyProfileImageReq;
 import com.algopulza.backend.api.response.MemberRes;
@@ -13,7 +15,7 @@ public interface MemberService {
 
     void modifyProfileImage(ModifyProfileImageReq modifyProfileImageReq);
 
-    MemberRes addMember(String solvedacToken);
+    MemberRes addMember(String bojId);
 
     void modifyMember(ModifyMemberReq modifyMemberReq);
 
@@ -24,5 +26,9 @@ public interface MemberService {
     TokenRes refreshAccessToken(Long id, String refreshToken);
 
     void logout(Long id);
+
+    void addSolvedProblem(AddSolvedProblemReq addSolvedProblemReq);
+
+    void addTriedProblem(AddTriedProblemReq addTriedProblemReq);
 }
 

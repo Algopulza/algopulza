@@ -28,6 +28,8 @@ public class ResponseMessage {
     public static final String MODIFY_MEMBER_INFO_SUCCESS = "회원 정보 수정 성공";
     public static final String MODIFY_MEMBER_INFO_FAIL = "회원 정보 수정 실패";
     public static final String RENEWAL_MEMBER_INFO = "회원 정보 갱신 성공";
+    public static final String POST_SOLVED_PROBLEM_SUCCESS = "solved 문제 넣기 성공";
+    public static final String POST_TRIED_PROBLEM_SUCCESS = "tried 문제 넣기 성공";
 
     // Problem
     public static final String GET_PROBLEM_LIST_SUCCESS = "문제 목록 조회 성공";
