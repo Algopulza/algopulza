@@ -234,7 +234,7 @@ public class MemberServiceImpl implements MemberService {
         Problem problem = problemRepository.findByBojId(addDetailSolvedProblem.getProblemBojId()).orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND_PROBLEM));
         Optional<Member> member = Optional.ofNullable(memberRepository.findByBojId(bojId));
 
-        member.ifPresent(selectMember-> {
+        member.ifPresentOrElse(selectMember-> {
             // member가 푼 문제 리스트
             List<Problem> problemList = solvingLogRepository.findByMember(selectMember);
 
@@ -312,6 +312,8 @@ public class MemberServiceImpl implements MemberService {
                     }
                 }
             }
+        }, ()-> {
+            new NotFoundException(ErrorCode.NOT_FOUND_MEMBER);
         });
     }
 
