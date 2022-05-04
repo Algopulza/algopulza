@@ -6,7 +6,7 @@ const Container = styled.section`
 `
 
 type ValueProps = {
-  value: string,
+  value: number,
 }
 
 export default function InfoValue({ value }: ValueProps) {
