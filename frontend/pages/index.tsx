@@ -1,5 +1,4 @@
 import Carousel from '../components/landing/Carousel'
-import Brand from '../components/landing/Brand'
 import styled from 'styled-components'
 
 const Container = styled.section`
@@ -12,7 +11,6 @@ export default function Landing() {
   return (
     <Container>
       <Carousel />
-      <Brand />
     </Container>
   )
 }

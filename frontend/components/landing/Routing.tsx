@@ -1,5 +1,5 @@
-import ButtonStranger from '../common/button/ButtonStranger'
-import ButtonSignup from '../common/button/ButtonSignup'
+import ButtonStranger from '../common/button/ButtonSubmitting'
+import ButtonSignup from '../common/button/ButtonToggling'
 import styled from 'styled-components'
 
 const Container = styled.section`
