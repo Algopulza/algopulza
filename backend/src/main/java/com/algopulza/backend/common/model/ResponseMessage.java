@@ -39,4 +39,7 @@ public class ResponseMessage {
     public static final String SEARCH_PROBLEM_SUCCESS = "문제 검색 성공";
     public static final String NOT_FOUND_PROBLEM = "존재하지 않는 문제";
 
+
+    // Tier
+    public static final String NOT_FOUND_TIER = "존재하지 않는 티어";
 }
