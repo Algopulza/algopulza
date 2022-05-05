@@ -1,21 +1,31 @@
-import { ReactElement } from 'react'
-import Layout from '../../components/common/Layout'
-import styled from 'styled-components'
+import Guide from "../../components/signup/Guide"
+import Routing from "../../components/signup/Routing"
+import Content from "../../components/signup/Content"
+import Form from "../../components/signup/Form"
+import styled from "styled-components"
 
 const Container = styled.section`
-  padding: 0vw 5vw;
+  display: grid;
+  grid-template-columns: 60vw 40vw;
+  height: 100vh;
+`
+
+const Subcontainer = styled.div`
+  display: grid;
+  grid-template-rows: 10vh 20vh 70vh;
+  height: 100vh;
 `
 
 export default function Signup() {
   return (
     <Container>
-      hi
-    </Container>
-  )
-}
+      <Guide />
 
-Signup.getLayout = function getLayout(signup: ReactElement) {
-  return (
-    <Layout>{signup}</Layout>
+      <Subcontainer>
+        <Routing />
+        <Content />
+        <Form />
+      </Subcontainer>
+    </Container>
   )
 }
