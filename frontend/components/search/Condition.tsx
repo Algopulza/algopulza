@@ -1,17 +1,46 @@
-import Selection from './condition/Selection'
-import Window from './condition/Window'
+import SelectionTier from './selection/SelectionTier'
+import SelectionLevel from './selection/SelectionLevel'
+import SelectionTag from './selection/SelectionTag'
+import InputTextField from '../common/InputTextField'
+import ButtonSearching from '../common/button/ButtonSearching'
 import styled from 'styled-components'
 
 const Container = styled.section`
-  height: 12vh;
-  background: #FFC94D;
+  display: grid;
+  grid-template-columns: 5fr 5fr;
+  align-items: center;
+  margin-bottom: 20px;
 `
+
+const Subcontainer = styled.div<{ cond: boolean }>`
+  display: flex;
+  justify-content: ${(props) => (props.cond ? "left" : "right")};
+  align-items: center;
+`
+
+export type TextFieldAttr = {
+  id: string,
+  label: string,
+  width: string,
+  password: boolean,
+  autofocus: boolean
+}
+
+export type SubmittingAttr = { text: string, width: string }
 
 export default function Condition() {
   return (
     <Container>
-      <Selection />
-      <Window />
+      <Subcontainer cond={true}>
+        <SelectionTier />
+        <SelectionLevel />
+        <SelectionTag />
+      </Subcontainer>
+      
+      <Subcontainer cond={false}>
+        <InputTextField textFieldAttr={{id: 'search', label: 'Search', width: '20vw', password: false, autofocus: false}} />
+        <ButtonSearching submittingAttr={{text: '검색', width: '5vw'}} />
+      </Subcontainer>
     </Container>
   )
 }

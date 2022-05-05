@@ -1,32 +1,30 @@
-import { Route } from '../NavBar'
 import Link from 'next/link'
 import styled from 'styled-components'
+import { NavItemAttr } from './NavBar'
 
 const Text = styled.span<{ cond: boolean }>`
+  font-size: 1.3vw;
   color: ${(props) => (props.cond ? "#FFC94D" : "#000000")};
-
   &:hover {
     color: #FFC94D;
   }
 `
 
-type RouteProps = {
-  route: Route,
-  isSelected: String,
+type NavItemProps = {
+  navItem: NavItemAttr,
+  isLocated: String,
   onClick(path: string): void
 }
 
-export default function NavItem({ route, isSelected, onClick }: RouteProps) {
-  const { name, path } = route
-
+export default function NavItem({ navItem, isLocated, onClick }: NavItemProps) {
   return (
-    <Link href={path}>
+    <Link href={navItem.url}>
       <a>
         <Text
-          cond={isSelected == path ? true : false}
-          onClick={() => onClick(path)}
+          cond={navItem.url == isLocated ? true : false}
+          onClick={() => onClick(navItem.url)}
         >
-          {name}
+          {navItem.item}
         </Text>
       </a>
     </Link>

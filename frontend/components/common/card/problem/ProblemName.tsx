@@ -9,9 +9,13 @@ const Title = styled.section`
   font-size: 1.8vw;
   color: white;
 `
+type CardProps = {
+  key: number,
+  title:string,
+}
 
-export default function ProblemName() {
+export default function ProblemName({key, title}:CardProps) {
   return (
-    <Title>로봇 청소기</Title>
+    <Title>{title}</Title>
   )
 }

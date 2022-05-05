@@ -1,7 +1,7 @@
-import Carousel from "../components/landing/Carousel"
-import Routing from "../components/landing/Routing"
-import Content from "../components/landing/Content"
-import Form from "../components/landing/Form"
+import Guide from "../../components/signup/Guide"
+import Routing from "../../components/signup/Routing"
+import Content from "../../components/signup/Content"
+import Form from "../../components/signup/Form"
 import styled from "styled-components"
 
 const Container = styled.section`
@@ -12,14 +12,14 @@ const Container = styled.section`
 
 const Subcontainer = styled.div`
   display: grid;
-  grid-template-rows: 10vh 45vh 45vh;
+  grid-template-rows: 10vh 30vh 60vh;
   height: 100vh;
 `
 
-export default function Landing() {
+export default function Signup() {
   return (
     <Container>
-      <Carousel />
+      <Guide />
 
       <Subcontainer>
         <Routing />

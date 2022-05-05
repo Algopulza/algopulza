@@ -15,8 +15,13 @@ const Tags = styled.div`
     display: flex;
     align-items: center;
 `
+type CardProps = {
+  key: number,
+  tags: any,
+  id:number,
+}
 
-export default function ProblemTag() {
+export default function ProblemTag({key, tags, id}:CardProps) {
   return (
     <Container>
       <Tags>
@@ -24,7 +29,7 @@ export default function ProblemTag() {
         <span style={{marginRight: 5}}>#시뮬레이션</span>
       </Tags>
       
-      <span>14503</span>
+      <span>{id}</span>
     </Container>
   )
 }

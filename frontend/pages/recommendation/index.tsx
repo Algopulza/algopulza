@@ -1,6 +1,6 @@
 import { ReactElement } from 'react'
 import Layout from '../../components/common/Layout'
-import Carousel from '../../components/recommendation/Carousel'
+import Form from '../../components/recommendation/Form'
 import Subject from '../../components/recommendation/Subject'
 import styled from 'styled-components'
 
@@ -18,7 +18,7 @@ const titles = [
 export default function Recommendation() {
   return (
     <>
-      <Carousel />
+      <Form />
 
       <Container>
         {titles.map(title => <Subject key={title.title} title={title} />)}
