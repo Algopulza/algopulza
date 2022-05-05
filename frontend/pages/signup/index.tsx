@@ -12,7 +12,7 @@ const Container = styled.section`
 
 const Subcontainer = styled.div`
   display: grid;
-  grid-template-rows: 10vh 20vh 70vh;
+  grid-template-rows: 10vh 30vh 60vh;
   height: 100vh;
 `
 

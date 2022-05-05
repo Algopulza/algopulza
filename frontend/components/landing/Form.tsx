@@ -22,8 +22,15 @@ export default function Form() {
   return (
     <Container>
       <div style={{marginBottom: 30}}>
-        <InputTextField textFieldAttr={{id: 'id', label:'ID', width: '20vw', password: false, autofocus: true}} />
-        <InputTextField textFieldAttr={{id: 'password', label:'PW', width: '20vw', password: true, autofocus: false}} />
+        {/* <InputTextField
+          textFieldAttr={{id: 'id', label:'ID', width: '20vw', password: false, autofocus: true}}
+        />
+        <InputTextField
+          textFieldAttr={{id: 'password', label:'Password', width: '20vw', password: true, autofocus: false}}
+        /> */}
+        <InputTextField
+          textFieldAttr={{id: 'bojId', label:'BOJ ID', width: '20vw', password: false, autofocus: false}}
+        />
       </div>
 
       <div>

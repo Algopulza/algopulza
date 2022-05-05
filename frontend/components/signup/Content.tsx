@@ -14,11 +14,18 @@ const BrandName = styled.p`
   font-weight: 700;
 `
 
+const BrandCatchphrase = styled.p`
+  margin: 0;
+  font-size: 1.5vw;
+  color: #545454;
+`
+
 export default function Content() {
   return (
     <Container>
-      <BrandName>알고ㅤ</BrandName>
-      <BrandName>ㅤ풀자</BrandName>
+      <BrandName style={{marginTop: 30}}>알고ㅤ</BrandName>
+      <BrandName style={{marginBottom: 30}}>ㅤ풀자</BrandName>
+      <BrandCatchphrase>막 풀지 말고, 알고 풀자!</BrandCatchphrase>
     </Container>
   )
 }
