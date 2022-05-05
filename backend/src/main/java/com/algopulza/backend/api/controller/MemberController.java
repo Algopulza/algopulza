@@ -1,9 +1,6 @@
 package com.algopulza.backend.api.controller;
 
-import com.algopulza.backend.api.request.member.AddSolvedProblemReq;
-import com.algopulza.backend.api.request.member.AddTriedProblemReq;
-import com.algopulza.backend.api.request.member.ModifyMemberReq;
-import com.algopulza.backend.api.request.member.ModifyProfileImageReq;
+import com.algopulza.backend.api.request.member.*;
 import com.algopulza.backend.api.response.MemberRes;
 import com.algopulza.backend.api.response.TokenRes;
 import com.algopulza.backend.api.service.MemberService;
@@ -141,5 +138,17 @@ public class MemberController {
     public ResponseEntity<BaseResponseBody> addTriedProblem(@RequestBody AddTriedProblemReq addTriedProblemReq){
         memberService.addTriedProblem(addTriedProblemReq);
         return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, ResponseMessage.POST_TRIED_PROBLEM_SUCCESS));
+    }
+
+    @PostMapping("/detailSolvedProblem")
+    @ApiOperation(value = "solved 문제에 대한 세부정보 등록하기", notes = "solved 문제에 대한 세부정보 등록 요청 API 입니다.")
+    @ApiResponses({@ApiResponse(code = 201, message = ResponseMessage.POST_DETAIL_SOLVED_PROBLEM_SUCCESS),
+            @ApiResponse(code = 400, message = ResponseMessage.BAD_REQUEST, response = ErrorResponse.class),
+            @ApiResponse(code = 401, message = ResponseMessage.UNAUTHORIZED, response = ErrorResponse.class),
+            @ApiResponse(code = 403, message = ResponseMessage.ACCESS_DENIED, response = ErrorResponse.class),
+            @ApiResponse(code = 404, message = ResponseMessage.NOT_FOUND, response = ErrorResponse.class)})
+    public ResponseEntity<BaseResponseBody> addDetailSolvedProblem(@RequestBody AddDetailSolvedProblem addDetailSolvedProblem){
+        memberService.addDetailSolvedProblem(addDetailSolvedProblem);
+        return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, ResponseMessage.POST_DETAIL_SOLVED_PROBLEM_SUCCESS));
     }
 }

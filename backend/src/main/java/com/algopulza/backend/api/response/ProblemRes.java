@@ -22,7 +22,7 @@ public class ProblemRes {
     private String title;
 
     @ApiModelProperty(name = "티어 레벨", example = "1")
-    private Long tierLevel;
+    private int tierLevel;
 
     @ApiModelProperty(name = "티어 레벨명", example = "1")
     private String tierName;
@@ -39,7 +39,7 @@ public class ProblemRes {
     @ApiModelProperty(name = "태그")
     private List<TagRes> tagList;
 
-    public ProblemRes(Long problemId, int bojId, String title, Long tierLevel, String tierName, int acceptedCount, double averageTryCount, boolean solvableFlag) {
+    public ProblemRes(Long problemId, int bojId, String title, int tierLevel, String tierName, int acceptedCount, double averageTryCount, boolean solvableFlag) {
         this.problemId = problemId;
         this.bojId = bojId;
         this.title = title;

@@ -26,8 +26,11 @@ public class MemberRes {
     @ApiModelProperty(name = "티어 레벨", example = "1")
     private Long level;
 
-    @ApiModelProperty(name = "티어명", example = "Bronze V")
+    @ApiModelProperty(name = "티어명", example = "Bronze")
     private String tierName;
+
+    @ApiModelProperty(name = "티어레벨", example = "2")
+    private int tierLevel;
 
     @ApiModelProperty(name = "푼 문제 수", example = "10")
     private int solveCount;

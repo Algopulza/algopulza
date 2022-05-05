@@ -10,6 +10,7 @@ public class ResponseMessage {
     public static final String BAD_REQUEST = "유효하지 않은 요청";
     public static final String DUPLICATE_INPUT_VALUE = "중복된 입력값";
     public static final String NOT_FOUND = "유효하지 않은 리소스 요청";
+    public static final String INTERRUPTED = "서버 interrupt 오류";
 
     // Auth
     public static final String REFRESH_TOKEN = "토큰 재발급 성공";
@@ -30,6 +31,7 @@ public class ResponseMessage {
     public static final String RENEWAL_MEMBER_INFO = "회원 정보 갱신 성공";
     public static final String POST_SOLVED_PROBLEM_SUCCESS = "solved 문제 넣기 성공";
     public static final String POST_TRIED_PROBLEM_SUCCESS = "tried 문제 넣기 성공";
+    public static final String POST_DETAIL_SOLVED_PROBLEM_SUCCESS = "solved한 문제 세부 정보 넣기 성공";
 
     // Problem
     public static final String GET_PROBLEM_LIST_SUCCESS = "문제 목록 조회 성공";
@@ -38,4 +40,6 @@ public class ResponseMessage {
     public static final String SEARCH_PROBLEM_SUCCESS = "문제 검색 성공";
     public static final String NOT_FOUND_PROBLEM = "존재하지 않는 문제";
 
+    // Tier
+    public static final String NOT_FOUND_TIER = "존재하지 않는 티어";
 }
