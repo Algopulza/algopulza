@@ -16,6 +16,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.scheduler.Schedulers;
 
+import java.time.*;
 import java.util.*;
 import java.util.concurrent.CountDownLatch;
 import java.util.stream.Collectors;
@@ -159,6 +160,7 @@ public class ProblemServiceImpl implements ProblemService {
         problem.setSolvableFlag(solvedAcProblemRes.getIsSolvable());
         problem.setAcceptedCount(solvedAcProblemRes.getAcceptedUserCount());
         problem.setAverageTryCount(solvedAcProblemRes.getAverageTries());
+        problem.setUpdatedTime(ZonedDateTime.now(ZoneId.of("Asia/Seoul")).toLocalDateTime());
 
         problemList.add(problem);
 
@@ -174,6 +176,7 @@ public class ProblemServiceImpl implements ProblemService {
                 tag.setBojKey(solvedAcTagRes.getKey());
                 tag.setName(tagDisplayName.getName());
                 tag.setShortName(tagDisplayName.getName());
+                tag.setUpdatedTime(ZonedDateTime.now(ZoneId.of("Asia/Seoul")).toLocalDateTime());
 
                 tagMapByBojTagId.put(solvedAcTagRes.getBojTagId(), tag);
             }
@@ -184,10 +187,11 @@ public class ProblemServiceImpl implements ProblemService {
                 problemHasTag = new ProblemHasTag();
 
                 problemHasTag.setProblem(problem);
-                nowProblemHasTagList.add(problemHasTag);
-
                 // tag.getId() == null 조건으로 if문 진입했다면 태그 정보는 tagMapByBojTagId 에서 가져온다.
                 problemHasTag.setTag(tagMapByBojTagId.getOrDefault(solvedAcTagRes.getBojTagId(), tag));
+                problemHasTag.setUpdatedTime(ZonedDateTime.now(ZoneId.of("Asia/Seoul")).toLocalDateTime());
+
+                nowProblemHasTagList.add(problemHasTag);
             }
         }
 
