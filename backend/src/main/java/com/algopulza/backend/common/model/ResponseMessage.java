@@ -41,4 +41,7 @@ public class ResponseMessage {
     public static final String NOT_FOUND_PROBLEM = "존재하지 않는 문제";
     public static final String NOT_FOUND_TIER = "존재하지 않는 티어";
 
+
+    // Tier
+    public static final String NOT_FOUND_TIER = "존재하지 않는 티어";
 }
