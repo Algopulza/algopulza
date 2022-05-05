@@ -1,12 +1,16 @@
 package com.algopulza.backend.db.entity;
 
 import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 
 @Getter
 @Setter
 @Entity
+@DynamicInsert
+@DynamicUpdate
 @Table(name = "tag")
 public class Tag extends BaseTimeEntity {
 
