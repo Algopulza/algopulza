@@ -53,8 +53,9 @@ public class MemberServiceImpl implements MemberService {
                 .bojId(member.getBojId())
                 .profileImage(member.getProfileImage())
                 .email(member.getEmail())
-                .level(member.getTier().getLevel())
+                .level(member.getTier().getId())
                 .tierName(member.getTier().getName())
+                .tierLevel(member.getTier().getLevel())
                 .solveCount(member.getSolveCount())
                 .exp(member.getExp())
                 .build();
@@ -83,10 +84,14 @@ public class MemberServiceImpl implements MemberService {
 
             // 기존 tier와 다르면
             Long tier = Long.parseLong(finalJsonNode.get("tier").toString());
-            Tier curTier = tierRepository.findByLevel(tier);
-            if(selectMember.getTier()!=curTier){
-                selectMember.setTier(curTier);
-            }
+            Optional<Tier> curTier = tierRepository.findById(tier);
+            curTier.ifPresentOrElse(selectTier -> {
+                if(selectMember.getTier() != selectTier){
+                    selectMember.setTier(selectTier);
+                }
+            }, ()-> {
+                new NotFoundException(ErrorCode.NOT_FOUND_TIER);
+            });
 
             // 기존 solveCount와 다르면
             int curSolveCount = Integer.parseInt(finalJsonNode.get("solvedCount").toString());
@@ -132,7 +137,7 @@ public class MemberServiceImpl implements MemberService {
 
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> memberInfo
-                = restTemplate.exchange(SolvedacBaseUrl+"user/show?handle="+bojId, HttpMethod.GET, entity, String.class);
+                = restTemplate.exchange(SolvedacBaseUrl+"/user/show?handle="+bojId, HttpMethod.GET, entity, String.class);
 
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode jsonNode = null;
@@ -155,10 +160,15 @@ public class MemberServiceImpl implements MemberService {
         member.ifPresent(selectMember->{
             // 기존 tier와 다르면
             Long tier = Long.parseLong(finalJsonNode.get("tier").toString());
-            Tier curTier = tierRepository.findByLevel(tier);
-            if(selectMember.getTier()!=curTier){
-                selectMember.setTier(curTier);
-            }
+            Optional<Tier> curTier = tierRepository.findById(tier);
+            curTier.ifPresentOrElse(selectTier -> {
+                if(selectMember.getTier() != selectTier){
+                    selectMember.setTier(selectTier);
+                }
+            }, ()-> {
+                new NotFoundException(ErrorCode.NOT_FOUND_TIER);
+            });
+
 
             // 기존 solveCount와 다르면
             int curSolveCount = Integer.parseInt(finalJsonNode.get("solvedCount").toString());
@@ -321,17 +331,22 @@ public class MemberServiceImpl implements MemberService {
         String profileImage = finalJsonNode.get("profileImageUrl").toString();
 
         Long tier = Long.parseLong(finalJsonNode.get("tier").toString());
-        Tier getTier = tierRepository.findByLevel(tier);
+        Optional<Tier> getTier = tierRepository.findById(tier);
 
-        // member table 에 저장
-        Member newMember = new Member();
-        newMember.setTier(getTier);
-        newMember.setBojId(bojId);
-        newMember.setProfileImage(profileImage.substring(1,profileImage.length()-1));
-        newMember.setSolveCount(Integer.parseInt(finalJsonNode.get("solvedCount").toString()));
-        newMember.setEmail(null);
-        newMember.setExp(0); // 신규회원은 0으로 시작
-        memberRepository.save(newMember);
+        getTier.ifPresentOrElse(selectTier -> {
+            // member table 에 저장
+            Member newMember = new Member();
+            newMember.setTier(selectTier);
+            newMember.setBojId(bojId);
+            newMember.setProfileImage(profileImage.substring(1,profileImage.length()-1));
+            newMember.setSolveCount(Integer.parseInt(finalJsonNode.get("solvedCount").toString()));
+            newMember.setEmail(null);
+            newMember.setExp(0); // 신규회원은 0으로 시작
+            memberRepository.save(newMember);
+        }, ()->{
+            new NotFoundException(ErrorCode.NOT_FOUND_TIER);
+        });
+
     }
 
     private void addProblem(String bojId, int problemId, String status) {
