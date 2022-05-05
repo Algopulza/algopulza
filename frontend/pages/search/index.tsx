@@ -6,7 +6,7 @@ import Layout from '../../components/common/Layout'
 import styled from 'styled-components'
 
 const Container = styled.section`
-  padding: 0vw 5vw;
+  padding: 3vh 5vw 0 5vw;
 `
 
 export default function Search() {
