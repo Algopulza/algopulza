@@ -1,7 +1,6 @@
 package com.algopulza.backend.api.service;
 
-import com.algopulza.backend.api.request.member.ModifyMemberReq;
-import com.algopulza.backend.api.request.member.ModifyProfileImageReq;
+import com.algopulza.backend.api.request.member.*;
 import com.algopulza.backend.api.response.MemberRes;
 import com.algopulza.backend.api.response.TokenRes;
 import com.algopulza.backend.common.exception.NotFoundException;
@@ -23,7 +22,8 @@ import org.springframework.web.client.RestTemplate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.StringTokenizer;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Slf4j
 @Service("memberService")
@@ -50,13 +50,13 @@ public class MemberServiceImpl implements MemberService {
         Member member = memberRepository.findById(memberId).orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND_MEMBER));
         MemberRes memberRes = MemberRes.builder()
                 .memberId(member.getId())
-                .memberName(member.getName())
+                .bojId(member.getBojId())
                 .profileImage(member.getProfileImage())
                 .email(member.getEmail())
-                .level(member.getTier().getLevel())
+                .level(member.getTier().getId())
                 .tierName(member.getTier().getName())
                 .solveCount(member.getSolveCount())
-                .daysCount(member.getDaysCount())
+                .exp(member.getExp())
                 .build();
         return memberRes;
     }
@@ -69,48 +69,41 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public MemberRes addMember(String solvedacToken) {
+    public MemberRes addMember(String bojId) {
 
         // 1. solvedac API 활용해서 member 정보 받아오기
+        JsonNode finalJsonNode = getMemberBybojId(bojId);
 
-        JsonNode finalJsonNode = getMemberBysolvedacToken(solvedacToken);
-
-        String name = finalJsonNode.get("user").get("handle").toString().substring(1, finalJsonNode.get("user").get("handle").toString().length() - 1);
-
-        // 2. solvedacToken으로 받아온 name을 가지고 DB에서 회원 검색
-        Optional<Member> member = Optional.ofNullable(memberRepository.findByName(name));
+        // 2. solvedacToken으로 받아온 bojId를 가지고 DB에서 회원 검색
+        Optional<Member> member = Optional.ofNullable(memberRepository.findByBojId(bojId));
 
         member.ifPresentOrElse(selectMember -> {
             // 3-1. DB에 있는 회원이면 정보 갱신
             log.info("member already exist!!");
 
-            // solvedacToken 갱신
-            selectMember.setSolvedacToken(solvedacToken);
-
-            // 기존의 solveCount랑 로그인할 당시 solveCount의 개수 다르면
-            if(selectMember.getSolveCount()!=finalJsonNode.get("solved").size()){
-                int prevCount = selectMember.getSolveCount();
-                int curCount = finalJsonNode.get("solved").size();
-                // solveCount랑 solving_log 갱신
-                selectMember.setSolveCount(curCount);
-
-                modifySolvingLog(prevCount, curCount, finalJsonNode, name);
-
-                //dayscount 갱신
-                if(checkDay(prevCount, curCount, name)) {
-                    int curDaysCount = selectMember.getDaysCount();
-                    selectMember.setDaysCount(curDaysCount+1);
-                }
-
-                memberRepository.save(selectMember);
-            }
-
             // 기존 tier와 다르면
-            Long tier = Long.parseLong(finalJsonNode.get("user").get("tier").toString());
+            Long tier = Long.parseLong(finalJsonNode.get("tier").toString());
             Tier curTier = tierRepository.findByLevel(tier);
-
             if(selectMember.getTier()!=curTier){
                 selectMember.setTier(curTier);
+            }
+
+            // 기존 solveCount와 다르면
+            int curSolveCount = Integer.parseInt(finalJsonNode.get("solvedCount").toString());
+            if(selectMember.getSolveCount()!=curSolveCount){
+                selectMember.setSolveCount(curSolveCount);
+            }
+
+            // 로그인 로그 확인 -> 오늘 첫 방문이면 +2 , 오늘첫방문+어제도방문이면 +3
+            switch (checkDay(bojId)){
+                case "first" :
+                    selectMember.setExp(selectMember.getExp()+2);
+                    break;
+                case "visited" :
+                    selectMember.setExp(selectMember.getExp()+3);
+                    break;
+                case "second" :
+                    break;
             }
 
         }, ()->{
@@ -118,33 +111,28 @@ public class MemberServiceImpl implements MemberService {
             log.info("new member!!");
 
             // member 추가
-            addNewMember(finalJsonNode, name, solvedacToken);
-            // solving_log 추가
-            addSolvingLog(finalJsonNode, name);
-            // organization & memberHasOrganization 추가
-            // addMemberOrganizaton(finalJsonNode, name);
+            addNewMember(finalJsonNode, bojId);
         });
 
         // 4. login_log 추가 (db 유무 상관없이 해야함)
-        addLoginlog(name);
+        addLoginlog(bojId);
 
-        Optional<Member> mem = Optional.ofNullable(memberRepository.findByName(name));
+        Optional<Member> mem = Optional.ofNullable(memberRepository.findByBojId(bojId));
         MemberRes memberRes = getMember(mem.get().getId());
 
         return memberRes;
     }
 
 
-    private JsonNode getMemberBysolvedacToken(String solvedacToken) {
+    private JsonNode getMemberBybojId(String bojId) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.set("Cookie", "solvedacToken=" + solvedacToken);
 
         HttpEntity<String> entity = new HttpEntity<String>("", headers);
 
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> memberInfo
-                = restTemplate.exchange(SolvedacBaseUrl+"account/verify_credentials", HttpMethod.GET, entity, String.class);
+                = restTemplate.exchange(SolvedacBaseUrl+"/user/show?handle="+bojId, HttpMethod.GET, entity, String.class);
 
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode jsonNode = null;
@@ -159,38 +147,25 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public void modifyMember(ModifyMemberReq modifyMemberReq) {
-        String name = modifyMemberReq.getName();
-        String solvedacToken = modifyMemberReq.getSolvedacToken();
+        String bojId = modifyMemberReq.getBojId();
 
-        Optional<Member> member = Optional.ofNullable(memberRepository.findByName(name));
-        JsonNode finalJsonNode = getMemberBysolvedacToken(solvedacToken);
+        Optional<Member> member = Optional.ofNullable(memberRepository.findByBojId(bojId));
+        JsonNode finalJsonNode = getMemberBybojId(bojId);
 
         member.ifPresent(selectMember->{
-            // 기존의 solveCount랑 로그인할 당시 solveCount의 개수 다르면
-            if(selectMember.getSolveCount()!=finalJsonNode.get("solved").size()){
-                int prevCount = selectMember.getSolveCount();
-                int curCount = finalJsonNode.get("solved").size();
-                // solveCount랑 solving_log 갱신
-                selectMember.setSolveCount(curCount);
-
-                modifySolvingLog(prevCount, curCount, finalJsonNode, name);
-
-                //dayscount 갱신
-                if(checkDay(prevCount, curCount, name)) {
-                    int curDaysCount = selectMember.getDaysCount();
-                    selectMember.setDaysCount(curDaysCount+1);
-                }
-
-                memberRepository.save(selectMember);
-            }
-
             // 기존 tier와 다르면
-            Long tier = Long.parseLong(finalJsonNode.get("user").get("tier").toString());
+            Long tier = Long.parseLong(finalJsonNode.get("tier").toString());
             Tier curTier = tierRepository.findByLevel(tier);
-
             if(selectMember.getTier()!=curTier){
                 selectMember.setTier(curTier);
             }
+
+            // 기존 solveCount와 다르면
+            int curSolveCount = Integer.parseInt(finalJsonNode.get("solvedCount").toString());
+            if(selectMember.getSolveCount()!=curSolveCount){
+                selectMember.setSolveCount(curSolveCount);
+            }
+
         });
     }
 
@@ -228,91 +203,166 @@ public class MemberServiceImpl implements MemberService {
 
     }
 
-    private void addNewMember(JsonNode finalJsonNode, String name, String solvedacToken) {
-        String profileImage = finalJsonNode.get("user").get("profileImageUrl").toString();
-        String email = finalJsonNode.get("user").get("email").toString();
+    @Override
+    public void addSolvedProblem(AddSolvedProblemReq addSolvedProblemReq) {
+        String bojId = addSolvedProblemReq.getBojId();
+        String problems = addSolvedProblemReq.getProblems();
 
-        Long tier = Long.parseLong(finalJsonNode.get("user").get("tier").toString());
+        StringTokenizer st = new StringTokenizer(problems, " ");
+        while (st.hasMoreTokens()){
+            int problemId = Integer.parseInt(st.nextToken());
+            addProblem(bojId, problemId, "solved");
+        }
+    }
+
+    @Override
+    public void addTriedProblem(AddTriedProblemReq addTriedProblemReq) {
+        String bojId = addTriedProblemReq.getBojId();
+        String problems = addTriedProblemReq.getProblems();
+
+        StringTokenizer st = new StringTokenizer(problems, " ");
+        while (st.hasMoreTokens()){
+            int problemId = Integer.parseInt(st.nextToken());
+            addProblem(bojId, problemId, "tried");
+        }
+    }
+
+    @Override
+    public void addDetailSolvedProblem(AddDetailSolvedProblem addDetailSolvedProblem) {
+        String status = "solved";
+        String bojId = addDetailSolvedProblem.getBojId();
+        Problem problem = problemRepository.findByBojId(addDetailSolvedProblem.getProblemBojId()).orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND_PROBLEM));
+        Optional<Member> member = Optional.ofNullable(memberRepository.findByBojId(bojId));
+
+        member.ifPresentOrElse(selectMember-> {
+            // member가 푼 문제 리스트
+            List<Problem> problemList = solvingLogRepository.findByMember(selectMember);
+
+            // 이전에 푼 기록이 없는 문제면
+            if(!problemList.contains(problem)){
+                SolvingLog solvingLog = new SolvingLog();
+                solvingLog.setMember(selectMember);
+                solvingLog.setProblem(problem);
+                solvingLog.setStatus(status);
+                solvingLog.setMemory(addDetailSolvedProblem.getMemory());
+                solvingLog.setTime(addDetailSolvedProblem.getTime());
+                solvingLog.setLanguage(addDetailSolvedProblem.getLanguage());
+                solvingLog.setCodeLength(addDetailSolvedProblem.getCodeLength());
+                solvingLog.setSolvingTime(addDetailSolvedProblem.getSolvingTime());
+                solvingLog.setCreatedTime(LocalDateTime.now());
+                solvingLogRepository.save(solvingLog);
+            }
+            // 문제를 푼 기록이 있으면
+            else{
+                // 상태 확인
+                Problem solvedProblem = problemList.get(problemList.indexOf(problem));
+                List<SolvingLog> solvingLog = solvingLogRepository.findByProblem(selectMember, solvedProblem);
+
+                if(solvingLog.size()==1 && solvingLog.get(0).getStatus().equals("tried")){
+                    solvingLog.get(0).setStatus("solved");
+                    solvingLog.get(0).setMemory(addDetailSolvedProblem.getMemory());
+                    solvingLog.get(0).setTime(addDetailSolvedProblem.getTime());
+                    solvingLog.get(0).setLanguage(addDetailSolvedProblem.getLanguage());
+                    solvingLog.get(0).setCodeLength(addDetailSolvedProblem.getCodeLength());
+                    solvingLog.get(0).setSolvingTime(addDetailSolvedProblem.getSolvingTime());
+                }
+                else if (solvingLog.size()==1 && solvingLog.get(0).getStatus().equals("solved")) {
+                    String useLanguage = solvingLog.get(0).getLanguage();
+                    if(useLanguage==null){ // 사용 언어 등록 안 되어있으면
+                        solvingLog.get(0).setMemory(addDetailSolvedProblem.getMemory());
+                        solvingLog.get(0).setTime(addDetailSolvedProblem.getTime());
+                        solvingLog.get(0).setLanguage(addDetailSolvedProblem.getLanguage());
+                        solvingLog.get(0).setCodeLength(addDetailSolvedProblem.getCodeLength());
+                        solvingLog.get(0).setSolvingTime(addDetailSolvedProblem.getSolvingTime());
+                    }else if(!useLanguage.equals(addDetailSolvedProblem.getLanguage())){ // 이전에 풀었던 언어랑 다른 언어로 푼 경우
+                        SolvingLog newSolvingLog = new SolvingLog();
+                        newSolvingLog.setMember(selectMember);
+                        newSolvingLog.setProblem(problem);
+                        newSolvingLog.setStatus(status);
+                        newSolvingLog.setMemory(addDetailSolvedProblem.getMemory());
+                        newSolvingLog.setTime(addDetailSolvedProblem.getTime());
+                        newSolvingLog.setLanguage(addDetailSolvedProblem.getLanguage());
+                        newSolvingLog.setCodeLength(addDetailSolvedProblem.getCodeLength());
+                        newSolvingLog.setSolvingTime(addDetailSolvedProblem.getSolvingTime());
+                        newSolvingLog.setCreatedTime(LocalDateTime.now());
+                        solvingLogRepository.save(newSolvingLog);
+                    }
+                }
+                else if(solvingLog.size()>1){
+                    boolean flag = false; // 같은 언어로 푼 경우가 있는지 확인하기 위한 flag
+                    for (SolvingLog solved:solvingLog) {
+                        if(solved.getLanguage().equals(addDetailSolvedProblem.getLanguage())){
+                            flag =true;
+                            break;
+                        }
+                    }
+
+                    if(!flag){ // 같은 언어로 푼 경우가 없다면 새로 추가
+                        SolvingLog newSolvingLog = new SolvingLog();
+                        newSolvingLog.setMember(selectMember);
+                        newSolvingLog.setProblem(problem);
+                        newSolvingLog.setStatus(status);
+                        newSolvingLog.setMemory(addDetailSolvedProblem.getMemory());
+                        newSolvingLog.setTime(addDetailSolvedProblem.getTime());
+                        newSolvingLog.setLanguage(addDetailSolvedProblem.getLanguage());
+                        newSolvingLog.setCodeLength(addDetailSolvedProblem.getCodeLength());
+                        newSolvingLog.setSolvingTime(addDetailSolvedProblem.getSolvingTime());
+                        newSolvingLog.setCreatedTime(LocalDateTime.now());
+                        solvingLogRepository.save(newSolvingLog);
+                    }
+                }
+            }
+        }, ()-> {
+            new NotFoundException(ErrorCode.NOT_FOUND_MEMBER);
+        });
+    }
+
+    private void addNewMember(JsonNode finalJsonNode, String bojId) {
+        String profileImage = finalJsonNode.get("profileImageUrl").toString();
+
+        Long tier = Long.parseLong(finalJsonNode.get("tier").toString());
         Tier getTier = tierRepository.findByLevel(tier);
-
 
         // member table 에 저장
         Member newMember = new Member();
         newMember.setTier(getTier);
-        newMember.setName(name);
+        newMember.setBojId(bojId);
         newMember.setProfileImage(profileImage.substring(1,profileImage.length()-1));
-        newMember.setSolveCount(finalJsonNode.get("solved").size());
-        newMember.setEmail(email.substring(1,email.length()-1));
-        newMember.setDaysCount(0); // 신규회원은 0으로 시작
-        newMember.setSolvedacToken(solvedacToken);
+        newMember.setSolveCount(Integer.parseInt(finalJsonNode.get("solvedCount").toString()));
+        newMember.setEmail(null);
+        newMember.setExp(0); // 신규회원은 0으로 시작
         memberRepository.save(newMember);
     }
 
-    private void addSolvingLog(JsonNode finalJsonNode, String name) {
-        int solvedSize = finalJsonNode.get("solved").size();
-        for (int i = 0; i < solvedSize; i++) {
-            int problemId = Integer.parseInt(finalJsonNode.get("solved").get(i).get("id").toString());
-            String status = finalJsonNode.get("solved").get(i).get("status").toString();
-            addProblem(name,problemId, status);
-        }
-    }
-
-    private void addProblem(String name, int problemId, String status) {
+    private void addProblem(String bojId, int problemId, String status) {
         Problem problem = problemRepository.findByBojId(problemId).orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND_PROBLEM));
-        Optional<Member> member = Optional.ofNullable(memberRepository.findByName(name));
+        Optional<Member> member = Optional.ofNullable(memberRepository.findByBojId(bojId));
         member.ifPresent(selectMember->{
-            SolvingLog solvingLog = new SolvingLog();
-            solvingLog.setMember(selectMember);
-            solvingLog.setProblem(problem);
-            solvingLog.setStatus(status);
-            solvingLog.setCreatedTime(LocalDateTime.now());
-            solvingLogRepository.save(solvingLog);
+            // member가 푼 문제 리스트
+            List<Problem> problemList = solvingLogRepository.findByMember(selectMember);
+
+            // 안 풀었던 문제였다면 새로 추가
+            if(!problemList.contains(problem)) {
+                SolvingLog solvingLog = new SolvingLog();
+                solvingLog.setMember(selectMember);
+                solvingLog.setProblem(problem);
+                solvingLog.setStatus(status);
+                solvingLog.setCreatedTime(LocalDateTime.now());
+                solvingLogRepository.save(solvingLog);
+            }
+            // 이미 풀었던 문제라면
+            else{
+                Problem solvedProblem = problemList.get(problemList.indexOf(problem));
+                List<SolvingLog> solvingLog = solvingLogRepository.findByProblem(selectMember, solvedProblem);
+                if(status.equals("solved") && solvingLog.get(0).getStatus().equals("tried")){
+                    solvingLog.get(0).setStatus("solved");
+                }
+            }
         });
     }
 
-    private void addMemberOrganizaton(JsonNode finalJsonNode, String name) {
-        int organizationSize = finalJsonNode.get("user").get("organizations").size();
-        for (int i = 0; i < organizationSize; i++) {
-            //organization 등록
-            int organizationId = Integer.parseInt(finalJsonNode.get("user").get("organizations").get(i).get("organizationId").toString());
-            String organizationName = finalJsonNode.get("user").get("organizations").get(i).get("name").toString();
-
-            boolean typeFlag = true;
-            addOrganization(organizationId, organizationName, typeFlag);
-            //memberHasOrganization 등록
-            addMemberHasOrganization(name, organizationName);
-        }
-    }
-
-    private void addOrganization(int organizationId, String organizationName, boolean typeFlag) {
-        Optional<Organization> organization =  organizationRepository.findByBojId(organizationId);
-        //이미 존재하는 organization이면 pass, 아니면 새로 등록
-        organization.ifPresentOrElse(selectorganization->{
-            log.info("organization already exist!!");
-        },()->{
-            log.info("new organization");
-            Organization newOrganiation = new Organization();
-            newOrganiation.setBojId(organizationId);
-            newOrganiation.setName(organizationName);
-            newOrganiation.setTypeFlag(typeFlag);
-            organizationRepository.save(newOrganiation);
-        });
-    }
-
-    private void addMemberHasOrganization(String name, String organizationName) {
-        Organization organization = organizationRepository.findByName(organizationName);
-        Optional<Member> member = Optional.ofNullable(memberRepository.findByName(name));
-        member.ifPresent(selectMember->{
-            MemberHasOrganization memberHasOrganization = new MemberHasOrganization();
-            memberHasOrganization.setMember(selectMember);
-            memberHasOrganization.setOrganization(organization);
-            memberHasOrganizationRepository.save(memberHasOrganization);
-        });
-    }
-
-
-    private void addLoginlog(String name) {
-        Optional<Member> member = Optional.ofNullable(memberRepository.findByName(name));
+    private void addLoginlog(String bojId) {
+        Optional<Member> member = Optional.ofNullable(memberRepository.findByBojId(bojId));
         member.ifPresent(selectMember->{
             LoginLog loginLog = new LoginLog();
             loginLog.setMember(selectMember);
@@ -320,31 +370,34 @@ public class MemberServiceImpl implements MemberService {
         });
     }
 
-    private void modifySolvingLog(int prevCount, int curCount, JsonNode finalJsonNode, String name) {
-        for (int i = prevCount; i < curCount; i++) {
-            int problemId = Integer.parseInt(finalJsonNode.get("solved").get(i).get("id").toString());
-            String status = finalJsonNode.get("solved").get(i).get("status").toString();
-            addProblem(name,problemId, status);
-        }
-    }
-
-    private boolean checkDay(int prevCount, int curCount, String name) {
-        Optional<Member> member = Optional.ofNullable(memberRepository.findByName(name));
-        AtomicBoolean flag = new AtomicBoolean(false);
+    private String checkDay(String bojId) {
+        Optional<Member> member = Optional.ofNullable(memberRepository.findByBojId(bojId));
+        AtomicReference<String> status = new AtomicReference<>("");
         member.ifPresent(selectMember->{
-            List<SolvingLog> solvingLogList = solvingLogRepository.findByName(selectMember);
+            String today = LocalDateTime.now().getYear() + "" + LocalDateTime.now().getMonthValue() + "" + LocalDateTime.now().getDayOfMonth() + "";
+            String yesterday = LocalDateTime.now().minusDays(1).getYear() + "" + LocalDateTime.now().minusDays(1).getMonthValue() + "" + LocalDateTime.now().minusDays(1).getDayOfMonth() +"";
 
-            LocalDateTime prevSolve = solvingLogList.get(prevCount-1).getCreatedTime();
-            LocalDateTime curSolve = solvingLogList.get(curCount-1).getCreatedTime();
+            // 이전 모든 로그인 로그 기록
+            List<LocalDateTime> loginLog = loginLogRepository.findLoginLog(selectMember);
 
-            String prevSolveTime = prevSolve.getYear() + ""+prevSolve.getMonthValue() + "" + prevSolve.getDayOfMonth()+"";
-            String curSolveTime = curSolve.getYear() + ""+curSolve.getMonthValue() + "" + curSolve.getDayOfMonth()+"";
+            // 가장 최근 로그인 로그 기록 확인
+            LocalDateTime latelyLogin = loginLog.get(loginLog.size()-1);
+            String lately = latelyLogin.getYear() + ""+ latelyLogin.getMonthValue() + ""+ latelyLogin.getDayOfMonth() + "";
 
-            // 날짜 같으면 0, curSolveTime이 더 크면 -1
-            if(prevSolveTime.compareTo(curSolveTime)==-1){
-                flag.set(true);
+            // 오늘 이미 방문했었으면 second 리턴
+            if(lately==today){
+                status.set("second");
+            }
+            // 오늘 첫 방문이고
+            else{
+                if(lately.equals(yesterday)){
+                    // 어제 방문한 기록이 있으면
+                    status.set("visited");
+                }else{
+                    status.set("first");
+                }
             }
         });
-        return flag.get();
+        return status.get();
     }
 }

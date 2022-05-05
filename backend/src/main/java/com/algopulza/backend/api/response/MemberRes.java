@@ -14,8 +14,8 @@ public class MemberRes {
     @ApiModelProperty(name = "회원 아이디", example = "1")
     private Long memberId;
 
-    @ApiModelProperty(name = "회원명 (백준 아이디)", example = "baekjoon")
-    private String memberName;
+    @ApiModelProperty(name = "백준 아이디", example = "baekjoon")
+    private String bojId;
 
     @ApiModelProperty(name = "프로필 사진 URI", example = "http://url...")
     private String profileImage;
@@ -32,7 +32,7 @@ public class MemberRes {
     @ApiModelProperty(name = "푼 문제 수", example = "10")
     private int solveCount;
 
-    @ApiModelProperty(name = "연속 풀이 일수", example = "3")
-    private int daysCount;
+    @ApiModelProperty(name = "경험치", example = "3")
+    private int exp;
 
 }

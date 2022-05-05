@@ -3,11 +3,12 @@ package com.algopulza.backend.db.repository;
 import com.algopulza.backend.api.response.ProblemAndStatusRes;
 import com.algopulza.backend.api.response.ProblemRes;
 import com.algopulza.backend.db.entity.*;
-import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.Set;
@@ -24,30 +25,54 @@ public class ProblemRepositoryCustomImpl implements ProblemRepositoryCustom {
     QTag qTag = QTag.tag;
 
     @Override
-    public List<ProblemAndStatusRes> findProblemAndStatusResByMemberId(Long memberId, Pageable pageable) {
-        QueryResults<ProblemAndStatusRes> queryResults = jpaQueryFactory.select(Projections.constructor(ProblemAndStatusRes.class,
-                                                                              qProblem.id,
-                                                                              qProblem.bojId,
-                                                                              qProblem.title,
-                                                                              qSolvingLog.status,
-                                                                              qTier.level,
-                                                                              qTier.name,
-                                                                              qProblem.acceptedCount,
-                                                                              qProblem.averageTryCount,
-                                                                              qProblem.solvableFlag
-                                                                        ))
-                                                                        .from(qProblem)
-                                                                        .join(qTier).on(qProblem.tier.eq(qTier))
-                                                                        .leftJoin(qSolvingLog).on(qProblem.eq(qSolvingLog.problem))
-                                                                        .orderBy(qProblem.bojId.asc())
-                                                                        .offset(pageable.getOffset())
-                                                                        .limit(pageable.getPageSize())
-                                                                        .fetchResults();
-        return queryResults.getResults();
+    public List<ProblemAndStatusRes> findProblemAndStatusRes(Long memberId, String tierName, Integer tierLevel, String status, Pageable pageable) {
+        return jpaQueryFactory.select(Projections.constructor(ProblemAndStatusRes.class,
+                                      qProblem.id,
+                                      qProblem.bojId,
+                                      qProblem.title,
+                                      qSolvingLog.status.coalesce("not try"),
+                                      qTier.level,
+                                      qTier.name,
+                                      qProblem.acceptedCount,
+                                      qProblem.averageTryCount,
+                                      qProblem.solvableFlag
+                              ))
+                              .from(qProblem)
+                              .join(qTier).on(qProblem.tier.eq(qTier))
+                              .leftJoin(qSolvingLog).on(qProblem.eq(qSolvingLog.problem))
+                              .where(eqTierName(tierName), eqNumberInTierName(tierLevel), eqStatus(status))
+                              .orderBy(qProblem.bojId.asc())
+                              .offset(pageable.getOffset())
+                              .limit(pageable.getPageSize())
+                              .fetch();
+    }
+
+    private BooleanExpression eqTierName(String tierName) {
+        if (StringUtils.hasText(tierName)) {
+            return qTier.name.eq(tierName);
+        }
+        return null;
+    }
+
+    private BooleanExpression eqNumberInTierName(Integer tierLevel) {
+        if (tierLevel != null && tierLevel >= 1 && tierLevel <= 5) {
+            return qTier.level.eq(tierLevel);
+        }
+        return null;
+    }
+
+    private BooleanExpression eqStatus(String status) {
+        if (StringUtils.hasText(status)) {
+            return qSolvingLog.status.eq(status);
+        }
+        if ("not try".equals(status)) {
+            return qSolvingLog.status.isNull();
+        }
+        return null;
     }
 
     @Override
-    public List<ProblemRes> findProblemResByTitleLike(String keyword) {
+    public List<ProblemRes> findProblemResByTitleLike(String keyword, Pageable pageable) {
         return jpaQueryFactory.select(Projections.constructor(ProblemRes.class,
                                       qProblem.id,
                                       qProblem.bojId,
@@ -62,6 +87,8 @@ public class ProblemRepositoryCustomImpl implements ProblemRepositoryCustom {
                               .join(qTier).on(qProblem.tier.eq(qTier))
                               .where(qProblem.title.contains(keyword))
                               .orderBy(qProblem.bojId.asc())
+                              .offset(pageable.getOffset())
+                              .limit(pageable.getPageSize())
                               .fetch();
     }
 
@@ -89,11 +116,11 @@ public class ProblemRepositoryCustomImpl implements ProblemRepositoryCustom {
     }
 
     @Override
-    public List<Long> findProblemIdByLevelRange(int levelStartValue, int levelEndValue) {
+    public List<Long> findProblemIdByTierNameSet(Set<String> tierNameSet) {
         return jpaQueryFactory.select(qProblem.id)
                               .from(qProblem)
                               .join(qTier).on(qProblem.tier.eq(qTier))
-                              .where(qTier.level.between(levelStartValue, levelEndValue))
+                              .where(qTier.name.in(tierNameSet))
                               .fetch();
     }
 

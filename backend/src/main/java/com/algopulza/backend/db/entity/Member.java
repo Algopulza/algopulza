@@ -29,7 +29,7 @@ public class Member extends BaseTimeEntity implements UserDetails {
     private Tier tier;
 
     @Column
-    private String name;
+    private String bojId;
 
     @Column
     private String profileImage;
@@ -41,10 +41,7 @@ public class Member extends BaseTimeEntity implements UserDetails {
     private String email;
 
     @Column
-    private int daysCount;
-
-    @Column
-    private  String solvedacToken;
+    private int exp;
 
     @Column
     private String refreshToken;
@@ -67,7 +64,7 @@ public class Member extends BaseTimeEntity implements UserDetails {
 
     @Override
     public String getUsername() {
-        return name;
+        return bojId;
     }
 
     @Override
