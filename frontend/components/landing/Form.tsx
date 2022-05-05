@@ -18,7 +18,7 @@ export type TextFieldAttr = {
   autofocus: boolean
 }
 
-export type SubmittingAttr = { text: string }
+export type SubmittingAttr = { text: string, width: string }
 
 export default function Form() {
   return (
@@ -36,7 +36,7 @@ export default function Form() {
       </div>
 
       <div>
-        <ButtonSubmitting submittingAttr={{text: '로그인'}} />
+        <ButtonSubmitting submittingAttr={{text: '검색', width: '20vw'}} />
         <ButtonRedirecting />
       </div>
     </Container>
