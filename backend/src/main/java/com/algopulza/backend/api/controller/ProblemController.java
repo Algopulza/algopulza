@@ -22,14 +22,16 @@ public class ProblemController {
     private final ProblemService problemService;
 
     @PutMapping("")
-    @ApiOperation(value = "문제 정보 수집하기", notes = "Solved.ac API로 문제 정보를 수집하는 API 입니다.")
+    @ApiOperation(value = "문제 정보 수집하기", notes = "Solved.ac API로 문제 정보를 수집하는 API 입니다. 조건을 입력하지 않으면 전체 문제를 수집합니다.")
     @ApiResponses({@ApiResponse(code = 200, message = ResponseMessage.PUT_PROBLEM_LIST_SUCCESS, response = ErrorResponse.class),
             @ApiResponse(code = 400, message = ResponseMessage.BAD_REQUEST, response = ErrorResponse.class),
             @ApiResponse(code = 401, message = ResponseMessage.UNAUTHORIZED, response = ErrorResponse.class),
             @ApiResponse(code = 403, message = ResponseMessage.ACCESS_DENIED, response = ErrorResponse.class),
             @ApiResponse(code = 404, message = ResponseMessage.NOT_FOUND, response = ErrorResponse.class)})
-    public ResponseEntity<BaseResponseBody> addProblemList(@RequestParam int startProblemNumber, @RequestParam int endProblemNumber) throws
-            InterruptedException {
+    public ResponseEntity<BaseResponseBody> addProblemList(
+            @RequestParam(name = "startProblemNumber", required = false) Integer startProblemNumber,
+            @RequestParam(name = "endProblemNumber", required = false) Integer endProblemNumber
+    ) throws InterruptedException {
         problemService.getAndAddProblemList(startProblemNumber, endProblemNumber);
         return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, ResponseMessage.PUT_PROBLEM_LIST_SUCCESS));
     }

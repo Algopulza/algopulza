@@ -10,7 +10,7 @@ import java.util.Map;
 
 public interface ProblemService {
 
-    void getAndAddProblemList(int start, int end) throws InterruptedException, ServerErrorException;
+    void getAndAddProblemList(Integer start, Integer end) throws InterruptedException, ServerErrorException;
 
     void addEntitiesFromSolvedAcProblemRes(SolvedAcProblemRes solvedAcProblemRes, List<Problem> problemList, List<ProblemHasTag> problemHasTagList, Map<Integer, Tag> tagMapByBojTagId);
 

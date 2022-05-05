@@ -57,14 +57,14 @@ public class ProblemServiceImpl implements ProblemService {
      * solved.ac API로 문제 리스트를 조회해서 DB에 저장
      */
     @Override
-    public void getAndAddProblemList(int start, int end) throws InterruptedException {
+    public void getAndAddProblemList(Integer start, Integer end) throws InterruptedException {
         // 정보를 요청할 문제들의 ID값을 만드는 StringBuilder
         StringBuilder problemIdBuilder = new StringBuilder();
         // 정보를 요청할 문제들의 ID값 String List
         List<String> problemIdList = new ArrayList<>();
 
-        // 유효하지 않은 범위로 요청 시에는 기본 범위로 조회
-        if (end > 0 && start <= end) {
+        // 요청값이 없거나, 유효하지 않은 범위로 요청 시에는 기본 범위로 조회
+        if (start != null && end != null && end > 0 && start <= end) {
             ProblemsStartNumber = start;
             ProblemsEndNumber = end;
         }
