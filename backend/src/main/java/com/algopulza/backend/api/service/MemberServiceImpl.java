@@ -137,7 +137,7 @@ public class MemberServiceImpl implements MemberService {
 
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> memberInfo
-                = restTemplate.exchange(SolvedacBaseUrl+"user/show?handle="+bojId, HttpMethod.GET, entity, String.class);
+                = restTemplate.exchange(SolvedacBaseUrl+"/user/show?handle="+bojId, HttpMethod.GET, entity, String.class);
 
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode jsonNode = null;

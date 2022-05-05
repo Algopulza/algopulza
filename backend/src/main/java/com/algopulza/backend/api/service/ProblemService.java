@@ -1,18 +1,18 @@
 package com.algopulza.backend.api.service;
 
 import com.algopulza.backend.api.response.*;
-import com.algopulza.backend.db.entity.ProblemAndTag;
-import com.algopulza.backend.db.entity.Tag;
+import com.algopulza.backend.db.entity.*;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.server.ServerErrorException;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public interface ProblemService {
 
-    void getAndAddProblemList(int start, int end);
+    void getAndAddProblemList(Integer start, Integer end) throws InterruptedException, ServerErrorException;
 
-    ProblemAndTag getEntitiesFromSolvedAcProblemRes(SolvedAcProblemRes solvedAcProblemRes, HashMap<Integer, Tag> tagMapBybojTagId);
+    void addEntitiesFromSolvedAcProblemRes(SolvedAcProblemRes solvedAcProblemRes, List<Problem> problemList, List<ProblemHasTag> problemHasTagList, Map<Integer, Tag> tagMapByBojTagId);
 
     List<ProblemAndStatusRes> getProblemList(Long memberId, String tierName, Integer tierLevel, String status, Pageable pageable);
 
