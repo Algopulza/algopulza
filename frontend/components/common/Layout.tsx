@@ -1,5 +1,5 @@
 import { ReactElement } from 'react'
-import NavBar from './NavBar'
+import NavBar from './navbar/NavBar'
 import styled from 'styled-components'
 
 const Container = styled.section`
