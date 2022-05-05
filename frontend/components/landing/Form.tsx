@@ -18,6 +18,8 @@ export type TextFieldAttr = {
   autofocus: boolean
 }
 
+export type SubmittingAttr = { text: string }
+
 export default function Form() {
   return (
     <Container>
@@ -29,12 +31,12 @@ export default function Form() {
           textFieldAttr={{id: 'password', label:'Password', width: '20vw', password: true, autofocus: false}}
         /> */}
         <InputTextField
-          textFieldAttr={{id: 'bojId', label:'BOJ ID', width: '20vw', password: false, autofocus: false}}
+          textFieldAttr={{id: 'bojId', label:'BOJ ID', width: '20vw', password: false, autofocus: true}}
         />
       </div>
 
       <div>
-        <ButtonSubmitting />
+        <ButtonSubmitting submittingAttr={{text: '로그인'}} />
         <ButtonRedirecting />
       </div>
     </Container>

@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
+import { SubmittingAttr } from '../../landing/Form'
 
 const Button = styled.button`
   margin-bottom: 20px;
@@ -17,13 +18,18 @@ const Button = styled.button`
     background-color: #1A4568;
   }
 `
-export default function ButtonSubmitting() {
+
+type SubmittingProps = {
+  submittingAttr: SubmittingAttr
+}
+
+export default function ButtonSubmitting({ submittingAttr }: SubmittingProps) {
   const router = useRouter()
   function moveToRecommendation() {
     router.push('/recommendation')
   }
 
   return (
-    <Button onClick={moveToRecommendation}>로그인</Button>
+    <Button onClick={moveToRecommendation}>{submittingAttr.text}</Button>
   )
 }

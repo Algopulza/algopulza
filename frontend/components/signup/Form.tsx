@@ -18,13 +18,13 @@ export type TextFieldAttr = {
   autofocus: boolean
 }
 
+export type SubmittingAttr = { text: string }
+
 export default function Form() {
   return (
     <Container>
       <div style={{marginBottom: 30}}>
-        <InputTextField
-          textFieldAttr={{id: 'id', label:'ID', width: '20vw', password: false, autofocus: true}}
-        />
+        <InputTextField textFieldAttr={{id: 'id', label:'ID', width: '20vw', password: false, autofocus: true}} />
         <InputTextField
           textFieldAttr={{id: 'password', label:'Password', width: '20vw', password: true, autofocus: false}}
         />
@@ -33,13 +33,11 @@ export default function Form() {
             {id: 'passwordConfirmation', label:'Password Confirmation', width: '20vw', password: true, autofocus: false}
           }
         />
-        <InputTextField
-          textFieldAttr={{id: 'email', label:'Email', width: '20vw', password: false, autofocus: false}}
-        />
+        <InputTextField textFieldAttr={{id: 'email', label:'Email', width: '20vw', password: false, autofocus: false}} />
       </div>
 
       <div>
-        <ButtonSubmitting />
+        <ButtonSubmitting submittingAttr={{text: '회원가입'}} />
         <ButtonRedirecting />
       </div>
     </Container>
