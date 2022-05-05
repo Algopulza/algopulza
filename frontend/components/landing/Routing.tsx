@@ -1,5 +1,4 @@
 import ButtonRouting from '../common/button/ButtonRouting'
-import ButtonToggling from '../common/button/ButtonToggling'
 import styled from 'styled-components'
 
 const Container = styled.section`
@@ -14,7 +13,7 @@ export default function Routing() {
   return (
     <Container>
       <ButtonRouting routingAttr={{url: '/recommendation', text: '비회원 로그인'}}  />
-      <ButtonToggling />
+      <ButtonRouting routingAttr={{url: '/signup', text: '회원 가입'}}  />
     </Container>
   )
 }
