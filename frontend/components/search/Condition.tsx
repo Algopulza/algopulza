@@ -9,7 +9,7 @@ const Container = styled.section`
   display: grid;
   grid-template-columns: 5fr 5fr;
   align-items: center;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 `
 
 const Subcontainer = styled.div<{ cond: boolean }>`

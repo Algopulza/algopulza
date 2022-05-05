@@ -31,7 +31,7 @@ const rows = [
 
 export default function Result() {
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} sx={{ marginBottom: '15px' }}>
       <Table aria-label="search">
         <TableHead sx={{ background: '#FFC94D' }}>
           <TableRow>
