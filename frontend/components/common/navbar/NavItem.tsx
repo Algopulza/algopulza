@@ -1,6 +1,6 @@
-import { NavItemAttr } from './NavBar'
 import Link from 'next/link'
 import styled from 'styled-components'
+import { NavItemAttr } from './NavBar'
 
 const Text = styled.span<{ cond: boolean }>`
   font-size: 1.3vw;
