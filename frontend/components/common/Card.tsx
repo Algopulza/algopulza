@@ -22,7 +22,7 @@ type CardProps = {
   accept: number,
 }
 
-export default function Card({key, tags, id, title, level, average, accept}:CardProps) {
+export default function Card() {
   const handleClick = () => {
     const problemUrl = `https://www.acmicpc.net/problem/${14503}`
     window.open(problemUrl)
@@ -30,8 +30,10 @@ export default function Card({key, tags, id, title, level, average, accept}:Card
 
   return (
     <Container onClick={handleClick}>
-      <Problem key={key} tags={tags} id={id} title={title}/>
-      <ProblemInfo key={key} level={level} average={average} accept={accept} />
+      <Problem key={1} tags={'구현'} id={144503} title={'로봇청소기'}/>
+      <ProblemInfo key={1} level={1} average={15} accept={13} />
     </Container>
   )
 }
+
+// {key, tags, id, title, level, average, accept}:CardProps
