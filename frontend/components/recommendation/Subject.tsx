@@ -1,7 +1,6 @@
 import { Title } from '../../pages/recommendation'
 import SubjectTitle from './SubjectTitle'
 import Card from '../common/Card'
-import _ from 'lodash'
 import styled from 'styled-components'
 
 const Container = styled.section`
@@ -14,18 +13,39 @@ const Cards = styled.div`
 `
 
 type TitleProps = {
-  title: Title
+  sub_title: Title
 }
 
-export default function Subject({ title }: TitleProps) {
-  const range = _.range(5)
+type ListProps = {
+  tagList: any,
+  bojId: number,
+  title: string,
+  tierLevel: number,
+  tierName: string,
+  averageTryCount: number,
+  acceptedCount: number,
+}
+
+export default function Subject({ sub_title }: TitleProps) {
+  const lists = sub_title.list
+  console.log(lists)
 
   return (
     <Container>
-      <SubjectTitle>{title}</SubjectTitle>
+      <SubjectTitle>{sub_title}</SubjectTitle>
       
       <Cards>
-        {range.map(index => <Card key={index} />)}
+        {lists.map((list:ListProps) =>
+        <Card
+        key={list.bojId}
+        tags={list.tagList}
+        id={list.bojId}
+        title={list.title}
+        level={list.tierLevel}
+        name={list.tierName}
+        average={list.averageTryCount}
+        accept={list.acceptedCount}
+        /> )}
       </Cards>
     </Container>
   )
