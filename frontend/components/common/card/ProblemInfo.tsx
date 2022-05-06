@@ -18,14 +18,16 @@ const Item = styled.div`
 type CardProps = {
   key: number,
   level: number,
+  name: string,
   average: number,
   accept: number,
 }
 
-export default function ProblemInfo({key, level, average, accept}:CardProps) {
+export default function ProblemInfo({key, level, name, average, accept}:CardProps) {
   const range = _.range(3)
+  const averages = Math.round(average*100)/100;
   const items = ['티어', '평균 시도', '해결']
-  const values = [level, average, accept]
+  const values = [level?name + level:name, averages, accept]
 
   return (
     <Container>
