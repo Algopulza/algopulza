@@ -29,7 +29,7 @@ def recomm_random(app, mongodb, userid):
     #############
 
     # 문제-태그 정보(problem_tag) 불러오기
-    # 아직 안풀었고 내 티어 +-1 난이도 하나 랜덤 추출
+    # 아직 안풀었고 내 티어 +-1 난이도 문제 10개 랜덤 추출
     collection = mongodb.problem_tag_nest
     problem = collection.aggregate([
         {'$match': {'problem_id': { '$nin': solved_id_list}}},
