@@ -1,3 +1,4 @@
+import { ReactElement, JSXElementConstructor, ReactFragment, ReactPortal } from 'react'
 import styled from 'styled-components'
 
 const Container = styled.section`
@@ -22,11 +23,11 @@ type CardProps = {
 }
 
 export default function ProblemTag({key, tags, id}:CardProps) {
+  const tags2 = tags.slice(0,2)
   return (
     <Container>
       <Tags>
-        <span style={{marginRight: 5}}>#구현</span>
-        <span style={{marginRight: 5}}>#시뮬레이션</span>
+        {tags2.map((tag: { name: string}) => <span key={key} style={{marginRight: 5}}>#{tag.name}</span>)}
       </Tags>
       
       <span>{id}</span>
