@@ -39,7 +39,7 @@ const titles = [
       <Form />
 
       <Container>
-        {titles.map(title => <Subject key={title.title} sub_title={title} />)}
+        {/* {titles.map(title => <Subject key={title.title} sub_title={title} />)} */}
       </Container>
     </>
   )

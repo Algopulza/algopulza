@@ -27,13 +27,13 @@ type ListProps = {
 }
 
 export default function Subject({ sub_title }: TitleProps) {
-  const lists = sub_title.list
-  console.log(lists)
+  // const lists = sub_title.list
+  // console.log(lists)
 
   return (
     <Container>
       <SubjectTitle>{sub_title}</SubjectTitle>
-      
+{/*       
       <Cards>
         {lists.map((list:ListProps) =>
         <Card
@@ -46,7 +46,7 @@ export default function Subject({ sub_title }: TitleProps) {
         average={list.averageTryCount}
         accept={list.acceptedCount}
         /> )}
-      </Cards>
+      </Cards> */}
     </Container>
   )
 }
