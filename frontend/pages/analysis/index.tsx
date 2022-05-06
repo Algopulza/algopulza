@@ -1,10 +1,10 @@
 import styled from "styled-components";
 import { ReactElement } from "react";
 import Layout from "../../components/common/Layout";
-import UserInfo from "../../components/analysis/userInfo/userinfo";
-import Badge from "../../components/analysis/badge/badge";
-import Weakness from "../../components/analysis/weakness/weakness";
-import Solved from "../../components/analysis/solved/solved";
+// import UserInfo from "../../components/analysis/userInfo/userinfo";
+// import Badge from "../../components/analysis/badge/badge";
+// import Weakness from "../../components/analysis/weakness/weakness";
+// import Solved from "../../components/analysis/solved/solved";
 
 const Container = styled.div`
   display: grid;
@@ -23,12 +23,12 @@ export default function Analysis() {
   return (
     <Container>
       <SubContainer>
-        <UserInfo />
-        <Badge />
+        {/* <UserInfo />
+        <Badge /> */}
       </SubContainer>
       <SubContainer>
-        <Weakness />
-        <Solved />
+        {/* <Weakness />
+        <Solved /> */}
       </SubContainer>
     </Container>
   );

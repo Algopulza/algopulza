@@ -5,7 +5,7 @@ import GiftBox from './gift/GiftBox'
 import ImgGiftBoxBlue from '../../public/random/giftbox_blue.png'
 import ImgGiftBoxRed from '../../public/random/giftbox_red.png'
 import _ from 'lodash'
-import { getRandom } from "../../api/random";
+// import { getRandom } from "../../api/random";
 
 const Container = styled.section`
   margin-bottom: 80px;
@@ -27,38 +27,38 @@ export default function Gift() {
   const images = [ImgGiftBoxBlue, ImgGiftBoxRed]
   const data = [dataBlue, dataRed]
 
-  const RandomBlue = async () => {
-    await getRandom()
-      .then((res) => {
-        console.log(res.data.data);
-        setDataBlue(res.data.data);
-      })
-      .catch((err) => console.log(err));
-  };
+  // const RandomBlue = async () => {
+  //   await getRandom()
+  //     .then((res) => {
+  //       console.log(res.data.data);
+  //       setDataBlue(res.data.data);
+  //     })
+  //     .catch((err) => console.log(err));
+  // };
 
-  const RandomRed = async () => {
-    await getRandom()
-      .then((res) => {
-        console.log(res.data.data);
-        setDataRed(res.data.data);
-      })
-      .catch((err) => console.log(err));
-  };
+  // const RandomRed = async () => {
+  //   await getRandom()
+  //     .then((res) => {
+  //       console.log(res.data.data);
+  //       setDataRed(res.data.data);
+  //     })
+  //     .catch((err) => console.log(err));
+  // };
 
   
-  const random = [RandomBlue, RandomRed]
+  // const random = [RandomBlue, RandomRed]
 
-  useEffect(() => {
-    RandomBlue();
-    RandomRed();
-  }, []);
+  // useEffect(() => {
+  //   RandomBlue();
+  //   RandomRed();
+  // }, []);
 
   return (
     <Container>
       <GiftDescription />
 
       <Boxes>
-        {range.map(idx => <GiftBox key={idx} text={buttonTexts[idx]} img={images[idx]} data={data[idx]} random={random[idx]}/>)}
+        {range.map(idx => <GiftBox key={idx} text={buttonTexts[idx]} img={images[idx]} data={data[idx]} />)}
       </Boxes>
     </Container>
   )
