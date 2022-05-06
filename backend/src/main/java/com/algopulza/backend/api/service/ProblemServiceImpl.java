@@ -235,7 +235,11 @@ public class ProblemServiceImpl implements ProblemService {
     public ProblemRes getOneRandomProblem() {
         List<Long> problemIdList = problemRepository.findAllId();
         int index = (int) (Math.random() * problemIdList.size());
-        return problemRepository.findProblemResById(problemIdList.get(index));
+
+        ProblemRes problemRes = problemRepository.findProblemResById(problemIdList.get(index));
+        problemRes.setTagList(tagRepository.findByProblemId(problemRes.getProblemId()));
+
+        return problemRes;
     }
 
     /**
