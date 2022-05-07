@@ -20,8 +20,8 @@ def recomm_random(app, mongodb, userid):
     
     # 유저의 solving log 불러오기
     collection = mongodb.solving_log
-    solving_log = collection.find({'member_id': user_id }, {'_id':0, 'problem_id':1})
-    solved_id_list = [s['problem_id'] for s in list(solving_log)]
+    solving_log = collection.find({'memberId': user_id }, {'_id':0, 'problemId':1})
+    solved_id_list = [s['problemId'] for s in list(solving_log)]
 
 
     #############
@@ -32,7 +32,7 @@ def recomm_random(app, mongodb, userid):
     # 아직 안풀었고 내 티어 +-1 난이도 문제 10개 랜덤 추출
     collection = mongodb.problem_tag_nest
     problem = collection.aggregate([
-        {'$match': {'problem_id': { '$nin': solved_id_list}}},
+        {'$match': {'problemId': { '$nin': solved_id_list}}},
         {'$match': {'level': {'$in': tiers}}},
         {'$sample': {'size': 10}},
         ])

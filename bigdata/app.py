@@ -47,8 +47,9 @@ def create_app(test_config=None):
     app.mysql_db = database
 
     # MongoDB
-    client = MongoClient('k6a4081.p.ssafy.io', app.config['MONGODB_PORT'])
-    # client = MongoClient('localhost', 27027)
+    # client = MongoClient('k6a4081.p.ssafy.io', app.config['MONGODB_PORT'])
+    # client = MongoClient('k6a4081.p.ssafy.io', 27017)
+    client = MongoClient('localhost', 27027)
     mongodb = client.algopulza_test
     
 
@@ -80,10 +81,10 @@ def create_app(test_config=None):
         return '<p>data saved</p>'
 
     # 유사티어 유저 mf 모델 저장
-    @app.route("/save-mf-models")
+    @app.route("/save-mf-model")
     def save_mf_model():
         res = train.train_level(app, mongodb)
-        return res
+        return '<p>model saved</p>'
     
     # 유사티어 유저 문제 추천
     @app.route("/recomm/mf-model/<userid>")

@@ -31,7 +31,7 @@ def random_one(app, mongodb, userid):
     """), {'user_id': id_tier[0]['user_id']}).fetchall()
     solving_log = [{
         'id': s['id'],
-        'problem_id': s['problem_id'],
+        'problemId': s['problem_id'],
         'status': s['status'],
     } for s in solving_log]
     solving_log = json.dumps(solving_log, ensure_ascii=False)
@@ -41,7 +41,7 @@ def random_one(app, mongodb, userid):
     # 아직 안풀었고 내 티어 +-1 난이도 하나 랜덤 추출
     collection = mongodb.problem_tag_nest
     problem = collection.aggregate([
-        {'$match': {'problem_id': { '$nin': solved_df['problem_id'].tolist()}}},
+        {'$match': {'problemId': { '$nin': solved_df['problemId'].tolist()}}},
         {'$match': {'level': {'$in': tiers}}},
         {'$sample': {'size': 1}},
         ])

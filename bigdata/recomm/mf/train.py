@@ -10,11 +10,11 @@ import json
 def train_level(app, mongodb):
     res_json = []
     # 난이도별로 모델 생성
-    # for i in range(1, 31):
-    for i in range(1):
-        tiers = list(map(str, [i-1, i, i+1]))
+    for i in range(1, 31):
+    # for i in range(1):
+        tiers = [i-1, i, i+1]
         # tiers = [3, 9, 14]
-
+        print('tiers: ', tiers)
 
         ##################
         # 데이터 불러오기 #
@@ -30,16 +30,24 @@ def train_level(app, mongodb):
 
         # 해당 티어에 유저 없거나 한명밖에 없는 경우
         if len(user_ids) <= 1:
-            print(f'no user in tier: {tiers}')
+            print(f'not enough users in tier: {tiers}')
             continue
 
         # 유저들의 solving 로그 불러오기
         user_id_list = [u['user_id'] for u in user_ids]
         collection = mongodb.solving_log
-        solving_log = collection.find({'member_id': { '$in': user_id_list }})
-    
+        solving_log = collection.find({'memberId': { '$in': user_id_list }})
+
         # member_id | problem_id | status df 생성
-        R_df = pd.DataFrame(solving_log)\
+        R_df = pd.DataFrame(solving_log)
+        ## empty df인 경우 제외
+        if len(R_df) == 0:
+            continue
+        ## solving log가 한 유저의것 밖에 없는 경우 제외
+        if len(set(list(R_df['memberId']))) <= 1:
+            continue
+    
+        R_df = R_df\
             .drop(columns='_id')\
             .set_index('id', drop=True)
         R_df['status'] = 1
@@ -60,8 +68,8 @@ def train_level(app, mongodb):
         R_valid_df = R_df.iloc[cutoff:]
 
         # df 형태 변형
-        R_train_df = R_train_df.pivot(index='member_id', columns='problem_id', values='status').fillna(0)
-        R_valid_df = R_valid_df.pivot(index='member_id', columns='problem_id', values='status').fillna(0)
+        R_train_df = R_train_df.pivot(index='memberId', columns='problemId', values='status').fillna(0)
+        R_valid_df = R_valid_df.pivot(index='memberId', columns='problemId', values='status').fillna(0)
 
         # R 매핑 딕셔너리 생성
         ## 문제번호 - idx
@@ -92,22 +100,21 @@ def train_level(app, mongodb):
 
         
         R_predicted = model.train_mf(res_dir='./recomm/mf/data', R_train=R_train, R_valid=R_valid)
-        
-        # print("U x V:")
-        # print(R_predicted)
-        # print(R_predicted)
+        print("U x V:")
+        print(R_predicted)
         
 
         ############
         # 결과 저장 #
         ############
 
+
         res_list = []
         for idx1, u in enumerate(R_predicted):
             for idx2, v in enumerate(u):        
                 res_list.append({
-                    'member_id': idx_member_id[idx1],
-                    'problem_id': idx_problem_id[idx2],
+                    'memberId': idx_member_id[idx1],
+                    'problemId': idx_problem_id[idx2],
                     'predicted_r': v,
                 })
 

@@ -21,8 +21,8 @@ def recomm_mf(app, mongodb, userid):
     
     # 유저의 solving log 불러오기
     collection = mongodb.solving_log
-    solving_log = collection.find({'member_id': user_id }, {'_id':0, 'problem_id':1})
-    solved_id_list = [s['problem_id'] for s in list(solving_log)]
+    solving_log = collection.find({'memberId': user_id }, {'_id':0, 'problemId':1})
+    solved_id_list = [s['problemId'] for s in list(solving_log)]
 
 
     #############
@@ -36,8 +36,8 @@ def recomm_mf(app, mongodb, userid):
     problem_tag = collection.find({
         '$and': [
             {'tier': user_tier },
-            {'data.member_id': user_id },
-            {'data.problem_id': {'$nin': solved_id_list}},
+            {'data.memberId': user_id },
+            {'data.problemId': {'$nin': solved_id_list}},
             {'data.predicted_r': {'$gte': 0.5}},
     ]})
     problem_id_list = list(problem_tag)
@@ -58,7 +58,7 @@ def recomm_mf(app, mongodb, userid):
     
     # 추천문제 문제데이터 결합
     collection = mongodb.problem_tag_nest
-    recomm_problems = collection.find({'problem_id': { '$in': recomm_df['problem_id'].tolist() }})
+    recomm_problems = collection.find({'problemId': { '$in': recomm_df['problemId'].tolist() }})
 
     ### 추천 문제 전달 ###
     recomm_list = list(recomm_problems)
