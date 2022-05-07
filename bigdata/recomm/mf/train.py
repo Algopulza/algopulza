@@ -40,9 +40,18 @@ def train_level(app, mongodb):
 
         # member_id | problem_id | status df 생성
         R_df = pd.DataFrame(solving_log)
+        
         ## empty df인 경우 제외
         if len(R_df) == 0:
             continue
+        
+        ## solving log 10개 미만 유저 제외
+        grouped_R = R_df.groupby('memberId', as_index=False).count()
+        insuff_user_ids = grouped_R.loc[grouped_R['status'] < 10]['memberId']
+        for insuff_id in insuff_user_ids:
+            R_df.drop(R_df.loc[R_df['memberId'] == insuff_id].index, inplace=True)
+        R_df.reset_index()
+
         ## solving log가 한 유저의것 밖에 없는 경우 제외
         if len(set(list(R_df['memberId']))) <= 1:
             continue
@@ -101,16 +110,17 @@ def train_level(app, mongodb):
         
         R_predicted = model.train_mf(res_dir='./recomm/mf/data', R_train=R_train, R_valid=R_valid)
         print("U x V:")
-        print(R_predicted)
+        print(R_predicted)        
         
 
         ############
         # 결과 저장 #
         ############
 
-
+    
         res_list = []
         for idx1, u in enumerate(R_predicted):
+            print('u:', u)
             for idx2, v in enumerate(u):        
                 res_list.append({
                     'memberId': idx_member_id[idx1],

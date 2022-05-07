@@ -90,11 +90,9 @@ class MF():
         predicted = self.U.dot(self.V.T)
         error = 0
         count = 0
-        print(predicted)
-        print(self.U)
-        print(self.R_valid)
         for x, y in zip(xs, ys):
-            print(x,y)
+            if (x >= len(predicted)):
+                break
             error += pow(self.R_valid[x, y] - predicted[x, y], 2)
             count += 1
         return np.sqrt(error)/count
