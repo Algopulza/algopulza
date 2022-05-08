@@ -35,10 +35,6 @@
   align-items: center;
 }
 
-.justify-evenly {
-  justify-content: space-evenly;
-}
-
 .font {
   font-size: 45px;
 }
