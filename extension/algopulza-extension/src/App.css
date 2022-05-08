@@ -10,7 +10,7 @@
   font-size: 28px;
 }
 
-.content-card {
+.content {
   width: 460px;
   height: 100px;
   margin: 10px 10px 20px 10px;
@@ -20,6 +20,45 @@
   border-radius: 15px;
 }
 
-.content-height {
+.content-big {
   height: 200px;
+}
+
+.stopwatch-structure {
+  display: grid;
+  grid-template-columns: 5fr 5fr;
+}
+
+.justify {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.justify-evenly {
+  justify-content: space-evenly;
+}
+
+.font {
+  font-size: 45px;
+}
+
+.font-small {
+  font-size: 25px;
+}
+
+.button-main {
+  width: 70px;
+  height: 35px;
+  
+  background: #FFC94D;
+  border: none;
+  border-radius: 15px;
+
+  font-size: 20px;
+}
+
+.button-black {
+  background: #000000;
+  color: #FFFFFF;
 }
