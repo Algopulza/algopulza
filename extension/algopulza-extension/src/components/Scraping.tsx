@@ -1,6 +1,6 @@
 export default function Scraping() {
   return (
-    <div>
+    <div className="content-card content-height">
       This is "SCRAPING" area.
     </div>
   )
