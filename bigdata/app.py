@@ -59,7 +59,7 @@ def create_app(test_config=None):
 
     @app.route('/')
     def hello():
-        return f'<p> hello </p>'
+        return '<p> hello </p>'
 
     # sql data fetch test
     @app.route("/test")
@@ -105,6 +105,12 @@ def create_app(test_config=None):
     @app.route('/random/<userid>')
     def rand(userid):
         rand_problem = random.recomm_random(app, mongodb, userid)
+        return rand_problem
+
+    # 이미 푼 자신 티어 +-1 level 문제 10개 랜덤추천
+    @app.route('/random-solved/<userid>')
+    def rand_solved(userid):
+        rand_problem = random.recomm_random_solved(app, mongodb, userid)
         return rand_problem
 
     # 유저 취약태그 분석
