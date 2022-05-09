@@ -24,17 +24,6 @@
   height: 200px;
 }
 
-.stopwatch-structure {
-  display: grid;
-  grid-template-columns: 5fr 5fr;
-}
-
-.justify {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .font {
   font-size: 45px;
 }
@@ -44,7 +33,8 @@
 }
 
 .button-main {
-  width: 70px;
+  margin-right: 10px;
+  width: 80px;
   height: 35px;
   
   background: #FFC94D;
@@ -52,6 +42,11 @@
   border-radius: 15px;
 
   font-size: 20px;
+}
+
+.button-blue {
+  background: #1A4568;
+  color: #FFFFFF;
 }
 
 .button-black {
