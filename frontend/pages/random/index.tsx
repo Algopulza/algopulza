@@ -19,9 +19,6 @@ export async function getRandom() {
   }
 }
 
-export type Title = { title: string, englishTitle: string, }
-
-
 export default function Random() {
 
   const [data, setData] = useState(

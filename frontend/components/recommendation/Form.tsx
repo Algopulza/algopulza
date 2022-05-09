@@ -1,6 +1,10 @@
+import { useEffect, useState } from 'react'
+import styled from 'styled-components'
+import axios from 'axios'
+import GiftBox from '../random/gift/GiftBox'
 import InputTextField from '../common/InputTextField'
 import ButtonSubmitting from '../common/button/ButtonSubmitting'
-import styled from 'styled-components'
+import ImgGiftBoxBlue from '../../public/random/giftbox_blue.png'
 
 const Container = styled.section`
   display: grid;
@@ -11,9 +15,11 @@ const Container = styled.section`
   background: #FFC94D;
 `
 
-const Subcontainer = styled.div`
+const Boxes = styled.div`
   display: flex;
-  align-items: center;
+  justify-content: space-evenly;
+  margin-top: 3rem;
+  padding: 0 2vw;
 `
 
 const InputContainer = styled.div`
@@ -24,12 +30,43 @@ const InputContainer = styled.div`
   background: #F3F3F3;
 `
 
+export async function getRecoRandom() {
+  const res = await axios.get("http://k6a4081.p.ssafy.io:5000/random-level/dw3624");
+  const posts =res.data;
+  return{
+    props:{
+      posts
+    }
+  }
+}
+
 export default function Form() {
+  const [dataBlue, setDataBlue] = useState<object>([]);
+  const buttonTexts = '수준을 고려해서 추천 받고 싶다면'
+  const images = ImgGiftBoxBlue
+  const data = dataBlue
+
+  const RecoRandomBlue = async () => {
+    await getRecoRandom()
+      .then((res) => {
+        const data = res.props.posts[0]
+        console.log(data)
+        setDataBlue(data);
+      })
+      .catch((err) => console.log(err));
+  };
+  
+  const random = RecoRandomBlue
+
+  useEffect(() => {
+    RecoRandomBlue();
+  }, []);
+
   return (
     <Container>
-      <Subcontainer>
-        문제 풀이 정보를 기록하면 좋은 점에 대한 내용이 들어갈 예정입니다.
-      </Subcontainer>
+        <Boxes>
+          <GiftBox text={buttonTexts} img={images} data={data} random={random} />
+      </Boxes>
 
       <InputContainer>
         <InputTextField

@@ -1,37 +1,94 @@
-import { ReactElement, useState } from 'react'
+import { ReactElement, useEffect, useState } from 'react'
 import Layout from '../../components/common/Layout'
 import Form from '../../components/recommendation/Form'
 import Subject from '../../components/recommendation/Subject'
 import styled from 'styled-components'
+import axios from 'axios'
 
 const Container = styled.section`
   padding: 0vw 5vw;
 `
 
-export type Title = { title: string, englishTitle: string}
-// const titles = [
-//   { title: '취약한 태그에 속하는 문제들을 추천해 드려요!', englishTitle: "", list:<A[] },
-//   { title: '최근 자주 풀었던 태그들에 속하는 문제들을 추천해 드려요!', englishTitle: "", list:undefined },
-//   { title: '비슷한 실력의 다른 유저들이 많이 푼 문제들을 추천해 드려요!', englishTitle: "", lsit:undefined },
-// ]
+export type Title = { title: string, englishTitle: string, list:any}
 
+export async function getVul() {
+  const res = await axios.get("http://k6a4081.p.ssafy.io:5000/recomm/vulnerability/dw3624");
+  console.log(res)
+  const posts =res.data;
+  return{
+    props:{
+      posts
+    }
+  }
+}
+
+export async function getTag() {
+  const res = await axios.get("http://k6a4081.p.ssafy.io:5000/recomm/freq-tag/dw3624");
+  console.log(res)
+  const posts =res.data;
+  return{
+    props:{
+      posts
+    }
+  }
+}
+
+export async function getSolved() {
+  const res = await axios.get("http://k6a4081.p.ssafy.io:5000/random-solved/dw3624");
+  console.log(res)
+  const posts =res.data;
+  return{
+    props:{
+      posts
+    }
+  }
+}
 
 export default function Recommendation() {
+  const [vulData, setVulData] = useState()
+  const [tagData, setTagData] = useState()
+  const [solvedData, setSolvedData] = useState()
 
-  
-  const [data, setData] = useState(
-    {
-      simulationList : [],
-  }
-  )
-  
-  const RandomSub = async () => {
-};
+  const RecommendVul = async () => {
+    await getVul()
+      .then((res) => {
+        const list = res.props.posts.slice(0,5)
+        console.log(list)
+        setVulData(list)
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const RecommendTag = async () => {
+    await getTag()
+      .then((res) => {
+        const list = res.props.posts.slice(0,5)
+        console.log(list)
+        setTagData(list)
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const RecommendSolved = async () => {
+    await getSolved()
+      .then((res) => {
+        const list = res.props.posts.slice(0,5)
+        console.log(list)
+        setSolvedData(list)
+      })
+      .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    RecommendVul();
+    RecommendTag();
+    RecommendSolved();
+  }, []);
 
 const titles = [
-  { title: '취약한 태그에 속하는 문제들을 추천해 드려요!', englishTitle: "", list:data.simulationList },
-  { title: '최근 자주 풀었던 태그들에 속하는 문제들을 추천해 드려요!', englishTitle: "", list:data.simulationList },
-  { title: '비슷한 실력의 다른 유저들이 많이 푼 문제들을 추천해 드려요!', englishTitle: "", lsit:data.simulationList },
+  { title: '최근 자주 풀었던 태그들에 속하는 문제들을 추천해 드려요!', englishTitle: "", list:tagData },
+  { title: '최근 푼 문제 중 적게 푼 태그에서 문제들을 추천해 드려요!', englishTitle: "", list:vulData },
+  { title: '이미 푼 문제 중 티어에 맞게 문제들을 추천해 드려요!', englishTitle: "", list:solvedData },
 ]
 
   return (
@@ -39,7 +96,7 @@ const titles = [
       <Form />
 
       <Container>
-        {/* {titles.map(title => <Subject key={title.title} sub_title={title} />)} */}
+        {titles.map(title => <Subject key={title.title} sub_title={title} />)}
       </Container>
     </>
   )
