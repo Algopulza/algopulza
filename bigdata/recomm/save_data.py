@@ -97,7 +97,7 @@ def save_data(app, mongodb):
         tmp_df = merged_df1.loc[merged_df1['problemId']==p['problemId']]
         tmp_df = tmp_df[['problemId', 'name']]
         tmp_list = tmp_df.to_dict('records')
-        p['tags'] = tmp_list
+        p['tagList'] = tmp_list
     
     problem_tag_nest = json.dumps(problem_list, ensure_ascii=False)
     problem_tag_nest = json.loads(problem_tag_nest)
