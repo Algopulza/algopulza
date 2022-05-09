@@ -10,7 +10,7 @@ const Container = styled.section`
 `
 
 export async function getRandom() {
-  const res = await axios.get("http://k6a408.p.ssafy.io:8081/api/v1/problems/random");
+  const res = await axios.get("https://k6a408.p.ssafy.io/api/v1/problems/random");
   const posts =res.data.data;
   return{
     props:{
