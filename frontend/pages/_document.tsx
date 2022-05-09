@@ -35,6 +35,7 @@ export default class CustomDocument extends Document {
             href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;700&display=swap"
             rel="stylesheet"
           />
+          {/* <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"></meta> */}
         </Head>
 
         <body>
