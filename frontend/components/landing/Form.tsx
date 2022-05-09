@@ -1,7 +1,5 @@
 import {useState} from 'react'
 import { useRouter } from 'next/router'
-import { useRecoilState } from 'recoil'
-import { userInfoState, accessTokenState, refreshTokenState } from '../../states/states'
 import axios from 'axios'
 import InputTextField from '../common/InputTextField'
 import ButtonSubmitting from '../common/button/ButtonSubmitting'
@@ -17,9 +15,6 @@ const Container = styled.section`
 
 export default function Form() {
   const [bojId, setBojId] = useState('')
-  const [userInfo, setUserInfo] = useRecoilState(userInfoState)
-  const [accessToken, setAccessToken] = useRecoilState(accessTokenState)
-  const [refreshToken, setRefreshToken] = useRecoilState(refreshTokenState)
   const handleChange = (event: any) => {
     setBojId(event.target.value)
   }
@@ -33,10 +28,10 @@ export default function Form() {
       }
     })
       .then(res => {
-        // console.log(res.data.data)
-        setUserInfo(res.data.data.member)
-        setAccessToken(res.data.data.token.accessToken)
-        setRefreshToken(res.data.data.token.refreshToken)
+        console.log(res.data.data)
+        localStorage.setItem('userInfo', JSON.stringify(res.data.data.member))
+        localStorage.setItem('accessToken', res.data.data.token.accessToken)
+        localStorage.setItem('refreshToken', res.data.data.token.refreshToken)
         router.push('/recommendation')
       })
   }
