@@ -62,6 +62,10 @@ export default function Form() {
     RecoRandomBlue();
   }, []);
 
+  const handleChange = () => {
+    // props 맞추기 위한 null 함수
+  }
+
   return (
     <Container>
         <Boxes>
@@ -71,18 +75,22 @@ export default function Form() {
       <InputContainer>
         <InputTextField
           textFieldAttr={{id: 'probId', label:'문제 번호', width: '20vw', password: false, autofocus: true}}
+          onChange={handleChange}
         />
         <InputTextField
           textFieldAttr={{id: 'memory', label:'메모리', width: '20vw', password: false, autofocus: true}}
+          onChange={handleChange}
         />
         <InputTextField
           textFieldAttr={{id: 'runTime', label:'실행시간', width: '20vw', password: false, autofocus: true}}
+          onChange={handleChange}
         />
         <InputTextField
           textFieldAttr={{id: 'language', label:'사용 언어', width: '20vw', password: false, autofocus: true}}
+          onChange={handleChange}
         />
         <div style={{marginTop: '10px'}}>
-          <ButtonSubmitting submittingAttr={{text: '제공', width: '20vw'}} />
+          <ButtonSubmitting submittingAttr={{text: '제공', width: '20vw'}} onClick={handleChange} />
         </div>
       </InputContainer>
     </Container>
