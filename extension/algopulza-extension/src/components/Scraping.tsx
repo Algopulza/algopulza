@@ -17,8 +17,8 @@ export default function Scraping() {
       </div>
 
       <div className='justify-edge'>
-        <button className='button-main button-margin'>수집</button>
-        <button className='button-main button-black button-margin'>제출</button> 
+        <button id="btn-scraping" className='button-main button-black button-margin'>수집</button>
+        <button id="btn-submitting" className='button-main button-margin'>제출</button> 
       </div>
     </div>
   )
