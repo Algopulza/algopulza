@@ -145,4 +145,4 @@ if __name__ == '__main__':
     ## flask run의 경우 개발자모드 비활성화
     app = create_app()
     app.debug = True # 개발자 모드
-    app.run(host='0.0.0.0', ssl_context='adhoc')
+    app.run(host='0.0.0.0')
