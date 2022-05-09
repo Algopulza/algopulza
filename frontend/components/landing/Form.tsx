@@ -1,3 +1,6 @@
+import {useState} from 'react'
+import { useRouter } from 'next/router'
+import axios from 'axios'
 import InputTextField from '../common/InputTextField'
 import ButtonSubmitting from '../common/button/ButtonSubmitting'
 import ButtonRedirecting from '../common/button/ButtonRedirecting'
@@ -10,33 +13,40 @@ const Container = styled.section`
   align-items: center;
 `
 
-export type TextFieldAttr = {
-  id: string,
-  label: string,
-  width: string,
-  password: boolean,
-  autofocus: boolean
-}
-
-export type SubmittingAttr = { text: string, width: string }
-
 export default function Form() {
+  const [bojId, setBojId] = useState('')
+  const handleChange = (event: any) => {
+    setBojId(event.target.value)
+  }
+  const router = useRouter()
+  const handleClick = () => {
+    axios({
+      url: 'https://k6a408.p.ssafy.io/api/v1/members',
+      method: 'post',
+      headers: {
+        'bojId': bojId
+      }
+    })
+      .then(res => {
+        console.log(res.data.data)
+        localStorage.setItem('userInfo', JSON.stringify(res.data.data.member))
+        localStorage.setItem('accessToken', res.data.data.token.accessToken)
+        localStorage.setItem('refreshToken', res.data.data.token.refreshToken)
+        router.push('/recommendation')
+      })
+  }
+
   return (
     <Container>
-      <div style={{marginBottom: 30}}>
-        {/* <InputTextField
-          textFieldAttr={{id: 'id', label:'ID', width: '20vw', password: false, autofocus: true}}
-        />
+      <div style={{marginBottom: 40}}>
         <InputTextField
-          textFieldAttr={{id: 'password', label:'Password', width: '20vw', password: true, autofocus: false}}
-        /> */}
-        <InputTextField
-          textFieldAttr={{id: 'bojId', label:'BOJ ID', width: '20vw', password: false, autofocus: true}}
+          textFieldAttr={{width: '20vw', id: 'bojId', label: 'BOJ ID', password: false, autofocus: true}}
+          onChange={handleChange}
         />
       </div>
 
       <div>
-        <ButtonSubmitting submittingAttr={{text: '검색', width: '20vw'}} />
+        <ButtonSubmitting submittingAttr={{text: '로그인', width: '20vw'}} onClick={handleClick} />
         <ButtonRedirecting />
       </div>
     </Container>
