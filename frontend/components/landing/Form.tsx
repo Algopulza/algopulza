@@ -1,9 +1,9 @@
 import {useState} from 'react'
+import axios from 'axios'
 import InputTextField from '../common/InputTextField'
 import ButtonSubmitting from '../common/button/ButtonSubmitting'
 import ButtonRedirecting from '../common/button/ButtonRedirecting'
 import styled from 'styled-components'
-import axios from 'axios'
 
 const Container = styled.section`
   display: flex;
@@ -11,16 +11,6 @@ const Container = styled.section`
   justify-content: center;
   align-items: center;
 `
-
-export type TextFieldAttr = {
-  width: string,
-  id: string,
-  label: string,
-  password: boolean,
-  autofocus: boolean
-}
-
-export type SubmittingAttr = { text: string, width: string }
 
 export default function Form() {
   const [bojId, setBojId] = useState('')

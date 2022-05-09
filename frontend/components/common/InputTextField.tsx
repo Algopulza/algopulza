@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
-import { TextFieldAttr } from '../landing/Form'
+import { TextFieldAttr } from '../../states/dto'
 
 type TextFieldProps = { 
   textFieldAttr: TextFieldAttr
