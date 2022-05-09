@@ -22,13 +22,15 @@ export default function Stopwatch() {
       <div className="justify">
         <div className='font'>{("0" + Math.floor((time / 3600000) % 60)).slice(-2)}:</div>
         <div className='font'>{("0" + Math.floor((time / 60000) % 60)).slice(-2)}:</div>
-        <div className='font'>{("0" + Math.floor((time / 1000) % 60)).slice(-2)}</div>
-        {/* <span>{("0" + ((time / 10) % 100)).slice(-2)}</span> */}
+        <div className='font'>{("0" + Math.floor((time / 1000) % 60)).slice(-2)}:</div>
+        <span>{("0" + ((time / 10) % 100)).slice(-2)}</span>
       </div>
 
       <div className='justify'>
-        <button className='button-main' onClick={() => setIsRunning(true)}>Start</button>
-        <button className='button-main button-black' onClick={() => setIsRunning(false)}>Stop</button>
+        {isRunning ?
+          <button className='button-main button-black' onClick={() => setIsRunning(false)}>Stop</button>:
+          <button className='button-main' onClick={() => setIsRunning(true)}>Start</button>
+        }
         <button className='button-main button-black' onClick={() => setTime(0)}>Reset</button> 
       </div>
     </div>
