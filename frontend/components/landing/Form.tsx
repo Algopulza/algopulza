@@ -1,4 +1,7 @@
 import {useState} from 'react'
+import { useRouter } from 'next/router'
+import { useRecoilState } from 'recoil'
+import { userInfoState, accessTokenState, refreshTokenState } from '../../states/states'
 import axios from 'axios'
 import InputTextField from '../common/InputTextField'
 import ButtonSubmitting from '../common/button/ButtonSubmitting'
@@ -14,9 +17,13 @@ const Container = styled.section`
 
 export default function Form() {
   const [bojId, setBojId] = useState('')
+  const [userInfo, setUserInfo] = useRecoilState(userInfoState)
+  const [accessToken, setAccessToken] = useRecoilState(accessTokenState)
+  const [refreshToken, setRefreshToken] = useRecoilState(refreshTokenState)
   const handleChange = (event: any) => {
     setBojId(event.target.value)
   }
+  const router = useRouter()
   const handleClick = () => {
     axios({
       url: 'https://k6a408.p.ssafy.io/api/v1/members',
@@ -26,7 +33,11 @@ export default function Form() {
       }
     })
       .then(res => {
-        console.log(res)
+        // console.log(res.data.data)
+        setUserInfo(res.data.data.member)
+        setAccessToken(res.data.data.token.accessToken)
+        setRefreshToken(res.data.data.token.refreshToken)
+        router.push('/recommendation')
       })
   }
 
@@ -40,7 +51,7 @@ export default function Form() {
       </div>
 
       <div>
-        <ButtonSubmitting submittingAttr={{text: '검색', width: '20vw'}} onClick={handleClick} />
+        <ButtonSubmitting submittingAttr={{text: '로그인', width: '20vw'}} onClick={handleClick} />
         <ButtonRedirecting />
       </div>
     </Container>
