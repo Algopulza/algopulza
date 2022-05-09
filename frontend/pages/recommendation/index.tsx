@@ -12,7 +12,7 @@ const Container = styled.section`
 export type Title = { title: string, englishTitle: string, list:any}
 
 export async function getVul() {
-  const res = await axios.get("http://k6a4081.p.ssafy.io:5000/recomm/vulnerability/dw3624");
+  const res = await axios.get("https://k6a4081.p.ssafy.io/recomm/vulnerability/dw3624");
   console.log(res)
   const posts =res.data;
   return{
@@ -23,7 +23,7 @@ export async function getVul() {
 }
 
 export async function getTag() {
-  const res = await axios.get("http://k6a4081.p.ssafy.io:5000/recomm/freq-tag/dw3624");
+  const res = await axios.get("https://k6a4081.p.ssafy.io/recomm/freq-tag/dw3624");
   console.log(res)
   const posts =res.data;
   return{
@@ -34,7 +34,7 @@ export async function getTag() {
 }
 
 export async function getSolved() {
-  const res = await axios.get("http://k6a4081.p.ssafy.io:5000/random-solved/dw3624");
+  const res = await axios.get("https://k6a4081.p.ssafy.io/random-solved/dw3624");
   console.log(res)
   const posts =res.data;
   return{
