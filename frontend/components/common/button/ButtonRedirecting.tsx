@@ -12,6 +12,7 @@ export default function ButtonRedirecting() {
     const url = 'https://chrome.google.com/webstore/category/extensions?hl=ko'
     window.open(url)
   }
+  
   return (
     <Container onClick={clickHandler}>
       알고풀자 <span style={{color: '#000000', fontWeight: 700}}>익스텐션</span>을 설치해보세요

@@ -21,23 +21,29 @@ export type TextFieldAttr = {
 export type SubmittingAttr = { text: string, width: string }
 
 export default function Form() {
+  const handleChange = () => {
+    // props 맞추기 위한 null 함수
+  }
+
   return (
     <Container>
       <div style={{marginBottom: 30}}>
-        <InputTextField textFieldAttr={{id: 'id', label:'ID', width: '20vw', password: false, autofocus: true}} />
+        <InputTextField textFieldAttr={{id: 'id', label:'ID', width: '20vw', password: false, autofocus: true}} onChange={handleChange} />
         <InputTextField
           textFieldAttr={{id: 'password', label:'Password', width: '20vw', password: true, autofocus: false}}
+          onChange={handleChange}
         />
         <InputTextField
           textFieldAttr={
             {id: 'passwordConfirmation', label:'Password Confirmation', width: '20vw', password: true, autofocus: false}
           }
+          onChange={handleChange}
         />
-        <InputTextField textFieldAttr={{id: 'email', label:'Email', width: '20vw', password: false, autofocus: false}} />
+        <InputTextField textFieldAttr={{id: 'email', label:'Email', width: '20vw', password: false, autofocus: false}} onChange={handleChange} />
       </div>
 
       <div>
-        <ButtonSubmitting submittingAttr={{text: '회원가입', width: '20vw'}} />
+        <ButtonSubmitting submittingAttr={{text: '회원가입', width: '20vw'}} onClick={handleChange} />
         <ButtonRedirecting />
       </div>
     </Container>

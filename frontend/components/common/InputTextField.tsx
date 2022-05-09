@@ -1,26 +1,28 @@
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
-import { TextFieldAttr } from '../landing/Form'
+import { TextFieldAttr } from '../../states/dto'
 
-type TextFieldProps = { textFieldAttr: TextFieldAttr }
+type TextFieldProps = { 
+  textFieldAttr: TextFieldAttr
+  onChange(event: any): void
+}
 
-export default function InputTextField({ textFieldAttr }: TextFieldProps) {
+export default function InputTextField({ textFieldAttr, onChange }: TextFieldProps) {
   return (
     <Box
       component="form"
-      sx={{
-        '& > :not(style)': { m: 1, width: textFieldAttr.width },
-      }}
       noValidate
       autoComplete="off"
     >
       <TextField
+        sx={{width: textFieldAttr.width}}
         id={textFieldAttr.id}
         label={textFieldAttr.label}
-        variant="outlined"
-        size="small"
         type={textFieldAttr.password ? 'password' : ""}
         autoFocus={textFieldAttr.autofocus ? true : false}
+        variant="outlined"
+        size="small"
+        onChange={onChange}
       />
     </Box>
   )
