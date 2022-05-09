@@ -8,19 +8,17 @@ export default function InputTextField({ textFieldAttr }: TextFieldProps) {
   return (
     <Box
       component="form"
-      sx={{
-        '& > :not(style)': { m: 1, width: textFieldAttr.width },
-      }}
       noValidate
       autoComplete="off"
     >
       <TextField
+        sx={{width: textFieldAttr.width}}
         id={textFieldAttr.id}
         label={textFieldAttr.label}
-        variant="outlined"
-        size="small"
         type={textFieldAttr.password ? 'password' : ""}
         autoFocus={textFieldAttr.autofocus ? true : false}
+        variant="outlined"
+        size="small"
       />
     </Box>
   )

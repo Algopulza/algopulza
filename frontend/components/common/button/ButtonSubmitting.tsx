@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router'
 import styled from 'styled-components'
 import { SubmittingAttr } from '../../landing/Form'
 
@@ -22,12 +21,7 @@ type SubmittingProps = {
 }
 
 export default function ButtonSubmitting({ submittingAttr }: SubmittingProps) {
-  const router = useRouter()
-  function moveToRecommendation() {
-    router.push('/recommendation')
-  }
-
   return (
-    <Button style={{width: `${submittingAttr.width}`}} onClick={moveToRecommendation}>{submittingAttr.text}</Button>
+    <Button style={{width: `${submittingAttr.width}`}}>{submittingAttr.text}</Button>
   )
 }

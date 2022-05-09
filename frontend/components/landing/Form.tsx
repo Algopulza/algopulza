@@ -11,9 +11,9 @@ const Container = styled.section`
 `
 
 export type TextFieldAttr = {
+  width: string,
   id: string,
   label: string,
-  width: string,
   password: boolean,
   autofocus: boolean
 }
@@ -23,15 +23,9 @@ export type SubmittingAttr = { text: string, width: string }
 export default function Form() {
   return (
     <Container>
-      <div style={{marginBottom: 30}}>
-        {/* <InputTextField
-          textFieldAttr={{id: 'id', label:'ID', width: '20vw', password: false, autofocus: true}}
-        />
+      <div style={{marginBottom: 40}}>
         <InputTextField
-          textFieldAttr={{id: 'password', label:'Password', width: '20vw', password: true, autofocus: false}}
-        /> */}
-        <InputTextField
-          textFieldAttr={{id: 'bojId', label:'BOJ ID', width: '20vw', password: false, autofocus: true}}
+          textFieldAttr={{width: '20vw', id: 'bojId', label: 'BOJ ID', password: false, autofocus: true}}
         />
       </div>
 
