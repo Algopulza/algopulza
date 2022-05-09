@@ -21,7 +21,8 @@ const Boxes = styled.div`
 `
 
 export async function getRandom() {
-  const res = await axios.get("http://k6a408.p.ssafy.io:8081/api/v1/problems/random-one");
+  const res = await axios.get("https://k6a408.p.ssafy.io/api/v1/problems/random-one");
+  console.log(res)
   const posts =res.data.data;
   return{
     props:{
