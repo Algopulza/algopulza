@@ -29,10 +29,10 @@ export default function Stopwatch() {
 
       <div className='justify'>
         {isRunning ?
-          <button className='button-main button-blue' onClick={() => setIsRunning(false)}>Stop</button>:
-          <button className='button-main' onClick={() => setIsRunning(true)}>Start</button>
+          <button className='button-main button-blue' onClick={() => setIsRunning(false)}>멈춤</button>:
+          <button className='button-main' onClick={() => setIsRunning(true)}>시작</button>
         }
-        <button className='button-main button-black' onClick={() => setTime(0)}>Reset</button> 
+        <button className='button-main button-black' onClick={() => setTime(0)}>초기화</button> 
       </div>
     </div>
   )
