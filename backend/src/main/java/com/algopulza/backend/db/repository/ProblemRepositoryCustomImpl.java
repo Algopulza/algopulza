@@ -18,7 +18,6 @@ public class ProblemRepositoryCustomImpl implements ProblemRepositoryCustom {
     private final JPAQueryFactory jpaQueryFactory;
 
     QProblem qProblem = QProblem.problem;
-    QSolvingLog qSolvingLog = QSolvingLog.solvingLog;
     QTier qTier = QTier.tier;
     QProblemHasTag qProblemHasTag = QProblemHasTag.problemHasTag;
     QTag qTag = QTag.tag;
@@ -37,7 +36,6 @@ public class ProblemRepositoryCustomImpl implements ProblemRepositoryCustom {
                               ))
                               .from(qProblem)
                               .join(qTier).on(qProblem.tier.eq(qTier))
-                              .leftJoin(qSolvingLog).on(qProblem.eq(qSolvingLog.problem))
                               .where(eqTierName(tierName), eqNumberInTierName(tierLevel))
                               .orderBy(qProblem.bojId.asc())
                               .offset(pageable.getOffset())
