@@ -31,7 +31,7 @@ const InputContainer = styled.div`
 `
 
 export async function getRecoRandom() {
-  const res = await axios.get("http://k6a4081.p.ssafy.io:5000/random-level/dw3624");
+  const res = await axios.get("https://k6a4081.p.ssafy.io/random-level/dw3624");
   const posts =res.data;
   return{
     props:{
