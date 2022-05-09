@@ -3,8 +3,7 @@ package com.algopulza.backend.api.service;
 import com.algopulza.backend.api.request.member.*;
 import com.algopulza.backend.api.response.MemberRes;
 import com.algopulza.backend.api.response.TokenRes;
-
-import java.util.List;
+import com.algopulza.backend.config.jwt.RoleType;
 
 public interface MemberService {
 
@@ -16,7 +15,7 @@ public interface MemberService {
 
     void modifyMember(ModifyMemberReq modifyMemberReq);
 
-    String createToken(Long id, List<String> roles);
+    String createToken(Long id, RoleType roleType);
 
     String createRefreshToken(Long id);
 
