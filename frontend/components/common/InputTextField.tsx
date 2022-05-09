@@ -2,9 +2,12 @@ import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 import { TextFieldAttr } from '../landing/Form'
 
-type TextFieldProps = { textFieldAttr: TextFieldAttr }
+type TextFieldProps = { 
+  textFieldAttr: TextFieldAttr
+  onChange(event: any): void
+}
 
-export default function InputTextField({ textFieldAttr }: TextFieldProps) {
+export default function InputTextField({ textFieldAttr, onChange }: TextFieldProps) {
   return (
     <Box
       component="form"
@@ -19,6 +22,7 @@ export default function InputTextField({ textFieldAttr }: TextFieldProps) {
         autoFocus={textFieldAttr.autofocus ? true : false}
         variant="outlined"
         size="small"
+        onChange={onChange}
       />
     </Box>
   )

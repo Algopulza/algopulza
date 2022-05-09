@@ -17,11 +17,12 @@ const Button = styled.button`
 `
 
 type SubmittingProps = {
-  submittingAttr: SubmittingAttr
+  submittingAttr: SubmittingAttr,
+  onClick(): void
 }
 
-export default function ButtonSubmitting({ submittingAttr }: SubmittingProps) {
+export default function ButtonSubmitting({ submittingAttr, onClick }: SubmittingProps) {
   return (
-    <Button style={{width: `${submittingAttr.width}`}}>{submittingAttr.text}</Button>
+    <Button style={{width: `${submittingAttr.width}`}} onClick={onClick}>{submittingAttr.text}</Button>
   )
 }
