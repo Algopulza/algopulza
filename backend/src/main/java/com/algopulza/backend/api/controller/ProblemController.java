@@ -45,15 +45,11 @@ public class ProblemController {
     public ResponseEntity<BaseResponseBody> listProblem(
             @RequestParam(value = "tierName", required = false) String tierName,
             @RequestParam(value = "tierLevel", required = false) Integer tierLevel,
-            @RequestParam(value = "status", required = false) String status,
             @ApiIgnore @PageableDefault(size = 20) Pageable pageable
     ) {
-        Long memberId = 1L;
         return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, ResponseMessage.GET_PROBLEM_LIST_SUCCESS, problemService.getProblemList(
-                memberId,
                 tierName,
                 tierLevel,
-                status,
                 pageable
         )));
     }
