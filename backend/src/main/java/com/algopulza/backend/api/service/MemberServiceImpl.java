@@ -359,7 +359,7 @@ public class MemberServiceImpl implements MemberService {
                 StringTokenizer st = new StringTokenizer(solvedProblems, ", ");
                 while (st.hasMoreTokens()){
                     int problemId = Integer.parseInt(st.nextToken());
-                    addProblem("3sally", problemId, "solved");
+                    addProblem(bojId, problemId, "solved");
                 }
 
                 String triedList = stdOut.readLine();
@@ -367,7 +367,7 @@ public class MemberServiceImpl implements MemberService {
                 st = new StringTokenizer(triedProblems, ", ");
                 while (st.hasMoreTokens()){
                     int problemId = Integer.parseInt(st.nextToken());
-                    addProblem("3sally", problemId, "tried");
+                    addProblem(bojId, problemId, "tried");
                 }
 
             }
