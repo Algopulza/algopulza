@@ -5,6 +5,16 @@ export const userInfoState = atom({
   default: {}
 })
 
+export const bojIdState = atom({
+  key: 'bojIdState',
+  default: {}
+})
+
+export const memberIdState = atom({
+  key: 'memberIdState',
+  default: {}
+})
+
 export const accessTokenState = atom({
   key: 'accessTokenState',
   default: ''
