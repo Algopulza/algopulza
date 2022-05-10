@@ -1,10 +1,10 @@
 package com.algopulza.backend.db.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
+@NoArgsConstructor
 @Getter
 @Setter
 @Entity
@@ -25,5 +25,11 @@ public class ProblemMark extends BaseTimeEntity {
 
     @Column
     private int typeFlag;
+
+    public ProblemMark(Member member, Problem problem, int typeFlag) {
+        this.member = member;
+        this.problem = problem;
+        this.typeFlag = typeFlag;
+    }
 
 }

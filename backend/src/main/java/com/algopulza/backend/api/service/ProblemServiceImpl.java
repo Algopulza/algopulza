@@ -33,6 +33,8 @@ public class ProblemServiceImpl implements ProblemService {
     private final TierRepository tierRepository;
     private final ProblemHasTagRepository problemHasTagRepository;
     private final TagRepository tagRepository;
+    private final ProblemMarkRepository problemMarkRepository;
+    private final MemberRepository memberRepository;
 
     // 구현, DP, 그래프, 그리디, 정렬, BFS, DFS, 조합론 태그의 맵 {boj_key : boj_tag_id}
     private final Map<String, Integer> tagMap = new HashMap<>() {{
@@ -331,6 +333,13 @@ public class ProblemServiceImpl implements ProblemService {
         }
 
         return problemResList;
+    }
+
+    @Override
+    public void addProblemMark(Long memberId, Long problemId, int markType) {
+        Member member = memberRepository.findById(memberId).orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND_MEMBER));
+        Problem problem = problemRepository.findById(problemId).orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND_PROBLEM));
+        problemMarkRepository.save(new ProblemMark(member, problem, markType));
     }
 
 }

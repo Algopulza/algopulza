@@ -26,4 +26,6 @@ public interface ProblemService {
 
     List<ProblemRes> getRandomProblemListByCondition(int type, Object condition, int count);
 
+    void addProblemMark(Long memberId, Long problemId, int markType);
+
 }
