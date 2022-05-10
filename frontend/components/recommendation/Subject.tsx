@@ -27,9 +27,7 @@ type ListProps = {
 }
 
 export default function Subject({ sub_title }: TitleProps) {
-  console.log(sub_title)
   const lists = sub_title.list
-  console.log(lists)
 
   return (
     <Container>
