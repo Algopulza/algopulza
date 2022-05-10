@@ -28,6 +28,7 @@ export default function Form() {
   const handleClick = () => {
     if (bojId.trim() === '') {
       setValid(false)
+      console.log('by click')
     } else {
       setValid(true)
       axiosLogin(bojId)
@@ -41,18 +42,8 @@ export default function Form() {
     }
   }
   const handleKeyDown = (event: any) => {
-    if (bojId.trim() === '') {
-      setValid(false)
-    } else if (event.key === 'Enter') {
-      setValid(true)
-      axiosLogin(bojId)
-        .then(res => {
-          // console.log(res.data.data)
-          setUserInfo(res.data.data.member)
-          setAccessToken(res.data.data.token.accessToken)
-          setRefreshToken(res.data.data.token.refreshToken)
-          router.push('/recommendation')
-        })
+    if (event.key === 'Enter') {
+      handleClick()
     }
   }
 
