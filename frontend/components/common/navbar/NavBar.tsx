@@ -15,31 +15,30 @@ const Container = styled.section`
 const Pages = styled.div`
   display: flex;
   justify-content: center;
-  padding: 0 80px;
 `
 
 export default function NavBar() {
   useEffect(() => {
     const currentUrl = window.location.href.split('/').pop()
     clickHandler('/' + currentUrl)
+    setIsLogin(localStorage.getItem('recoil-persist') !== null ? true : false )
   }, [])
   const [isLocated, setIsLocated] = useState('')
-  const loginStatus = useRecoilValue(accessTokenState) === '' ? false : true
-  
   const clickHandler = (path: string) => setIsLocated(path)
+  const [isLogin, setIsLogin] = useState(true)
 
   return (
     <Container>
       <Brand />
 
       <Pages>
-        {loginStatus ?
+        {isLogin ?
           <NavItem navItemAttr={{item: '추천', url: '/recommendation'}} isLocated={isLocated} onClick={clickHandler} /> :
           <></>
         }
         <NavItem navItemAttr={{item: '랜덤', url: '/random'}} isLocated={isLocated} onClick={clickHandler} />
         <NavItem navItemAttr={{item: '검색', url: '/search'}} isLocated={isLocated} onClick={clickHandler} />
-        {loginStatus ?
+        {isLogin ?
           <NavItem navItemAttr={{item: '분석', url: '/analysis'}} isLocated={isLocated} onClick={clickHandler} /> :
           <></>
         }

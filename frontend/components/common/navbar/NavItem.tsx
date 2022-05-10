@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { NavItemAttr } from '../../../util/dto'
 
 const Text = styled.span<{ cond: boolean }>`
-  margin: 0 40px 0 40px;
+  margin: 0 3vw 0 3vw;
   font-size: 1.3vw;
   color: ${(props) => (props.cond ? "#FFC94D" : "#000000")};
   &:hover {
