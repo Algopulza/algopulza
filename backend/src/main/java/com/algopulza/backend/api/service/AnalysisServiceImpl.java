@@ -1,7 +1,6 @@
 package com.algopulza.backend.api.service;
 
-import com.algopulza.backend.api.response.LanguageAnalysisRes;
-import com.algopulza.backend.api.response.SolvedCountAnalysisRes;
+import com.algopulza.backend.api.response.*;
 import com.algopulza.backend.db.repository.SolvingLogRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,6 +24,11 @@ public class AnalysisServiceImpl implements AnalysisService {
     @Override
     public List<SolvedCountAnalysisRes> getSolvedCountAnalysisList(Long memberId) {
         return solvingLogRepository.findCountByMemberId(memberId);
+    }
+
+    @Override
+    public SolvingLogStatisticsRes getSolvingLogStatistics(Long memberId) {
+        return solvingLogRepository.findStatisticsByMemberId(memberId);
     }
 
 }

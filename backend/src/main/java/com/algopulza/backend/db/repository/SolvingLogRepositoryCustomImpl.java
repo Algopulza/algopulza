@@ -1,7 +1,6 @@
 package com.algopulza.backend.db.repository;
 
-import com.algopulza.backend.api.response.LanguageAnalysisRes;
-import com.algopulza.backend.api.response.SolvedCountAnalysisRes;
+import com.algopulza.backend.api.response.*;
 import com.algopulza.backend.db.entity.Member;
 import com.algopulza.backend.db.entity.Problem;
 import com.algopulza.backend.db.entity.QSolvingLog;
@@ -66,6 +65,19 @@ public class SolvingLogRepositoryCustomImpl implements  SolvingLogRepositoryCust
                 .groupBy(qSolvingLog.createdTime.year(), qSolvingLog.createdTime.month())
                 .orderBy(qSolvingLog.createdTime.asc())
                 .fetch();
+    }
+
+    @Override
+    public SolvingLogStatisticsRes findStatisticsByMemberId(Long memberId) {
+        return jpaQueryFactory
+                .select(Projections.constructor(SolvingLogStatisticsRes.class,
+                        qSolvingLog.count(),
+                        qSolvingLog.codeLength.sum().longValue(),
+                        qSolvingLog.solvingTime.sum().longValue()
+                ))
+                .from(qSolvingLog)
+                .where(qSolvingLog.member.id.eq(memberId), qSolvingLog.status.eq("solved"))
+                .fetchOne();
     }
 
 }

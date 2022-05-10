@@ -27,8 +27,7 @@ public class AddDetailSolvedProblem {
     @ApiModelProperty(value = "코드 길이", required = true)
     private int codeLength;
 
-
-    @ApiModelProperty(value = "문제 푼 시간", required = true)
-    private LocalDateTime solvingTime;
+    @ApiModelProperty(value = "풀이 시간", required = true)
+    private int solvingTime;
 
 }
