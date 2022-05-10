@@ -6,7 +6,7 @@ import ButtonSubmitting from '../common/button/ButtonSubmitting'
 import ButtonRedirecting from '../common/button/ButtonRedirecting'
 import styled from 'styled-components'
 import { useSetRecoilState } from 'recoil'
-import { userInfoState, accessTokenState, refreshTokenState } from '../../util/stateCollection'
+import { userInfoState, bojIdState, memberIdState, accessTokenState, refreshTokenState } from '../../util/stateCollection'
 
 const Container = styled.section`
   display: flex;
@@ -19,6 +19,8 @@ export default function Form() {
   const [bojId, setBojId] = useState('')
   const [valid, setValid] = useState(true)
   const setUserInfo = useSetRecoilState(userInfoState)
+  const setBoj = useSetRecoilState(bojIdState)
+  const setMember = useSetRecoilState(memberIdState)
   const setAccessToken = useSetRecoilState(accessTokenState)
   const setRefreshToken = useSetRecoilState(refreshTokenState)
   const handleChange = (event: any) => {
@@ -35,6 +37,8 @@ export default function Form() {
         .then(res => {
           // console.log(res.data.data)
           setUserInfo(res.data.data.member)
+          setBoj(res.data.data.member.bojId)
+          setMember(res.data.data.member.memberId)
           setAccessToken(res.data.data.token.accessToken)
           setRefreshToken(res.data.data.token.refreshToken)
           router.push('/recommendation')
