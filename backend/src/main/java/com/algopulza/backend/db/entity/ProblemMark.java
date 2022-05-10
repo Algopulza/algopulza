@@ -24,6 +24,6 @@ public class ProblemMark extends BaseTimeEntity {
     private Problem problem;
 
     @Column
-    private int markType;
+    private int typeFlag;
 
 }
