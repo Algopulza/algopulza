@@ -1,6 +1,8 @@
 package com.algopulza.backend.api.controller;
 
+import com.algopulza.backend.api.response.MyPageRes;
 import com.algopulza.backend.api.service.AnalysisService;
+import com.algopulza.backend.api.service.ProblemService;
 import com.algopulza.backend.common.exception.handler.ErrorResponse;
 import com.algopulza.backend.common.model.BaseResponseBody;
 import com.algopulza.backend.common.model.ResponseMessage;
@@ -18,6 +20,28 @@ import org.springframework.web.bind.annotation.*;
 public class AnalysisController {
 
     private final AnalysisService analysisService;
+    private final ProblemService problemService;
+
+    @GetMapping("")
+    @ApiOperation(value = "마이페이지 정보 조회", notes = "풀이 시 사용한 언어의 비율, 월별 문제 풀이 개수, 풀이기록 통계, 풀어볼 문제 리스트를 조회하는 API 입니다.")
+    @ApiResponses({@ApiResponse(code = 200, message = ResponseMessage.GET_ANALYSIS_INFO_SUCCESS),
+            @ApiResponse(code = 400, message = ResponseMessage.BAD_REQUEST, response = ErrorResponse.class),
+            @ApiResponse(code = 401, message = ResponseMessage.UNAUTHORIZED, response = ErrorResponse.class),
+            @ApiResponse(code = 403, message = ResponseMessage.ACCESS_DENIED, response = ErrorResponse.class),
+            @ApiResponse(code = 404, message = ResponseMessage.NOT_FOUND, response = ErrorResponse.class)})
+    public ResponseEntity<BaseResponseBody> listAnalysis() {
+        Long memberId = JwtUtil.getCurrentId();
+        return ResponseEntity.ok(BaseResponseBody.of(
+                HttpStatus.OK,
+                ResponseMessage.GET_ANALYSIS_INFO_SUCCESS,
+                new MyPageRes(
+                        analysisService.getLanguageAnalysisList(memberId),
+                        analysisService.getSolvedCountAnalysisList(memberId),
+                        analysisService.getSolvingLogStatistics(memberId),
+                        problemService.getProblemMarkList(memberId, 0)
+                )
+        ));
+    }
 
     @GetMapping("/languages")
     @ApiOperation(value = "사용 언어 비율 조회", notes = "풀이 시 사용한 언어의 비율을 조회하는 API 입니다.")
