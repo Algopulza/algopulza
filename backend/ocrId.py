@@ -6,19 +6,21 @@ import cv2
 import sys
 import os
 
-print("start ocr")
-
 url = sys.argv[1]
-res = request.urlopen(url).read()
-img = Image.open(BytesIO(res))
 
-print(res)
-
-image = cv2.imread(img)
+image = cv2.imread(url)
 rgb_image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
 text = pytesseract.image_to_string(rgb_image, lang = 'eng+kor', config = '--oem 3 --psm 11')
 
-print(text)
+a = text.find("아이디")
+b = text.find("상태")
 
-print("finish ocr")
+if a>-1 and b>-1:
+    bojId = text[a+3 : b].strip()
+    print(bojId)
+else:
+    print("fail")
+
+
+

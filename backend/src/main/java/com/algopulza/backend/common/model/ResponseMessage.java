@@ -29,8 +29,6 @@ public class ResponseMessage {
     public static final String MODIFY_MEMBER_INFO_SUCCESS = "회원 정보 수정 성공";
     public static final String MODIFY_MEMBER_INFO_FAIL = "회원 정보 수정 실패";
     public static final String RENEWAL_MEMBER_INFO = "회원 정보 갱신 성공";
-    public static final String POST_SOLVED_PROBLEM_SUCCESS = "solved 문제 넣기 성공";
-    public static final String POST_TRIED_PROBLEM_SUCCESS = "tried 문제 넣기 성공";
     public static final String POST_DETAIL_SOLVED_PROBLEM_SUCCESS = "solved한 문제 세부 정보 넣기 성공";
 
     // Problem
@@ -42,4 +40,9 @@ public class ResponseMessage {
 
     // Tier
     public static final String NOT_FOUND_TIER = "존재하지 않는 티어";
+
+    // Image
+    public static final String INVALID_IMAGE = "잘못된 이미지";
+    public static final String GET_BOJID_FROM_IMG_SUCCESS = "이미지에서 백준 아이디 추출하기 성공";
+    public static final String GET_PROBLEM_FROM_IMG_SUCCESS = "이미지에서 문제 추출하기 성공";
 }

@@ -3,10 +3,8 @@ package com.algopulza.backend.api.service;
 import com.algopulza.backend.api.request.member.*;
 import com.algopulza.backend.api.response.MemberRes;
 import com.algopulza.backend.api.response.TokenRes;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.util.List;
 import com.algopulza.backend.config.jwt.RoleType;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface MemberService {
 
@@ -26,12 +24,10 @@ public interface MemberService {
 
     void logout(Long id);
 
-    void addSolvedProblem(AddSolvedProblemReq addSolvedProblemReq);
-
-    void addTriedProblem(AddTriedProblemReq addTriedProblemReq);
-
     void addDetailSolvedProblem(AddDetailSolvedProblem addDetailSolvedProblem);
 
     String extractBojIdFromImg(MultipartFile capturedImage);
+
+    void extractProblemFromImg(String bojId, MultipartFile capturedImage);
 }
 
