@@ -10,6 +10,7 @@ import com.algopulza.backend.common.exception.handler.ErrorResponse;
 import com.algopulza.backend.common.model.BaseResponseBody;
 import com.algopulza.backend.common.model.ResponseMessage;
 import com.algopulza.backend.config.jwt.JwtTokenProvider;
+import com.algopulza.backend.config.jwt.RoleType;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
@@ -37,17 +38,17 @@ public class MemberController {
             @ApiResponse(code = 401, message = ResponseMessage.UNAUTHORIZED, response = ErrorResponse.class),
             @ApiResponse(code = 403, message = ResponseMessage.ACCESS_DENIED, response = ErrorResponse.class),
             @ApiResponse(code = 404, message = ResponseMessage.NOT_FOUND, response = ErrorResponse.class)})
-    public ResponseEntity<BaseResponseBody> addMember(@RequestHeader String bojId) throws JsonProcessingException {
+    public ResponseEntity<BaseResponseBody> addMember(@RequestHeader String bojId) {
         // 회원정보 저장
         MemberRes memberRes = memberService.addMember(bojId);
 
         // jwt token 발급
-        String token = memberService.createToken(memberRes.getMemberId(), null);
+        String token = memberService.createToken(memberRes.getMemberId(), RoleType.USER);
         String refreshToken = memberService.createRefreshToken(memberRes.getMemberId());
         TokenRes tokenRes = new TokenRes(token, refreshToken);
 
         Map<String, Object> result = new HashMap<>();
-        result.put("member",memberRes);
+        result.put("member", memberRes);
         result.put("token", tokenRes);
         return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.CREATED, ResponseMessage.LOGIN_SUCCESS, result));
     }

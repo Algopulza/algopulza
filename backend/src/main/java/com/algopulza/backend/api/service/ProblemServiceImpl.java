@@ -203,15 +203,15 @@ public class ProblemServiceImpl implements ProblemService {
      * 필터링 조건이 있다면 필터링해서 반환, 없다면 전체 문제 반환
      */
     @Override
-    public List<ProblemAndStatusRes> getProblemList(Long memberId, String tierName, Integer tierLevel, String status, Pageable pageable) {
+    public List<ProblemRes> getProblemList(String tierName, Integer tierLevel, Pageable pageable) {
         // Problem List 조회
-        List<ProblemAndStatusRes> problemAndStatusResList
-                = problemRepository.findProblemAndStatusRes(memberId, tierName, tierLevel, status, pageable);
+        List<ProblemRes> problemResList
+                = problemRepository.findProblemRes(tierName, tierLevel, pageable);
         // Problem별로 Tag List 조회
-        for (ProblemAndStatusRes problemAndStatusRes : problemAndStatusResList) {
+        for (ProblemRes problemAndStatusRes : problemResList) {
             problemAndStatusRes.setTagList(tagRepository.findByProblemId(problemAndStatusRes.getProblemId()));
         }
-        return problemAndStatusResList;
+        return problemResList;
     }
 
     /**
