@@ -20,3 +20,8 @@ export const refreshTokenState = atom({
   default: '',
   effects_UNSTABLE: [persistAtom]
 })
+
+export const pageState = atom({
+  key: 'pageState',
+  default: '',
+})
