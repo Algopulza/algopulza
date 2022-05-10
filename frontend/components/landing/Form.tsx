@@ -1,6 +1,6 @@
 import {useState} from 'react'
 import { useRouter } from 'next/router'
-import axios from 'axios'
+import { axiosLogin } from '../../util/axiosCollection'
 import InputTextField from '../common/InputTextField'
 import ButtonSubmitting from '../common/button/ButtonSubmitting'
 import ButtonRedirecting from '../common/button/ButtonRedirecting'
@@ -20,18 +20,27 @@ export default function Form() {
     setBojId(event.target.value)
   }
   const router = useRouter()
-  const handleClick = (event: any) => {
+  const handleClick = () => {
     if (bojId.trim() == '') {
       setValid(false)
     } else {
       setValid(true)
-      axios({
-        url: 'https://k6a408.p.ssafy.io/api/v1/members',
-        method: 'post',
-        headers: {
-          'bojId': bojId
-        }
-      })
+      axiosLogin(bojId)
+        .then(res => {
+          console.log(res.data.data)
+          localStorage.setItem('userInfo', JSON.stringify(res.data.data.member))
+          localStorage.setItem('accessToken', res.data.data.token.accessToken)
+          localStorage.setItem('refreshToken', res.data.data.token.refreshToken)
+          router.push('/recommendation')
+        })
+    }
+  }
+  const handleKeyDown = (event: any) => {
+    if (bojId.trim() == '') {
+      setValid(false)
+    } else if (event.key === 'Enter') {
+      setValid(true)
+      axiosLogin(bojId)
         .then(res => {
           console.log(res.data.data)
           localStorage.setItem('userInfo', JSON.stringify(res.data.data.member))
@@ -50,6 +59,7 @@ export default function Form() {
           valid={valid}
           validMessage='백준 아이디를 정확히 입력해 주세요.'
           onChange={handleChange}
+          onKeyDown={handleKeyDown}
         />
       </div>
 

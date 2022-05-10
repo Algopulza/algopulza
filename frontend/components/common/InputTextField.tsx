@@ -7,14 +7,20 @@ type TextFieldProps = {
   valid: boolean
   validMessage: string
   onChange(event: any): void
+  onKeyDown(event: any): void
 }
 
-export default function InputTextField({ textFieldAttr, valid, validMessage, onChange }: TextFieldProps) {
+export default function InputTextField({ textFieldAttr, valid, validMessage, onChange, onKeyDown }: TextFieldProps) {
+  const submitHandler = (event: any) => {
+    event.preventDefault()
+  }
+
   return (
     <Box
       component="form"
       noValidate
       autoComplete="off"
+      onSubmit={submitHandler}
     >
       {valid ?
         <TextField
@@ -26,6 +32,7 @@ export default function InputTextField({ textFieldAttr, valid, validMessage, onC
           variant="outlined"
           size="small"
           onChange={onChange}
+          onKeyDown={onKeyDown}
         /> :
         <TextField
           error
@@ -36,6 +43,7 @@ export default function InputTextField({ textFieldAttr, valid, validMessage, onC
           autoFocus={textFieldAttr.autofocus ? true : false}
           size="small"
           onChange={onChange}
+          onKeyDown={onKeyDown}
         />
       }
     </Box>
