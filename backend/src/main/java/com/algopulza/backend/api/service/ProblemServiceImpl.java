@@ -16,7 +16,8 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.scheduler.Schedulers;
 
-import java.time.*;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.*;
 import java.util.concurrent.CountDownLatch;
 import java.util.stream.Collectors;
@@ -205,8 +206,7 @@ public class ProblemServiceImpl implements ProblemService {
     @Override
     public List<ProblemRes> getProblemList(String tierName, Integer tierLevel, Pageable pageable) {
         // Problem List 조회
-        List<ProblemRes> problemResList
-                = problemRepository.findProblemRes(tierName, tierLevel, pageable);
+        List<ProblemRes> problemResList = problemRepository.findProblemRes(tierName, tierLevel, pageable);
         // Problem별로 Tag List 조회
         for (ProblemRes problemAndStatusRes : problemResList) {
             problemAndStatusRes.setTagList(tagRepository.findByProblemId(problemAndStatusRes.getProblemId()));
@@ -261,6 +261,32 @@ public class ProblemServiceImpl implements ProblemService {
                             .goldList(getRandomProblemListByCondition(1, "Gold", 5))
                             .platinumList(getRandomProblemListByCondition(1, "Platinum", 5))
                             .build();
+    }
+
+    /**
+     * 풀었던 문제들 중 랜덤으로 5개를 반환
+     */
+    @Override
+    public List<ProblemRes> getRandomSolvedProblemList(Long memberId) {
+        // memberId가 푼 문제의 Id 리스트
+        List<Long> problemIdList = problemRepository.findProblemIdByStatus(memberId, "solved");
+        Set<Long> problemIdSet = new HashSet<>();
+
+        // 반환할 문제 정보 개수 (푼 문제의 수가 5개보다 적다면 푼 문제 모두 반환)
+        int selectCount = Math.min(problemIdList.size(), 5);
+
+        while (problemIdSet.size() < selectCount) {
+            problemIdSet.add(problemIdList.get((int) (Math.random() * problemIdList.size())));
+        }
+
+        // 랜덤으로 선택된 5개의 문제 아이디로 문제 정보 조회
+        List<ProblemRes> problemResList = problemRepository.findProblemResByIdSet(problemIdSet);
+        // 각 Problem별 Tag List 조회
+        for (ProblemRes problemRes : problemResList) {
+            problemRes.setTagList(tagRepository.findByProblemId(problemRes.getProblemId()));
+        }
+
+        return problemResList;
     }
 
     /**

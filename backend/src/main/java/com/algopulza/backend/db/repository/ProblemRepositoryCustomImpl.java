@@ -21,6 +21,7 @@ public class ProblemRepositoryCustomImpl implements ProblemRepositoryCustom {
     QTier qTier = QTier.tier;
     QProblemHasTag qProblemHasTag = QProblemHasTag.problemHasTag;
     QTag qTag = QTag.tag;
+    QSolvingLog qSolvingLog = QSolvingLog.solvingLog;
 
     @Override
     public List<ProblemRes> findProblemRes(String tierName, Integer tierLevel, Pageable pageable) {
@@ -117,6 +118,15 @@ public class ProblemRepositoryCustomImpl implements ProblemRepositoryCustom {
                               .from(qProblemHasTag)
                               .leftJoin(qTag).on(qProblemHasTag.tag.eq(qTag))
                               .where(qTag.bojTagId.eq(bojTagId))
+                              .fetch();
+    }
+
+    @Override
+    public List<Long> findProblemIdByStatus(Long memberId, String status) {
+        return jpaQueryFactory.select(qSolvingLog.problem.id)
+                              .distinct()
+                              .from(qSolvingLog)
+                              .where(qSolvingLog.member.id.eq(memberId), qSolvingLog.status.eq(status))
                               .fetch();
     }
 
