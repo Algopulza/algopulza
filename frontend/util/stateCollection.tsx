@@ -1,22 +1,16 @@
 import { atom } from 'recoil'
 
-export interface UserInfo {
-  member: object;
-  accessToken: string;
-  refreshToken: string;
-}
-
 export const userInfoState = atom({
-  key: 'userInfo',
+  key: 'userInfoState',
   default: {}
 })
 
 export const accessTokenState = atom({
-  key: 'accessToken',
+  key: 'accessTokenState',
   default: ''
 })
 
 export const refreshTokenState = atom({
-  key: 'refreshToken',
+  key: 'refreshTokenState',
   default: ''
 })

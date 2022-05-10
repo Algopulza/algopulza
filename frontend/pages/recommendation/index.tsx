@@ -85,11 +85,11 @@ export default function Recommendation() {
     RecommendSolved();
   }, []);
 
-const titles = [
-  { title: '최근 자주 풀었던 태그들에 속하는 문제들을 추천해 드려요!', englishTitle: "", list:tagData },
-  { title: '최근 푼 문제 중 적게 푼 태그에서 문제들을 추천해 드려요!', englishTitle: "", list:vulData },
-  { title: '이미 푼 문제 중 티어에 맞게 문제들을 추천해 드려요!', englishTitle: "", list:solvedData },
-]
+  const titles = [
+    { title: '최근 자주 풀었던 태그들에 속하는 문제들을 추천해 드려요!', englishTitle: "", list:tagData },
+    { title: '최근 푼 문제 중 적게 푼 태그에서 문제들을 추천해 드려요!', englishTitle: "", list:vulData },
+    { title: '이미 푼 문제 중 티어에 맞게 문제들을 추천해 드려요!', englishTitle: "", list:solvedData },
+  ]
 
   return (
     <>
