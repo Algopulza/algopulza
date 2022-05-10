@@ -137,8 +137,8 @@ public class MemberController {
             @ApiResponse(code = 401, message = ResponseMessage.UNAUTHORIZED, response = ErrorResponse.class),
             @ApiResponse(code = 403, message = ResponseMessage.ACCESS_DENIED, response = ErrorResponse.class),
             @ApiResponse(code = 404, message = ResponseMessage.NOT_FOUND, response = ErrorResponse.class)})
-    public ResponseEntity<BaseResponseBody> addSolvedProblem(@RequestPart MultipartFile capturedImage){
-        memberService.extractProblemFromImg("3sally",capturedImage);
+    public ResponseEntity<BaseResponseBody> addSolvedProblem(AddProblemReq addProblemReq){
+        memberService.extractProblemFromImg(addProblemReq.getBojId(),addProblemReq.getCapturedImage());
         return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, ResponseMessage.GET_PROBLEM_FROM_IMG_SUCCESS));
     }
 

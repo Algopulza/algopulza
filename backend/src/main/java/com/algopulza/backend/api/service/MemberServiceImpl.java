@@ -243,7 +243,6 @@ public class MemberServiceImpl implements MemberService {
                 solvingLog.setLanguage(addDetailSolvedProblem.getLanguage());
                 solvingLog.setCodeLength(addDetailSolvedProblem.getCodeLength());
                 solvingLog.setSolvingTime(addDetailSolvedProblem.getSolvingTime());
-                solvingLog.setCreatedTime(LocalDateTime.now());
                 solvingLogRepository.save(solvingLog);
             }
             // 문제를 푼 기록이 있으면
@@ -278,7 +277,6 @@ public class MemberServiceImpl implements MemberService {
                         newSolvingLog.setLanguage(addDetailSolvedProblem.getLanguage());
                         newSolvingLog.setCodeLength(addDetailSolvedProblem.getCodeLength());
                         newSolvingLog.setSolvingTime(addDetailSolvedProblem.getSolvingTime());
-                        newSolvingLog.setCreatedTime(LocalDateTime.now());
                         solvingLogRepository.save(newSolvingLog);
                     }
                 }
@@ -301,8 +299,7 @@ public class MemberServiceImpl implements MemberService {
                         newSolvingLog.setLanguage(addDetailSolvedProblem.getLanguage());
                         newSolvingLog.setCodeLength(addDetailSolvedProblem.getCodeLength());
                         newSolvingLog.setSolvingTime(addDetailSolvedProblem.getSolvingTime());
-                        newSolvingLog.setCreatedTime(LocalDateTime.now());
-                        solvingLogRepository.save(newSolvingLog);
+                         solvingLogRepository.save(newSolvingLog);
                     }
                 }
             }

@@ -40,7 +40,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
            )
            .antMatchers(HttpMethod.POST, "/api/v1/members") // 로그인
            .antMatchers(HttpMethod.POST, "/api/v1/members/extractBojId") // 이미지에서 백준 아이디 추출하기
-                 .antMatchers(HttpMethod.POST, "/api/v1/members/solved") // TODO : 삭제해야함
            .antMatchers(HttpMethod.GET, "/api/v1/problems") // 문제 리스트 조회
            .antMatchers(HttpMethod.PUT, "/api/v1/problems") // 문제 정보 수집
            .antMatchers(HttpMethod.GET, "/api/v1/problems/random") // 랜덤 문제 리스트 조회
