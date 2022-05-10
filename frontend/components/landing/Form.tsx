@@ -15,25 +15,31 @@ const Container = styled.section`
 
 export default function Form() {
   const [bojId, setBojId] = useState('')
+  const [valid, setValid] = useState(true)
   const handleChange = (event: any) => {
     setBojId(event.target.value)
   }
   const router = useRouter()
-  const handleClick = () => {
-    axios({
-      url: 'https://k6a408.p.ssafy.io/api/v1/members',
-      method: 'post',
-      headers: {
-        'bojId': bojId
-      }
-    })
-      .then(res => {
-        console.log(res.data.data)
-        localStorage.setItem('userInfo', JSON.stringify(res.data.data.member))
-        localStorage.setItem('accessToken', res.data.data.token.accessToken)
-        localStorage.setItem('refreshToken', res.data.data.token.refreshToken)
-        router.push('/recommendation')
+  const handleClick = (event: any) => {
+    if (bojId.trim() == '') {
+      setValid(false)
+    } else {
+      setValid(true)
+      axios({
+        url: 'https://k6a408.p.ssafy.io/api/v1/members',
+        method: 'post',
+        headers: {
+          'bojId': bojId
+        }
       })
+        .then(res => {
+          console.log(res.data.data)
+          localStorage.setItem('userInfo', JSON.stringify(res.data.data.member))
+          localStorage.setItem('accessToken', res.data.data.token.accessToken)
+          localStorage.setItem('refreshToken', res.data.data.token.refreshToken)
+          router.push('/recommendation')
+        })
+    }
   }
 
   return (
@@ -41,6 +47,7 @@ export default function Form() {
       <div style={{marginBottom: 40}}>
         <InputTextField
           textFieldAttr={{width: '20vw', id: 'bojId', label: 'BOJ ID', password: false, autofocus: true}}
+          valid={valid}
           onChange={handleChange}
         />
       </div>

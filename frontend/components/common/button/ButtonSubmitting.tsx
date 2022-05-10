@@ -18,7 +18,7 @@ const Button = styled.button`
 
 type SubmittingProps = {
   submittingAttr: SubmittingAttr,
-  onClick(): void
+  onClick(event: any): void
 }
 
 export default function ButtonSubmitting({ submittingAttr, onClick }: SubmittingProps) {
