@@ -8,4 +8,7 @@ import java.util.List;
 
 @Repository
 public interface SolvingLogRepository extends JpaRepository<SolvingLog, Long>, SolvingLogRepositoryCustom{
+
+    long countByMemberIdAndLanguageIsNotNull(Long memberId);
+
 }
