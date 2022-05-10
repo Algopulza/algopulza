@@ -396,7 +396,7 @@ public class MemberServiceImpl implements MemberService {
             String lately = latelyLogin.getYear() + ""+ latelyLogin.getMonthValue() + ""+ latelyLogin.getDayOfMonth() + "";
 
             // 오늘 이미 방문했었으면 second 리턴
-            if(lately==today){
+            if(lately.equals(today)){
                 status.set("second");
             }
             // 오늘 첫 방문이고
