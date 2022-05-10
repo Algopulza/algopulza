@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { SubmittingAttr } from '../../../states/dto'
+import { SubmittingAttr } from '../../../util/dto'
 
 const Button = styled.button`
   height: 45px;
@@ -18,7 +18,7 @@ const Button = styled.button`
 
 type SubmittingProps = {
   submittingAttr: SubmittingAttr,
-  onClick(): void
+  onClick(event: any): void
 }
 
 export default function ButtonSubmitting({ submittingAttr, onClick }: SubmittingProps) {
