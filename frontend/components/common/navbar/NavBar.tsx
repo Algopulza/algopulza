@@ -1,7 +1,9 @@
-import { useState } from 'react'
-import BrandName from './BrandName'
+import { useEffect, useState } from 'react'
+import Brand from './Brand'
 import NavItem from './NavItem'
 import styled from 'styled-components'
+import { useRecoilState } from 'recoil'
+import { pageState } from '../../../util/stateCollection'
 
 const Container = styled.section`
   display: grid;
@@ -12,29 +14,33 @@ const Container = styled.section`
 
 const Pages = styled.div`
   display: flex;
-  justify-content: space-between;
-  padding: 0 50px;
+  justify-content: center;
 `
 
-export type NavItemAttr = { item: string, url: string }
-const navItems = [
-  { item: '추천', url: '/recommendation' },
-  { item: '랜덤', url: '/random' },
-  { item: '검색', url: '/search' },
-  { item: '분석', url: '/analysis' }
-]
-
 export default function NavBar() {
-  const [isLocated, setIsLocatd] = useState('/recommendation')
-  const clickHandler = (path: string) => setIsLocatd(path)
+  useEffect(() => {
+    const currentUrl = window.location.href.split('/').pop()
+    clickHandler('/' + currentUrl)
+    setIsLogin(localStorage.getItem('recoil-persist') !== null ? true : false )
+  }, [])
+  const [page, setPage] = useRecoilState(pageState)
+  const clickHandler = (path: string) => setPage(path)
+  const [isLogin, setIsLogin] = useState(true)
 
   return (
     <Container>
-      <BrandName />
+      <Brand />
 
       <Pages>
-        {navItems.map(navItem =>
-          <NavItem key={navItem.item} navItem={navItem} isLocated={isLocated} onClick={clickHandler} />)
+        {isLogin ?
+          <NavItem navItemAttr={{item: '추천', url: '/recommendation'}} isLocated={page} onClick={clickHandler} /> :
+          <></>
+        }
+        <NavItem navItemAttr={{item: '랜덤', url: '/random'}} isLocated={page} onClick={clickHandler} />
+        <NavItem navItemAttr={{item: '검색', url: '/search'}} isLocated={page} onClick={clickHandler} />
+        {isLogin ?
+          <NavItem navItemAttr={{item: '분석', url: '/analysis'}} isLocated={page} onClick={clickHandler} /> :
+          <></>
         }
       </Pages>
     </Container>
