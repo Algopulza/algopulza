@@ -342,4 +342,9 @@ public class ProblemServiceImpl implements ProblemService {
         problemMarkRepository.save(new ProblemMark(member, problem, markType));
     }
 
+    @Override
+    public List<ProblemMarkRes> getProblemMarkList(Long memberId, int markType) {
+        return problemMarkRepository.findProblemByTypeFlag(memberId, markType);
+    }
+
 }

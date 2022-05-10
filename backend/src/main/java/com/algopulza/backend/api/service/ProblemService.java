@@ -28,4 +28,6 @@ public interface ProblemService {
 
     void addProblemMark(Long memberId, Long problemId, int markType);
 
+    List<ProblemMarkRes> getProblemMarkList(Long memberId, int markType);
+
 }
