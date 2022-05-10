@@ -48,6 +48,7 @@ export default function Form() {
         <InputTextField
           textFieldAttr={{width: '20vw', id: 'bojId', label: 'BOJ ID', password: false, autofocus: true}}
           valid={valid}
+          validMessage='백준 아이디를 정확히 입력해 주세요.'
           onChange={handleChange}
         />
       </div>

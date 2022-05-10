@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { SubmittingAttr } from '../../../states/dto'
+import { SubmittingAttr } from '../../../util/dto'
 
 const Button = styled.button`
   height: 45px;

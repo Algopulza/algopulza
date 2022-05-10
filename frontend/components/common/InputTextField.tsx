@@ -1,16 +1,15 @@
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
-import { TextFieldAttr } from '../../states/dto'
+import { TextFieldAttr } from '../../util/dto'
 
 type TextFieldProps = { 
   textFieldAttr: TextFieldAttr
   valid: boolean
+  validMessage: string
   onChange(event: any): void
 }
 
-export default function InputTextField({ textFieldAttr, valid, onChange }: TextFieldProps) {
-
-
+export default function InputTextField({ textFieldAttr, valid, validMessage, onChange }: TextFieldProps) {
   return (
     <Box
       component="form"
@@ -33,7 +32,7 @@ export default function InputTextField({ textFieldAttr, valid, onChange }: TextF
           sx={{width: textFieldAttr.width}}
           id={textFieldAttr.id}
           label='Error'
-          helperText="백준 아이디를 정확히 입력해주세요."
+          helperText={validMessage}
           autoFocus={textFieldAttr.autofocus ? true : false}
           size="small"
           onChange={onChange}
