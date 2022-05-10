@@ -337,7 +337,7 @@ public class MemberServiceImpl implements MemberService {
             newMember.setProfileImage(profileImage.substring(1,profileImage.length()-1));
             newMember.setSolveCount(Integer.parseInt(finalJsonNode.get("solvedCount").toString()));
             newMember.setEmail(null);
-            newMember.setExp(0); // 신규회원은 0으로 시작
+            newMember.setExp(2); // 신규회원은 첫방문으로 경험치 2부터 시작
             memberRepository.save(newMember);
         }, ()->{
             new NotFoundException(ErrorCode.NOT_FOUND_TIER);
