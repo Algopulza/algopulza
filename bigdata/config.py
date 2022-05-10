@@ -8,4 +8,13 @@ mysql_db = {
 
 DB_URL = f"mysql+mysqlconnector://{mysql_db['user']}:{mysql_db['password']}@{mysql_db['host']}:{mysql_db['port']}/{mysql_db['database']}?charset=utf8"
 
-MONGODB_PORT = 27017
+
+mongodb = {
+    'user'     : 'ssafy',
+    'password' : 'dkfrhvnfwk123',
+    'host'     : 'k6a4081.p.ssafy.io',
+    'port'     : 27017,
+    'collection' : 'algopulza_test'
+}
+MONGO_USER = 'ssafy'
+MONGO_PW = 'dkfrhvnfwk123'

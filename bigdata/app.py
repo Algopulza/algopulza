@@ -47,9 +47,7 @@ def create_app(test_config=None):
     app.mysql_db = database
 
     # MongoDB
-    # client = MongoClient('k6a4081.p.ssafy.io', app.config['MONGODB_PORT'])
-    client = MongoClient('k6a4081.p.ssafy.io', 27017)
-    # client = MongoClient('localhost', 27027)
+    client = MongoClient('k6a4081.p.ssafy.io', 27017, username=app.config['MONGO_USER'] , password=app.config['MONGO_PW'])
     mongodb = client.algopulza_test
     
 
