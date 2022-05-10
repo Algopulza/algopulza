@@ -37,6 +37,8 @@ public class ResponseMessage {
     public static final String PUT_PROBLEM_LIST_SUCCESS = "문제 목록 수집 성공";
     public static final String SEARCH_PROBLEM_SUCCESS = "문제 검색 성공";
     public static final String NOT_FOUND_PROBLEM = "존재하지 않는 문제";
+    public static final String POST_PROBLEM_MARK = "풀어볼 문제에 추가 성공";
+    public static final String GET_PROBLEM_MARK = "풀어볼 문제 목록 조회 성공";
 
     // Tier
     public static final String NOT_FOUND_TIER = "존재하지 않는 티어";
@@ -45,4 +47,10 @@ public class ResponseMessage {
     public static final String INVALID_IMAGE = "잘못된 이미지";
     public static final String GET_BOJID_FROM_IMG_SUCCESS = "이미지에서 백준 아이디 추출하기 성공";
     public static final String GET_PROBLEM_FROM_IMG_SUCCESS = "이미지에서 문제 추출하기 성공";
+    // Analysis
+    public static final String GET_ANALYSIS_INFO_SUCCESS = "분석 정보 조회 성공";
+    public static final String GET_ANALYSIS_LANGUAGE_SUCCESS = "사용 언어 비율 조회 성공";
+    public static final String GET_ANALYSIS_SOLVED_COUNT_SUCCESS = "월별 문제 풀이 개수 조회 성공";
+    public static final String GET_SOLVING_LOG_STATISTICS_SUCCESS = "풀이기록 통계 조회 성공";
+
 }
