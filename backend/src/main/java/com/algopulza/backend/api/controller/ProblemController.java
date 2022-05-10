@@ -4,6 +4,7 @@ import com.algopulza.backend.api.service.ProblemService;
 import com.algopulza.backend.common.exception.handler.ErrorResponse;
 import com.algopulza.backend.common.model.BaseResponseBody;
 import com.algopulza.backend.common.model.ResponseMessage;
+import com.algopulza.backend.config.jwt.JwtUtil;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -83,6 +84,17 @@ public class ProblemController {
     })
     public ResponseEntity<BaseResponseBody> listRandomProblem() {
         return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, ResponseMessage.GET_PROBLEM_LIST_SUCCESS, problemService.getRandomProblemList()));
+    }
+
+    @GetMapping("/random-solved")
+    @ApiOperation(value = "풀었던 문제 랜덤 리스트 조회", notes = "풀었던 문제 랜덤 리스트를 조회하는 API 입니다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = ResponseMessage.GET_PROBLEM_LIST_SUCCESS, response = ErrorResponse.class),
+            @ApiResponse(code = 400, message = ResponseMessage.BAD_REQUEST, response = ErrorResponse.class)
+    })
+    public ResponseEntity<BaseResponseBody> listRandomSolvedProblem() {
+        Long memberId = JwtUtil.getCurrentId();
+        return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, ResponseMessage.GET_PROBLEM_LIST_SUCCESS, problemService.getRandomSolvedProblemList(memberId)));
     }
 
 }
