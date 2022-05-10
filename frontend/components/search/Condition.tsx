@@ -28,6 +28,10 @@ export type TextFieldAttr = {
 
 export type SubmittingAttr = { text: string, width: string }
 
+const handleChange = () => {
+  // props 맞추기 위한 null 함수
+}
+
 export default function Condition() {
   return (
     <Container>
@@ -38,7 +42,7 @@ export default function Condition() {
       </Subcontainer>
       
       <Subcontainer cond={false}>
-        <InputTextField textFieldAttr={{id: 'search', label: 'Search', width: '20vw', password: false, autofocus: false}} />
+        <InputTextField textFieldAttr={{id: 'search', label: 'Search', width: '20vw', password: false, autofocus: false}} onChange={handleChange} />
         <ButtonSearching submittingAttr={{text: '검색', width: '5vw'}} />
       </Subcontainer>
     </Container>

@@ -22,6 +22,8 @@ public interface ProblemService {
 
     RandomListRes getRandomProblemList();
 
+    List<ProblemRes> getRandomSolvedProblemList(Long memberId);
+
     List<ProblemRes> getRandomProblemListByCondition(int type, Object condition, int count);
 
 }
