@@ -31,4 +31,16 @@ public class AnalysisController {
         return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, ResponseMessage.GET_ANALYSIS_LANGUAGE_SUCCESS, analysisService.getLanguageAnalysisList(memberId)));
     }
 
+    @GetMapping("/solved-count")
+    @ApiOperation(value = "월별 문제 풀이 개수 조회", notes = "연도별, 월별 문제 풀이 개수를 조회하는 API 입니다.")
+    @ApiResponses({@ApiResponse(code = 201, message = ResponseMessage.GET_ANALYSIS_SOLVED_COUNT_SUCCESS),
+            @ApiResponse(code = 400, message = ResponseMessage.BAD_REQUEST, response = ErrorResponse.class),
+            @ApiResponse(code = 401, message = ResponseMessage.UNAUTHORIZED, response = ErrorResponse.class),
+            @ApiResponse(code = 403, message = ResponseMessage.ACCESS_DENIED, response = ErrorResponse.class),
+            @ApiResponse(code = 404, message = ResponseMessage.NOT_FOUND, response = ErrorResponse.class)})
+    public ResponseEntity<BaseResponseBody> listSolvedCountAnalysis() {
+        Long memberId = JwtUtil.getCurrentId();
+        return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, ResponseMessage.GET_ANALYSIS_SOLVED_COUNT_SUCCESS, analysisService.getSolvedCountAnalysisList(memberId)));
+    }
+
 }

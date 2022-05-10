@@ -46,4 +46,5 @@ public class ResponseMessage {
     // Analysis
     public static final String GET_ANALYSIS_INFO_SUCCESS = "분석 정보 조회 성공";
     public static final String GET_ANALYSIS_LANGUAGE_SUCCESS = "사용 언어 비율 조회 성공";
+    public static final String GET_ANALYSIS_SOLVED_COUNT_SUCCESS = "월별 문제 풀이 개수 조회 성공";
 }
