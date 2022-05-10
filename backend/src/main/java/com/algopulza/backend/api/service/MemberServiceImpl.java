@@ -18,7 +18,9 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -44,6 +46,8 @@ public class MemberServiceImpl implements MemberService {
 
     @Value("${solvedac.baseurl}")
     private String SolvedacBaseUrl;
+
+    private static final String PYTHON_PATH = "../../../../../../../../ocr_test.py";
 
     @Override
     public MemberRes getMember(Long memberId) {
@@ -325,6 +329,25 @@ public class MemberServiceImpl implements MemberService {
         }, ()-> {
             new NotFoundException(ErrorCode.NOT_FOUND_MEMBER);
         });
+    }
+
+    @Override
+    public String extractBojIdFromImg(MultipartFile capturedImage) {
+        String imageUrl = s3Service.uploadToMember(capturedImage);
+        System.out.println(imageUrl);
+        ProcessBuilder builder = new ProcessBuilder("python3", PYTHON_PATH, imageUrl);
+        try {
+            Process process = builder.start();
+            int exitval = process.waitFor(); // 파이썬 프로세스가 종료될 때까지 기다림
+            System.out.println(exitval);
+            if(exitval != 0){
+                log.error("{} 이미지 프로세스가 비정상적으로 종료되었습니다", imageUrl);
+            }
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        return null;
     }
 
     private void addNewMember(JsonNode finalJsonNode, String bojId) {
