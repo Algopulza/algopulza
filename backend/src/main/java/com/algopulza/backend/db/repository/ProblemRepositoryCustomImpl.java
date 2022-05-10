@@ -1,6 +1,5 @@
 package com.algopulza.backend.db.repository;
 
-import com.algopulza.backend.api.response.ProblemAndStatusRes;
 import com.algopulza.backend.api.response.ProblemRes;
 import com.algopulza.backend.db.entity.*;
 import com.querydsl.core.types.Projections;
@@ -19,18 +18,16 @@ public class ProblemRepositoryCustomImpl implements ProblemRepositoryCustom {
     private final JPAQueryFactory jpaQueryFactory;
 
     QProblem qProblem = QProblem.problem;
-    QSolvingLog qSolvingLog = QSolvingLog.solvingLog;
     QTier qTier = QTier.tier;
     QProblemHasTag qProblemHasTag = QProblemHasTag.problemHasTag;
     QTag qTag = QTag.tag;
 
     @Override
-    public List<ProblemAndStatusRes> findProblemAndStatusRes(Long memberId, String tierName, Integer tierLevel, String status, Pageable pageable) {
-        return jpaQueryFactory.select(Projections.constructor(ProblemAndStatusRes.class,
+    public List<ProblemRes> findProblemRes(String tierName, Integer tierLevel, Pageable pageable) {
+        return jpaQueryFactory.select(Projections.constructor(ProblemRes.class,
                                       qProblem.id,
                                       qProblem.bojId,
                                       qProblem.title,
-                                      qSolvingLog.status.coalesce("not try"),
                                       qTier.level,
                                       qTier.name,
                                       qProblem.acceptedCount,
@@ -39,8 +36,7 @@ public class ProblemRepositoryCustomImpl implements ProblemRepositoryCustom {
                               ))
                               .from(qProblem)
                               .join(qTier).on(qProblem.tier.eq(qTier))
-                              .leftJoin(qSolvingLog).on(qProblem.eq(qSolvingLog.problem))
-                              .where(eqTierName(tierName), eqNumberInTierName(tierLevel), eqStatus(status))
+                              .where(eqTierName(tierName), eqNumberInTierName(tierLevel))
                               .orderBy(qProblem.bojId.asc())
                               .offset(pageable.getOffset())
                               .limit(pageable.getPageSize())
@@ -57,16 +53,6 @@ public class ProblemRepositoryCustomImpl implements ProblemRepositoryCustom {
     private BooleanExpression eqNumberInTierName(Integer tierLevel) {
         if (tierLevel != null && tierLevel >= 1 && tierLevel <= 5) {
             return qTier.level.eq(tierLevel);
-        }
-        return null;
-    }
-
-    private BooleanExpression eqStatus(String status) {
-        if (StringUtils.hasText(status)) {
-            return qSolvingLog.status.eq(status);
-        }
-        if ("not try".equals(status)) {
-            return qSolvingLog.status.isNull();
         }
         return null;
     }

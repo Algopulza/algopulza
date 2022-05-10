@@ -14,10 +14,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -45,17 +42,13 @@ public class JwtTokenProvider implements InitializingBean {
     }
 
     // JWT 토큰 생성
-    public String createToken(String id, List<String> roles) {
+    public String createToken(String id, RoleType roleType) {
         Claims claims = Jwts.claims().setSubject(id);
-        claims.put(AUTHORITIES_KEY, roles);
+        claims.put(AUTHORITIES_KEY, roleType);
         long now = (new Date()).getTime();
-        Date validity = new Date(now + this.tokenValidityInMilliseconds*6);
+        Date validity = new Date(now + this.tokenValidityInMilliseconds * 6);
 
-        return Jwts.builder()
-                .setClaims(claims)
-                .signWith(key, SignatureAlgorithm.HS512)
-                .setExpiration(validity)
-                .compact();
+        return Jwts.builder().setClaims(claims).signWith(key, SignatureAlgorithm.HS512).setExpiration(validity).compact();
     }
 
     // 리프레시토큰 생성
@@ -92,7 +85,7 @@ public class JwtTokenProvider implements InitializingBean {
     public boolean validateToken(String token) {
         try {
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
-            log.info("accessToken : "+token);
+            log.debug("accessToken : {}", token);
             log.info("올바른 JWT입니다.");
             return true;
         } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {

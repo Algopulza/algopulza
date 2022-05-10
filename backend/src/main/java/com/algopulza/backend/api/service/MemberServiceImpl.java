@@ -6,6 +6,7 @@ import com.algopulza.backend.api.response.TokenRes;
 import com.algopulza.backend.common.exception.NotFoundException;
 import com.algopulza.backend.common.exception.handler.ErrorCode;
 import com.algopulza.backend.config.jwt.JwtTokenProvider;
+import com.algopulza.backend.config.jwt.RoleType;
 import com.algopulza.backend.db.entity.*;
 import com.algopulza.backend.db.repository.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -22,9 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
-import java.util.StringTokenizer;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
 @Slf4j
@@ -37,12 +36,9 @@ public class MemberServiceImpl implements MemberService {
     private final MemberRepository memberRepository;
     private final LoginLogRepository loginLogRepository;
     private final TierRepository tierRepository;
-    private final OrganizationRepository organizationRepository;
-    private final MemberHasOrganizationRepository memberHasOrganizationRepository;
     private final ProblemRepository problemRepository;
     private final SolvingLogRepository solvingLogRepository;
     private final S3Service s3Service;
-    private final JwtTokenProvider jwtTokenProvider;
 
     @Value("${solvedac.baseurl}")
     private String SolvedacBaseUrl;
@@ -184,8 +180,8 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public String createToken(Long id, List<String> roles) {
-        return tokenProvider.createToken(id.toString(),roles);
+    public String createToken(Long id, RoleType roleType) {
+        return tokenProvider.createToken(id.toString(), roleType);
     }
 
     @Override
