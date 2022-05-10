@@ -1,8 +1,9 @@
 import Link from 'next/link'
 import styled from 'styled-components'
-import { NavItemAttr } from './NavBar'
+import { NavItemAttr } from '../../../util/dto'
 
 const Text = styled.span<{ cond: boolean }>`
+  margin: 0 40px 0 40px;
   font-size: 1.3vw;
   color: ${(props) => (props.cond ? "#FFC94D" : "#000000")};
   &:hover {
@@ -11,20 +12,20 @@ const Text = styled.span<{ cond: boolean }>`
 `
 
 type NavItemProps = {
-  navItem: NavItemAttr,
+  navItemAttr: NavItemAttr,
   isLocated: String,
   onClick(path: string): void
 }
 
-export default function NavItem({ navItem, isLocated, onClick }: NavItemProps) {
+export default function NavItem({ navItemAttr, isLocated, onClick }: NavItemProps) {
   return (
-    <Link href={navItem.url}>
+    <Link href={navItemAttr.url}>
       <a>
         <Text
-          cond={navItem.url == isLocated ? true : false}
-          onClick={() => onClick(navItem.url)}
+          cond={navItemAttr.url == isLocated ? true : false}
+          onClick={() => onClick(navItemAttr.url)}
         >
-          {navItem.item}
+          {navItemAttr.item}
         </Text>
       </a>
     </Link>

@@ -10,3 +10,9 @@ export type SubmittingAttr = {
   text: string,
   width: string
 }
+
+// NavItem Data Object
+export type NavItemAttr = {
+  item: string,
+  url: string
+}
