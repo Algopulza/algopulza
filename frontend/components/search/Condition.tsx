@@ -4,6 +4,7 @@ import SelectionTag from './selection/SelectionTag'
 import InputTextField from '../common/InputTextField'
 import ButtonSearching from '../common/button/ButtonSearching'
 import styled from 'styled-components'
+import { useState } from 'react'
 
 const Container = styled.section`
   display: grid;
@@ -33,6 +34,8 @@ const handleChange = () => {
 }
 
 export default function Condition() {
+  const [valid, setValid] = useState(true)
+  
   return (
     <Container>
       <Subcontainer cond={true}>
@@ -42,7 +45,13 @@ export default function Condition() {
       </Subcontainer>
       
       <Subcontainer cond={false}>
-        <InputTextField textFieldAttr={{id: 'search', label: 'Search', width: '20vw', password: false, autofocus: false}} onChange={handleChange} />
+        <InputTextField
+          textFieldAttr={{id: 'search', label: 'Search', width: '20vw', password: false, autofocus: false}}
+          valid={valid}
+          validMessage='백준 아이디를 정확히 입력해 주세요.'
+          onChange={handleChange}
+          onKeyDown={handleChange}
+        />
         <ButtonSearching submittingAttr={{text: '검색', width: '5vw'}} />
       </Subcontainer>
     </Container>
