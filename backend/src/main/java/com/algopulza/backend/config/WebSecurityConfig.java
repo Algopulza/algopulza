@@ -36,10 +36,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                    "/error",
                    "/swagger-resources/**",
                    "/swagger-ui/**",
-                   "/v2/api-docs",
-                   "/api/v1/problems/**"
+                   "/v2/api-docs"
            )
-           .antMatchers(HttpMethod.POST, "/api/v1/members");
+           .antMatchers(HttpMethod.POST, "/api/v1/members") // 로그인
+           .antMatchers(HttpMethod.GET, "/api/v1/problems") // 문제 리스트 조회
+           .antMatchers(HttpMethod.PUT, "/api/v1/problems") // 문제 정보 수집
+           .antMatchers(HttpMethod.GET, "/api/v1/problems/random") // 랜덤 문제 리스트 조회
+           .antMatchers(HttpMethod.GET, "/api/v1/problems/random-one") // 랜덤 문제 1개 조회
+           .antMatchers(HttpMethod.GET, "/api/v1/problems/title") // 문제 검색
+        ;
     }
 
     @Override
