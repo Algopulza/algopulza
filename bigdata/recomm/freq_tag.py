@@ -31,6 +31,8 @@ def recomm_freq_tag(app, mongodb, userid):
     } for s in solving_log]
     solving_log = json.dumps(solving_log, ensure_ascii=False)
     solved_df = pd.read_json(solving_log)
+    if len(solved_df) == 0:
+        return 'empty'
 
     # 내가 푼 문제-태그 정보(problem_tag) 불러오기
     collection = mongodb.problem_tag
@@ -120,6 +122,19 @@ def recomm_freq_tag(app, mongodb, userid):
     recomm_list = list(recomm_problems)
     if len(recomm_list) >= 10:
         recomm_list = random.sample(recomm_list, 10)
+        # 즐겨찾기 정보 추가
+        for r in recomm_list:
+            is_marked = app.mysql_db.execute(text("""
+                SELECT problem_id FROM problem_mark
+                WHERE member_id = :user_id AND problem_id = :problem_id 
+            """), {'user_id': user_id, 'problem_id': r['problemId']}).fetchone()
+            marked = is_marked
+            if marked:
+                if marked[0] == r['problemId']:
+                    r['problemMark'] = True
+            else:
+                r['problemMark'] = False
+
         recomm_json = dumps(recomm_list, ensure_ascii=False)
         return recomm_json
     else:

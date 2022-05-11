@@ -68,6 +68,7 @@ def save_data(app, mongodb):
     tag = json.dumps(tag, ensure_ascii=False)
     tag_df = pd.read_json(tag)
 
+
     # solving log 정보
     data_solving_log = app.mysql_db.execute(text("""
         SELECT * FROM solving_log

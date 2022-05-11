@@ -62,6 +62,20 @@ def recomm_mf(app, mongodb, userid):
 
     ### 추천 문제 전달 ###
     recomm_list = list(recomm_problems)
+
+    # 즐겨찾기 정보 추가
+    for r in recomm_list:
+        is_marked = app.mysql_db.execute(text("""
+            SELECT problem_id FROM problem_mark
+            WHERE member_id = :user_id AND problem_id = :problem_id 
+        """), {'user_id': user_id, 'problem_id': r['problemId']}).fetchone()
+        marked = is_marked
+        if marked:
+            if marked[0] == r['problemId']:
+                r['problemMark'] = True
+        else:
+            r['problemMark'] = False
+
     recomm_json = dumps(recomm_list, ensure_ascii=False)
     
     return recomm_json

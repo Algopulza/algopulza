@@ -16,6 +16,7 @@ def random_one(app, mongodb, userid):
         'user_id': i['id'],
         'tier': i['tier'],
     } for i in id_tier]
+    user_id = id_tier[0]['user_id']
     tier = id_tier[0]['tier']
     tiers = [tier-1, tier, tier+1]
     
@@ -48,6 +49,20 @@ def random_one(app, mongodb, userid):
 
     # json으로 형태변환
     problem = list(problem)
+
+    # 즐겨찾기 정보 추가
+    for r in problem:
+        is_marked = app.mysql_db.execute(text("""
+            SELECT problem_id FROM problem_mark
+            WHERE member_id = :user_id AND problem_id = :problem_id 
+        """), {'user_id': user_id, 'problem_id': r['problemId']}).fetchone()
+        marked = is_marked
+        if marked:
+            if marked[0] == r['problemId']:
+                r['problemMark'] = True
+        else:
+            r['problemMark'] = False
+
     problem = dumps(problem)
     
     return problem
