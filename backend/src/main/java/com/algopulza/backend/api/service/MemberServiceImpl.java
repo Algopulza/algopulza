@@ -45,7 +45,7 @@ public class MemberServiceImpl implements MemberService {
     @Value("${solvedac.baseurl}")
     private String SolvedacBaseUrl;
 
-    private static final String PYTHON_PATH = "/Users/minjung/SSAFY/자율PJT/S06P31A408/backend/ocrId.py";
+    private static final String PYTHON_PATH = "/ocrId.py";
 
    @Value("${spring.servlet.multipart.location}")
     public String tempLocation;
@@ -80,7 +80,7 @@ public class MemberServiceImpl implements MemberService {
         String password = loginReq.getPassword();
 
         Optional<Member> member = memberRepository.findByAlgopulzaId(id);
-    
+
         member.ifPresentOrElse(selectMember ->{
             BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
             if(encoder.matches(password, selectMember.getAlgopulzaPassword())){
