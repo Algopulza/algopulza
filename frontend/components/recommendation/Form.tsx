@@ -28,7 +28,9 @@ const InfoContainer = styled.div`
 export default function Form() {
   return (
     <Container>
-      <div></div>
+      <div style={{marginTop: 20}}>
+        문제에 대한 정보를 넣어주시면 더 강력한 추천이 가능합니다!
+      </div>
       <HistoryContainer>
         <FormSolved />
         <FormTried />

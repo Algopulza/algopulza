@@ -34,21 +34,21 @@ export default function FormInfo() {
           onKeyDown={handleChange}
         />
         <InputTextField
-          textFieldAttr={{id: 'memory', label:'메모리', width: '15vw', password: false, autofocus: true}}
+          textFieldAttr={{id: 'memory', label:'메모리', width: '15vw', password: false, autofocus: false}}
           valid={valid}
           validMessage='백준 아이디를 정확히 입력해 주세요.'
           onChange={handleChange}
           onKeyDown={handleChange}
         />
         <InputTextField
-          textFieldAttr={{id: 'runTime', label:'실행시간', width: '15vw', password: false, autofocus: true}}
+          textFieldAttr={{id: 'runTime', label:'실행시간', width: '15vw', password: false, autofocus: false}}
           valid={valid}
           validMessage='백준 아이디를 정확히 입력해 주세요.'
           onChange={handleChange}
           onKeyDown={handleChange}
         />
         <InputTextField
-          textFieldAttr={{id: 'language', label:'사용 언어', width: '15vw', password: false, autofocus: true}}
+          textFieldAttr={{id: 'language', label:'사용 언어', width: '15vw', password: false, autofocus: false}}
           valid={valid}
           validMessage='백준 아이디를 정확히 입력해 주세요.'
           onChange={handleChange}
