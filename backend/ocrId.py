@@ -20,6 +20,8 @@ print(text)
 a = text.find("아이디")
 b = text.find("상태")
 
+print(a,b)
+
 if a==-1 and b==-1:
     print("fail")
 else:
