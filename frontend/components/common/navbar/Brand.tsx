@@ -24,8 +24,8 @@ export default function BrandName() {
         <span onClick={() => setPage('/recommendation')}>
           <Link href="/recommendation"><a><Title>알고풀자</Title></a></Link>
         </span> :
-        <span onClick={() => setPage('/random')}>
-          <Link href="/random"><a><Title>알고풀자</Title></a></Link>
+        <span>
+          <Link href="/"><a><Title>알고풀자</Title></a></Link>
         </span>
       }
     </>

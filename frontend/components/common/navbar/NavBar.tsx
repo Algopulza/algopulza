@@ -4,6 +4,7 @@ import NavItem from './NavItem'
 import styled from 'styled-components'
 import { useRecoilState } from 'recoil'
 import { pageState } from '../../../util/stateCollection'
+import Logout from './Logout'
 
 const Container = styled.section`
   display: grid;
@@ -21,7 +22,7 @@ export default function NavBar() {
   useEffect(() => {
     const currentUrl = window.location.href.split('/').pop()
     clickHandler('/' + currentUrl)
-    setIsLogin(localStorage.getItem('recoil-persist') !== null ? true : false )
+    setIsLogin(localStorage.getItem('recoil-persist') !== null ? true : false)
   }, [])
   const [page, setPage] = useRecoilState(pageState)
   const clickHandler = (path: string) => setPage(path)
@@ -43,6 +44,8 @@ export default function NavBar() {
           <></>
         }
       </Pages>
+
+      <Logout />
     </Container>
   )
 }
