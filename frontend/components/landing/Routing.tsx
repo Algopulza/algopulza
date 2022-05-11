@@ -18,8 +18,7 @@ export default function Routing() {
 
   return (
     <Container>
-      {isLogin ? <></> : <ButtonRouting routingAttr={{url: '/random', text: '비회원 로그인'}} />}
-      {isLogin ? <></> : <ButtonRouting routingAttr={{url: '/random', text: '비회원 로그인'}} />}
+      {isLogin ? <></> : <ButtonRouting routingAttr={{url: '/signup', text: '회원 가입'}} />}
     </Container>
   )
 }
