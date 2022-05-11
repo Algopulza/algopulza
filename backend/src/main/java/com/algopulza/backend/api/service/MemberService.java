@@ -24,10 +24,6 @@ public interface MemberService {
 
     void logout(Long id);
 
-    void addSolvedProblem(AddSolvedProblemReq addSolvedProblemReq);
-
-    void addTriedProblem(AddTriedProblemReq addTriedProblemReq);
-
     void addDetailSolvedProblem(AddDetailSolvedProblem addDetailSolvedProblem);
 
     String extractBojIdFromImg(MultipartFile capturedImage);

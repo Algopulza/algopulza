@@ -1,6 +1,8 @@
 package com.algopulza.backend.api.service;
 
-import com.algopulza.backend.api.request.member.*;
+import com.algopulza.backend.api.request.member.AddDetailSolvedProblem;
+import com.algopulza.backend.api.request.member.ModifyMemberReq;
+import com.algopulza.backend.api.request.member.ModifyProfileImageReq;
 import com.algopulza.backend.api.response.MemberRes;
 import com.algopulza.backend.api.response.TokenRes;
 import com.algopulza.backend.common.exception.NotFoundException;
@@ -222,30 +224,6 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public void addSolvedProblem(AddSolvedProblemReq addSolvedProblemReq) {
-        String bojId = addSolvedProblemReq.getBojId();
-        String problems = addSolvedProblemReq.getProblems();
-
-        StringTokenizer st = new StringTokenizer(problems, " ");
-        while (st.hasMoreTokens()){
-            int problemId = Integer.parseInt(st.nextToken());
-            addProblem(bojId, problemId, "solved");
-        }
-    }
-
-    @Override
-    public void addTriedProblem(AddTriedProblemReq addTriedProblemReq) {
-        String bojId = addTriedProblemReq.getBojId();
-        String problems = addTriedProblemReq.getProblems();
-
-        StringTokenizer st = new StringTokenizer(problems, " ");
-        while (st.hasMoreTokens()){
-            int problemId = Integer.parseInt(st.nextToken());
-            addProblem(bojId, problemId, "tried");
-        }
-    }
-
-    @Override
     public void addDetailSolvedProblem(AddDetailSolvedProblem addDetailSolvedProblem) {
         String status = "solved";
         String bojId = addDetailSolvedProblem.getBojId();
@@ -267,7 +245,6 @@ public class MemberServiceImpl implements MemberService {
                 solvingLog.setLanguage(addDetailSolvedProblem.getLanguage());
                 solvingLog.setCodeLength(addDetailSolvedProblem.getCodeLength());
                 solvingLog.setSolvingTime(addDetailSolvedProblem.getSolvingTime());
-                solvingLog.setCreatedTime(LocalDateTime.now());
                 solvingLogRepository.save(solvingLog);
             }
             // 문제를 푼 기록이 있으면
@@ -302,7 +279,6 @@ public class MemberServiceImpl implements MemberService {
                         newSolvingLog.setLanguage(addDetailSolvedProblem.getLanguage());
                         newSolvingLog.setCodeLength(addDetailSolvedProblem.getCodeLength());
                         newSolvingLog.setSolvingTime(addDetailSolvedProblem.getSolvingTime());
-                        newSolvingLog.setCreatedTime(LocalDateTime.now());
                         solvingLogRepository.save(newSolvingLog);
                     }
                 }
@@ -325,8 +301,7 @@ public class MemberServiceImpl implements MemberService {
                         newSolvingLog.setLanguage(addDetailSolvedProblem.getLanguage());
                         newSolvingLog.setCodeLength(addDetailSolvedProblem.getCodeLength());
                         newSolvingLog.setSolvingTime(addDetailSolvedProblem.getSolvingTime());
-                        newSolvingLog.setCreatedTime(LocalDateTime.now());
-                        solvingLogRepository.save(newSolvingLog);
+                         solvingLogRepository.save(newSolvingLog);
                     }
                 }
             }
@@ -401,7 +376,6 @@ public class MemberServiceImpl implements MemberService {
                 solvingLog.setMember(selectMember);
                 solvingLog.setProblem(problem);
                 solvingLog.setStatus(status);
-                solvingLog.setCreatedTime(LocalDateTime.now());
                 solvingLogRepository.save(solvingLog);
             }
             // 이미 풀었던 문제라면

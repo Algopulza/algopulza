@@ -19,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -39,7 +40,8 @@ public class MemberController {
             @ApiResponse(code = 401, message = ResponseMessage.UNAUTHORIZED, response = ErrorResponse.class),
             @ApiResponse(code = 403, message = ResponseMessage.ACCESS_DENIED, response = ErrorResponse.class),
             @ApiResponse(code = 404, message = ResponseMessage.NOT_FOUND, response = ErrorResponse.class)})
-    public ResponseEntity<BaseResponseBody> addMember(@RequestHeader String bojId) {
+    public ResponseEntity<BaseResponseBody> addMember(@RequestHeader String bojId, HttpServletRequest request) {
+        System.out.println(request.getSession().getServletContext().getRealPath("/"));
         // 회원정보 저장
         MemberRes memberRes = memberService.addMember(bojId);
 
@@ -131,27 +133,15 @@ public class MemberController {
     }
 
     @PostMapping("/solved")
-    @ApiOperation(value = "solved 문제 등록하기", notes = "solved 문제 등록 요청 API 입니다.")
-    @ApiResponses({@ApiResponse(code = 201, message = ResponseMessage.POST_SOLVED_PROBLEM_SUCCESS),
+    @ApiOperation(value = "풀었던 문제 등록하기", notes = "이미지에서 풀었던 문제 정보를 추출해 저장하는 API 입니다.")
+    @ApiResponses({@ApiResponse(code = 201, message = ResponseMessage.GET_PROBLEM_FROM_IMG_SUCCESS),
             @ApiResponse(code = 400, message = ResponseMessage.BAD_REQUEST, response = ErrorResponse.class),
             @ApiResponse(code = 401, message = ResponseMessage.UNAUTHORIZED, response = ErrorResponse.class),
             @ApiResponse(code = 403, message = ResponseMessage.ACCESS_DENIED, response = ErrorResponse.class),
             @ApiResponse(code = 404, message = ResponseMessage.NOT_FOUND, response = ErrorResponse.class)})
-    public ResponseEntity<BaseResponseBody> addSolvedProblem(@RequestBody AddSolvedProblemReq addSolvedProblemReq){
-        memberService.addSolvedProblem(addSolvedProblemReq);
-        return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, ResponseMessage.POST_SOLVED_PROBLEM_SUCCESS));
-    }
-
-    @PostMapping("/tried")
-    @ApiOperation(value = "tried 문제 등록하기", notes = "tried 문제 등록 요청 API 입니다.")
-    @ApiResponses({@ApiResponse(code = 201, message = ResponseMessage.POST_TRIED_PROBLEM_SUCCESS),
-            @ApiResponse(code = 400, message = ResponseMessage.BAD_REQUEST, response = ErrorResponse.class),
-            @ApiResponse(code = 401, message = ResponseMessage.UNAUTHORIZED, response = ErrorResponse.class),
-            @ApiResponse(code = 403, message = ResponseMessage.ACCESS_DENIED, response = ErrorResponse.class),
-            @ApiResponse(code = 404, message = ResponseMessage.NOT_FOUND, response = ErrorResponse.class)})
-    public ResponseEntity<BaseResponseBody> addTriedProblem(@RequestBody AddTriedProblemReq addTriedProblemReq){
-        memberService.addTriedProblem(addTriedProblemReq);
-        return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, ResponseMessage.POST_TRIED_PROBLEM_SUCCESS));
+    public ResponseEntity<BaseResponseBody> addSolvedProblem(AddProblemReq addProblemReq){
+        memberService.extractProblemFromImg(addProblemReq.getBojId(),addProblemReq.getCapturedImage());
+        return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, ResponseMessage.GET_PROBLEM_FROM_IMG_SUCCESS));
     }
 
     @PostMapping("/detailSolvedProblem")

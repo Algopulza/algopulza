@@ -3,7 +3,7 @@ import { RoutingAttr } from '../../landing/Routing'
 import styled from 'styled-components'
 
 const Container = styled.section`
-  margin-right: 1vw;
+  margin-right: 20px;
   color: #545454;
   cursor: pointer;
   &:hover {
