@@ -1,0 +1,14 @@
+{
+  "name": "Algopulze Extension",
+  "description": "Provide stopwatch and other tools for better experience!",
+  "version": "1.0",
+  "manifest_version": 3,
+
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": ["storage", "activeTab"],
+  "action": {
+    "default_popup": "popup.html"
+  }
+}
