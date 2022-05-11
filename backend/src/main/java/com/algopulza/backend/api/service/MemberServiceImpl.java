@@ -1,11 +1,9 @@
 package com.algopulza.backend.api.service;
 
-import com.algopulza.backend.api.request.member.AddDetailSolvedProblem;
-import com.algopulza.backend.api.request.member.AddProblemReq;
-import com.algopulza.backend.api.request.member.ModifyMemberReq;
-import com.algopulza.backend.api.request.member.ModifyProfileImageReq;
+import com.algopulza.backend.api.request.member.*;
 import com.algopulza.backend.api.response.MemberRes;
 import com.algopulza.backend.api.response.TokenRes;
+import com.algopulza.backend.common.exception.DuplicatedException;
 import com.algopulza.backend.common.exception.NotFoundException;
 import com.algopulza.backend.common.exception.handler.ErrorCode;
 import com.algopulza.backend.config.jwt.JwtTokenProvider;
@@ -19,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
@@ -61,9 +60,9 @@ public class MemberServiceImpl implements MemberService {
         Member member = memberRepository.findById(memberId).orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND_MEMBER));
         MemberRes memberRes = MemberRes.builder()
                 .memberId(member.getId())
+                .algopluzaId(member.getAlgopulzaId())
                 .bojId(member.getBojId())
                 .profileImage(member.getProfileImage())
-                .email(member.getEmail())
                 .level(member.getTier().getId())
                 .tierName(member.getTier().getName())
                 .tierLevel(member.getTier().getLevel())
@@ -80,63 +79,101 @@ public class MemberServiceImpl implements MemberService {
         memberRepository.save(member);
     }
 
-    @Override
-    public MemberRes addMember(String bojId) {
+//    @Override
+//    public MemberRes addMember(String bojId) {
+//
+//        // 1. solvedac API 활용해서 member 정보 받아오기
+//        JsonNode finalJsonNode = getMemberBybojId(bojId);
+//
+//        // 2. solvedacToken으로 받아온 bojId를 가지고 DB에서 회원 검색
+//        Optional<Member> member = Optional.ofNullable(memberRepository.findByBojId(bojId));
+//
+//        member.ifPresentOrElse(selectMember -> {
+//            // 3-1. DB에 있는 회원이면 정보 갱신
+//            log.info("member already exist!!");
+//
+//            // 기존 tier와 다르면
+//            Long tier = Long.parseLong(finalJsonNode.get("tier").toString());
+//            Optional<Tier> curTier = tierRepository.findById(tier);
+//            curTier.ifPresentOrElse(selectTier -> {
+//                if(selectMember.getTier() != selectTier){
+//                    selectMember.setTier(selectTier);
+//                }
+//            }, ()-> {
+//                new NotFoundException(ErrorCode.NOT_FOUND_TIER);
+//            });
+//
+//            // 기존 solveCount와 다르면
+//            int curSolveCount = Integer.parseInt(finalJsonNode.get("solvedCount").toString());
+//            if(selectMember.getSolveCount()!=curSolveCount){
+//                selectMember.setSolveCount(curSolveCount);
+//            }
+//
+//            // 로그인 로그 확인 -> 오늘 첫 방문이면 +2 , 오늘첫방문+어제도방문이면 +3
+//            switch (checkDay(bojId)){
+//                case "first" :
+//                    selectMember.setExp(selectMember.getExp()+2);
+//                    break;
+//                case "visited" :
+//                    selectMember.setExp(selectMember.getExp()+3);
+//                    break;
+//                case "second" :
+//                    break;
+//            }
+//
+//        }, ()->{
+//            // 3-2. DB에 없는 회원이면 새로 등록
+//            log.info("new member!!");
+//
+//            // member 추가
+//            addNewMember(finalJsonNode, bojId);
+//        });
+//
+//        // 4. login_log 추가 (db 유무 상관없이 해야함)
+//        addLoginlog(bojId);
+//
+//        Optional<Member> mem = Optional.ofNullable(memberRepository.findByBojId(bojId));
+//        MemberRes memberRes = getMember(mem.get().getId());
+//
+//        return memberRes;
+//    }
 
-        // 1. solvedac API 활용해서 member 정보 받아오기
+
+    @Override
+    public void addMember(JoinReq joinReq){
+        String id = joinReq.getId();
+        String password = getPasswordEncoder(joinReq.getPassword());
+        String bojId = extractBojIdFromImg(joinReq.getCapturedImage());
+        String solvedProblems = joinReq.getSolvedProblems();
+        String triedProblems = joinReq.getTriedProblems();
+
+        // DB에서 bojId로 가입한 회원 있는지 확인
+        Optional<Member> member = Optional.ofNullable(memberRepository.findByBojId(bojId));
+        if(member.isPresent()){  // 존재하면 예외 처리
+            throw new DuplicatedException(ErrorCode.DUPLICATE_BOJID);
+        }
+
+        // 존재하지 않다면 회원가입 정상 진행
+        // bojId 이용해서 백준 사이트 회원정보 가져오기
         JsonNode finalJsonNode = getMemberBybojId(bojId);
 
-        // 2. solvedacToken으로 받아온 bojId를 가지고 DB에서 회원 검색
-        Optional<Member> member = Optional.ofNullable(memberRepository.findByBojId(bojId));
+        // 회원가입
+        addNewMember(finalJsonNode, bojId, id, password);
 
-        member.ifPresentOrElse(selectMember -> {
-            // 3-1. DB에 있는 회원이면 정보 갱신
-            log.info("member already exist!!");
+        // 풀었던 문제 번호 등록 (solved + tried)
+        AddProblemReq addProblemReq = new AddProblemReq();
+        addProblemReq.setBojId(bojId);
+        addProblemReq.setProblems(solvedProblems);
+        addSolvedProblem(addProblemReq);
 
-            // 기존 tier와 다르면
-            Long tier = Long.parseLong(finalJsonNode.get("tier").toString());
-            Optional<Tier> curTier = tierRepository.findById(tier);
-            curTier.ifPresentOrElse(selectTier -> {
-                if(selectMember.getTier() != selectTier){
-                    selectMember.setTier(selectTier);
-                }
-            }, ()-> {
-                new NotFoundException(ErrorCode.NOT_FOUND_TIER);
-            });
+        addProblemReq.setProblems(triedProblems);
+        addTriedProblem(addProblemReq);
+    }
 
-            // 기존 solveCount와 다르면
-            int curSolveCount = Integer.parseInt(finalJsonNode.get("solvedCount").toString());
-            if(selectMember.getSolveCount()!=curSolveCount){
-                selectMember.setSolveCount(curSolveCount);
-            }
-
-            // 로그인 로그 확인 -> 오늘 첫 방문이면 +2 , 오늘첫방문+어제도방문이면 +3
-            switch (checkDay(bojId)){
-                case "first" :
-                    selectMember.setExp(selectMember.getExp()+2);
-                    break;
-                case "visited" :
-                    selectMember.setExp(selectMember.getExp()+3);
-                    break;
-                case "second" :
-                    break;
-            }
-
-        }, ()->{
-            // 3-2. DB에 없는 회원이면 새로 등록
-            log.info("new member!!");
-
-            // member 추가
-            addNewMember(finalJsonNode, bojId);
-        });
-
-        // 4. login_log 추가 (db 유무 상관없이 해야함)
-        addLoginlog(bojId);
-
-        Optional<Member> mem = Optional.ofNullable(memberRepository.findByBojId(bojId));
-        MemberRes memberRes = getMember(mem.get().getId());
-
-        return memberRes;
+   private String getPasswordEncoder(String password) {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String securePassword = encoder.encode(password);
+        return securePassword;
     }
 
 
@@ -212,9 +249,6 @@ public class MemberServiceImpl implements MemberService {
         return new TokenRes(tokenProvider.createToken(String.valueOf(id),null),refreshToken);
     }
 
-    /*
-    로그아웃
-     */
     @Override
     public void logout(Long id) {
         // refreshToken 초기화
@@ -369,7 +403,7 @@ public class MemberServiceImpl implements MemberService {
         return id;
     }
 
-    private void addNewMember(JsonNode finalJsonNode, String bojId) {
+    private void addNewMember(JsonNode finalJsonNode, String bojId, String id, String password) {
         String profileImage = finalJsonNode.get("profileImageUrl").toString();
 
         Long tier = Long.parseLong(finalJsonNode.get("tier").toString());
@@ -378,11 +412,12 @@ public class MemberServiceImpl implements MemberService {
         getTier.ifPresentOrElse(selectTier -> {
             // member table 에 저장
             Member newMember = new Member();
-            newMember.setTier(selectTier);
+            newMember.setAlgopulzaId(id);
+            newMember.setAlgopulzaPassword(password);
             newMember.setBojId(bojId);
+            newMember.setTier(selectTier);
             newMember.setProfileImage(profileImage.substring(1,profileImage.length()-1));
             newMember.setSolveCount(Integer.parseInt(finalJsonNode.get("solvedCount").toString()));
-            newMember.setEmail(null);
             newMember.setExp(2); // 신규회원은 첫방문으로 경험치 2부터 시작
             memberRepository.save(newMember);
         }, ()->{

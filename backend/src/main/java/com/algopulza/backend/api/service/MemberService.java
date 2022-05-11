@@ -12,7 +12,7 @@ public interface MemberService {
 
     void modifyProfileImage(ModifyProfileImageReq modifyProfileImageReq);
 
-    MemberRes addMember(String bojId);
+    void addMember(JoinReq joinReq);
 
     void modifyMember(ModifyMemberReq modifyMemberReq);
 
