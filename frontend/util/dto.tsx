@@ -16,3 +16,10 @@ export type NavItemAttr = {
   item: string,
   url: string
 }
+
+// Subject Data Object
+export type Title = {
+  title: string,
+  englishTitle: string,
+  list: any
+}
