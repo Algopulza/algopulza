@@ -19,7 +19,8 @@ public enum ErrorCode {
     // Problem
     NOT_FOUND_PROBLEM(404, "P001", ResponseMessage.NOT_FOUND_PROBLEM),
     NOT_FOUND_TIER(404, "P002", ResponseMessage.NOT_FOUND_TIER),
-    INVALID_IMAGE(404, "P003", ResponseMessage.INVALID_IMAGE);
+    INVALID_IMAGE(404, "P003", ResponseMessage.INVALID_IMAGE),
+    DUPLICATE_BOJID(404,"P004",ResponseMessage.DUPLICATE_BOJID);
     
     private int status;
     private final String code;

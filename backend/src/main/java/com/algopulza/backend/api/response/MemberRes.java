@@ -14,14 +14,14 @@ public class MemberRes {
     @ApiModelProperty(name = "회원 아이디", example = "1")
     private Long memberId;
 
+    @ApiModelProperty(name = "알고풀자 아이디", example = "algopulza")
+    private String algopluzaId;
+
     @ApiModelProperty(name = "백준 아이디", example = "baekjoon")
     private String bojId;
 
     @ApiModelProperty(name = "프로필 사진 URI", example = "http://url...")
     private String profileImage;
-
-    @ApiModelProperty(name = "이메일", example = "algo@pulza.com")
-    private String email;
 
     @ApiModelProperty(name = "티어 레벨", example = "1")
     private Long level;
