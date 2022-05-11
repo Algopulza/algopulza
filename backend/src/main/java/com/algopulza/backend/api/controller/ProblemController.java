@@ -48,11 +48,8 @@ public class ProblemController {
             @RequestParam(value = "tierLevel", required = false) Integer tierLevel,
             @ApiIgnore @PageableDefault(size = 20) Pageable pageable
     ) {
-        return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, ResponseMessage.GET_PROBLEM_LIST_SUCCESS, problemService.getProblemList(
-                tierName,
-                tierLevel,
-                pageable
-        )));
+        Long memberId = JwtUtil.getCurrentId();
+        return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, ResponseMessage.GET_PROBLEM_LIST_SUCCESS, problemService.getProblemList(memberId, tierName, tierLevel, pageable)));
     }
 
     @GetMapping("/search")
@@ -63,7 +60,8 @@ public class ProblemController {
             @ApiResponse(code = 400, message = ResponseMessage.BAD_REQUEST, response = ErrorResponse.class)
     })
     public ResponseEntity<BaseResponseBody> listProblemByKeyword(@RequestParam String title, @ApiIgnore @PageableDefault(size = 20) Pageable pageable) {
-        return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, ResponseMessage.SEARCH_PROBLEM_SUCCESS, problemService.getProblemListByTitle(title, pageable)));
+        Long memberId = JwtUtil.getCurrentId();
+        return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, ResponseMessage.SEARCH_PROBLEM_SUCCESS, problemService.getProblemListByTitle(memberId, title, pageable)));
     }
 
     @GetMapping("/random-one")
@@ -73,7 +71,8 @@ public class ProblemController {
             @ApiResponse(code = 400, message = ResponseMessage.BAD_REQUEST, response = ErrorResponse.class)
     })
     public ResponseEntity<BaseResponseBody> detailRandomProblem() {
-        return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, ResponseMessage.GET_PROBLEM_SUCCESS, problemService.getOneRandomProblem()));
+        Long memberId = JwtUtil.getCurrentId();
+        return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, ResponseMessage.GET_PROBLEM_SUCCESS, problemService.getOneRandomProblem(memberId)));
     }
 
     @GetMapping("/random")
@@ -83,7 +82,8 @@ public class ProblemController {
             @ApiResponse(code = 400, message = ResponseMessage.BAD_REQUEST, response = ErrorResponse.class)
     })
     public ResponseEntity<BaseResponseBody> listRandomProblem() {
-        return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, ResponseMessage.GET_PROBLEM_LIST_SUCCESS, problemService.getRandomProblemList()));
+        Long memberId = JwtUtil.getCurrentId();
+        return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, ResponseMessage.GET_PROBLEM_LIST_SUCCESS, problemService.getRandomProblemList(memberId)));
     }
 
     @GetMapping("/random-solved")
