@@ -1,18 +1,15 @@
 package com.algopulza.backend.db.entity;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
+@NoArgsConstructor
 @Getter
 @Setter
 @Entity
-@Data
-@Table(name = "solving_log")
-public class SolvingLog extends BaseTimeEntity {
+@Table(name = "problem_mark")
+public class ProblemMark extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,21 +24,12 @@ public class SolvingLog extends BaseTimeEntity {
     private Problem problem;
 
     @Column
-    private String status;
+    private int typeFlag;
 
-    @Column
-    private int memory;
-
-    @Column
-    private int time;
-
-    @Column
-    private String language;
-
-    @Column
-    private int codeLength;
-
-    @Column
-    private int solvingTime;
+    public ProblemMark(Member member, Problem problem, int typeFlag) {
+        this.member = member;
+        this.problem = problem;
+        this.typeFlag = typeFlag;
+    }
 
 }
