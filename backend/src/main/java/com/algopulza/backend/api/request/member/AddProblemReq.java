@@ -4,12 +4,13 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-@ApiModel("AddSolvedProblemReq")
+@ApiModel("AddProblemReq")
 @Data
-public class AddSolvedProblemReq {
+public class AddProblemReq {
     @ApiModelProperty(value = "백준 아이디", required = true)
     private String bojId;
 
-    @ApiModelProperty(value = "solved 상태의 문제들", required = true)
+    @ApiModelProperty(value = "문제들", required = true)
     private String problems;
+
 }

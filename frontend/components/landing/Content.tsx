@@ -13,6 +13,7 @@ const BrandName = styled.p`
   font-size: 5vw;
   font-weight: 700;
 `
+
 const BrandCatchphrase = styled.p`
   margin: 0;
   font-size: 1.7vw;

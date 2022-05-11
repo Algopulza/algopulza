@@ -1,6 +1,9 @@
 package com.algopulza.backend.api.service;
 
-import com.algopulza.backend.api.request.member.*;
+import com.algopulza.backend.api.request.member.AddDetailSolvedProblem;
+import com.algopulza.backend.api.request.member.AddProblemReq;
+import com.algopulza.backend.api.request.member.ModifyMemberReq;
+import com.algopulza.backend.api.request.member.ModifyProfileImageReq;
 import com.algopulza.backend.api.response.MemberRes;
 import com.algopulza.backend.api.response.TokenRes;
 import com.algopulza.backend.common.exception.NotFoundException;
@@ -19,9 +22,16 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.BufferedReader;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
+import java.util.StringTokenizer;
 import java.util.concurrent.atomic.AtomicReference;
 
 @Slf4j
@@ -40,6 +50,11 @@ public class MemberServiceImpl implements MemberService {
 
     @Value("${solvedac.baseurl}")
     private String SolvedacBaseUrl;
+
+    private static final String PYTHON_PATH = "/ocrId.py";
+
+   @Value("${spring.servlet.multipart.location}")
+    public String tempLocation;
 
     @Override
     public MemberRes getMember(Long memberId) {
@@ -210,7 +225,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public void addSolvedProblem(AddSolvedProblemReq addSolvedProblemReq) {
+    public void addSolvedProblem(AddProblemReq addSolvedProblemReq) {
         String bojId = addSolvedProblemReq.getBojId();
         String problems = addSolvedProblemReq.getProblems();
 
@@ -222,7 +237,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public void addTriedProblem(AddTriedProblemReq addTriedProblemReq) {
+    public void addTriedProblem(AddProblemReq addTriedProblemReq) {
         String bojId = addTriedProblemReq.getBojId();
         String problems = addTriedProblemReq.getProblems();
 
@@ -255,7 +270,6 @@ public class MemberServiceImpl implements MemberService {
                 solvingLog.setLanguage(addDetailSolvedProblem.getLanguage());
                 solvingLog.setCodeLength(addDetailSolvedProblem.getCodeLength());
                 solvingLog.setSolvingTime(addDetailSolvedProblem.getSolvingTime());
-                solvingLog.setCreatedTime(LocalDateTime.now());
                 solvingLogRepository.save(solvingLog);
             }
             // 문제를 푼 기록이 있으면
@@ -290,7 +304,6 @@ public class MemberServiceImpl implements MemberService {
                         newSolvingLog.setLanguage(addDetailSolvedProblem.getLanguage());
                         newSolvingLog.setCodeLength(addDetailSolvedProblem.getCodeLength());
                         newSolvingLog.setSolvingTime(addDetailSolvedProblem.getSolvingTime());
-                        newSolvingLog.setCreatedTime(LocalDateTime.now());
                         solvingLogRepository.save(newSolvingLog);
                     }
                 }
@@ -313,14 +326,47 @@ public class MemberServiceImpl implements MemberService {
                         newSolvingLog.setLanguage(addDetailSolvedProblem.getLanguage());
                         newSolvingLog.setCodeLength(addDetailSolvedProblem.getCodeLength());
                         newSolvingLog.setSolvingTime(addDetailSolvedProblem.getSolvingTime());
-                        newSolvingLog.setCreatedTime(LocalDateTime.now());
-                        solvingLogRepository.save(newSolvingLog);
+                         solvingLogRepository.save(newSolvingLog);
                     }
                 }
             }
         }, ()-> {
             new NotFoundException(ErrorCode.NOT_FOUND_MEMBER);
         });
+    }
+
+    @Override
+    public String extractBojIdFromImg(MultipartFile capturedImage) {
+        String imagePath = tempLocation + capturedImage.getOriginalFilename();
+        String id = "";
+        try {
+            FileOutputStream fos = new FileOutputStream(imagePath);
+            fos.write(capturedImage.getBytes());
+            fos.close();
+
+            ProcessBuilder builder = new ProcessBuilder("python3", PYTHON_PATH, imagePath);
+            Process process = builder.start();
+
+            // python 파일 출력 읽기
+            BufferedReader stdOut = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            id = stdOut.readLine();
+
+            if ("fail".equals(id)){
+                throw new NotFoundException(ErrorCode.INVALID_IMAGE);
+            }
+
+            int exitval = process.waitFor(); // 파이썬 프로세스가 종료될 때까지 기다림
+            if(exitval != 0){
+                log.error("이미지 프로세스가 비정상적으로 종료되었습니다");
+                throw new NotFoundException(ErrorCode.INVALID_IMAGE);
+            }
+
+
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        return id;
     }
 
     private void addNewMember(JsonNode finalJsonNode, String bojId) {
@@ -358,7 +404,6 @@ public class MemberServiceImpl implements MemberService {
                 solvingLog.setMember(selectMember);
                 solvingLog.setProblem(problem);
                 solvingLog.setStatus(status);
-                solvingLog.setCreatedTime(LocalDateTime.now());
                 solvingLogRepository.save(solvingLog);
             }
             // 이미 풀었던 문제라면

@@ -5,14 +5,13 @@ import Slide002 from '../../public/landing/sample_slide_002.jpg'
 import Slide003 from '../../public/landing/sample_slide_003.jpg'
 import Slide004 from '../../public/landing/sample_slide_004.jpg'
 import styled from 'styled-components'
-import "slick-carousel/slick/slick.css"
-import "slick-carousel/slick/slick-theme.css"
+import 'slick-carousel/slick/slick.css'
+import 'slick-carousel/slick/slick-theme.css'
 
 const Container = styled.section`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  height: 100vh;
   background: #FFC94D;
 `
 
