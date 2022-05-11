@@ -4,6 +4,9 @@ COPY ${JAR_FILE} app.jar
 # Install dependencies
 RUN apt-get update && apt-get install -y \
     pip \
+    libglib2.0-0 \
+    libgl1-mesa-glx \
+    && pip install -y \
     pillow \
     pytesseract \
     opencv-python
