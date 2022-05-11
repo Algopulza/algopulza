@@ -55,15 +55,15 @@ public class ProblemController {
         )));
     }
 
-    @GetMapping("/title")
+    @GetMapping("/search")
     @ApiOperation(value = "문제 검색", notes = "제목으로 문제를 검색하는 API 입니다.")
     @ApiImplicitParams({@ApiImplicitParam(name = "page", dataType = "integer", paramType = "query", defaultValue = "0")})
     @ApiResponses({
             @ApiResponse(code = 200, message = ResponseMessage.SEARCH_PROBLEM_SUCCESS, response = ErrorResponse.class),
             @ApiResponse(code = 400, message = ResponseMessage.BAD_REQUEST, response = ErrorResponse.class)
     })
-    public ResponseEntity<BaseResponseBody> listProblemByKeyword(@RequestParam String keyword, @ApiIgnore @PageableDefault(size = 20) Pageable pageable) {
-        return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, ResponseMessage.SEARCH_PROBLEM_SUCCESS, problemService.getProblemListByKeyword(keyword, pageable)));
+    public ResponseEntity<BaseResponseBody> listProblemByKeyword(@RequestParam String title, @ApiIgnore @PageableDefault(size = 20) Pageable pageable) {
+        return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, ResponseMessage.SEARCH_PROBLEM_SUCCESS, problemService.getProblemListByTitle(title, pageable)));
     }
 
     @GetMapping("/random-one")
