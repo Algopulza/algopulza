@@ -1,10 +1,10 @@
-import { Title } from '../../util/dto'
+import { SubjectAttr, ProblemAttr } from '../../util/dto'
 import SubjectTitle from './SubjectTitle'
 import Card from '../common/Card'
 import styled from 'styled-components'
 
 const Container = styled.section`
-  margin-bottom: 70px;
+  margin-bottom: 80px;
 `
 
 const Cards = styled.div`
@@ -12,39 +12,28 @@ const Cards = styled.div`
   justify-content: space-between;
 `
 
-type TitleProps = {
-  sub_title: Title
+type SubjectProps = {
+  subjectAttr: SubjectAttr
 }
 
-type ListProps = {
-  tagList: any,
-  bojId: number,
-  title: string,
-  tierLevel: number,
-  tierName: string,
-  averageTryCount: number,
-  acceptedCount: number,
-}
-
-export default function Subject({ sub_title }: TitleProps) {
-  const lists = sub_title.list
+export default function Subject({ subjectAttr }: SubjectProps) {
+  const lists = subjectAttr.list
 
   return (
     <Container>
-      <SubjectTitle>{sub_title}</SubjectTitle>
+      <SubjectTitle>{subjectAttr}</SubjectTitle>
       
       <Cards>
-        {lists && lists.map((list:ListProps) =>
-        <Card
-        key={list.bojId}
-        tags={list.tagList}
-        id={list.bojId}
-        title={list.title}
-        level={list.tierLevel}
-        name={list.tierName}
-        average={list.averageTryCount}
-        accept={list.acceptedCount}
-        /> )}
+        {lists.map((list: ProblemAttr) =>
+          <Card
+            key={list.bojId}
+            id={list.bojId}
+            title={list.title}
+            tier={list.tierName}
+            level={list.tierLevel}
+            accept={list.acceptedCount}
+          />
+        )}
       </Cards>
     </Container>
   )

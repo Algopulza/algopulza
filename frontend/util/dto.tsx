@@ -19,8 +19,19 @@ export type NavItemAttr = {
 }
 
 // Subject Data Object
-export type Title = {
+export type SubjectAttr = {
   title: string,
   englishTitle: string,
   list: any
+}
+
+// Problem Data Object
+export type ProblemAttr = {
+  title: string,
+  bojId: number,
+  tierName: string,
+  tierLevel: number,
+  acceptedCount: number,
+  averageTryCount: number,
+  tagList: any,
 }

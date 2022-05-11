@@ -39,7 +39,7 @@ export default function Random() {
   }
   useEffect(() => {RandomProblems()}, [])
 
-  const titles = [
+  const subjects = [
     { title: '구현', englishTitle: 'Implementation', list: data.simulationList },
     { title: '다이내믹 프로그래밍', englishTitle: 'Dynamic Programming', list: data.dpList },
     { title: '그래프', englishTitle: 'Graph', list: data.graphList },
@@ -60,7 +60,7 @@ export default function Random() {
 
       <Container>
         {data ?
-          <>{titles.map(title => <Subject key={title.title} sub_title={title} />)}</> :
+          <>{subjects.map(subject => <Subject key={subject.title} subjectAttr={subject} />)}</> :
           <div>먼저 문제 풀이 내역을 입력해주세요! 만약 푼 문제가 없다면 적어도 5문제를 풀고 와주세요!</div>  
         }
       </Container>

@@ -13,17 +13,14 @@ const Container = styled.section`
 `
 
 type CardProps = {
-  key: number,
-  tags: any,
   id:number,
   title:string,
+  tier: string,
   level: number,
-  name: string,
-  average: number,
-  accept: number,
+  accept: number
 }
 
-export default function Card({key, tags, id, title, level, name, average, accept}:CardProps) {
+export default function Card({id, title, tier, level, accept}: CardProps) {
   const handleClick = () => {
     const problemUrl = `https://www.acmicpc.net/problem/${id}`
     window.open(problemUrl)
@@ -31,8 +28,8 @@ export default function Card({key, tags, id, title, level, name, average, accept
 
   return (
     <Container onClick={handleClick}>
-    <Problem key={key} tags={tags} id={id} title={title}/>
-    <ProblemInfo key={key} level={level} name={name} average={average} accept={accept} />
+      {/* <Problem key={key} tags={tags} id={id} title={title}/> */}
+      {/* <ProblemInfo key={key} level={level} name={name} average={average} accept={accept} /> */}
     </Container>
   )
 }
