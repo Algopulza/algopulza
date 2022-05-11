@@ -50,9 +50,9 @@ public class MemberServiceImpl implements MemberService {
     @Value("${solvedac.baseurl}")
     private String SolvedacBaseUrl;
 
-    private static final String PYTHON_ID = "/Users/minjung/SSAFY/자율PJT/S06P31A408/backend/ocrId.py";
-    private static final String PYTHON_PROBLEM = "/Users/minjung/SSAFY/자율PJT/S06P31A408/backend/ocrProblem.py";
-    @Value("${spring.servlet.multipart.location}")
+    private static final String PYTHON_ID = "/ocrId.py";
+
+   @Value("${spring.servlet.multipart.location}")
     public String tempLocation;
 
     @Override
@@ -339,52 +339,6 @@ public class MemberServiceImpl implements MemberService {
         }
 
         return id;
-    }
-
-    @Override
-    public void extractProblemFromImg(String bojId, MultipartFile capturedImage) {
-        String imagePath = tempLocation + capturedImage.getOriginalFilename();
-        try {
-            FileOutputStream fos = new FileOutputStream(imagePath);
-            fos.write(capturedImage.getBytes());
-            fos.close();
-
-            ProcessBuilder builder = new ProcessBuilder("python3", PYTHON_PROBLEM, imagePath);
-            Process process = builder.start();
-
-            // python 파일 출력 읽기
-            BufferedReader stdOut = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            String status = stdOut.readLine();
-            if(status.equals("success")) {
-                String solvedList = stdOut.readLine();
-                String solvedProblems = solvedList.substring(1,solvedList.length()-1);
-                StringTokenizer st = new StringTokenizer(solvedProblems, ", ");
-                while (st.hasMoreTokens()){
-                    int problemId = Integer.parseInt(st.nextToken());
-                    addProblem(bojId, problemId, "solved");
-                }
-
-                String triedList = stdOut.readLine();
-                String triedProblems = triedList.substring(1,triedList.length()-1);
-                st = new StringTokenizer(triedProblems, ", ");
-                while (st.hasMoreTokens()){
-                    int problemId = Integer.parseInt(st.nextToken());
-                    addProblem(bojId, problemId, "tried");
-                }
-
-            }
-            else if (status.equals("fail")){
-                throw new NotFoundException(ErrorCode.INVALID_IMAGE);
-            }
-
-            int exitval = process.waitFor(); // 파이썬 프로세스가 종료될 때까지 기다림
-            if(exitval != 0){
-                log.error("이미지 프로세스가 비정상적으로 종료되었습니다");
-            }
-        } catch (IOException | InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-
     }
 
     private void addNewMember(JsonNode finalJsonNode, String bojId) {

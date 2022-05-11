@@ -27,7 +27,5 @@ public interface MemberService {
     void addDetailSolvedProblem(AddDetailSolvedProblem addDetailSolvedProblem);
 
     String extractBojIdFromImg(MultipartFile capturedImage);
-
-    void extractProblemFromImg(String bojId, MultipartFile capturedImage);
 }
 

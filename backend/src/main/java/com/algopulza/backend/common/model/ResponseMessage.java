@@ -53,4 +53,8 @@ public class ResponseMessage {
     public static final String GET_ANALYSIS_SOLVED_COUNT_SUCCESS = "월별 문제 풀이 개수 조회 성공";
     public static final String GET_SOLVING_LOG_STATISTICS_SUCCESS = "풀이기록 통계 조회 성공";
 
+    // Image
+    public static final String INVALID_IMAGE = "잘못된 이미지";
+    public static final String GET_BOJID_FROM_IMG_SUCCESS = "이미지에서 백준 아이디 추출하기 성공";
+
 }
