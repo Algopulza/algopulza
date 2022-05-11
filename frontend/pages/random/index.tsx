@@ -4,23 +4,15 @@ import Gift from '../../components/random/Gift'
 import Subject from '../../components/recommendation/Subject'
 import styled from 'styled-components'
 import axios from 'axios'
+import { getRandom } from "../../api/back/ramdom/Random";
+import { useRecoilValue } from "recoil";
+import { accessTokenState } from "../../util/stateCollection";
 
 const Container = styled.section`
   padding: 0vw 5vw;
 `
 
-export async function getRandom() {
-  const res = await axios.get("https://k6a408.p.ssafy.io/api/v1/problems/random");
-  const posts =res.data.data;
-  return{
-    props:{
-      posts
-    }
-  }
-}
-
 export default function Random() {
-
   const [data, setData] = useState(
     {
       simulationList : [],
@@ -38,10 +30,11 @@ export default function Random() {
   }
   )
   
+  const accessToken = useRecoilValue(accessTokenState);
   const RandomSub = async () => {
-  await getRandom()
+  await getRandom(accessToken)
     .then((res) => {
-      const list = res.props.posts
+      const list = res.data.data
       setData(list)
     })
     .catch((err) => console.log(err));
@@ -70,7 +63,10 @@ const titles = [
       <Gift />
 
       <Container>
-        {titles.map(title => <Subject key={title.title} sub_title={title} />)}
+        {data ?
+        <>{titles.map(title => <Subject key={title.title} sub_title={title} />)}</>
+      :<div>추천 페이지에서 기존 문제들을 제공해주세요!</div>  
+      }
       </Container>
     </>
   )
