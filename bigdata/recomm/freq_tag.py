@@ -48,7 +48,7 @@ def recomm_freq_tag(app, mongodb, userid):
 
 
     # 푼 문제 목록 추출
-    problem_tag_df_solved = problem_tag_df.loc[problem_tag_df['status']=='"solved"']
+    problem_tag_df_solved = problem_tag_df.loc[problem_tag_df['status']=='solved']
     # 태그별로 문제 많이 푼 순으로 태그 나열
     solved_tag = problem_tag_df_solved.groupby('bojTagId').count().sort_values('bojId', ascending=False).reset_index()['bojTagId']
     # list 형태로 변형
@@ -118,6 +118,9 @@ def recomm_freq_tag(app, mongodb, userid):
 
     ### 추천 문제 10개 랜덤 추출 및 전달 ###
     recomm_list = list(recomm_problems)
-    recomm_list = random.sample(recomm_list, 10)
-    recomm_json = dumps(recomm_list, ensure_ascii=False)
-    return recomm_json
+    if len(recomm_list) >= 10:
+        recomm_list = random.sample(recomm_list, 10)
+        recomm_json = dumps(recomm_list, ensure_ascii=False)
+        return recomm_json
+    else:
+        return 'empty'

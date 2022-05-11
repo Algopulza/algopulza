@@ -47,7 +47,7 @@ def user_freq_tag(app, mongodb, userid):
 
     
     # 푼 문제 목록 추출
-    problem_tag_df_solved = problem_tag_df.loc[problem_tag_df['status']=='"solved"']
+    problem_tag_df_solved = problem_tag_df.loc[problem_tag_df['status']=='solved']
     # 태그별로 문제 많이 푼 순으로 태그 나열
     solved_tag = problem_tag_df_solved.groupby('bojTagId').count().sort_values('bojId', ascending=False).reset_index()['bojTagId']
     # list 형태로 변형

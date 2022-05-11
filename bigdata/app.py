@@ -48,6 +48,7 @@ def create_app(test_config=None):
 
     # MongoDB
     client = MongoClient('k6a4081.p.ssafy.io', 27017, username=app.config['MONGO_USER'] , password=app.config['MONGO_PW'])
+    # client = MongoClient('localhost', 27027)
     mongodb = client.algopulza_test
     
 
@@ -121,6 +122,9 @@ def create_app(test_config=None):
     @app.route('/recomm/vulnerability/<userid>')
     def recomm_vul(userid):
         res = vulnerability.recomm_vulnerability(app, mongodb, userid)
+        if res == 'empty':
+            print('empty mf recomm problems list')
+            return rand(userid)
         return res
 
     # 유저 많이푼태그 분석
@@ -133,6 +137,9 @@ def create_app(test_config=None):
     @app.route('/recomm/freq-tag/<userid>')
     def recomm_freq(userid):
         res = freq_tag.recomm_freq_tag(app, mongodb, userid)
+        if res == 'empty':
+            print('empty mf recomm problems list')
+            return rand(userid)
         return res
 
     return app
