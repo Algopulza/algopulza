@@ -358,8 +358,11 @@ public class MemberServiceImpl implements MemberService {
 
             // python 파일 출력 읽기
             BufferedReader stdOut = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            id = stdOut.readLine();
-            log.info("id -> {} ",id);
+//            id = stdOut.readLine();
+            while((id=stdOut.readLine())!=null){
+                log.info("id -> {} ",id);
+            }
+//            log.info("id -> {} ",id);
 
             if ("fail".equals(id)){
                 throw new NotFoundException(ErrorCode.INVALID_IMAGE);
