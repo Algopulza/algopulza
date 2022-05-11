@@ -347,22 +347,9 @@ public class MemberServiceImpl implements MemberService {
             ProcessBuilder builder = new ProcessBuilder("python3", PYTHON_PATH, imagePath);
             Process process = builder.start();
 
-            System.out.println("imagePath => " + imagePath);
-
-            BufferedReader errOut = new BufferedReader(new InputStreamReader(process.getErrorStream()));
-            while((id=errOut.readLine())!=null){
-                System.out.println(id);
-            }
-
-
-
             // python 파일 출력 읽기
             BufferedReader stdOut = new BufferedReader(new InputStreamReader(process.getInputStream()));
-//            id = stdOut.readLine();
-            while((id=stdOut.readLine())!=null){
-                log.info("id -> {} ",id);
-            }
-//            log.info("id -> {} ",id);
+            id = stdOut.readLine();
 
             if ("fail".equals(id)){
                 throw new NotFoundException(ErrorCode.INVALID_IMAGE);
