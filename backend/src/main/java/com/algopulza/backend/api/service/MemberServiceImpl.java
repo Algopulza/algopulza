@@ -1,6 +1,7 @@
 package com.algopulza.backend.api.service;
 
 import com.algopulza.backend.api.request.member.AddDetailSolvedProblem;
+import com.algopulza.backend.api.request.member.AddProblemReq;
 import com.algopulza.backend.api.request.member.ModifyMemberReq;
 import com.algopulza.backend.api.request.member.ModifyProfileImageReq;
 import com.algopulza.backend.api.response.MemberRes;
@@ -221,6 +222,30 @@ public class MemberServiceImpl implements MemberService {
         member.setRefreshToken(null);
         memberRepository.save(member);
 
+    }
+
+    @Override
+    public void addSolvedProblem(AddProblemReq addSolvedProblemReq) {
+        String bojId = addSolvedProblemReq.getBojId();
+        String problems = addSolvedProblemReq.getProblems();
+
+        StringTokenizer st = new StringTokenizer(problems, " ");
+        while (st.hasMoreTokens()){
+            int problemId = Integer.parseInt(st.nextToken());
+            addProblem(bojId, problemId, "solved");
+        }
+    }
+
+    @Override
+    public void addTriedProblem(AddProblemReq addTriedProblemReq) {
+        String bojId = addTriedProblemReq.getBojId();
+        String problems = addTriedProblemReq.getProblems();
+
+        StringTokenizer st = new StringTokenizer(problems, " ");
+        while (st.hasMoreTokens()){
+            int problemId = Integer.parseInt(st.nextToken());
+            addProblem(bojId, problemId, "tried");
+        }
     }
 
     @Override
