@@ -15,12 +15,8 @@ rgb_image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
 text = pytesseract.image_to_string(rgb_image, lang = 'eng+kor', config = '--oem 3 --psm 11')
 
-print(text)
-
 a = text.find("아이디")
 b = text.find("상태")
-
-print(a,b)
 
 if a==-1 and b==-1:
     print("fail")
