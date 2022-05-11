@@ -6,7 +6,7 @@ import cv2
 import sys
 import os
 
-pytesseract.pytesseract.tesseract_cmd = "/"
+# pytesseract.pytesseract.tesseract_cmd = "/"
 
 url = sys.argv[1]
 
