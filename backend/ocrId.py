@@ -6,7 +6,7 @@ import cv2
 import sys
 import os
 
-pytesseract.pytesseract.tesseract_cmd = r'/usr/local/bin/pytesseract'
+pytesseract.pytesseract.tesseract_cmd = r'/usr/bin/tesseract'
 
 url = sys.argv[1]
 
@@ -18,7 +18,7 @@ text = pytesseract.image_to_string(rgb_image, lang = 'eng+kor', config = '--oem 
 a = text.find("아이디")
 b = text.find("상태")
 
-if a>-1 and b>-1:
+if a>-1 or b>-1:
     bojId = text[a+3 : b].strip()
     print(bojId)
 else:
