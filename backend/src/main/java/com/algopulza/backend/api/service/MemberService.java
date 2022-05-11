@@ -28,8 +28,6 @@ public interface MemberService {
 
     void addTriedProblem(AddProblemReq addTriedProblemReq);
 
-    void addDetailSolvedProblem(AddDetailSolvedProblem addDetailSolvedProblem);
-
     String extractBojIdFromImg(MultipartFile capturedImage);
 }
 
