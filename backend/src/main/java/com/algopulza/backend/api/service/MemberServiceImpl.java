@@ -347,18 +347,20 @@ public class MemberServiceImpl implements MemberService {
             ProcessBuilder builder = new ProcessBuilder("python3", PYTHON_ID, imagePath);
             Process process = builder.start();
 
-            // python 파일 출력 읽기
-            BufferedReader stdOut = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            id = stdOut.readLine();
-
-            if (id.equals("fail")){
-                throw new NotFoundException(ErrorCode.INVALID_IMAGE);
-            }
-
             int exitval = process.waitFor(); // 파이썬 프로세스가 종료될 때까지 기다림
             if(exitval != 0){
                 log.error("이미지 프로세스가 비정상적으로 종료되었습니다");
             }
+
+            // python 파일 출력 읽기
+            BufferedReader stdOut = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            id = stdOut.readLine();
+
+            if ("fail".equals(id)){
+                throw new NotFoundException(ErrorCode.INVALID_IMAGE);
+            }
+
+
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
