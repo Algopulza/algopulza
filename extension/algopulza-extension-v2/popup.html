@@ -36,9 +36,30 @@
   </div>
 
   <!-- scrapper -->
-  <p class="title-area">SCRAPPER</p>
-  <div class="tool-area">
+  <p class="title-area">COLLECTOR</p>
+  <div class="collector-area">
+    <div class="data-area">
+      <div class="column">
+        <span class="data">id</span>
+        <span class="data">language</span>
+      </div>
+      <div class="column">
+        <span class="data">problemId</span>
+        <span class="data">codeLength</span>
+      </div>
+      <div class="column">
+        <span class="data">memory</span>
+        <span class="data">submitTime</span>
+      </div>
+      <div class="column justify-start">
+        <span class="data">runTime</span>
+      </div>
+    </div>
 
+    <div class="button-area flex-column">
+      <button id="btnStart" class="button button-height">수집</button>
+      <button id="btnSubmit" class="button button-blue button-height">전송</button>
+    </div>
   </div>
 
   <script type="text/javascript" src="./stopwatch.js"></script>
