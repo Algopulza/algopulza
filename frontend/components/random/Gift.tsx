@@ -6,7 +6,10 @@ import ImgGiftBoxBlue from '../../public/random/giftbox_blue.png'
 import ImgGiftBoxRed from '../../public/random/giftbox_red.png'
 import _ from 'lodash'
 import axios from "axios";
-// import { getRandom } from "../../api/random";
+import { getRandomOne } from "../../api/back/ramdom/RandomOne";
+import { getRandBox } from "../../api/flask/random/RandBox";
+import { useRecoilValue } from "recoil";
+import { bojIdState, accessTokenState } from "../../util/stateCollection";
 
 const Container = styled.section`
   margin-bottom: 80px;
@@ -20,17 +23,6 @@ const Boxes = styled.div`
   padding: 0 2vw;
 `
 
-export async function getRandom() {
-  const res = await axios.get("https://k6a408.p.ssafy.io/api/v1/problems/random-one");
-  console.log(res)
-  const posts =res.data.data;
-  return{
-    props:{
-      posts
-    }
-  }
-}
-
   function Gift() {
   const [dataRed, setDataRed] = useState<object>([]);
   const [dataBlue, setDataBlue] = useState<object>([]);
@@ -38,22 +30,22 @@ export async function getRandom() {
   const buttonTexts = ['수준을 고려해서 추천 받고 싶다면', '수준에 관계 없이 추천 받고 싶다면']
   const images = [ImgGiftBoxBlue, ImgGiftBoxRed]
   const data = [dataBlue, dataRed]
+  const accessToken = useRecoilValue(accessTokenState);
+  const bojId = useRecoilValue(bojIdState);
 
   const RandomBlue = async () => {
-    await getRandom()
+    await getRandBox(accessToken, bojId)
       .then((res) => {
-        const data = res.props.posts
-        console.log(data)
+        const data = res.data[0]
         setDataBlue(data);
       })
       .catch((err) => console.log(err));
   };
 
   const RandomRed = async () => {
-    await getRandom()
+    await getRandomOne(accessToken)
       .then((res) => {
-        const data = res.props.posts
-        console.log(data)
+        const data = res.data.data
         setDataRed(data);
       })
       .catch((err) => console.log(err));

@@ -45,7 +45,7 @@ export default function GiftBox({ text, img, data, random }: TextProps) {
         </Canvas>
       }
       
-      <GiftButton onClick={() => {random(), setIsToggled(!isToggled)}}>{text}</GiftButton>
+      <GiftButton onClick={() => {isToggled && random(), setIsToggled(!isToggled)}}>{text}</GiftButton>
     </Container>
   )
 }

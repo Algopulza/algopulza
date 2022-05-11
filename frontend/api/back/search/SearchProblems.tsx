@@ -1,5 +1,5 @@
 import { backapi } from "../BackApi";
 
-export const getSearchProblems = async () => {
-  return await backapi.get("/problems").then().catch();
+export const getSearchProblems = async (accessToken:string) => {
+  return await backapi(accessToken).get("/problems").then().catch();
 };
