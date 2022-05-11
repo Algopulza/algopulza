@@ -19,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -39,7 +40,8 @@ public class MemberController {
             @ApiResponse(code = 401, message = ResponseMessage.UNAUTHORIZED, response = ErrorResponse.class),
             @ApiResponse(code = 403, message = ResponseMessage.ACCESS_DENIED, response = ErrorResponse.class),
             @ApiResponse(code = 404, message = ResponseMessage.NOT_FOUND, response = ErrorResponse.class)})
-    public ResponseEntity<BaseResponseBody> addMember(@RequestHeader String bojId) {
+    public ResponseEntity<BaseResponseBody> addMember(@RequestHeader String bojId, HttpServletRequest request) {
+        System.out.println(request.getSession().getServletContext().getRealPath("/"));
         // 회원정보 저장
         MemberRes memberRes = memberService.addMember(bojId);
 
