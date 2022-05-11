@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { axiosLogin } from '../../util/axiosCollection'
 import InputTextField from '../common/InputTextField'
@@ -23,6 +23,12 @@ export default function Form() {
   const setMember = useSetRecoilState(memberIdState)
   const setAccessToken = useSetRecoilState(accessTokenState)
   const setRefreshToken = useSetRecoilState(refreshTokenState)
+
+  useEffect(() => {
+    setIsLogin(localStorage.getItem('recoil-persist') !== null ? true : false)
+  }, [])
+  const [isLogin, setIsLogin] = useState(true)
+
   const handleChange = (event: any) => {
     setBojId(event.target.value)
   }
@@ -30,7 +36,6 @@ export default function Form() {
   const handleClick = () => {
     if (bojId.trim() === '') {
       setValid(false)
-      console.log('by click')
     } else {
       setValid(true)
       axiosLogin(bojId)
@@ -51,6 +56,8 @@ export default function Form() {
     }
   }
 
+  const text = isLogin ? '시작하기' : '로그인'
+
   return (
     <Container>
       <div style={{marginBottom: 40}}>
@@ -64,7 +71,7 @@ export default function Form() {
       </div>
 
       <div>
-        <ButtonSubmitting submittingAttr={{text: '로그인', width: '20vw'}} onClick={handleClick} />
+        <ButtonSubmitting submittingAttr={{text: text, width: '20vw'}} onClick={handleClick} />
         <ButtonRedirecting />
       </div>
     </Container>

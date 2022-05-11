@@ -1,4 +1,4 @@
-import { Title } from '../../pages/recommendation'
+import { Title } from '../../util/dto'
 import styled from 'styled-components'
 
 const Container = styled.section`

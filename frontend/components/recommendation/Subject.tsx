@@ -1,4 +1,4 @@
-import { Title } from '../../pages/recommendation'
+import { Title } from '../../util/dto'
 import SubjectTitle from './SubjectTitle'
 import Card from '../common/Card'
 import styled from 'styled-components'

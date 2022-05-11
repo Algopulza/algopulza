@@ -11,12 +11,14 @@ export const userInfoState = atom({
 
 export const bojIdState = atom({
   key: 'bojIdState',
-  default: {}
+  default: {},
+  effects_UNSTABLE: [persistAtom]
 })
 
 export const memberIdState = atom({
   key: 'memberIdState',
-  default: {}
+  default: {},
+  effects_UNSTABLE: [persistAtom]
 })
 
 export const accessTokenState = atom({
