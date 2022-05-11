@@ -26,8 +26,10 @@ public interface ProblemService {
 
     List<ProblemRes> getRandomProblemListByCondition(int type, Object condition, int count);
 
-    void addProblemMark(Long memberId, Long problemId, int markType);
+    void addProblemMark(Long memberId, Long problemId, int typeFlag);
 
-    List<ProblemMarkRes> getProblemMarkList(Long memberId, int markType);
+    void deleteProblemMark(Long memberId, Long problemId, int typeFlag);
+
+    List<ProblemMarkRes> getProblemMarkList(Long memberId, int typeFlag);
 
 }

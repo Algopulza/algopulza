@@ -336,15 +336,25 @@ public class ProblemServiceImpl implements ProblemService {
     }
 
     @Override
-    public void addProblemMark(Long memberId, Long problemId, int markType) {
+    public void addProblemMark(Long memberId, Long problemId, int typeFlag) {
         Member member = memberRepository.findById(memberId).orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND_MEMBER));
         Problem problem = problemRepository.findById(problemId).orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND_PROBLEM));
-        problemMarkRepository.save(new ProblemMark(member, problem, markType));
+        problemMarkRepository.save(new ProblemMark(member, problem, typeFlag));
     }
 
     @Override
-    public List<ProblemMarkRes> getProblemMarkList(Long memberId, int markType) {
-        return problemMarkRepository.findProblemByTypeFlag(memberId, markType);
+    public void deleteProblemMark(Long memberId, Long problemId, int typeFlag) {
+        Member member = memberRepository.findById(memberId).orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND_MEMBER));
+        Problem problem = problemRepository.findById(problemId).orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND_PROBLEM));
+        ProblemMark problemMark = problemMarkRepository.findByMemberAndProblemAndTypeFlag(member, problem, typeFlag)
+                                                       .orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND_PROBLEM_MARK));
+
+        problemMarkRepository.delete(problemMark);
+    }
+
+    @Override
+    public List<ProblemMarkRes> getProblemMarkList(Long memberId, int typeFlag) {
+        return problemMarkRepository.findProblemByTypeFlag(memberId, typeFlag);
     }
 
 }
