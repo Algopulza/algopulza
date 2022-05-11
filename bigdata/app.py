@@ -91,7 +91,7 @@ def create_app(test_config=None):
         res = recomm_mf.recomm_mf(app, mongodb, userid)
         if res == 'empty':
             print('empty mf recomm problems list')
-            return rand(userid)
+            return []
         return res
 
     # 자신 티어 +-1 level 문제 1개 랜덤추천
@@ -124,7 +124,7 @@ def create_app(test_config=None):
         res = vulnerability.recomm_vulnerability(app, mongodb, userid)
         if res == 'empty':
             print('empty vulnerable recomm problems list')
-            return rand(userid)
+            return []
         return res
 
     # 유저 많이푼태그 분석
@@ -139,7 +139,7 @@ def create_app(test_config=None):
         res = freq_tag.recomm_freq_tag(app, mongodb, userid)
         if res == 'empty':
             print('empty mf recomm problems list')
-            return rand(userid)
+            return []
         return res
 
     return app
