@@ -6,6 +6,7 @@ RUN apt-get update && apt-get install -y \
     pip \
     libglib2.0-0 \
     libgl1-mesa-glx \
+    tesseract-ocr \
     && pip install \
     pillow \
     pytesseract \
