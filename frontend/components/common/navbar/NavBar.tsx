@@ -4,6 +4,7 @@ import NavItem from './NavItem'
 import styled from 'styled-components'
 import { useRecoilState } from 'recoil'
 import { pageState } from '../../../util/stateCollection'
+import Logout from './Logout'
 
 const Container = styled.section`
   display: grid;
@@ -43,6 +44,8 @@ export default function NavBar() {
           <></>
         }
       </Pages>
+
+      <Logout />
     </Container>
   )
 }

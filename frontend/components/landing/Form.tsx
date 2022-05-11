@@ -30,7 +30,6 @@ export default function Form() {
   const handleClick = () => {
     if (bojId.trim() === '') {
       setValid(false)
-      console.log('by click')
     } else {
       setValid(true)
       axiosLogin(bojId)
