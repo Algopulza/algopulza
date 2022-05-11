@@ -16,7 +16,7 @@ public interface ProblemService {
 
     List<ProblemRes> getProblemList(String tierName, Integer tierLevel, Pageable pageable);
 
-    List<ProblemRes> getProblemListByKeyword(String keyword, Pageable pageable);
+    List<ProblemRes> getProblemListByTitle(String title, Pageable pageable);
 
     ProblemRes getOneRandomProblem();
 
