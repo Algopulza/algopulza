@@ -4,7 +4,7 @@
   "version": "1.0",
   "manifest_version": 3,
 
-  "permissions": ["storage", "activeTab"],
+  "permissions": ["scripting"],
   "action": {
     "default_popup": "popup.html"
   }
