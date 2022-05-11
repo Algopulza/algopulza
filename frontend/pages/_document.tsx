@@ -31,6 +31,7 @@ export default class CustomDocument extends Document {
     return (
       <Html>
         <Head>
+          <link rel='shortcut icon' href='/common/brand_logo.png' />
           <link
             href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;700&display=swap"
             rel="stylesheet"
