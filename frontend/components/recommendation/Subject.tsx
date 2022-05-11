@@ -24,7 +24,7 @@ export default function Subject({ subjectAttr }: SubjectProps) {
       <SubjectTitle>{subjectAttr}</SubjectTitle>
       
       <Cards>
-        {lists.map((list: ProblemAttr) =>
+        {lists && lists.map((list: ProblemAttr) =>
           <Card
             key={list.bojId}
             id={list.bojId}

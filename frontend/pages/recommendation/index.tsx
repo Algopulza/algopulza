@@ -67,7 +67,7 @@ export default function Recommendation() {
     RecommendTear()
   }, [])
 
-  const titles = [
+  const subjects = [
     {title: '최근 자주 풀었던 태그들에 속하는 문제들을 추천해 드려요!', englishTitle: '', list: tagData},
     {title: '최근 푼 문제 중 적게 푼 태그에서 문제들을 추천해 드려요!', englishTitle: '', list: vulData},
     {title: '이미 푼 문제 중 티어에 맞게 문제들을 추천해 드려요!', englishTitle: '', list: solvedData},
@@ -80,7 +80,7 @@ export default function Recommendation() {
       <Container>
         {vulData ? (
           <>
-            {titles.map((title) => ( <Subject key={title.title} sub_title={title} /> ))}
+            {subjects.map((subject) => ( <Subject key={subject.title} subjectAttr={subject} /> ))}
           </>
         ) : (
           <div>기존에 푼 문제들을 상단에 제공해주세요!</div>
