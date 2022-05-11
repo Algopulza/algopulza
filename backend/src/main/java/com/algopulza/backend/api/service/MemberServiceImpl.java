@@ -51,7 +51,7 @@ public class MemberServiceImpl implements MemberService {
     @Value("${solvedac.baseurl}")
     private String SolvedacBaseUrl;
 
-    private static final String PYTHON_ID = "/ocrId.py";
+    private static final String PYTHON_PATH = "/ocrId.py";
 
    @Value("${spring.servlet.multipart.location}")
     public String tempLocation;
@@ -344,12 +344,20 @@ public class MemberServiceImpl implements MemberService {
             fos.write(capturedImage.getBytes());
             fos.close();
 
-            ProcessBuilder builder = new ProcessBuilder("python3", PYTHON_ID, imagePath);
+            ProcessBuilder builder = new ProcessBuilder("python3", PYTHON_PATH, imagePath);
             Process process = builder.start();
+
+            System.out.println("imagePath => " + imagePath);
+
+            BufferedReader errOut = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+            while((id=errOut.readLine())!=null){
+                System.out.println(id);
+            }
 
             int exitval = process.waitFor(); // 파이썬 프로세스가 종료될 때까지 기다림
             if(exitval != 0){
                 log.error("이미지 프로세스가 비정상적으로 종료되었습니다");
+                throw new NotFoundException(ErrorCode.INVALID_IMAGE);
             }
 
             // python 파일 출력 읽기
