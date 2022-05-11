@@ -97,4 +97,29 @@ public class ProblemController {
         return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, ResponseMessage.GET_PROBLEM_LIST_SUCCESS, problemService.getRandomSolvedProblemList(memberId)));
     }
 
+    @PostMapping("/{problemId}/mark")
+    @ApiOperation(value = "풀어볼 문제 목록에 추가", notes = "풀어볼 문제로 등록하는 API 입니다.")
+    @ApiResponses({@ApiResponse(code = 201, message = ResponseMessage.POST_PROBLEM_MARK),
+            @ApiResponse(code = 400, message = ResponseMessage.BAD_REQUEST, response = ErrorResponse.class),
+            @ApiResponse(code = 401, message = ResponseMessage.UNAUTHORIZED, response = ErrorResponse.class),
+            @ApiResponse(code = 403, message = ResponseMessage.ACCESS_DENIED, response = ErrorResponse.class),
+            @ApiResponse(code = 404, message = ResponseMessage.NOT_FOUND, response = ErrorResponse.class)})
+    public ResponseEntity<BaseResponseBody> addProblemMark(@PathVariable Long problemId) {
+        Long memberId = JwtUtil.getCurrentId();
+        problemService.addProblemMark(memberId, problemId, 0);
+        return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, ResponseMessage.POST_PROBLEM_MARK));
+    }
+
+    @GetMapping("/mark")
+    @ApiOperation(value = "풀어볼 문제 목록 조회", notes = "풀어볼 문제 목록을 조회하는 API 입니다.")
+    @ApiResponses({@ApiResponse(code = 200, message = ResponseMessage.GET_PROBLEM_MARK),
+            @ApiResponse(code = 400, message = ResponseMessage.BAD_REQUEST, response = ErrorResponse.class),
+            @ApiResponse(code = 401, message = ResponseMessage.UNAUTHORIZED, response = ErrorResponse.class),
+            @ApiResponse(code = 403, message = ResponseMessage.ACCESS_DENIED, response = ErrorResponse.class),
+            @ApiResponse(code = 404, message = ResponseMessage.NOT_FOUND, response = ErrorResponse.class)})
+    public ResponseEntity<BaseResponseBody> listProblemMark() {
+        Long memberId = JwtUtil.getCurrentId();
+        return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, ResponseMessage.GET_PROBLEM_MARK, problemService.getProblemMarkList(memberId, 0)));
+    }
+
 }
