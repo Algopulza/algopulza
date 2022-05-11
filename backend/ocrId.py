@@ -18,11 +18,11 @@ text = pytesseract.image_to_string(rgb_image, lang = 'eng+kor', config = '--oem 
 a = text.find("아이디")
 b = text.find("상태")
 
-if a>-1 or b>-1:
+if a==-1 and b==-1:
+    print("fail")
+else:
     bojId = text[a+3 : b].strip()
     print(bojId)
-else:
-    print("fail")
 
 
 
