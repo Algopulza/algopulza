@@ -45,6 +45,10 @@ public class ResponseMessage {
     // Tier
     public static final String NOT_FOUND_TIER = "존재하지 않는 티어";
 
+    // Image
+    public static final String INVALID_IMAGE = "잘못된 이미지";
+    public static final String GET_BOJID_FROM_IMG_SUCCESS = "이미지에서 백준 아이디 추출하기 성공";
+
     // Analysis
     public static final String GET_ANALYSIS_INFO_SUCCESS = "분석 정보 조회 성공";
     public static final String GET_ANALYSIS_LANGUAGE_SUCCESS = "사용 언어 비율 조회 성공";

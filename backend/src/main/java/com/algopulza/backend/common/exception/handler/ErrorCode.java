@@ -18,8 +18,9 @@ public enum ErrorCode {
     ACCESS_DENIED(403, "M003", ResponseMessage.ACCESS_DENIED),
     // Problem
     NOT_FOUND_PROBLEM(404, "P001", ResponseMessage.NOT_FOUND_PROBLEM),
-    NOT_FOUND_TIER(404, "P002", ResponseMessage.NOT_FOUND_TIER);
-
+    NOT_FOUND_TIER(404, "P002", ResponseMessage.NOT_FOUND_TIER),
+    INVALID_IMAGE(404, "P003", ResponseMessage.INVALID_IMAGE);
+    
     private int status;
     private final String code;
     private final String message;
