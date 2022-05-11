@@ -45,7 +45,7 @@ public class MemberServiceImpl implements MemberService {
     @Value("${solvedac.baseurl}")
     private String SolvedacBaseUrl;
 
-    private static final String PYTHON_PATH = "/ocrId.py";
+    private static final String PYTHON_PATH = "/Users/minjung/SSAFY/자율PJT/S06P31A408/backend/ocrId.py";
 
    @Value("${spring.servlet.multipart.location}")
     public String tempLocation;
@@ -80,10 +80,10 @@ public class MemberServiceImpl implements MemberService {
         String password = loginReq.getPassword();
 
         Optional<Member> member = memberRepository.findByAlgopulzaId(id);
-
+    
         member.ifPresentOrElse(selectMember ->{
             BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-            if(encoder.matches(password, selectMember.getPassword())){
+            if(encoder.matches(password, selectMember.getAlgopulzaPassword())){
                 String bojId = selectMember.getBojId();
 
                 // 비밀번호까지 일치하면 백준 사이트 정보 읽어와 정보 갱신 해주기
@@ -106,6 +106,9 @@ public class MemberServiceImpl implements MemberService {
                     selectMember.setSolveCount(curSolveCount);
                 }
 
+                // login_log 추가
+                addLoginlog(selectMember.getId());
+
                 // 경험치 관리
                 // 로그인 로그 확인 -> 오늘 첫 방문이면 +2 , 오늘첫방문+어제도방문이면 +3
                 switch (checkDay(bojId)){
@@ -119,15 +122,13 @@ public class MemberServiceImpl implements MemberService {
                         break;
                 }
 
-                // login_log 추가
-                addLoginlog(bojId);
             }
             else{
                 // 비밀번호 맞지 않을 시
-                new NotFoundException(ErrorCode.NOT_FOUND_MEMBER);
+                throw new NotFoundException(ErrorCode.NOT_FOUND_MEMBER);
             }
         }, ()->{
-            new NotFoundException(ErrorCode.NOT_FOUND_MEMBER);
+            throw new NotFoundException(ErrorCode.NOT_FOUND_MEMBER);
         });
 
         MemberRes memberRes = getMember(member.get().getId());
@@ -370,8 +371,8 @@ public class MemberServiceImpl implements MemberService {
         });
     }
 
-    private void addLoginlog(String bojId) {
-        Optional<Member> member = Optional.ofNullable(memberRepository.findByBojId(bojId));
+    private void addLoginlog(Long id) {
+        Optional<Member> member = memberRepository.findById(id);
         member.ifPresent(selectMember->{
             LoginLog loginLog = new LoginLog();
             loginLog.setMember(selectMember);
