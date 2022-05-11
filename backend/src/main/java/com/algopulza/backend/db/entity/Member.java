@@ -23,6 +23,12 @@ public class Member extends BaseTimeEntity implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column
+    private String algopulzaId;
+
+    @Column
+    private String algopulzaPassword;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tier")
     @JsonIgnore
@@ -36,9 +42,6 @@ public class Member extends BaseTimeEntity implements UserDetails {
 
     @Column
     private int solveCount;
-
-    @Column
-    private String email;
 
     @Column
     private int exp;
