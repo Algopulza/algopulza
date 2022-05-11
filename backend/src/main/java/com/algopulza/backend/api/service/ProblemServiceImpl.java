@@ -339,7 +339,9 @@ public class ProblemServiceImpl implements ProblemService {
     public void addProblemMark(Long memberId, Long problemId, int typeFlag) {
         Member member = memberRepository.findById(memberId).orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND_MEMBER));
         Problem problem = problemRepository.findById(problemId).orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND_PROBLEM));
-        problemMarkRepository.save(new ProblemMark(member, problem, typeFlag));
+        ProblemMark problemMark = problemMarkRepository.findByMemberAndProblemAndTypeFlag(member, problem, typeFlag)
+                                                       .orElse(new ProblemMark(member, problem, typeFlag));
+        problemMarkRepository.save(problemMark);
     }
 
     @Override
