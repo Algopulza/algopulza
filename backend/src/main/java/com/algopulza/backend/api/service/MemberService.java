@@ -12,7 +12,7 @@ public interface MemberService {
 
     void modifyProfileImage(ModifyProfileImageReq modifyProfileImageReq);
 
-    MemberRes addMember(String bojId);
+    void addMember(JoinReq joinReq);
 
     void modifyMember(ModifyMemberReq modifyMemberReq);
 
@@ -29,5 +29,9 @@ public interface MemberService {
     void addTriedProblem(AddProblemReq addTriedProblemReq);
 
     String extractBojIdFromImg(MultipartFile capturedImage);
+
+    MemberRes login(LoginReq loginReq);
+
+    boolean checkId(String id);
 }
 
