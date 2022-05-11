@@ -14,7 +14,7 @@ public interface ProblemService {
 
     void addEntitiesFromSolvedAcProblemRes(SolvedAcProblemRes solvedAcProblemRes, List<Problem> problemList, List<ProblemHasTag> problemHasTagList, Map<Integer, Tag> tagMapByBojTagId);
 
-    List<ProblemAndStatusRes> getProblemList(Long memberId, String tierName, Integer tierLevel, String status, Pageable pageable);
+    List<ProblemRes> getProblemList(String tierName, Integer tierLevel, Pageable pageable);
 
     List<ProblemRes> getProblemListByKeyword(String keyword, Pageable pageable);
 
@@ -22,6 +22,12 @@ public interface ProblemService {
 
     RandomListRes getRandomProblemList();
 
+    List<ProblemRes> getRandomSolvedProblemList(Long memberId);
+
     List<ProblemRes> getRandomProblemListByCondition(int type, Object condition, int count);
+
+    void addProblemMark(Long memberId, Long problemId, int markType);
+
+    List<ProblemMarkRes> getProblemMarkList(Long memberId, int markType);
 
 }

@@ -14,10 +14,13 @@ public enum ErrorCode {
     // Auth
     INVALID_REFRESH_TOKEN(401, "M001", ResponseMessage.INVALID_REFRESH_TOKEN),
     NOT_FOUND_MEMBER(404, "M002", ResponseMessage.NOT_FOUND_MEMBER),
+
     ACCESS_DENIED(403, "M003", ResponseMessage.ACCESS_DENIED),
     // Problem
     NOT_FOUND_PROBLEM(404, "P001", ResponseMessage.NOT_FOUND_PROBLEM),
-    NOT_FOUND_TIER(404, "P002", ResponseMessage.NOT_FOUND_TIER);
+    NOT_FOUND_TIER(404, "P002", ResponseMessage.NOT_FOUND_TIER),
+    INVALID_IMAGE(404, "P003", ResponseMessage.INVALID_IMAGE);
+
 
     private int status;
     private final String code;

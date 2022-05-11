@@ -1,11 +1,14 @@
 package com.algopulza.backend.api.service;
 
-import com.algopulza.backend.api.request.member.*;
+import com.algopulza.backend.api.request.member.AddDetailSolvedProblem;
+import com.algopulza.backend.api.request.member.ModifyMemberReq;
+import com.algopulza.backend.api.request.member.ModifyProfileImageReq;
 import com.algopulza.backend.api.response.MemberRes;
 import com.algopulza.backend.api.response.TokenRes;
 import com.algopulza.backend.common.exception.NotFoundException;
 import com.algopulza.backend.common.exception.handler.ErrorCode;
 import com.algopulza.backend.config.jwt.JwtTokenProvider;
+import com.algopulza.backend.config.jwt.RoleType;
 import com.algopulza.backend.db.entity.*;
 import com.algopulza.backend.db.repository.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -18,7 +21,12 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.BufferedReader;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -35,15 +43,17 @@ public class MemberServiceImpl implements MemberService {
     private final MemberRepository memberRepository;
     private final LoginLogRepository loginLogRepository;
     private final TierRepository tierRepository;
-    private final OrganizationRepository organizationRepository;
-    private final MemberHasOrganizationRepository memberHasOrganizationRepository;
     private final ProblemRepository problemRepository;
     private final SolvingLogRepository solvingLogRepository;
     private final S3Service s3Service;
-    private final JwtTokenProvider jwtTokenProvider;
 
     @Value("${solvedac.baseurl}")
     private String SolvedacBaseUrl;
+
+    private static final String PYTHON_ID = "/Users/minjung/SSAFY/자율PJT/S06P31A408/backend/ocrId.py";
+    private static final String PYTHON_PROBLEM = "/Users/minjung/SSAFY/자율PJT/S06P31A408/backend/ocrProblem.py";
+    @Value("${spring.servlet.multipart.location}")
+    public String tempLocation;
 
     @Override
     public MemberRes getMember(Long memberId) {
@@ -55,6 +65,7 @@ public class MemberServiceImpl implements MemberService {
                 .email(member.getEmail())
                 .level(member.getTier().getId())
                 .tierName(member.getTier().getName())
+                .tierLevel(member.getTier().getLevel())
                 .solveCount(member.getSolveCount())
                 .exp(member.getExp())
                 .build();
@@ -83,10 +94,14 @@ public class MemberServiceImpl implements MemberService {
 
             // 기존 tier와 다르면
             Long tier = Long.parseLong(finalJsonNode.get("tier").toString());
-            Tier curTier = tierRepository.findByLevel(tier);
-            if(selectMember.getTier()!=curTier){
-                selectMember.setTier(curTier);
-            }
+            Optional<Tier> curTier = tierRepository.findById(tier);
+            curTier.ifPresentOrElse(selectTier -> {
+                if(selectMember.getTier() != selectTier){
+                    selectMember.setTier(selectTier);
+                }
+            }, ()-> {
+                new NotFoundException(ErrorCode.NOT_FOUND_TIER);
+            });
 
             // 기존 solveCount와 다르면
             int curSolveCount = Integer.parseInt(finalJsonNode.get("solvedCount").toString());
@@ -155,10 +170,15 @@ public class MemberServiceImpl implements MemberService {
         member.ifPresent(selectMember->{
             // 기존 tier와 다르면
             Long tier = Long.parseLong(finalJsonNode.get("tier").toString());
-            Tier curTier = tierRepository.findByLevel(tier);
-            if(selectMember.getTier()!=curTier){
-                selectMember.setTier(curTier);
-            }
+            Optional<Tier> curTier = tierRepository.findById(tier);
+            curTier.ifPresentOrElse(selectTier -> {
+                if(selectMember.getTier() != selectTier){
+                    selectMember.setTier(selectTier);
+                }
+            }, ()-> {
+                new NotFoundException(ErrorCode.NOT_FOUND_TIER);
+            });
+
 
             // 기존 solveCount와 다르면
             int curSolveCount = Integer.parseInt(finalJsonNode.get("solvedCount").toString());
@@ -170,8 +190,8 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public String createToken(Long id, List<String> roles) {
-        return tokenProvider.createToken(id.toString(),roles);
+    public String createToken(Long id, RoleType roleType) {
+        return tokenProvider.createToken(id.toString(), roleType);
     }
 
     @Override
@@ -204,30 +224,6 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public void addSolvedProblem(AddSolvedProblemReq addSolvedProblemReq) {
-        String bojId = addSolvedProblemReq.getBojId();
-        String problems = addSolvedProblemReq.getProblems();
-
-        StringTokenizer st = new StringTokenizer(problems, " ");
-        while (st.hasMoreTokens()){
-            int problemId = Integer.parseInt(st.nextToken());
-            addProblem(bojId, problemId, "solved");
-        }
-    }
-
-    @Override
-    public void addTriedProblem(AddTriedProblemReq addTriedProblemReq) {
-        String bojId = addTriedProblemReq.getBojId();
-        String problems = addTriedProblemReq.getProblems();
-
-        StringTokenizer st = new StringTokenizer(problems, " ");
-        while (st.hasMoreTokens()){
-            int problemId = Integer.parseInt(st.nextToken());
-            addProblem(bojId, problemId, "tried");
-        }
-    }
-
-    @Override
     public void addDetailSolvedProblem(AddDetailSolvedProblem addDetailSolvedProblem) {
         String status = "solved";
         String bojId = addDetailSolvedProblem.getBojId();
@@ -249,7 +245,6 @@ public class MemberServiceImpl implements MemberService {
                 solvingLog.setLanguage(addDetailSolvedProblem.getLanguage());
                 solvingLog.setCodeLength(addDetailSolvedProblem.getCodeLength());
                 solvingLog.setSolvingTime(addDetailSolvedProblem.getSolvingTime());
-                solvingLog.setCreatedTime(LocalDateTime.now());
                 solvingLogRepository.save(solvingLog);
             }
             // 문제를 푼 기록이 있으면
@@ -284,7 +279,6 @@ public class MemberServiceImpl implements MemberService {
                         newSolvingLog.setLanguage(addDetailSolvedProblem.getLanguage());
                         newSolvingLog.setCodeLength(addDetailSolvedProblem.getCodeLength());
                         newSolvingLog.setSolvingTime(addDetailSolvedProblem.getSolvingTime());
-                        newSolvingLog.setCreatedTime(LocalDateTime.now());
                         solvingLogRepository.save(newSolvingLog);
                     }
                 }
@@ -307,8 +301,7 @@ public class MemberServiceImpl implements MemberService {
                         newSolvingLog.setLanguage(addDetailSolvedProblem.getLanguage());
                         newSolvingLog.setCodeLength(addDetailSolvedProblem.getCodeLength());
                         newSolvingLog.setSolvingTime(addDetailSolvedProblem.getSolvingTime());
-                        newSolvingLog.setCreatedTime(LocalDateTime.now());
-                        solvingLogRepository.save(newSolvingLog);
+                         solvingLogRepository.save(newSolvingLog);
                     }
                 }
             }
@@ -317,21 +310,103 @@ public class MemberServiceImpl implements MemberService {
         });
     }
 
+    @Override
+    public String extractBojIdFromImg(MultipartFile capturedImage) {
+        String imagePath = tempLocation + capturedImage.getOriginalFilename();
+        String id = "";
+        try {
+            FileOutputStream fos = new FileOutputStream(imagePath);
+            fos.write(capturedImage.getBytes());
+            fos.close();
+
+            ProcessBuilder builder = new ProcessBuilder("python3", PYTHON_ID, imagePath);
+            Process process = builder.start();
+
+            // python 파일 출력 읽기
+            BufferedReader stdOut = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            id = stdOut.readLine();
+
+            if (id.equals("fail")){
+                throw new NotFoundException(ErrorCode.INVALID_IMAGE);
+            }
+
+            int exitval = process.waitFor(); // 파이썬 프로세스가 종료될 때까지 기다림
+            if(exitval != 0){
+                log.error("이미지 프로세스가 비정상적으로 종료되었습니다");
+            }
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        return id;
+    }
+
+    @Override
+    public void extractProblemFromImg(String bojId, MultipartFile capturedImage) {
+        String imagePath = tempLocation + capturedImage.getOriginalFilename();
+        try {
+            FileOutputStream fos = new FileOutputStream(imagePath);
+            fos.write(capturedImage.getBytes());
+            fos.close();
+
+            ProcessBuilder builder = new ProcessBuilder("python3", PYTHON_PROBLEM, imagePath);
+            Process process = builder.start();
+
+            // python 파일 출력 읽기
+            BufferedReader stdOut = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            String status = stdOut.readLine();
+            if(status.equals("success")) {
+                String solvedList = stdOut.readLine();
+                String solvedProblems = solvedList.substring(1,solvedList.length()-1);
+                StringTokenizer st = new StringTokenizer(solvedProblems, ", ");
+                while (st.hasMoreTokens()){
+                    int problemId = Integer.parseInt(st.nextToken());
+                    addProblem(bojId, problemId, "solved");
+                }
+
+                String triedList = stdOut.readLine();
+                String triedProblems = triedList.substring(1,triedList.length()-1);
+                st = new StringTokenizer(triedProblems, ", ");
+                while (st.hasMoreTokens()){
+                    int problemId = Integer.parseInt(st.nextToken());
+                    addProblem(bojId, problemId, "tried");
+                }
+
+            }
+            else if (status.equals("fail")){
+                throw new NotFoundException(ErrorCode.INVALID_IMAGE);
+            }
+
+            int exitval = process.waitFor(); // 파이썬 프로세스가 종료될 때까지 기다림
+            if(exitval != 0){
+                log.error("이미지 프로세스가 비정상적으로 종료되었습니다");
+            }
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
     private void addNewMember(JsonNode finalJsonNode, String bojId) {
         String profileImage = finalJsonNode.get("profileImageUrl").toString();
 
         Long tier = Long.parseLong(finalJsonNode.get("tier").toString());
-        Tier getTier = tierRepository.findByLevel(tier);
+        Optional<Tier> getTier = tierRepository.findById(tier);
 
-        // member table 에 저장
-        Member newMember = new Member();
-        newMember.setTier(getTier);
-        newMember.setBojId(bojId);
-        newMember.setProfileImage(profileImage.substring(1,profileImage.length()-1));
-        newMember.setSolveCount(Integer.parseInt(finalJsonNode.get("solvedCount").toString()));
-        newMember.setEmail(null);
-        newMember.setExp(0); // 신규회원은 0으로 시작
-        memberRepository.save(newMember);
+        getTier.ifPresentOrElse(selectTier -> {
+            // member table 에 저장
+            Member newMember = new Member();
+            newMember.setTier(selectTier);
+            newMember.setBojId(bojId);
+            newMember.setProfileImage(profileImage.substring(1,profileImage.length()-1));
+            newMember.setSolveCount(Integer.parseInt(finalJsonNode.get("solvedCount").toString()));
+            newMember.setEmail(null);
+            newMember.setExp(2); // 신규회원은 첫방문으로 경험치 2부터 시작
+            memberRepository.save(newMember);
+        }, ()->{
+            new NotFoundException(ErrorCode.NOT_FOUND_TIER);
+        });
+
     }
 
     private void addProblem(String bojId, int problemId, String status) {
@@ -347,7 +422,6 @@ public class MemberServiceImpl implements MemberService {
                 solvingLog.setMember(selectMember);
                 solvingLog.setProblem(problem);
                 solvingLog.setStatus(status);
-                solvingLog.setCreatedTime(LocalDateTime.now());
                 solvingLogRepository.save(solvingLog);
             }
             // 이미 풀었던 문제라면
@@ -385,7 +459,7 @@ public class MemberServiceImpl implements MemberService {
             String lately = latelyLogin.getYear() + ""+ latelyLogin.getMonthValue() + ""+ latelyLogin.getDayOfMonth() + "";
 
             // 오늘 이미 방문했었으면 second 리턴
-            if(lately==today){
+            if(lately.equals(today)){
                 status.set("second");
             }
             // 오늘 첫 방문이고

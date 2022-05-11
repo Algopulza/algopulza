@@ -42,10 +42,6 @@ public class SolvingLog extends BaseTimeEntity {
     private int codeLength;
 
     @Column
-    private LocalDateTime solvingTime;
-
-    @Column
-    private LocalDateTime createdTime;
-
+    private int solvingTime;
 
 }
