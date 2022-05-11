@@ -3,10 +3,10 @@ import Layout from '../../components/common/Layout'
 import Gift from '../../components/random/Gift'
 import Subject from '../../components/recommendation/Subject'
 import styled from 'styled-components'
-import axios from 'axios'
-import { getRandom } from "../../api/back/ramdom/Random";
-import { useRecoilValue } from "recoil";
-import { accessTokenState } from "../../util/stateCollection";
+
+import { useRecoilValue } from 'recoil'
+import { accessTokenState } from '../../util/stateCollection'
+import { getRandom } from '../../api/back/ramdom/Random'
 
 const Container = styled.section`
   padding: 0vw 5vw;
@@ -15,48 +15,44 @@ const Container = styled.section`
 export default function Random() {
   const [data, setData] = useState(
     {
-      simulationList : [],
-      dpList : [],
-      graphList : [],
-      greedyList : [],
-      sortingList : [],
-      bfsList : [],
-      dfsList : [],
-      combinationList : [],
-      bronzeList : [],
-      silverList : [],
-      goldList : [],
-      platinumList : [],
-  }
+      simulationList: [],
+      dpList: [],
+      graphList: [],
+      greedyList: [],
+      sortingList: [],
+      bfsList: [],
+      dfsList: [],
+      combinationList: [],
+      bronzeList: [],
+      silverList: [],
+      goldList: [],
+      platinumList: []
+    }
   )
-  
-  const accessToken = useRecoilValue(accessTokenState);
-  const RandomSub = async () => {
-  await getRandom(accessToken)
-    .then((res) => {
-      const list = res.data.data
-      setData(list)
-    })
-    .catch((err) => console.log(err));
-};
-useEffect(() => {
-  RandomSub();
-}, []);
+  const accessToken = useRecoilValue(accessTokenState)
+  const RandomProblems = async () => {
+    await getRandom(accessToken)
+      .then(res => {
+        // console.log(res.data.data)
+        setData(res.data.data)
+      })
+  }
+  useEffect(() => {RandomProblems()}, [])
 
-const titles = [
-  { title: "구현", englishTitle: "Implementation", list: data.simulationList },
-  { title: "다이내믹 프로그래밍", englishTitle: "Dynamic Programming", list: data.dpList },
-  { title: "그래프", englishTitle: "Graph", list: data.graphList },
-  { title: "그리디", englishTitle: "Greedy", list: data.greedyList },
-  { title: "정렬", englishTitle: "Sorting", list: data.sortingList },
-  { title: "너비 우선 탐색", englishTitle: "BFS", list: data.bfsList },
-  { title: "깊이 우선 탐색", englishTitle: "DFS", list: data.dfsList },
-  { title: "조합론", englishTitle: "Combinatorics", list: data.combinationList },
-  { title: "브론즈", englishTitle: "Bronze", list: data.bronzeList },
-  { title: "실버", englishTitle: "Silver", list: data.silverList },
-  { title: "골드", englishTitle: "Gold", list: data.goldList },
-  { title: "플래티넘", englishTitle: "Platinum", list: data.platinumList },
-]
+  const titles = [
+    { title: '구현', englishTitle: 'Implementation', list: data.simulationList },
+    { title: '다이내믹 프로그래밍', englishTitle: 'Dynamic Programming', list: data.dpList },
+    { title: '그래프', englishTitle: 'Graph', list: data.graphList },
+    { title: '그리디', englishTitle: 'Greedy', list: data.greedyList },
+    { title: '정렬', englishTitle: 'Sorting', list: data.sortingList },
+    { title: '너비 우선 탐색', englishTitle: 'BFS', list: data.bfsList },
+    { title: '깊이 우선 탐색', englishTitle: 'DFS', list: data.dfsList },
+    { title: '조합론', englishTitle: 'Combinatorics', list: data.combinationList },
+    { title: '브론즈', englishTitle: 'Bronze', list: data.bronzeList },
+    { title: '실버', englishTitle: 'Silver', list: data.silverList },
+    { title: '골드', englishTitle: 'Gold', list: data.goldList },
+    { title: '플래티넘', englishTitle: 'Platinum', list: data.platinumList }
+  ]
 
   return (
     <>
@@ -64,9 +60,9 @@ const titles = [
 
       <Container>
         {data ?
-        <>{titles.map(title => <Subject key={title.title} sub_title={title} />)}</>
-      :<div>추천 페이지에서 기존 문제들을 제공해주세요!</div>  
-      }
+          <>{titles.map(title => <Subject key={title.title} sub_title={title} />)}</> :
+          <div>먼저 문제 풀이 내역을 입력해주세요! 만약 푼 문제가 없다면 적어도 5문제를 풀고 와주세요!</div>  
+        }
       </Container>
     </>
   )
