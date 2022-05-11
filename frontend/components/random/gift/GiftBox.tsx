@@ -29,8 +29,15 @@ export default function GiftBox({ text, img, data, random }: TextProps) {
   const [isToggled, setIsToggled] = useState(false)
   return (
     <Container>
-      {isToggled ? <></>
- :
+      {isToggled ?
+        <Card
+          key={data.bojId}
+          id={data.bojId}
+          title={data.title}
+          tier={data.tier}
+          level={data.tierLevel}
+          accept={data.acceptedCount}
+        /> :
         <Canvas onClick={() => setIsToggled(true)}>
           <Image src={img} layout="responsive" alt="gift box image" />
         </Canvas>
@@ -40,10 +47,3 @@ export default function GiftBox({ text, img, data, random }: TextProps) {
     </Container>
   )
 }
-{/* <Card
-key={data.bojId}
-id={data.bojId}
-title={data.title}
-level={data.tierLevel}
-accept={data.acceptedCount}
-/> */}

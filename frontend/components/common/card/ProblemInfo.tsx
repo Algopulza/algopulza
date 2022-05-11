@@ -16,6 +16,7 @@ const Item = styled.div`
 const Title = styled.p`
   margin: 0;
   font-size: 0.9vw;
+  color: '#545454';
 `
 
 type BodyProps = {
