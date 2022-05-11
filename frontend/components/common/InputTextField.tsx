@@ -10,7 +10,7 @@ type TextFieldProps = {
   onKeyDown(event: any): void
 }
 
-export default function InputTextField({ textFieldAttr, valid, value, validMessage, onChange, onKeyDown }: TextFieldProps) {
+export default function InputTextField({ textFieldAttr, valid, validMessage, onChange, onKeyDown }: TextFieldProps) {
   const submitHandler = (event: any) => {
     event.preventDefault()
   }

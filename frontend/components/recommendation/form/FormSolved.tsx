@@ -28,7 +28,7 @@ export default function FormSolved() {
       setValid(true)
       axiosSolved(bojId, solvedProblems, accessToken)
         .then(res => {
-          // console.log(res)
+          console.log(res)
           // event.target.value = null
           // setSolvedProblems(event.target.value)
         })
@@ -42,7 +42,7 @@ export default function FormSolved() {
         valid={valid}
         validMessage='해결한(solved) 문제 목록을 정확히 입력해주세요.'
         onChange={handleChange}
-        onKeyDown={handleChange}
+        onKeyDown={() => {}}
       />
       <ButtonSubmitting submittingAttr={{text: '제공', width: '15vw'}} onClick={handleClick} />
     </Container>

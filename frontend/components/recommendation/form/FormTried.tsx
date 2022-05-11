@@ -2,9 +2,9 @@ import { useState } from 'react'
 import InputTextField from '../../common/InputTextField'
 import ButtonSubmitting from '../../common/button/ButtonSubmitting'
 import styled from 'styled-components'
-import { axiosSolved } from '../../../util/axiosCollection'
 import { useRecoilValue } from 'recoil'
-import { bojIdState } from '../../../util/stateCollection'
+import { accessTokenState, bojIdState } from '../../../util/stateCollection'
+import { axiosTried } from '../../../util/axiosCollection'
 
 const Container = styled.section`
   display: grid;
@@ -13,18 +13,25 @@ const Container = styled.section`
 `
 
 export default function FormTried() {
-  const [bojId, setBojId] = useState('')
+  const [triedProblems, setTriedProblems] = useState('')
   const [valid, setValid] = useState(true)
-
+  const bojId = useRecoilValue(bojIdState)
+  const accessToken = useRecoilValue(accessTokenState)
 
   const handleChange = (event: any) => {
-    setBojId(event.target.value)
+    setTriedProblems(event.target.value)
   }
   const handleClick = () => {
-    if (bojId.trim() === '') {
+    if (triedProblems.trim() === '') {
       setValid(false)
     } else {
       setValid(true)
+      axiosTried(bojId, triedProblems, accessToken)
+        .then(res => {
+          console.log(res)
+          // event.target.value = null
+          // setSolvedProblems(event.target.value)
+        })
     }
   }
 
@@ -35,9 +42,9 @@ export default function FormTried() {
         valid={valid}
         validMessage='시도한(tried) 문제 목록을 정확히 입력해주세요.'
         onChange={handleChange}
-        onKeyDown={handleChange}
+        onKeyDown={() => {}}
       />
-      <ButtonSubmitting submittingAttr={{text: '제공', width: '15vw'}} onClick={handleChange} />
+      <ButtonSubmitting submittingAttr={{text: '제공', width: '15vw'}} onClick={handleClick} />
     </Container>
   )
 }
