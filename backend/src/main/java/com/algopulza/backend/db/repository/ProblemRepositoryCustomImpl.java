@@ -2,8 +2,9 @@ package com.algopulza.backend.db.repository;
 
 import com.algopulza.backend.api.response.ProblemRes;
 import com.algopulza.backend.db.entity.*;
-import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.*;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -22,9 +23,24 @@ public class ProblemRepositoryCustomImpl implements ProblemRepositoryCustom {
     QProblemHasTag qProblemHasTag = QProblemHasTag.problemHasTag;
     QTag qTag = QTag.tag;
     QSolvingLog qSolvingLog = QSolvingLog.solvingLog;
+    QProblemMark qProblemMark = QProblemMark.problemMark;
+
+    /**
+     * 즐겨찾기 문제로 표시되어있는지 여부 반환
+     */
+    private Expression<Boolean> isMarked(Long memberId) {
+        return ExpressionUtils.as(
+                JPAExpressions.select(qProblemMark.count().eq(1L))
+                              .from(qProblemMark)
+                              .where(qProblemMark.problem.eq(qProblem))
+                              .where(qProblemMark.member.id.eq(memberId))
+                              .where(qProblemMark.typeFlag.eq(0))
+                , "markFlag"
+        );
+    }
 
     @Override
-    public List<ProblemRes> findProblemRes(String tierName, Integer tierLevel, Pageable pageable) {
+    public List<ProblemRes> findProblemRes(Long memberId, String tierName, Integer tierLevel, Pageable pageable) {
         return jpaQueryFactory.select(Projections.constructor(ProblemRes.class,
                                       qProblem.id,
                                       qProblem.bojId,
@@ -33,7 +49,7 @@ public class ProblemRepositoryCustomImpl implements ProblemRepositoryCustom {
                                       qTier.name,
                                       qProblem.acceptedCount,
                                       qProblem.averageTryCount,
-                                      qProblem.solvableFlag
+                                      isMarked(memberId)
                               ))
                               .from(qProblem)
                               .join(qTier).on(qProblem.tier.eq(qTier))
@@ -59,7 +75,7 @@ public class ProblemRepositoryCustomImpl implements ProblemRepositoryCustom {
     }
 
     @Override
-    public List<ProblemRes> findProblemResByTitleLike(String keyword, Pageable pageable) {
+    public List<ProblemRes> findProblemResByTitleLike(Long memberId, String keyword, Pageable pageable) {
         return jpaQueryFactory.select(Projections.constructor(ProblemRes.class,
                                       qProblem.id,
                                       qProblem.bojId,
@@ -68,7 +84,7 @@ public class ProblemRepositoryCustomImpl implements ProblemRepositoryCustom {
                                       qTier.name,
                                       qProblem.acceptedCount,
                                       qProblem.averageTryCount,
-                                      qProblem.solvableFlag
+                                      isMarked(memberId)
                               ))
                               .from(qProblem)
                               .join(qTier).on(qProblem.tier.eq(qTier))
@@ -85,7 +101,7 @@ public class ProblemRepositoryCustomImpl implements ProblemRepositoryCustom {
     }
 
     @Override
-    public ProblemRes findProblemResById(Long id) {
+    public ProblemRes findProblemResById(Long memberId, Long id) {
         return jpaQueryFactory.select(Projections.constructor(ProblemRes.class,
                                       qProblem.id,
                                       qProblem.bojId,
@@ -94,7 +110,7 @@ public class ProblemRepositoryCustomImpl implements ProblemRepositoryCustom {
                                       qTier.name,
                                       qProblem.acceptedCount,
                                       qProblem.averageTryCount,
-                                      qProblem.solvableFlag
+                                      isMarked(memberId)
                               ))
                               .from(qProblem)
                               .join(qTier).on(qProblem.tier.eq(qTier))
@@ -131,7 +147,7 @@ public class ProblemRepositoryCustomImpl implements ProblemRepositoryCustom {
     }
 
     @Override
-    public List<ProblemRes> findProblemResByIdSet(Set<Long> idSet) {
+    public List<ProblemRes> findProblemResByIdSet(Long memberId, Set<Long> idSet) {
         return jpaQueryFactory.select(Projections.constructor(ProblemRes.class,
                                       qProblem.id,
                                       qProblem.bojId,
@@ -140,7 +156,7 @@ public class ProblemRepositoryCustomImpl implements ProblemRepositoryCustom {
                                       qTier.name,
                                       qProblem.acceptedCount,
                                       qProblem.averageTryCount,
-                                      qProblem.solvableFlag
+                                      isMarked(memberId)
                               ))
                               .from(qProblem)
                               .join(qTier).on(qProblem.tier.eq(qTier))
