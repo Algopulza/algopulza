@@ -27,6 +27,7 @@ export type SubjectAttr = {
 
 // Problem Data Object
 export type ProblemAttr = {
+  key: number,
   title: string,
   bojId: number,
   tierName: string,

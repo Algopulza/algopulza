@@ -33,11 +33,15 @@ export default function Random() {
   const RandomProblems = async () => {
     await getRandom(accessToken)
       .then(res => {
-        // console.log(res.data.data)
+        console.log(res.data.data)
         setData(res.data.data)
       })
   }
-  useEffect(() => {RandomProblems()}, [])
+  useEffect(() => {
+    console.log(data)
+    RandomProblems()
+    console.log(data)
+  }, [])
 
   const subjects = [
     { title: '구현', englishTitle: 'Implementation', list: data.simulationList },
@@ -59,10 +63,7 @@ export default function Random() {
       <Gift />
 
       <Container>
-        {data ?
-          <>{subjects.map(subject => <Subject key={subject.title} subjectAttr={subject} />)}</> :
-          <div>먼저 문제 풀이 내역을 입력해주세요! 만약 푼 문제가 없다면 적어도 5문제를 풀고 와주세요!</div>  
-        }
+        {subjects.map(subject => <Subject key={subject.title} subjectAttr={subject} />)}
       </Container>
     </>
   )

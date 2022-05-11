@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import Image, { StaticImageData } from 'next/image'
 import GiftButton from './GiftButton'
-import Card from '../../common/Card'
+import Card from '../../common/card/Card'
 import styled from 'styled-components'
 
 const Container = styled.section`
@@ -29,17 +29,8 @@ export default function GiftBox({ text, img, data, random }: TextProps) {
   const [isToggled, setIsToggled] = useState(false)
   return (
     <Container>
-      {isToggled ?
-        <Card
-        key={data.bojId}
-        tags={data.tagList}
-        id={data.bojId}
-        title={data.title}
-        level={data.tierLevel}
-        name={data.tierName}
-        average={data.averageTryCount}
-        accept={data.acceptedCount}
-        /> :
+      {isToggled ? <></>
+ :
         <Canvas onClick={() => setIsToggled(true)}>
           <Image src={img} layout="responsive" alt="gift box image" />
         </Canvas>
@@ -49,3 +40,10 @@ export default function GiftBox({ text, img, data, random }: TextProps) {
     </Container>
   )
 }
+{/* <Card
+key={data.bojId}
+id={data.bojId}
+title={data.title}
+level={data.tierLevel}
+accept={data.acceptedCount}
+/> */}

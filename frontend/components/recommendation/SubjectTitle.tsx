@@ -16,7 +16,7 @@ type SubjectProps = {
   children: SubjectAttr
 }
 
-export default function SubjectTitle({ children} : SubjectProps) {
+export default function SubjectTitle({ children }: SubjectProps) {
   return (
     <Container>
       <Title>{children.title}</Title>

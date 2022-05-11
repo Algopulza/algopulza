@@ -1,6 +1,6 @@
 import { SubjectAttr, ProblemAttr } from '../../util/dto'
 import SubjectTitle from './SubjectTitle'
-import Card from '../common/Card'
+import Card from '../common/card/Card'
 import styled from 'styled-components'
 
 const Container = styled.section`

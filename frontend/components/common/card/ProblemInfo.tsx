@@ -1,42 +1,47 @@
-import InfoKey from './info/InfoKey'
-import InfoValue from './info/InfoValue'
-import _ from 'lodash'
 import styled from 'styled-components'
 
 const Container = styled.section`
   display: grid;
-  grid-template-columns: 30% 40% 30%;
-  height: 80px;
+  grid-template-columns: 1fr 1fr 1fr;
+  height: 100px;
 `
 
 const Item = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-evenly;
+  align-items: center;
 `
 
-type CardProps = {
-  key: number,
+const Title = styled.p`
+  margin: 0;
+  font-size: 0.9vw;
+`
+
+type BodyProps = {
+  id: number,
+  tier: string,
   level: number,
-  name: string,
-  average: number,
-  accept: number,
+  accept: number
 }
 
-export default function ProblemInfo({key, level, name, average, accept}:CardProps) {
-  const range = _.range(3)
-  const averages = Math.round(average*100)/100;
-  const items = ['티어', '평균 시도', '해결']
-  const values = [level?name + level:name, averages, accept]
-
+export default function ProblemInfo({ id, tier, level, accept }: BodyProps) {
   return (
     <Container>
-      {range.map(index =>
-        <Item key={index}>
-          <InfoKey item={items[index]} />
-          <InfoValue value={values[index]} />
-        </Item>)
-      }
+      <Item>
+        <Title>ID</Title>
+        <Title>{id}</Title>
+      </Item>
+
+      <Item>
+        <Title>TIER</Title>
+        <Title>{tier + ' ' + level.toString()}</Title>
+      </Item>
+
+      <Item>
+        <Title>SOL</Title>
+        <Title>{accept.toLocaleString('ko-KR')}</Title>
+      </Item>
     </Container>
   )
 }
