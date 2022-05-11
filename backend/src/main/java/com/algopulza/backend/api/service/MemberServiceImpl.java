@@ -45,7 +45,7 @@ public class MemberServiceImpl implements MemberService {
     @Value("${solvedac.baseurl}")
     private String SolvedacBaseUrl;
 
-    private static final String PYTHON_PATH = "/ocrId.py";
+    private static final String PYTHON_PATH = "/Users/minjung/SSAFY/자율PJT/S06P31A408/backend/ocrId.py";
 
    @Value("${spring.servlet.multipart.location}")
     public String tempLocation;
@@ -74,64 +74,74 @@ public class MemberServiceImpl implements MemberService {
         memberRepository.save(member);
     }
 
-//    @Override
-//    public MemberRes addMember(String bojId) {
-//
-//        // 1. solvedac API 활용해서 member 정보 받아오기
-//        JsonNode finalJsonNode = getMemberBybojId(bojId);
-//
-//        // 2. solvedacToken으로 받아온 bojId를 가지고 DB에서 회원 검색
-//        Optional<Member> member = Optional.ofNullable(memberRepository.findByBojId(bojId));
-//
-//        member.ifPresentOrElse(selectMember -> {
-//            // 3-1. DB에 있는 회원이면 정보 갱신
-//            log.info("member already exist!!");
-//
-//            // 기존 tier와 다르면
-//            Long tier = Long.parseLong(finalJsonNode.get("tier").toString());
-//            Optional<Tier> curTier = tierRepository.findById(tier);
-//            curTier.ifPresentOrElse(selectTier -> {
-//                if(selectMember.getTier() != selectTier){
-//                    selectMember.setTier(selectTier);
-//                }
-//            }, ()-> {
-//                new NotFoundException(ErrorCode.NOT_FOUND_TIER);
-//            });
-//
-//            // 기존 solveCount와 다르면
-//            int curSolveCount = Integer.parseInt(finalJsonNode.get("solvedCount").toString());
-//            if(selectMember.getSolveCount()!=curSolveCount){
-//                selectMember.setSolveCount(curSolveCount);
-//            }
-//
-//            // 로그인 로그 확인 -> 오늘 첫 방문이면 +2 , 오늘첫방문+어제도방문이면 +3
-//            switch (checkDay(bojId)){
-//                case "first" :
-//                    selectMember.setExp(selectMember.getExp()+2);
-//                    break;
-//                case "visited" :
-//                    selectMember.setExp(selectMember.getExp()+3);
-//                    break;
-//                case "second" :
-//                    break;
-//            }
-//
-//        }, ()->{
-//            // 3-2. DB에 없는 회원이면 새로 등록
-//            log.info("new member!!");
-//
-//            // member 추가
-//            addNewMember(finalJsonNode, bojId);
-//        });
-//
-//        // 4. login_log 추가 (db 유무 상관없이 해야함)
-//        addLoginlog(bojId);
-//
-//        Optional<Member> mem = Optional.ofNullable(memberRepository.findByBojId(bojId));
-//        MemberRes memberRes = getMember(mem.get().getId());
-//
-//        return memberRes;
-//    }
+    @Override
+    public MemberRes login(LoginReq loginReq) {
+        String id = loginReq.getId();
+        String password = loginReq.getPassword();
+
+        Optional<Member> member = memberRepository.findByAlgopulzaId(id);
+
+        member.ifPresentOrElse(selectMember ->{
+            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+            if(encoder.matches(password, selectMember.getPassword())){
+                String bojId = selectMember.getBojId();
+
+                // 비밀번호까지 일치하면 백준 사이트 정보 읽어와 정보 갱신 해주기
+                JsonNode finalJsonNode = getMemberBybojId(bojId);
+
+                // 기존 tier와 다르면
+                Long tier = Long.parseLong(finalJsonNode.get("tier").toString());
+                Optional<Tier> curTier = tierRepository.findById(tier);
+                curTier.ifPresentOrElse(selectTier -> {
+                    if(selectMember.getTier() != selectTier){
+                        selectMember.setTier(selectTier);
+                    }
+                }, ()-> {
+                    new NotFoundException(ErrorCode.NOT_FOUND_TIER);
+                });
+
+                // 기존 solveCount와 다르면
+                int curSolveCount = Integer.parseInt(finalJsonNode.get("solvedCount").toString());
+                if(selectMember.getSolveCount()!=curSolveCount){
+                    selectMember.setSolveCount(curSolveCount);
+                }
+
+                // 경험치 관리
+                // 로그인 로그 확인 -> 오늘 첫 방문이면 +2 , 오늘첫방문+어제도방문이면 +3
+                switch (checkDay(bojId)){
+                    case "first" :
+                        selectMember.setExp(selectMember.getExp()+2);
+                        break;
+                    case "visited" :
+                        selectMember.setExp(selectMember.getExp()+3);
+                        break;
+                    case "second" :
+                        break;
+                }
+
+                // login_log 추가
+                addLoginlog(bojId);
+            }
+            else{
+                // 비밀번호 맞지 않을 시
+                new NotFoundException(ErrorCode.NOT_FOUND_MEMBER);
+            }
+        }, ()->{
+            new NotFoundException(ErrorCode.NOT_FOUND_MEMBER);
+        });
+
+        MemberRes memberRes = getMember(member.get().getId());
+        return memberRes;
+    }
+
+    @Override
+    public boolean checkId(String id) {
+        Optional<Member> member = memberRepository.findByAlgopulzaId(id);
+        if(member.isPresent()){
+            return true;
+        }
+        return false;
+    }
 
 
     @Override

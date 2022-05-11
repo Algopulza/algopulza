@@ -24,6 +24,7 @@ public class ResponseMessage {
     public static final String LOGOUT_FAIL = "로그아웃 실패";
 
     // Member
+    public static final String CHECK_DUPLICATE_ID = "아이디 중복검사 완료";
     public static final String NOT_FOUND_MEMBER = "존재하지 않는 회원";
     public static final String DUPLICATE_BOJID = "이미 회원가입한 백준 아이디";
     public static final String GET_MEMBER_INFO_SUCCESS = "회원 정보 조회 성공";

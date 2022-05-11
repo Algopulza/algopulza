@@ -29,5 +29,9 @@ public interface MemberService {
     void addTriedProblem(AddProblemReq addTriedProblemReq);
 
     String extractBojIdFromImg(MultipartFile capturedImage);
+
+    MemberRes login(LoginReq loginReq);
+
+    boolean checkId(String id);
 }
 

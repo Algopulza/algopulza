@@ -10,6 +10,7 @@ import com.algopulza.backend.common.exception.handler.ErrorResponse;
 import com.algopulza.backend.common.model.BaseResponseBody;
 import com.algopulza.backend.common.model.ResponseMessage;
 import com.algopulza.backend.config.jwt.JwtTokenProvider;
+import com.algopulza.backend.config.jwt.RoleType;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.algopulza.backend.common.model.ResponseMessage.REFRESH_TOKEN;
 
@@ -35,34 +39,48 @@ public class MemberController {
             @ApiResponse(code = 401, message = ResponseMessage.UNAUTHORIZED, response = ErrorResponse.class),
             @ApiResponse(code = 403, message = ResponseMessage.ACCESS_DENIED, response = ErrorResponse.class),
             @ApiResponse(code = 404, message = ResponseMessage.NOT_FOUND, response = ErrorResponse.class)})
-    public ResponseEntity<BaseResponseBody> addMember(@RequestHeader JoinReq joinReq) {
+    public ResponseEntity<BaseResponseBody> addMember(JoinReq joinReq) {
+        System.out.println(joinReq.toString());
         // 회원정보 저장
         memberService.addMember(joinReq);
 
         return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.CREATED, ResponseMessage.JOIN_SUCCESS));
     }
 
-//    @PostMapping("")
-//    @ApiOperation(value = "로그인", notes = "로그인 요청 API 입니다. 첫 로그인이라면 회원정보 저장도 진행합니다.")
-//    @ApiResponses({@ApiResponse(code = 201, message = ResponseMessage.LOGIN_SUCCESS),
-//            @ApiResponse(code = 400, message = ResponseMessage.BAD_REQUEST, response = ErrorResponse.class),
-//            @ApiResponse(code = 401, message = ResponseMessage.UNAUTHORIZED, response = ErrorResponse.class),
-//            @ApiResponse(code = 403, message = ResponseMessage.ACCESS_DENIED, response = ErrorResponse.class),
-//            @ApiResponse(code = 404, message = ResponseMessage.NOT_FOUND, response = ErrorResponse.class)})
-//    public ResponseEntity<BaseResponseBody> login(@RequestHeader String bojId) {
-//        // 회원정보 저장
-//        MemberRes memberRes = memberService.addMember(bojId);
-//
-//        // jwt token 발급
-//        String token = memberService.createToken(memberRes.getMemberId(), RoleType.USER);
-//        String refreshToken = memberService.createRefreshToken(memberRes.getMemberId());
-//        TokenRes tokenRes = new TokenRes(token, refreshToken);
-//
-//        Map<String, Object> result = new HashMap<>();
-//        result.put("member", memberRes);
-//        result.put("token", tokenRes);
-//        return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.CREATED, ResponseMessage.LOGIN_SUCCESS, result));
-//    }
+    @PostMapping("/login")
+    @ApiOperation(value = "로그인", notes = "로그인 요청 API 입니다.")
+    @ApiResponses({@ApiResponse(code = 201, message = ResponseMessage.LOGIN_SUCCESS),
+            @ApiResponse(code = 400, message = ResponseMessage.BAD_REQUEST, response = ErrorResponse.class),
+            @ApiResponse(code = 401, message = ResponseMessage.UNAUTHORIZED, response = ErrorResponse.class),
+            @ApiResponse(code = 403, message = ResponseMessage.ACCESS_DENIED, response = ErrorResponse.class),
+            @ApiResponse(code = 404, message = ResponseMessage.NOT_FOUND, response = ErrorResponse.class)})
+    public ResponseEntity<BaseResponseBody> login(LoginReq loginReq) {
+        // 회원정보 저장
+        MemberRes memberRes = memberService.login(loginReq);
+
+        // jwt token 발급
+        String token = memberService.createToken(memberRes.getMemberId(), RoleType.USER);
+        String refreshToken = memberService.createRefreshToken(memberRes.getMemberId());
+        TokenRes tokenRes = new TokenRes(token, refreshToken);
+
+        Map<String, Object> result = new HashMap<>();
+        result.put("member", memberRes);
+        result.put("token", tokenRes);
+        return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.CREATED, ResponseMessage.LOGIN_SUCCESS, result));
+    }
+
+    @PostMapping("/checkId")
+    @ApiOperation(value = "algopulza ID 중복검사", notes = "algopulza ID 중복검사 요청 API 입니다.")
+    @ApiResponses({@ApiResponse(code = 201, message = ResponseMessage.CHECK_DUPLICATE_ID),
+            @ApiResponse(code = 400, message = ResponseMessage.BAD_REQUEST, response = ErrorResponse.class),
+            @ApiResponse(code = 401, message = ResponseMessage.UNAUTHORIZED, response = ErrorResponse.class),
+            @ApiResponse(code = 403, message = ResponseMessage.ACCESS_DENIED, response = ErrorResponse.class),
+            @ApiResponse(code = 404, message = ResponseMessage.NOT_FOUND, response = ErrorResponse.class)})
+    public ResponseEntity<BaseResponseBody> checkId(@RequestBody @ApiParam(value = "algopulza ID", required = true) String id) {
+        boolean isPresent =  memberService.checkId(id);
+
+        return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.CREATED, ResponseMessage.CHECK_DUPLICATE_ID, isPresent));
+    }
 
     @PostMapping("/extractBojId")
     @ApiOperation(value = "이미지에서 백준 id 추출하기", notes = "이미지에서 백준 ID 추출하는 API 입니다.")
