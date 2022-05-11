@@ -11,6 +11,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 public class SolvingLogRepositoryCustomImpl implements  SolvingLogRepositoryCustom{
@@ -36,6 +37,15 @@ public class SolvingLogRepositoryCustomImpl implements  SolvingLogRepositoryCust
                 .where(qSolvingLog.member.eq(member))
                 .where(qSolvingLog.problem.eq(problem))
                 .fetch();
+    }
+
+    @Override
+    public Optional<SolvingLog> findByProblemAndLanguage(Member member, Problem problem, String language) {
+        return Optional.ofNullable(jpaQueryFactory
+                .select(qSolvingLog)
+                .from(qSolvingLog)
+                .where(qSolvingLog.member.eq(member), qSolvingLog.problem.eq(problem), qSolvingLog.language.eq(language))
+                .fetchOne());
     }
 
     @Override

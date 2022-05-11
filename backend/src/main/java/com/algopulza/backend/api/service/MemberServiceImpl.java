@@ -1,9 +1,6 @@
 package com.algopulza.backend.api.service;
 
-import com.algopulza.backend.api.request.member.AddDetailSolvedProblem;
-import com.algopulza.backend.api.request.member.AddProblemReq;
-import com.algopulza.backend.api.request.member.ModifyMemberReq;
-import com.algopulza.backend.api.request.member.ModifyProfileImageReq;
+import com.algopulza.backend.api.request.member.*;
 import com.algopulza.backend.api.response.MemberRes;
 import com.algopulza.backend.api.response.TokenRes;
 import com.algopulza.backend.common.exception.NotFoundException;
@@ -24,14 +21,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.BufferedReader;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
-import java.util.StringTokenizer;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
 @Slf4j
@@ -246,93 +238,6 @@ public class MemberServiceImpl implements MemberService {
             int problemId = Integer.parseInt(st.nextToken());
             addProblem(bojId, problemId, "tried");
         }
-    }
-
-    @Override
-    public void addDetailSolvedProblem(AddDetailSolvedProblem addDetailSolvedProblem) {
-        String status = "solved";
-        String bojId = addDetailSolvedProblem.getBojId();
-        Problem problem = problemRepository.findByBojId(addDetailSolvedProblem.getProblemBojId()).orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND_PROBLEM));
-        Optional<Member> member = Optional.ofNullable(memberRepository.findByBojId(bojId));
-
-        member.ifPresentOrElse(selectMember-> {
-            // member가 푼 문제 리스트
-            List<Problem> problemList = solvingLogRepository.findByMember(selectMember);
-
-            // 이전에 푼 기록이 없는 문제면
-            if(!problemList.contains(problem)){
-                SolvingLog solvingLog = new SolvingLog();
-                solvingLog.setMember(selectMember);
-                solvingLog.setProblem(problem);
-                solvingLog.setStatus(status);
-                solvingLog.setMemory(addDetailSolvedProblem.getMemory());
-                solvingLog.setTime(addDetailSolvedProblem.getTime());
-                solvingLog.setLanguage(addDetailSolvedProblem.getLanguage());
-                solvingLog.setCodeLength(addDetailSolvedProblem.getCodeLength());
-                solvingLog.setSolvingTime(addDetailSolvedProblem.getSolvingTime());
-                solvingLogRepository.save(solvingLog);
-            }
-            // 문제를 푼 기록이 있으면
-            else{
-                // 상태 확인
-                Problem solvedProblem = problemList.get(problemList.indexOf(problem));
-                List<SolvingLog> solvingLog = solvingLogRepository.findByProblem(selectMember, solvedProblem);
-
-                if(solvingLog.size()==1 && solvingLog.get(0).getStatus().equals("tried")){
-                    solvingLog.get(0).setStatus("solved");
-                    solvingLog.get(0).setMemory(addDetailSolvedProblem.getMemory());
-                    solvingLog.get(0).setTime(addDetailSolvedProblem.getTime());
-                    solvingLog.get(0).setLanguage(addDetailSolvedProblem.getLanguage());
-                    solvingLog.get(0).setCodeLength(addDetailSolvedProblem.getCodeLength());
-                    solvingLog.get(0).setSolvingTime(addDetailSolvedProblem.getSolvingTime());
-                }
-                else if (solvingLog.size()==1 && solvingLog.get(0).getStatus().equals("solved")) {
-                    String useLanguage = solvingLog.get(0).getLanguage();
-                    if(useLanguage==null){ // 사용 언어 등록 안 되어있으면
-                        solvingLog.get(0).setMemory(addDetailSolvedProblem.getMemory());
-                        solvingLog.get(0).setTime(addDetailSolvedProblem.getTime());
-                        solvingLog.get(0).setLanguage(addDetailSolvedProblem.getLanguage());
-                        solvingLog.get(0).setCodeLength(addDetailSolvedProblem.getCodeLength());
-                        solvingLog.get(0).setSolvingTime(addDetailSolvedProblem.getSolvingTime());
-                    }else if(!useLanguage.equals(addDetailSolvedProblem.getLanguage())){ // 이전에 풀었던 언어랑 다른 언어로 푼 경우
-                        SolvingLog newSolvingLog = new SolvingLog();
-                        newSolvingLog.setMember(selectMember);
-                        newSolvingLog.setProblem(problem);
-                        newSolvingLog.setStatus(status);
-                        newSolvingLog.setMemory(addDetailSolvedProblem.getMemory());
-                        newSolvingLog.setTime(addDetailSolvedProblem.getTime());
-                        newSolvingLog.setLanguage(addDetailSolvedProblem.getLanguage());
-                        newSolvingLog.setCodeLength(addDetailSolvedProblem.getCodeLength());
-                        newSolvingLog.setSolvingTime(addDetailSolvedProblem.getSolvingTime());
-                        solvingLogRepository.save(newSolvingLog);
-                    }
-                }
-                else if(solvingLog.size()>1){
-                    boolean flag = false; // 같은 언어로 푼 경우가 있는지 확인하기 위한 flag
-                    for (SolvingLog solved:solvingLog) {
-                        if(solved.getLanguage().equals(addDetailSolvedProblem.getLanguage())){
-                            flag =true;
-                            break;
-                        }
-                    }
-
-                    if(!flag){ // 같은 언어로 푼 경우가 없다면 새로 추가
-                        SolvingLog newSolvingLog = new SolvingLog();
-                        newSolvingLog.setMember(selectMember);
-                        newSolvingLog.setProblem(problem);
-                        newSolvingLog.setStatus(status);
-                        newSolvingLog.setMemory(addDetailSolvedProblem.getMemory());
-                        newSolvingLog.setTime(addDetailSolvedProblem.getTime());
-                        newSolvingLog.setLanguage(addDetailSolvedProblem.getLanguage());
-                        newSolvingLog.setCodeLength(addDetailSolvedProblem.getCodeLength());
-                        newSolvingLog.setSolvingTime(addDetailSolvedProblem.getSolvingTime());
-                         solvingLogRepository.save(newSolvingLog);
-                    }
-                }
-            }
-        }, ()-> {
-            new NotFoundException(ErrorCode.NOT_FOUND_MEMBER);
-        });
     }
 
     @Override
