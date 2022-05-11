@@ -45,7 +45,7 @@ public class MemberServiceImpl implements MemberService {
     @Value("${solvedac.baseurl}")
     private String SolvedacBaseUrl;
 
-    private static final String PYTHON_PATH = "/Users/minjung/SSAFY/자율PJT/S06P31A408/backend/ocrId.py";
+    private static final String PYTHON_PATH = "/ocrId.py";
 
    @Value("${spring.servlet.multipart.location}")
     public String tempLocation;
