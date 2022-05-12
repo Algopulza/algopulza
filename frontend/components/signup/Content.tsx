@@ -10,13 +10,13 @@ const Container = styled.section`
 const BrandName = styled.p`
   margin: 0;
   line-height: 1.2;
-  font-size: 3.5vw;
+  font-size: 3vw;
   font-weight: 700;
 `
 
 const BrandCatchphrase = styled.p`
   margin: 0;
-  font-size: 1.5vw;
+  font-size: 1.3vw;
   color: #545454;
 `
 

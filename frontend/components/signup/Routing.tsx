@@ -7,8 +7,6 @@ const Container = styled.section`
   align-items: center;
 `
 
-export type RoutingAttr = { url: string, text: string }
-
 export default function Routing() {
   return (
     <Container>
