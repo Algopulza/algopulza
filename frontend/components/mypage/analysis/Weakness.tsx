@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import dynamic from 'next/dynamic'
+import dynamic from "next/dynamic";
+import AnalyTitle from "../../common/AnalyTitle";
 
 const Container = styled.div`
   width: 90%;
@@ -9,22 +10,17 @@ const Container = styled.div`
   padding: 1rem;
 `;
 
-const Title = styled.div`
-  font-size: 1.5rem;
-  padding: 1rem;
-`;
-
-export default function solved() {
+export default function weakness() {
   const ApexCharts = dynamic(() => import("react-apexcharts"), { ssr: false });
   return (
     <Container>
-      <Title>태그 별 해결 문제 수</Title>
+      <AnalyTitle>취약점</AnalyTitle>
       <ApexCharts
-        type="bar"
+        type="radar"
         series={[
           {
             name: "Tag",
-            data: [15, 18, 22, 21, 24, 16, 10, 11, 16, 20],
+            data: [3, 5, 9, 6, 5, 4],
           },
         ]}
         options={{
@@ -32,6 +28,8 @@ export default function solved() {
             mode: "light",
           },
           chart: {
+            type: "radar",
+            height: "200%",
             background: "transparent",
           },
           stroke: {
@@ -40,27 +38,22 @@ export default function solved() {
           },
           yaxis: {
             show: true,
-            labels: {},
           },
           xaxis: {
-            categories: [
-              "deque",
-              "hashing",
-              "trees",
-              "bitmask",
-              "divide_and_conquer",
-              "euclidean",
-              "arbitrary_precision",
-              "pythagoras",
-              "geometry",
-              "combinatorics",
-            ],
-            labels: {},
+            categories: ["DFS", "BFS", "DP", "math", "greedy", "graphs"],
           },
           plotOptions: {
-            bar: {
-              borderRadius: 4,
-              horizontal: true,
+            radar: {
+              size: 110,
+              offsetX: 0,
+              offsetY: 0,
+              polygons: {
+                strokeColors: "#e8e8e8",
+                connectorColors: "#e8e8e8",
+                fill: {
+                  colors: undefined,
+                },
+              },
             },
           },
         }}
