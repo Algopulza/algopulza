@@ -27,6 +27,7 @@ type TextProps = {
 
 export default function GiftBox({ text, img, data, random }: TextProps) {
   const [isToggled, setIsToggled] = useState(false)
+  console.log(data)
   return (
     <Container>
       {isToggled ?
@@ -34,9 +35,10 @@ export default function GiftBox({ text, img, data, random }: TextProps) {
           key={data.bojId}
           id={data.bojId}
           title={data.title}
-          tier={data.tier}
+          tier={data.tierName}
           level={data.tierLevel}
           accept={data.acceptedCount}
+          bookmark={data.markFlag}
         /> :
         <Canvas onClick={() => setIsToggled(true)}>
           <Image src={img} layout="responsive" alt="gift box image" />
