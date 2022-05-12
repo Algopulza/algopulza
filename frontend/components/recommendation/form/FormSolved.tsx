@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import InputTextField from '../../common/InputTextField'
+import InputTextField from '../../common/input/InputTextField'
 import ButtonSubmitting from '../../common/button/ButtonSubmitting'
 import { useRecoilValue } from 'recoil'
 import { accessTokenState, bojIdState } from '../../../util/stateCollection'
