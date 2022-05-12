@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useRouter } from 'next/router'
 import { axiosLogin } from '../../util/axiosCollection'
 import InputTextField from '../common/InputTextField'
@@ -7,6 +7,7 @@ import ButtonRedirecting from '../common/button/ButtonRedirecting'
 import styled from 'styled-components'
 import { useSetRecoilState } from 'recoil'
 import { userInfoState, bojIdState, memberIdState, accessTokenState, refreshTokenState } from '../../util/stateCollection'
+import { stringify } from 'querystring'
 
 const Container = styled.section`
   display: flex;
@@ -16,29 +17,25 @@ const Container = styled.section`
 `
 
 export default function Form() {
-  const [bojId, setBojId] = useState('')
-  const [valid, setValid] = useState(true)
+  const [id, setId] = useState('')
+  const [password, setPassword] = useState('')
   const setUserInfo = useSetRecoilState(userInfoState)
   const setBoj = useSetRecoilState(bojIdState)
   const setMember = useSetRecoilState(memberIdState)
   const setAccessToken = useSetRecoilState(accessTokenState)
   const setRefreshToken = useSetRecoilState(refreshTokenState)
-
-  useEffect(() => {
-    setIsLogin(localStorage.getItem('recoil-persist') !== null ? true : false)
-  }, [])
-  const [isLogin, setIsLogin] = useState(true)
-
-  const handleChange = (event: any) => {
-    setBojId(event.target.value)
-  }
   const router = useRouter()
+
+  const handleIdChange = (event: any) => {
+    setId(event.target.value)
+  }
+  const handlePasswordChange = (event: any) => {
+    setPassword(event.target.value)
+  }
   const handleClick = () => {
-    if (bojId.trim() === '') {
-      setValid(false)
+    if (id.trim() === '') {
     } else {
-      setValid(true)
-      axiosLogin(bojId)
+      axiosLogin(id, password)
         .then(res => {
           // console.log(res.data.data)
           setUserInfo(res.data.data.member)
@@ -56,22 +53,27 @@ export default function Form() {
     }
   }
 
-  const text = isLogin ? '시작하기' : '로그인'
-
   return (
     <Container>
       <div style={{marginBottom: 40}}>
         <InputTextField
-          textFieldAttr={{width: '20vw', id: 'bojId', label: 'BOJ ID', password: false, autofocus: true}}
-          valid={valid}
-          validMessage='백준 아이디를 정확히 입력해 주세요.'
-          onChange={handleChange}
+          textFieldAttr={{width: '20vw', id: 'id', label: 'ID', password: false, autofocus: true}}
+          valid={true}
+          validMessage='알고풀자 아이디를 정확히 입력해 주세요.'
+          onChange={handleIdChange}
+          onKeyDown={() => {}}
+        />
+        <InputTextField
+          textFieldAttr={{width: '20vw', id: 'password', label: 'Password', password: true, autofocus: false}}
+          valid={true}
+          validMessage='비밀번호를 정확히 입력해 주세요.'
+          onChange={handlePasswordChange}
           onKeyDown={handleKeyDown}
         />
       </div>
 
       <div>
-        <ButtonSubmitting submittingAttr={{text: text, width: '20vw'}} onClick={handleClick} />
+        <ButtonSubmitting submittingAttr={{text: '로그인', width: '20vw'}} onClick={handleClick} />
         <ButtonRedirecting />
       </div>
     </Container>
