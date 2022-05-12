@@ -1,7 +1,8 @@
 import { axiosSignup } from "./axiosCollection"
 
+
 export const handleSignupClick = (
-    event: any, img: any, id: string, password: string, pwConfrim: string, solvedProblems: string, triedProblems: string
+    event: any, img: any, id: string, password: string, pwConfrim: string, solvedProblems: string, triedProblems: string, router: any
   ) => {
     if (password !== pwConfrim) {
       console.log('not valid')
@@ -15,7 +16,8 @@ export const handleSignupClick = (
 
       axiosSignup(formData)
         .then(res => {
-          console.log(res.data.data)
+          // console.log(res.data.data)
+          router.push('/')
         })
     }
 }

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useRouter } from 'next/router'
 import InputTextField from '../common/InputTextField'
 import ButtonSubmitting from '../common/button/ButtonSubmitting'
 import ButtonRedirecting from '../common/button/ButtonRedirecting'
@@ -26,6 +27,7 @@ export default function Form() {
   const [pwConfrim, setPwConfirm] = useState('')
   const [sovled, setSolved] = useState('')
   const [tried, setTried] = useState('')
+  const router = useRouter()
 
   const handleImgChange = (event: any) => {
     event.preventDefault()
@@ -133,7 +135,7 @@ export default function Form() {
       <div>
         <ButtonSubmitting
           submittingAttr={{text: '회원가입', width: '20vw'}}
-          onClick={() => {handleSignupClick(event, pureImg, id, password, pwConfrim, sovled, tried)}}
+          onClick={() => {handleSignupClick(event, pureImg, id, password, pwConfrim, sovled, tried, router)}}
         />
         <ButtonRedirecting />
       </div>
