@@ -8,13 +8,13 @@ import java.util.Set;
 
 public interface ProblemRepositoryCustom {
 
-    List<ProblemRes> findProblemRes(String tierName, Integer tierLevel, Pageable pageable);
+    List<ProblemRes> findProblemRes(Long memberId, String tierName, Integer tierLevel, Pageable pageable);
 
-    List<ProblemRes> findProblemResByTitleLike(String keyword, Pageable pageable);
+    List<ProblemRes> findProblemResByTitleLike(Long memberId, String keyword, Pageable pageable);
 
     List<Long> findAllId();
 
-    ProblemRes findProblemResById(Long id);
+    ProblemRes findProblemResById(Long memberId, Long id);
 
     List<Long> findProblemIdByTierNameSet(Set<String> tierNameSet);
 
@@ -22,6 +22,6 @@ public interface ProblemRepositoryCustom {
 
     List<Long> findProblemIdByStatus(Long memberId, String status);
 
-    List<ProblemRes> findProblemResByIdSet(Set<Long> idSet);
+    List<ProblemRes> findProblemResByIdSet(Long memberId, Set<Long> idSet);
 
 }

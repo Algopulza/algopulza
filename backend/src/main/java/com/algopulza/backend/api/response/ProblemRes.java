@@ -33,13 +33,13 @@ public class ProblemRes {
     @ApiModelProperty(name = "평균 시도 횟수", example = "10")
     private double averageTryCount;
 
-    @ApiModelProperty(name = "채점 가능 여부", example = "true")
-    private boolean solvableFlag;
+    @ApiModelProperty(name = "즐겨찾기 여부", example = "true")
+    private boolean markFlag;
 
     @ApiModelProperty(name = "태그")
     private List<TagRes> tagList;
 
-    public ProblemRes(Long problemId, int bojId, String title, int tierLevel, String tierName, int acceptedCount, double averageTryCount, boolean solvableFlag) {
+    public ProblemRes(Long problemId, int bojId, String title, int tierLevel, String tierName, int acceptedCount, double averageTryCount, boolean markFlag) {
         this.problemId = problemId;
         this.bojId = bojId;
         this.title = title;
@@ -47,7 +47,7 @@ public class ProblemRes {
         this.tierName = tierName;
         this.acceptedCount = acceptedCount;
         this.averageTryCount = averageTryCount;
-        this.solvableFlag = solvableFlag;
+        this.markFlag = markFlag;
     }
 
 }
