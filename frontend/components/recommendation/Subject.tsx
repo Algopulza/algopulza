@@ -32,6 +32,7 @@ export default function Subject({ subjectAttr }: SubjectProps) {
             tier={list.tierName}
             level={list.tierLevel}
             accept={list.acceptedCount}
+            bookmark={list.markFlag}
           />
         )}
       </Cards>
