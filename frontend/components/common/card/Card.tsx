@@ -17,13 +17,14 @@ type CardProps = {
   title: string,
   tier: string,
   level: number,
-  accept: number
+  accept: number,
+  bookmark: boolean
 }
 
-export default function Card({key, id, title, tier, level, accept}: CardProps) {
+export default function Card({key, id, title, tier, level, accept, bookmark}: CardProps) {
   return (
     <Container>
-      <ProblemName key={key} title={title} id={id} tier={tier} />
+      <ProblemName key={key} title={title} id={id} tier={tier} bookmark={bookmark} />
       <ProblemInfo key={key} id={id} tier={tier} level={level} accept={accept} />
     </Container>
   )

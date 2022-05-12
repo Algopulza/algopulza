@@ -75,3 +75,21 @@ export const axiosInfo = ( info: object, accessToken: string ) => axios({
   },
   data: info
 })
+
+export const axiosPutBookmark = ( id: number, accessToken: string ) => axios({
+  url: `https://k6a408.p.ssafy.io/api/v1/problems/${id}/mark`,
+  method: 'post',
+  headers: {
+    Authorization: `Bearer ${accessToken}`
+  },
+  data: id
+})
+
+export const axiosDeleteBookmark = ( id: number, accessToken: string ) => axios({
+  url: `https://k6a408.p.ssafy.io/api/v1/problems/${id}/mark`,
+  method: 'delete',
+  headers: {
+    Authorization: `Bearer ${accessToken}`
+  },
+  data: id
+})
