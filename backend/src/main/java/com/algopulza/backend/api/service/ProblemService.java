@@ -14,20 +14,22 @@ public interface ProblemService {
 
     void addEntitiesFromSolvedAcProblemRes(SolvedAcProblemRes solvedAcProblemRes, List<Problem> problemList, List<ProblemHasTag> problemHasTagList, Map<Integer, Tag> tagMapByBojTagId);
 
-    List<ProblemRes> getProblemList(String tierName, Integer tierLevel, Pageable pageable);
+    List<ProblemRes> getProblemList(Long memberId, String tierName, Integer tierLevel, Pageable pageable);
 
-    List<ProblemRes> getProblemListByKeyword(String keyword, Pageable pageable);
+    List<ProblemRes> getProblemListByTitle(Long memberId, String title, Pageable pageable);
 
-    ProblemRes getOneRandomProblem();
+    ProblemRes getOneRandomProblem(Long memberId);
 
-    RandomListRes getRandomProblemList();
+    RandomListRes getRandomProblemList(Long memberId);
 
     List<ProblemRes> getRandomSolvedProblemList(Long memberId);
 
-    List<ProblemRes> getRandomProblemListByCondition(int type, Object condition, int count);
+    List<ProblemRes> getRandomProblemListByCondition(Long memberId, int type, Object condition, int count);
 
-    void addProblemMark(Long memberId, Long problemId, int markType);
+    void addProblemMark(Long memberId, Long problemId, int typeFlag);
 
-    List<ProblemMarkRes> getProblemMarkList(Long memberId, int markType);
+    void deleteProblemMark(Long memberId, Long problemId, int typeFlag);
+
+    List<ProblemMarkRes> getProblemMarkList(Long memberId, int typeFlag);
 
 }

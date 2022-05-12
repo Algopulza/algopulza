@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <title>Algopulza</title>
+  <meta charset="utf-8">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="common.css">
+  <!-- <script src="scripts.js"></script> -->
+</head>
+
+<body class="body">
+  <!-- navigation bar -->
+  <div class="nav-bar">
+    알고풀자
+  </div>
+
+  <!-- stopwatch -->
+  <p class="title-area">STOPWATCH</p>
+  <div class="stopwatch-area">
+    <div class="time-area">
+      <p id="hour" class="time">00</p>
+      <p class="time">:</p>
+      <p id="min" class="time">00</p>
+      <p class="time">:</p>
+      <p id="sec" class="time">00</p>
+      <p class="time">:</p>
+      <p id="msec" class="time time-small">00</p>
+    </div>
+
+    <div class="button-area">
+      <button id="btnStart" class="button">시작</button>
+      <button id="btnReset" class="button button-black">리셋</button>
+      <button id="btnSubmit" class="button button-blue">전송</button>
+    </div>
+  </div>
+
+  <!-- scrapper -->
+  <p class="title-area">COLLECTOR</p>
+  <div class="collector-area">
+    <div class="data-area">
+      <div class="column">
+        <span class="data">id</span>
+        <span class="data">language</span>
+      </div>
+      <div class="column">
+        <span class="data">problemId</span>
+        <span class="data">codeLength</span>
+      </div>
+      <div class="column">
+        <span class="data">memory</span>
+        <span class="data">submitTime</span>
+      </div>
+      <div class="column justify-start">
+        <span class="data">runTime</span>
+      </div>
+    </div>
+
+    <div class="button-area flex-column">
+      <button id="btnCollect" class="button button-height">수집</button>
+      <button id="btnSubmitData" class="button button-blue button-height">전송</button>
+    </div>
+  </div>
+
+  <script type="text/javascript" src="./stopwatch.js"></script>
+</body>
+</html>

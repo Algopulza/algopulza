@@ -17,13 +17,16 @@ public class ResponseMessage {
     public static final String INVALID_REFRESH_TOKEN = "유효하지 않은 리프레시 토큰";
     public static final String UNAUTHORIZED = "인증되지 않은 회원";
     public static final String ACCESS_DENIED = "접근권한 없음";
+    public static final String JOIN_SUCCESS = "회원가입 성공";
     public static final String LOGIN_SUCCESS = "로그인 성공";
     public static final String LOGIN_FAIL = "로그인 실패";
     public static final String LOGOUT_SUCCESS = "로그아웃 성공";
     public static final String LOGOUT_FAIL = "로그아웃 실패";
 
     // Member
+    public static final String CHECK_DUPLICATE_ID = "아이디 중복검사 완료";
     public static final String NOT_FOUND_MEMBER = "존재하지 않는 회원";
+    public static final String DUPLICATE_BOJID = "이미 회원가입한 백준 아이디";
     public static final String GET_MEMBER_INFO_SUCCESS = "회원 정보 조회 성공";
     public static final String GET_MEMBER_INFO_FAIL = "회원 정보 조회 실패";
     public static final String MODIFY_MEMBER_INFO_SUCCESS = "회원 정보 수정 성공";
@@ -39,7 +42,9 @@ public class ResponseMessage {
     public static final String PUT_PROBLEM_LIST_SUCCESS = "문제 목록 수집 성공";
     public static final String SEARCH_PROBLEM_SUCCESS = "문제 검색 성공";
     public static final String NOT_FOUND_PROBLEM = "존재하지 않는 문제";
+    public static final String NOT_FOUND_PROBLEM_MARK = "존재하지 않는 문제 표시";
     public static final String POST_PROBLEM_MARK = "풀어볼 문제에 추가 성공";
+    public static final String DELETE_PROBLEM_MARK = "풀어볼 문제에서 삭제 성공";
     public static final String GET_PROBLEM_MARK = "풀어볼 문제 목록 조회 성공";
 
     // Tier

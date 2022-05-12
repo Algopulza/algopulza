@@ -206,9 +206,9 @@ public class ProblemServiceImpl implements ProblemService {
      * 필터링 조건이 있다면 필터링해서 반환, 없다면 전체 문제 반환
      */
     @Override
-    public List<ProblemRes> getProblemList(String tierName, Integer tierLevel, Pageable pageable) {
+    public List<ProblemRes> getProblemList(Long memberId, String tierName, Integer tierLevel, Pageable pageable) {
         // Problem List 조회
-        List<ProblemRes> problemResList = problemRepository.findProblemRes(tierName, tierLevel, pageable);
+        List<ProblemRes> problemResList = problemRepository.findProblemRes(memberId, tierName, tierLevel, pageable);
         // Problem별로 Tag List 조회
         for (ProblemRes problemAndStatusRes : problemResList) {
             problemAndStatusRes.setTagList(tagRepository.findByProblemId(problemAndStatusRes.getProblemId()));
@@ -220,9 +220,9 @@ public class ProblemServiceImpl implements ProblemService {
      * 제목으로 문제 검색
      */
     @Override
-    public List<ProblemRes> getProblemListByKeyword(String keyword, Pageable pageable) {
+    public List<ProblemRes> getProblemListByTitle(Long memberId, String title, Pageable pageable) {
         // 제목으로 Problem 검색
-        List<ProblemRes> problemResList = problemRepository.findProblemResByTitleLike(keyword, pageable);
+        List<ProblemRes> problemResList = problemRepository.findProblemResByTitleLike(memberId, title, pageable);
         // 각 Problem별 Tag List 조회
         for (ProblemRes problemRes : problemResList) {
             problemRes.setTagList(tagRepository.findByProblemId(problemRes.getProblemId()));
@@ -234,34 +234,31 @@ public class ProblemServiceImpl implements ProblemService {
      * 모든 문제 중 랜덤으로 하나의 문제를 반환
      */
     @Override
-    public ProblemRes getOneRandomProblem() {
+    public ProblemRes getOneRandomProblem(Long memberId) {
         List<Long> problemIdList = problemRepository.findAllId();
         int index = (int) (Math.random() * problemIdList.size());
 
-        ProblemRes problemRes = problemRepository.findProblemResById(problemIdList.get(index));
-        problemRes.setTagList(tagRepository.findByProblemId(problemRes.getProblemId()));
-
-        return problemRes;
+        return problemRepository.findProblemResById(memberId, problemIdList.get(index));
     }
 
     /**
      * 랜덤 페이지의 모든 종류의 랜덤 문제 리스트를 반환
      */
     @Override
-    public RandomListRes getRandomProblemList() {
+    public RandomListRes getRandomProblemList(Long memberId) {
         return RandomListRes.builder()
-                            .simulationList(getRandomProblemListByCondition(0, tagMap.get("simulation"), 5))
-                            .dpList(getRandomProblemListByCondition(0, tagMap.get("dp"), 5))
-                            .graphList(getRandomProblemListByCondition(0, tagMap.get("graphs"), 5))
-                            .greedyList(getRandomProblemListByCondition(0, tagMap.get("greedy"), 5))
-                            .sortingList(getRandomProblemListByCondition(0, tagMap.get("sorting"), 5))
-                            .bfsList(getRandomProblemListByCondition(0, tagMap.get("bfs"), 5))
-                            .dfsList(getRandomProblemListByCondition(0, tagMap.get("dfs"), 5))
-                            .combinationList(getRandomProblemListByCondition(0, tagMap.get("combinatorics"), 5))
-                            .bronzeList(getRandomProblemListByCondition(1, "Bronze", 5))
-                            .silverList(getRandomProblemListByCondition(1, "Silver", 5))
-                            .goldList(getRandomProblemListByCondition(1, "Gold", 5))
-                            .platinumList(getRandomProblemListByCondition(1, "Platinum", 5))
+                            .simulationList(getRandomProblemListByCondition(memberId, 0, tagMap.get("simulation"), 5))
+                            .dpList(getRandomProblemListByCondition(memberId, 0, tagMap.get("dp"), 5))
+                            .graphList(getRandomProblemListByCondition(memberId, 0, tagMap.get("graphs"), 5))
+                            .greedyList(getRandomProblemListByCondition(memberId, 0, tagMap.get("greedy"), 5))
+                            .sortingList(getRandomProblemListByCondition(memberId, 0, tagMap.get("sorting"), 5))
+                            .bfsList(getRandomProblemListByCondition(memberId, 0, tagMap.get("bfs"), 5))
+                            .dfsList(getRandomProblemListByCondition(memberId, 0, tagMap.get("dfs"), 5))
+                            .combinationList(getRandomProblemListByCondition(memberId, 0, tagMap.get("combinatorics"), 5))
+                            .bronzeList(getRandomProblemListByCondition(memberId, 1, "Bronze", 5))
+                            .silverList(getRandomProblemListByCondition(memberId, 1, "Silver", 5))
+                            .goldList(getRandomProblemListByCondition(memberId, 1, "Gold", 5))
+                            .platinumList(getRandomProblemListByCondition(memberId, 1, "Platinum", 5))
                             .build();
     }
 
@@ -277,18 +274,13 @@ public class ProblemServiceImpl implements ProblemService {
         // 반환할 문제 정보 개수 (푼 문제의 수가 5개보다 적다면 푼 문제 모두 반환)
         int selectCount = Math.min(problemIdList.size(), 5);
 
+        // 랜덤으로 5개 선택
         while (problemIdSet.size() < selectCount) {
             problemIdSet.add(problemIdList.get((int) (Math.random() * problemIdList.size())));
         }
 
         // 랜덤으로 선택된 5개의 문제 아이디로 문제 정보 조회
-        List<ProblemRes> problemResList = problemRepository.findProblemResByIdSet(problemIdSet);
-        // 각 Problem별 Tag List 조회
-        for (ProblemRes problemRes : problemResList) {
-            problemRes.setTagList(tagRepository.findByProblemId(problemRes.getProblemId()));
-        }
-
-        return problemResList;
+        return problemRepository.findProblemResByIdSet(memberId, problemIdSet);
     }
 
     /**
@@ -298,7 +290,7 @@ public class ProblemServiceImpl implements ProblemService {
      * count: 조회할 개수
      */
     @Override
-    public List<ProblemRes> getRandomProblemListByCondition(int type, Object condition, int count) {
+    public List<ProblemRes> getRandomProblemListByCondition(Long memberId, int type, Object condition, int count) {
         List<Long> problemIdList = new ArrayList<>();
         Set<Long> problemIdSet = new HashSet<>();
         Set<String> tierNameSet = new HashSet<>();
@@ -326,25 +318,40 @@ public class ProblemServiceImpl implements ProblemService {
         }
 
         // Problem 목록 조회
-        List<ProblemRes> problemResList = problemRepository.findProblemResByIdSet(problemIdSet);
-        // Problem별 Tag 목록 조회
-        for (ProblemRes problemRes : problemResList) {
-            problemRes.setTagList(tagRepository.findByProblemId(problemRes.getProblemId()));
-        }
-
-        return problemResList;
+        return problemRepository.findProblemResByIdSet(memberId, problemIdSet);
     }
 
+    /**
+     * 즐겨찾기 표시 추가
+     */
     @Override
-    public void addProblemMark(Long memberId, Long problemId, int markType) {
+    public void addProblemMark(Long memberId, Long problemId, int typeFlag) {
         Member member = memberRepository.findById(memberId).orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND_MEMBER));
         Problem problem = problemRepository.findById(problemId).orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND_PROBLEM));
-        problemMarkRepository.save(new ProblemMark(member, problem, markType));
+        ProblemMark problemMark = problemMarkRepository.findByMemberAndProblemAndTypeFlag(member, problem, typeFlag)
+                                                       .orElse(new ProblemMark(member, problem, typeFlag));
+        problemMarkRepository.save(problemMark);
     }
 
+    /**
+     * 즐겨찾기 표시 삭제
+     */
     @Override
-    public List<ProblemMarkRes> getProblemMarkList(Long memberId, int markType) {
-        return problemMarkRepository.findProblemByTypeFlag(memberId, markType);
+    public void deleteProblemMark(Long memberId, Long problemId, int typeFlag) {
+        Member member = memberRepository.findById(memberId).orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND_MEMBER));
+        Problem problem = problemRepository.findById(problemId).orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND_PROBLEM));
+        ProblemMark problemMark = problemMarkRepository.findByMemberAndProblemAndTypeFlag(member, problem, typeFlag)
+                                                       .orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND_PROBLEM_MARK));
+
+        problemMarkRepository.delete(problemMark);
+    }
+
+    /**
+     * 즐겨찾기 표시된 모든 문제 반환
+     */
+    @Override
+    public List<ProblemMarkRes> getProblemMarkList(Long memberId, int typeFlag) {
+        return problemMarkRepository.findProblemByTypeFlag(memberId, typeFlag);
     }
 
 }

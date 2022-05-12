@@ -38,13 +38,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                    "/swagger-ui/**",
                    "/v2/api-docs"
            )
-           .antMatchers(HttpMethod.POST, "/api/v1/members") // 로그인
+           .antMatchers(HttpMethod.POST, "/api/v1/members/join") // 회원가입
            .antMatchers(HttpMethod.POST, "/api/v1/members/extractBojId") // 이미지에서 백준 아이디 추출하기
-           .antMatchers(HttpMethod.GET, "/api/v1/problems") // 문제 리스트 조회
+           .antMatchers(HttpMethod.POST,"/api/v1/members/login") // 로그인
+           .antMatchers(HttpMethod.POST,"/api/v1/members/checkId") // 아이디 중복검사
+           .antMatchers(HttpMethod.POST,"/api/v1/members/solved") // solved 문제 등록
+           .antMatchers(HttpMethod.POST,"/api/v1/members/tried") // tried 문제 등록
            .antMatchers(HttpMethod.PUT, "/api/v1/problems") // 문제 정보 수집
-           .antMatchers(HttpMethod.GET, "/api/v1/problems/random") // 랜덤 문제 리스트 조회
-           .antMatchers(HttpMethod.GET, "/api/v1/problems/random-one") // 랜덤 문제 1개 조회
-           .antMatchers(HttpMethod.GET, "/api/v1/problems/title") // 문제 검색
         ;
     }
 

@@ -19,7 +19,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,17 +32,30 @@ public class MemberController {
     private final MemberService memberService;
     private final JwtTokenProvider tokenProvider;
 
-    @PostMapping("")
-    @ApiOperation(value = "로그인", notes = "로그인 요청 API 입니다. 첫 로그인이라면 회원정보 저장도 진행합니다.")
+    @PostMapping("/join")
+    @ApiOperation(value = "회원가입", notes = "회원가입 요청 API 입니다.")
+    @ApiResponses({@ApiResponse(code = 201, message = ResponseMessage.JOIN_SUCCESS),
+            @ApiResponse(code = 400, message = ResponseMessage.BAD_REQUEST, response = ErrorResponse.class),
+            @ApiResponse(code = 401, message = ResponseMessage.UNAUTHORIZED, response = ErrorResponse.class),
+            @ApiResponse(code = 403, message = ResponseMessage.ACCESS_DENIED, response = ErrorResponse.class),
+            @ApiResponse(code = 404, message = ResponseMessage.NOT_FOUND, response = ErrorResponse.class)})
+    public ResponseEntity<BaseResponseBody> addMember(JoinReq joinReq) {
+        // 회원정보 저장
+        memberService.addMember(joinReq);
+
+        return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.CREATED, ResponseMessage.JOIN_SUCCESS));
+    }
+
+    @PostMapping("/login")
+    @ApiOperation(value = "로그인", notes = "로그인 요청 API 입니다.")
     @ApiResponses({@ApiResponse(code = 201, message = ResponseMessage.LOGIN_SUCCESS),
             @ApiResponse(code = 400, message = ResponseMessage.BAD_REQUEST, response = ErrorResponse.class),
             @ApiResponse(code = 401, message = ResponseMessage.UNAUTHORIZED, response = ErrorResponse.class),
             @ApiResponse(code = 403, message = ResponseMessage.ACCESS_DENIED, response = ErrorResponse.class),
             @ApiResponse(code = 404, message = ResponseMessage.NOT_FOUND, response = ErrorResponse.class)})
-    public ResponseEntity<BaseResponseBody> addMember(@RequestHeader String bojId, HttpServletRequest request) {
-        System.out.println(request.getSession().getServletContext().getRealPath("/"));
+    public ResponseEntity<BaseResponseBody> login(LoginReq loginReq) {
         // 회원정보 저장
-        MemberRes memberRes = memberService.addMember(bojId);
+        MemberRes memberRes = memberService.login(loginReq);
 
         // jwt token 발급
         String token = memberService.createToken(memberRes.getMemberId(), RoleType.USER);
@@ -54,6 +66,19 @@ public class MemberController {
         result.put("member", memberRes);
         result.put("token", tokenRes);
         return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.CREATED, ResponseMessage.LOGIN_SUCCESS, result));
+    }
+
+    @PostMapping("/checkId")
+    @ApiOperation(value = "algopulza ID 중복검사", notes = "algopulza ID 중복검사 요청 API 입니다.")
+    @ApiResponses({@ApiResponse(code = 201, message = ResponseMessage.CHECK_DUPLICATE_ID),
+            @ApiResponse(code = 400, message = ResponseMessage.BAD_REQUEST, response = ErrorResponse.class),
+            @ApiResponse(code = 401, message = ResponseMessage.UNAUTHORIZED, response = ErrorResponse.class),
+            @ApiResponse(code = 403, message = ResponseMessage.ACCESS_DENIED, response = ErrorResponse.class),
+            @ApiResponse(code = 404, message = ResponseMessage.NOT_FOUND, response = ErrorResponse.class)})
+    public ResponseEntity<BaseResponseBody> checkId(@RequestBody @ApiParam(value = "algopulza ID", required = true) String id) {
+        boolean isPresent =  memberService.checkId(id);
+
+        return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.CREATED, ResponseMessage.CHECK_DUPLICATE_ID, isPresent));
     }
 
     @PostMapping("/extractBojId")
@@ -156,15 +181,4 @@ public class MemberController {
         return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, ResponseMessage.POST_TRIED_PROBLEM_SUCCESS));
     }
 
-    @PostMapping("/detailSolvedProblem")
-    @ApiOperation(value = "solved 문제에 대한 세부정보 등록하기", notes = "solved 문제에 대한 세부정보 등록 요청 API 입니다.")
-    @ApiResponses({@ApiResponse(code = 201, message = ResponseMessage.POST_DETAIL_SOLVED_PROBLEM_SUCCESS),
-            @ApiResponse(code = 400, message = ResponseMessage.BAD_REQUEST, response = ErrorResponse.class),
-            @ApiResponse(code = 401, message = ResponseMessage.UNAUTHORIZED, response = ErrorResponse.class),
-            @ApiResponse(code = 403, message = ResponseMessage.ACCESS_DENIED, response = ErrorResponse.class),
-            @ApiResponse(code = 404, message = ResponseMessage.NOT_FOUND, response = ErrorResponse.class)})
-    public ResponseEntity<BaseResponseBody> addDetailSolvedProblem(@RequestBody AddDetailSolvedProblem addDetailSolvedProblem){
-        memberService.addDetailSolvedProblem(addDetailSolvedProblem);
-        return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, ResponseMessage.POST_DETAIL_SOLVED_PROBLEM_SUCCESS));
-    }
 }
