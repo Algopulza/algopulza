@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { method } from 'lodash'
 
 export const axiosLogin = (bojId: string) => axios({
   url: 'https://k6a408.p.ssafy.io/api/v1/members',
@@ -48,4 +47,21 @@ export const axiosImg = (img: any) => axios({
     'Content-Type': 'multipart/form-data'
   },
   data: img
+})
+
+export const axiosId = (id: string) => axios({
+  url: `https://k6a408.p.ssafy.io/api/v1/members/checkId`,
+  method: 'post',
+  data: {
+    'id': id
+  }
+})
+
+export const axiosSignup = ( formData: any ) => axios({
+    url: `https://k6a408.p.ssafy.io/api/v1/members/join`,
+    method: 'post',
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    },
+    data: formData
 })
