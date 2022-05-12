@@ -66,3 +66,12 @@ export const axiosSignup = ( formData: any ) => axios({
     },
     data: formData
 })
+
+export const axiosInfo = ( info: object, accessToken: string ) => axios({
+  url: `https://k6a408.p.ssafy.io/api/v1/analysis`,
+  method: 'post',
+  headers: {
+    Authorization: `Bearer ${accessToken}`
+  },
+  data: info
+})
