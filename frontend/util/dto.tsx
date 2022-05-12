@@ -33,6 +33,7 @@ export type ProblemAttr = {
   tierName: string,
   tierLevel: number,
   acceptedCount: number,
+  markFlag: boolean,
   averageTryCount: number,
   tagList: any,
 }

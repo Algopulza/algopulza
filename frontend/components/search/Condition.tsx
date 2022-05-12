@@ -1,7 +1,7 @@
 import SelectionTier from './selection/SelectionTier'
 import SelectionLevel from './selection/SelectionLevel'
 import SelectionTag from './selection/SelectionTag'
-import InputTextField from '../common/InputTextField'
+import InputTextField from '../common/input/InputTextField'
 import ButtonSearching from '../common/button/ButtonSearching'
 import styled from 'styled-components'
 import { useState } from 'react'

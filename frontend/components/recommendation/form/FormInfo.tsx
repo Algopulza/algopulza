@@ -1,7 +1,11 @@
 import { useState } from 'react'
-import InputTextField from '../../common/InputTextField'
+import InputTextField from '../../common/input/InputTextField'
 import ButtonSubmitting from '../../common/button/ButtonSubmitting'
 import styled from 'styled-components'
+import InputSelection from '../../common/input/InputSelection'
+import { useRecoilValue } from 'recoil'
+import { languageSelectionState, accessTokenState } from '../../../util/stateCollection'
+import { handleInfoClick } from '../../../util/inputHandlerCollection'
 
 const Container = styled.section`
   display: grid;
@@ -10,52 +14,59 @@ const Container = styled.section`
 `
 
 export default function FormInfo() {
-  const [bojId, setBojId] = useState('')
-  const [valid, setValid] = useState(true)
-  const handleChange = (event: any) => {
-    setBojId(event.target.value)
+  const [problemBojId, setProblemBojId] = useState('')
+  const [memory, setMemory] = useState('')
+  const [runTime, setRunTime] = useState('')
+  const language = useRecoilValue(languageSelectionState)
+  const accessToken = useRecoilValue(accessTokenState)
+
+  const handleIdChange = (event: any) => {
+    setProblemBojId(event.target.value)
   }
-  const handleClick = () => {
-    if (bojId.trim() === '') {
-      setValid(false)
-    } else {
-      setValid(true)
-    }
+  const handleMemoryChange = (event: any) => {
+    setMemory(event.target.value)
+  }
+  const handleRunTimeChange = (event: any) => {
+    setRunTime(event.target.value)
+  }
+
+  const info = {
+    'problemBojId': problemBojId,
+    'memory': memory,
+    'runTime': runTime,
+    'language': language,
+    'codeLength': 0,
+    'solvingTime': 0,
+    'submitTime': ""
   }
 
   return (
     <Container>
       <div>
         <InputTextField
-          textFieldAttr={{id: 'probId', label:'문제 번호', width: '15vw', password: false, autofocus: true}}
-          valid={valid}
-          validMessage='백준 아이디를 정확히 입력해 주세요.'
-          onChange={handleChange}
-          onKeyDown={handleChange}
+          textFieldAttr={{id: 'problemBojId', label:'문제 번호', width: '15vw', password: false, autofocus: true}}
+          valid={true}
+          validMessage='문제 번호를 정확히 입력해 주세요.'
+          onChange={handleIdChange}
+          onKeyDown={() => {}}
         />
         <InputTextField
           textFieldAttr={{id: 'memory', label:'메모리', width: '15vw', password: false, autofocus: false}}
-          valid={valid}
-          validMessage='백준 아이디를 정확히 입력해 주세요.'
-          onChange={handleChange}
-          onKeyDown={handleChange}
+          valid={true}
+          validMessage='메모리를 정확히 입력해 주세요.'
+          onChange={handleMemoryChange}
+          onKeyDown={() => {}}
         />
         <InputTextField
           textFieldAttr={{id: 'runTime', label:'실행시간', width: '15vw', password: false, autofocus: false}}
-          valid={valid}
-          validMessage='백준 아이디를 정확히 입력해 주세요.'
-          onChange={handleChange}
-          onKeyDown={handleChange}
+          valid={true}
+          validMessage='사용언어를 정확히 입력해 주세요.'
+          onChange={handleRunTimeChange}
+          onKeyDown={() => {}}
         />
-        <InputTextField
-          textFieldAttr={{id: 'language', label:'사용 언어', width: '15vw', password: false, autofocus: false}}
-          valid={valid}
-          validMessage='백준 아이디를 정확히 입력해 주세요.'
-          onChange={handleChange}
-          onKeyDown={handleChange}
-        />
+        <InputSelection></InputSelection>
       </div>
-      <ButtonSubmitting submittingAttr={{text: '제공', width: '15vw'}} onClick={handleChange} />
+      <ButtonSubmitting submittingAttr={{text: '제공', width: '15vw'}} onClick={() => {handleInfoClick(event, info, accessToken)}} />
     </Container>
   )
 }

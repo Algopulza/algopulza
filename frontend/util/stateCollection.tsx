@@ -37,3 +37,8 @@ export const pageState = atom({
   key: 'pageState',
   default: '',
 })
+
+export const languageSelectionState = atom({
+  key: 'languageSelectionState',
+  default: '',
+})
