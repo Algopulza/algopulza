@@ -1,10 +1,11 @@
 import axios from 'axios'
 
-export const axiosLogin = (bojId: string) => axios({
-  url: 'https://k6a408.p.ssafy.io/api/v1/members',
+export const axiosLogin = (id: string, password: string) => axios({
+  url: 'https://k6a408.p.ssafy.io/api/v1/members/login',
   method: 'post',
-  headers: {
-    'bojId': bojId
+  params: {
+    'id': id,
+    'password': password
   }
 })
 
