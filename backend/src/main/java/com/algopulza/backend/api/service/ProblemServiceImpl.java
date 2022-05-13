@@ -9,6 +9,7 @@ import com.algopulza.backend.db.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -207,37 +208,23 @@ public class ProblemServiceImpl implements ProblemService {
      * 필터링 조건이 있다면 필터링해서 반환, 없다면 전체 문제 반환
      */
     @Override
-    public List<ProblemRes> getProblemList(Long memberId, String tierName, Integer tierLevel, String title, String tagIds, Pageable pageable) {
-        // Problem List 조회
-        List<ProblemRes> tempProblemResList = problemRepository.findProblemRes(memberId, tierName, tierLevel, title, pageable);
-        List<ProblemRes> problemResList = new LinkedList<>();
-
+    public Page<ProblemRes> getProblemList(Long memberId, String tierName, Integer tierLevel, String title, String tagIds, Pageable pageable) {
         // 1,2,3 형태의 태그 ID 리스트를 Set<Long> 형태로 변환
-        Set<Long> tagIdSet = new HashSet<>();
+        Set<Long> tagIdSet = null;
         if (tagIds != null) {
+            tagIdSet = new HashSet<>();
             String[] tagIdStringList = tagIds.split(",");
             for (String tagIdString : tagIdStringList) {
                 tagIdSet.add(Long.parseLong(tagIdString));
             }
         }
 
+        // Problem List 조회
+        Page<ProblemRes> problemResList = problemRepository.findProblemRes(memberId, tierName, tierLevel, title, tagIdSet, pageable);
+
         // Problem별로 Tag List 조회
-        for (ProblemRes problemRes : tempProblemResList) {
-            List<TagRes> tagResList = tagRepository.findByProblemId(problemRes.getProblemId());
-            // 조회 조건에 tag가 없다면
-            if (tagIds == null) {
-                problemRes.setTagList(tagResList);
-                problemResList.add(problemRes);
-                continue;
-            }
-            // 조회 조건에 tag가 있다면
-            for (TagRes tagRes : tagResList) {
-                if (tagIdSet.contains(tagRes.getTagId())) {
-                    problemRes.setTagList(tagResList);
-                    problemResList.add(problemRes);
-                    break;
-                }
-            }
+        for (ProblemRes problemRes : problemResList) {
+            problemRes.setTagList(tagRepository.findByProblemId(problemRes.getProblemId()));
         }
 
         return problemResList;
