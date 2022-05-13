@@ -1,6 +1,10 @@
 import styled from "styled-components";
-import Seed from "../../../public/analysis/badge/seed.png";
-import Image from 'next/image'
+import Image from "next/image";
+import Seed1 from "../../../public/analysis/badge/seed1.png";
+import Seed2 from "../../../public/analysis/badge/seed2.png";
+import Seed3 from "../../../public/analysis/badge/seed3.png";
+import Seed4 from "../../../public/analysis/badge/seed4.png";
+import Seed5 from "../../../public/analysis/badge/seed5.png";
 
 const Container = styled.div`
   width: 90%;
@@ -38,11 +42,11 @@ const Title = styled.div`
   margin-left: 1rem;
 `;
 
-export default function badge() {
+export default function Badge() {
   return (
     <Container>
       <ProfileImage>
-        <Image src={Seed} alt="이미지를 찾을 수 없습니다." />
+        <Image src={Seed1} alt="이미지를 찾을 수 없습니다." />
       </ProfileImage>
       <RightContainer>
         <NickName>
