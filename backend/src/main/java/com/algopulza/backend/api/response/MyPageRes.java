@@ -12,7 +12,7 @@ public class MyPageRes {
 
     private List<LanguageAnalysisRes> languageAnalysisList;
 
-    private List<SolvedCountAnalysisRes> solvedCountAnalysisList;
+    private List<SolvedCountByYearRes> solvedCountAnalysisList;
 
     private SolvingLogStatisticsRes solvingLogStatistics;
 
