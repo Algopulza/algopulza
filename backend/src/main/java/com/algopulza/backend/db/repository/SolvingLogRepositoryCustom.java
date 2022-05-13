@@ -2,13 +2,16 @@ package com.algopulza.backend.db.repository;
 
 import com.algopulza.backend.api.response.*;
 import com.algopulza.backend.db.entity.*;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface SolvingLogRepositoryCustom {
 
-    List<Problem> findByMember(Member member);
+    List<Problem> findProblemByMember(Member member);
+
+    List<SolvingLogRes> findByMemberId(Long memberId, Pageable pageable);
 
     List<SolvingLog> findByProblem(Member member, Problem problem);
 

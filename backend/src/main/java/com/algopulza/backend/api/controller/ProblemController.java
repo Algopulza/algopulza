@@ -57,7 +57,7 @@ public class ProblemController {
             @ApiImplicitParam(name = "size", dataType = "integer", paramType = "query", defaultValue = "5")})
     @ApiResponses({@ApiResponse(code = 200, message = ResponseMessage.SEARCH_PROBLEM_SUCCESS, response = ErrorResponse.class),
             @ApiResponse(code = 400, message = ResponseMessage.BAD_REQUEST, response = ErrorResponse.class)})
-    public ResponseEntity<BaseResponseBody> listProblemByKeyword(@RequestParam String title, @ApiIgnore @PageableDefault(size = 20) Pageable pageable) {
+    public ResponseEntity<BaseResponseBody> listProblemByKeyword(@RequestParam String title, @ApiIgnore @PageableDefault(size = 5) Pageable pageable) {
         Long memberId = JwtUtil.getCurrentId();
         return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, ResponseMessage.SEARCH_PROBLEM_SUCCESS, problemService.getProblemListByTitle(memberId, title, pageable)));
     }

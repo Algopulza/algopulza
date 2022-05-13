@@ -10,6 +10,7 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
@@ -23,11 +24,31 @@ public class SolvingLogRepositoryCustomImpl implements  SolvingLogRepositoryCust
     QSolvingLog qSolvingLog = QSolvingLog.solvingLog;
 
     @Override
-    public List<Problem> findByMember(Member member) {
+    public List<Problem> findProblemByMember(Member member) {
         return jpaQueryFactory
                 .select(qSolvingLog.problem)
                 .from(qSolvingLog)
                 .where(qSolvingLog.member.eq(member))
+                .fetch();
+    }
+
+    @Override
+    public List<SolvingLogRes> findByMemberId(Long memberId, Pageable pageable) {
+        return jpaQueryFactory
+                .select(Projections.constructor(SolvingLogRes.class,
+                        qSolvingLog.problem.id,
+                        qSolvingLog.problem.bojId,
+                        qSolvingLog.problem.title,
+                        qSolvingLog.status,
+                        qSolvingLog.language,
+                        qSolvingLog.memory,
+                        qSolvingLog.runTime
+                ))
+                .from(qSolvingLog)
+                .where(qSolvingLog.member.id.eq(memberId))
+                .orderBy(qSolvingLog.submitTime.desc(), qSolvingLog.updatedTime.desc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
                 .fetch();
     }
 
