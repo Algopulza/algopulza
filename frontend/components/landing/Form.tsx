@@ -6,7 +6,7 @@ import ButtonSubmitting from '../common/button/ButtonSubmitting'
 import ButtonRedirecting from '../common/button/ButtonRedirecting'
 import styled from 'styled-components'
 import { useSetRecoilState } from 'recoil'
-import { userInfoState, bojIdState, memberIdState, accessTokenState, refreshTokenState } from '../../util/stateCollection'
+import { userInfoState, bojIdState, memberIdState,algoIdState, accessTokenState, refreshTokenState } from '../../util/stateCollection'
 import { stringify } from 'querystring'
 
 const Container = styled.section`
@@ -22,6 +22,7 @@ export default function Form() {
   const setUserInfo = useSetRecoilState(userInfoState)
   const setBoj = useSetRecoilState(bojIdState)
   const setMember = useSetRecoilState(memberIdState)
+  const setAlgo = useSetRecoilState(algoIdState)
   const setAccessToken = useSetRecoilState(accessTokenState)
   const setRefreshToken = useSetRecoilState(refreshTokenState)
   const router = useRouter()
@@ -37,10 +38,10 @@ export default function Form() {
     } else {
       axiosLogin(id, password)
         .then(res => {
-          // console.log(res.data.data)
           setUserInfo(res.data.data.member)
           setBoj(res.data.data.member.bojId)
           setMember(res.data.data.member.memberId)
+          setAlgo(res.data.data.member.algopluzaId)
           setAccessToken(res.data.data.token.accessToken)
           setRefreshToken(res.data.data.token.refreshToken)
           router.push('/recommendation')
