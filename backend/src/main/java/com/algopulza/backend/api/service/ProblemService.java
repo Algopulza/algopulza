@@ -2,6 +2,7 @@ package com.algopulza.backend.api.service;
 
 import com.algopulza.backend.api.response.*;
 import com.algopulza.backend.db.entity.*;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.server.ServerErrorException;
 
@@ -14,7 +15,7 @@ public interface ProblemService {
 
     void addEntitiesFromSolvedAcProblemRes(SolvedAcProblemRes solvedAcProblemRes, List<Problem> problemList, List<ProblemHasTag> problemHasTagList, Map<Integer, Tag> tagMapByBojTagId);
 
-    List<ProblemRes> getProblemList(Long memberId, String tierName, Integer tierLevel, String title, String tagIds, Pageable pageable);
+    Page<ProblemRes> getProblemList(Long memberId, String tierName, Integer tierLevel, String title, String tagIds, Pageable pageable);
 
     ProblemRes getOneRandomProblem(Long memberId);
 

@@ -1,6 +1,7 @@
 package com.algopulza.backend.db.repository;
 
 import com.algopulza.backend.api.response.ProblemRes;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
@@ -8,7 +9,7 @@ import java.util.Set;
 
 public interface ProblemRepositoryCustom {
 
-    List<ProblemRes> findProblemRes(Long memberId, String tierName, Integer tierLevel, String title, Pageable pageable);
+    Page<ProblemRes> findProblemRes(Long memberId, String tierName, Integer tierLevel, String title, Set<Long> tagIdSet, Pageable pageable);
 
     List<Long> findAllId();
 

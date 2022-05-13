@@ -47,7 +47,7 @@ public class ProblemController {
             @RequestParam(value = "tierLevel", required = false) Integer tierLevel,
             @RequestParam(value = "title", required = false) String title,
             @RequestParam(value = "tagIds", required = false) String tagIds,
-            @ApiIgnore @PageableDefault(size = 20) Pageable pageable
+            @ApiIgnore @PageableDefault(size = 5) Pageable pageable
     ) {
         Long memberId = JwtUtil.getCurrentId();
         return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, ResponseMessage.GET_PROBLEM_LIST_SUCCESS, problemService.getProblemList(memberId, tierName, tierLevel, title, tagIds, pageable)));
