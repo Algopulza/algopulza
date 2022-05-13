@@ -14,9 +14,7 @@ public interface ProblemService {
 
     void addEntitiesFromSolvedAcProblemRes(SolvedAcProblemRes solvedAcProblemRes, List<Problem> problemList, List<ProblemHasTag> problemHasTagList, Map<Integer, Tag> tagMapByBojTagId);
 
-    List<ProblemRes> getProblemList(Long memberId, String tierName, Integer tierLevel, Pageable pageable);
-
-    List<ProblemRes> getProblemListByTitle(Long memberId, String title, Pageable pageable);
+    List<ProblemRes> getProblemList(Long memberId, String tierName, Integer tierLevel, String title, String tagIds, Pageable pageable);
 
     ProblemRes getOneRandomProblem(Long memberId);
 
