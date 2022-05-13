@@ -42,7 +42,9 @@ public class ResponseMessage {
     public static final String PUT_PROBLEM_LIST_SUCCESS = "문제 목록 수집 성공";
     public static final String SEARCH_PROBLEM_SUCCESS = "문제 검색 성공";
     public static final String NOT_FOUND_PROBLEM = "존재하지 않는 문제";
+    public static final String NOT_FOUND_PROBLEM_MARK = "존재하지 않는 문제 표시";
     public static final String POST_PROBLEM_MARK = "풀어볼 문제에 추가 성공";
+    public static final String DELETE_PROBLEM_MARK = "풀어볼 문제에서 삭제 성공";
     public static final String GET_PROBLEM_MARK = "풀어볼 문제 목록 조회 성공";
 
     // Tier
