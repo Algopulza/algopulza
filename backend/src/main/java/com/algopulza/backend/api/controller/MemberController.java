@@ -1,6 +1,7 @@
 package com.algopulza.backend.api.controller;
 
 import com.algopulza.backend.api.request.member.*;
+import com.algopulza.backend.api.response.LoginMemberRes;
 import com.algopulza.backend.api.response.MemberRes;
 import com.algopulza.backend.api.response.TokenRes;
 import com.algopulza.backend.api.service.MemberService;
@@ -57,7 +58,7 @@ public class MemberController {
             @ApiResponse(code = 404, message = ResponseMessage.NOT_FOUND, response = ErrorResponse.class)})
     public ResponseEntity<BaseResponseBody> login(LoginReq loginReq) {
         // 회원정보 저장
-        MemberRes memberRes = memberService.login(loginReq);
+        LoginMemberRes memberRes = memberService.login(loginReq);
 
         // jwt token 발급
         String token = memberService.createToken(memberRes.getMemberId(), RoleType.USER);
