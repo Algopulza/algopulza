@@ -46,7 +46,7 @@ export default function Condition() {
       
       <Subcontainer cond={false}>
         <InputTextField
-          textFieldAttr={{id: 'search', label: 'Search', width: '20vw', password: false, autofocus: false}}
+          textFieldAttr={{id: 'search', label: 'Search', width: '20vw', marginRight: '0px', password: false, autofocus: false}}
           valid={valid}
           validMessage='백준 아이디를 정확히 입력해 주세요.'
           onChange={handleChange}

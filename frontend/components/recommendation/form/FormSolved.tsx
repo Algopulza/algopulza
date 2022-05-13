@@ -38,13 +38,13 @@ export default function FormSolved() {
   return (
     <Container>
       <InputTextField
-        textFieldAttr={{id: 'solved', label: '해결한 문제', width: '15vw', password: false, autofocus: false}}
+        textFieldAttr={{id: 'solved', label: '해결한 문제', marginRight: '0px', width: '15vw', password: false, autofocus: false}}
         valid={valid}
         validMessage='해결한(solved) 문제 목록을 정확히 입력해주세요.'
         onChange={handleChange}
         onKeyDown={() => {}}
       />
-      <ButtonSubmitting submittingAttr={{text: '제공', width: '15vw'}} onClick={handleClick} />
+      <ButtonSubmitting submittingAttr={{text: '제공', width: '15vw', fontSize: '1.1vw'}} onClick={handleClick} />
     </Container>
   )
 }

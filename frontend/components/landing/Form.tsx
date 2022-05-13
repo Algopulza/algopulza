@@ -57,14 +57,14 @@ export default function Form() {
     <Container>
       <div style={{marginBottom: 40}}>
         <InputTextField
-          textFieldAttr={{width: '20vw', id: 'id', label: 'ID', password: false, autofocus: true}}
+          textFieldAttr={{width: '20vw', id: 'id', label: 'ID', marginRight: '0px', password: false, autofocus: true}}
           valid={true}
           validMessage='알고풀자 아이디를 정확히 입력해 주세요.'
           onChange={handleIdChange}
           onKeyDown={() => {}}
         />
         <InputTextField
-          textFieldAttr={{width: '20vw', id: 'password', label: 'Password', password: true, autofocus: false}}
+          textFieldAttr={{width: '20vw', id: 'password', marginRight: '0px', label: 'Password', password: true, autofocus: false}}
           valid={true}
           validMessage='비밀번호를 정확히 입력해 주세요.'
           onChange={handlePasswordChange}
@@ -73,7 +73,7 @@ export default function Form() {
       </div>
 
       <div>
-        <ButtonSubmitting submittingAttr={{text: '로그인', width: '20vw'}} onClick={handleClick} />
+        <ButtonSubmitting submittingAttr={{text: '로그인', width: '20vw', fontSize: '1.1vw'}} onClick={handleClick} />
         <ButtonRedirecting />
       </div>
     </Container>
