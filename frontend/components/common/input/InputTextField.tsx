@@ -24,7 +24,7 @@ export default function InputTextField({ textFieldAttr, valid, validMessage, onC
     >
       {valid ?
         <TextField
-          sx={{width: textFieldAttr.width, marginBottom: 1}}
+          sx={{width: textFieldAttr.width, marginBottom: 1, marginRight: textFieldAttr.marginRight}}
           id={textFieldAttr.id}
           label={textFieldAttr.label}
           type={textFieldAttr.password ? 'password' : ""}

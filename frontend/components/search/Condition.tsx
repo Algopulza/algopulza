@@ -1,10 +1,10 @@
+import { useState } from 'react'
 import SelectionTier from './selection/SelectionTier'
 import SelectionLevel from './selection/SelectionLevel'
 import SelectionTag from './selection/SelectionTag'
 import InputTextField from '../common/input/InputTextField'
 import ButtonSearching from '../common/button/ButtonSearching'
 import styled from 'styled-components'
-import { useState } from 'react'
 
 const Container = styled.section`
   display: grid;
@@ -33,26 +33,39 @@ const handleChange = () => {
   // props 맞추기 위한 null 함수
 }
 
-export default function Condition() {
+export default function Condition(props: any) {
   const [valid, setValid] = useState(true)
+  const [text, setText] = useState("")
+
+  const handleChangeSearched = (event: any) => {
+    setText(event.target.value)
+  }
+  const submitSearched = () => {
+    props.propFunction(text)
+  }
+
   
   return (
     <Container>
       <Subcontainer cond={true}>
-        <SelectionTier />
+        {/* <SelectionTier />
         <SelectionLevel />
-        <SelectionTag />
+        <SelectionTag /> */}
       </Subcontainer>
       
       <Subcontainer cond={false}>
         <InputTextField
-          textFieldAttr={{id: 'search', label: 'Search', width: '20vw', password: false, autofocus: false}}
+          textFieldAttr={{id: 'search', label: 'Search', width: '20vw', marginRight: '0px', password: false, autofocus: false}}
           valid={valid}
           validMessage='백준 아이디를 정확히 입력해 주세요.'
-          onChange={handleChange}
+          onChange={handleChangeSearched}
           onKeyDown={handleChange}
         />
-        <ButtonSearching submittingAttr={{text: '검색', width: '5vw'}} />
+        <ButtonSearching
+          submittingAttr={{text: '검색', width: '5vw'}}
+          onClick={submitSearched}
+          onKeyDown={submitSearched}
+        />
       </Subcontainer>
     </Container>
   )

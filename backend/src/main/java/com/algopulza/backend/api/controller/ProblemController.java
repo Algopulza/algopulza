@@ -38,11 +38,10 @@ public class ProblemController {
 
     @GetMapping("")
     @ApiOperation(value = "문제 리스트 조회", notes = "문제 리스트를 조회하는 API 입니다. 조건을 입력하지 않으면 전체 문제를 조회합니다.")
-    @ApiImplicitParams({@ApiImplicitParam(name = "page", dataType = "integer", paramType = "query", defaultValue = "0")})
-    @ApiResponses({
-            @ApiResponse(code = 200, message = ResponseMessage.GET_PROBLEM_LIST_SUCCESS, response = ErrorResponse.class),
-            @ApiResponse(code = 400, message = ResponseMessage.BAD_REQUEST, response = ErrorResponse.class)
-    })
+    @ApiImplicitParams({@ApiImplicitParam(name = "page", dataType = "integer", paramType = "query", defaultValue = "0"),
+            @ApiImplicitParam(name = "size", dataType = "integer", paramType = "query", defaultValue = "5")})
+    @ApiResponses({@ApiResponse(code = 200, message = ResponseMessage.GET_PROBLEM_LIST_SUCCESS, response = ErrorResponse.class),
+            @ApiResponse(code = 400, message = ResponseMessage.BAD_REQUEST, response = ErrorResponse.class)})
     public ResponseEntity<BaseResponseBody> listProblem(
             @RequestParam(value = "tierName", required = false) String tierName,
             @RequestParam(value = "tierLevel", required = false) Integer tierLevel,
@@ -54,12 +53,11 @@ public class ProblemController {
 
     @GetMapping("/search")
     @ApiOperation(value = "문제 검색", notes = "제목으로 문제를 검색하는 API 입니다.")
-    @ApiImplicitParams({@ApiImplicitParam(name = "page", dataType = "integer", paramType = "query", defaultValue = "0")})
-    @ApiResponses({
-            @ApiResponse(code = 200, message = ResponseMessage.SEARCH_PROBLEM_SUCCESS, response = ErrorResponse.class),
-            @ApiResponse(code = 400, message = ResponseMessage.BAD_REQUEST, response = ErrorResponse.class)
-    })
-    public ResponseEntity<BaseResponseBody> listProblemByKeyword(@RequestParam String title, @ApiIgnore @PageableDefault(size = 20) Pageable pageable) {
+    @ApiImplicitParams({@ApiImplicitParam(name = "page", dataType = "integer", paramType = "query", defaultValue = "0"),
+            @ApiImplicitParam(name = "size", dataType = "integer", paramType = "query", defaultValue = "5")})
+    @ApiResponses({@ApiResponse(code = 200, message = ResponseMessage.SEARCH_PROBLEM_SUCCESS, response = ErrorResponse.class),
+            @ApiResponse(code = 400, message = ResponseMessage.BAD_REQUEST, response = ErrorResponse.class)})
+    public ResponseEntity<BaseResponseBody> listProblemByKeyword(@RequestParam String title, @ApiIgnore @PageableDefault(size = 5) Pageable pageable) {
         Long memberId = JwtUtil.getCurrentId();
         return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, ResponseMessage.SEARCH_PROBLEM_SUCCESS, problemService.getProblemListByTitle(memberId, title, pageable)));
     }
