@@ -1,7 +1,7 @@
-import React from 'react';
+import React from "react";
 import styled from "styled-components";
-import Favorite from './Favorite';
-import Solved from './Solved';
+import Favorite from "./Favorite";
+import Solved from "./Solved";
 
 const Container = styled.div`
   display: grid;
