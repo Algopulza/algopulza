@@ -44,21 +44,21 @@ export default function FormInfo() {
     <Container>
       <div>
         <InputTextField
-          textFieldAttr={{id: 'problemBojId', label:'문제 번호', width: '15vw', password: false, autofocus: true}}
+          textFieldAttr={{id: 'problemBojId', label:'문제 번호', marginRight: '0px', width: '15vw', password: false, autofocus: true}}
           valid={true}
           validMessage='문제 번호를 정확히 입력해 주세요.'
           onChange={handleIdChange}
           onKeyDown={() => {}}
         />
         <InputTextField
-          textFieldAttr={{id: 'memory', label:'메모리', width: '15vw', password: false, autofocus: false}}
+          textFieldAttr={{id: 'memory', label:'메모리', marginRight: '0px', width: '15vw', password: false, autofocus: false}}
           valid={true}
           validMessage='메모리를 정확히 입력해 주세요.'
           onChange={handleMemoryChange}
           onKeyDown={() => {}}
         />
         <InputTextField
-          textFieldAttr={{id: 'runTime', label:'실행시간', width: '15vw', password: false, autofocus: false}}
+          textFieldAttr={{id: 'runTime', label:'실행시간', marginRight: '0px', width: '15vw', password: false, autofocus: false}}
           valid={true}
           validMessage='사용언어를 정확히 입력해 주세요.'
           onChange={handleRunTimeChange}
@@ -66,7 +66,7 @@ export default function FormInfo() {
         />
         <InputSelection></InputSelection>
       </div>
-      <ButtonSubmitting submittingAttr={{text: '제공', width: '15vw'}} onClick={() => {handleInfoClick(event, info, accessToken)}} />
+      <ButtonSubmitting submittingAttr={{text: '제공', width: '15vw', fontSize: '1.1vw'}} onClick={() => {handleInfoClick(event, info, accessToken)}} />
     </Container>
   )
 }

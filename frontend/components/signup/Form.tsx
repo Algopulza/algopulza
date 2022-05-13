@@ -66,8 +66,10 @@ export default function Form() {
     if (id.trim() === '') {
       console.log('not valid')
     } else {
+      console.log(`전송id: ${id}`)
       axiosId(id)
         .then(res => {
+          console.log(res)
           const idResult = document.getElementById('idResult')
           const text = res.data.data ? '중복입니다.' : '가능합니다.'
           idResult!.innerText = text

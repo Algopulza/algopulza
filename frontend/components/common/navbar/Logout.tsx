@@ -32,7 +32,7 @@ export default function Logout() {
 
   return (
     <Container>
-      {isLogin ? <ButtonSubmitting submittingAttr={{text: '로그아웃', width: '6vw'}} onClick={handleClick} /> : <></>}
+      {isLogin ? <ButtonSubmitting submittingAttr={{text: '로그아웃', width: '5vw', fontSize: '1.1vw'}} onClick={handleClick} /> : <></>}
     </Container>
   )
 }

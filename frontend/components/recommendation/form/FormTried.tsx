@@ -38,13 +38,13 @@ export default function FormTried() {
   return (
     <Container>
       <InputTextField
-        textFieldAttr={{id: 'tried', label: '시도한 문제', width: '15vw', password: false, autofocus: false}}
+        textFieldAttr={{id: 'tried', label: '시도한 문제', width: '15vw', marginRight: '0px', password: false, autofocus: false}}
         valid={valid}
         validMessage='시도한(tried) 문제 목록을 정확히 입력해주세요.'
         onChange={handleChange}
         onKeyDown={() => {}}
       />
-      <ButtonSubmitting submittingAttr={{text: '제공', width: '15vw'}} onClick={handleClick} />
+      <ButtonSubmitting submittingAttr={{text: '제공', width: '15vw', fontSize: '1.1vw'}} onClick={handleClick} />
     </Container>
   )
 }
