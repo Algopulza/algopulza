@@ -1,6 +1,7 @@
 // TextInput Data Object
 export type TextFieldAttr = {
   width: string,
+  marginRight: string,
   id: string,
   label: string,
   password: boolean,
@@ -9,7 +10,8 @@ export type TextFieldAttr = {
 
 export type SubmittingAttr = {
   text: string,
-  width: string
+  width: string,
+  fontSize: string
 }
 
 // NavItem Data Object
