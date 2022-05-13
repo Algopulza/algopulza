@@ -14,6 +14,7 @@ import com.algopulza.backend.config.jwt.RoleType;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +25,7 @@ import java.util.Map;
 
 import static com.algopulza.backend.common.model.ResponseMessage.REFRESH_TOKEN;
 
+@Slf4j
 @Api(value = "회원관리 API", tags = {"member"})
 @RestController
 @RequiredArgsConstructor
