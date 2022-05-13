@@ -6,9 +6,11 @@ import com.algopulza.backend.db.entity.Problem;
 import com.algopulza.backend.db.entity.QSolvingLog;
 import com.algopulza.backend.db.entity.SolvingLog;
 import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.Optional;
@@ -44,8 +46,21 @@ public class SolvingLogRepositoryCustomImpl implements  SolvingLogRepositoryCust
         return Optional.ofNullable(jpaQueryFactory
                 .select(qSolvingLog)
                 .from(qSolvingLog)
-                .where(qSolvingLog.member.eq(member), qSolvingLog.problem.eq(problem), qSolvingLog.language.eq(language))
+                .where(qSolvingLog.member.eq(member), qSolvingLog.problem.eq(problem), eqLanguage(language))
                 .fetchOne());
+    }
+
+    private BooleanExpression eqLanguage(String language) {
+        if (StringUtils.hasText(language)) {
+            if ("null".equals(language)) {
+                // language가 null인 값들을 찾는다.
+                return qSolvingLog.language.isNull();
+            }
+            // language가 null이거나 language인 값들을 찾는다.
+            return qSolvingLog.language.eq(language).or(qSolvingLog.language.isNull());
+        }
+        // language 조건을 적용하지 않는다.
+        return null;
     }
 
     @Override
