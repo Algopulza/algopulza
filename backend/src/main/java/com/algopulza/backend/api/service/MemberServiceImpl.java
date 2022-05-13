@@ -300,10 +300,10 @@ public class MemberServiceImpl implements MemberService {
             ProcessBuilder builder = new ProcessBuilder("python3", PYTHON_PATH, imagePath);
             Process process = builder.start();
 
-            BufferedReader errOut = new BufferedReader(new InputStreamReader(process.getErrorStream()));
-            while((id=errOut.readLine())!=null){
-                log.error(id);
-            }
+//            BufferedReader errOut = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+//            while((id=errOut.readLine())!=null){
+//                log.error(id);
+//            }
 
             // python 파일 출력 읽기
             BufferedReader stdOut = new BufferedReader(new InputStreamReader(process.getInputStream()));
