@@ -32,20 +32,21 @@ const Solved = () => {
   const [currentPage, setPage] = useState(0)
 
   // 최초진입시 문제표시 api
-  const accessToken = useRecoilValue(accessTokenState)
-  const solvingLog = async () => {
-    await getSolvingLog(accessToken, 0, 20)
-      .then(res => {
-        console.log(res.data.data)
-        setRows(res.data.data)
-      })
-      .catch(err => console.log(err))
-  }
   useEffect(() => { 
+    const accessToken = useRecoilValue(accessTokenState)
+    const solvingLog = async () => {
+      await getSolvingLog(accessToken, 0, 20)
+        .then(res => {
+          console.log(res.data.data)
+          setRows(res.data.data)
+        })
+        .catch(err => console.log(err))
+    }
     solvingLog()
   }, [])
 
   // page 검색 api
+  const accessToken = useRecoilValue(accessTokenState)
   const SolvingLogPage = async (page: any) => {
     setPage(page)
     await getSolvingLog(accessToken, currentPage, 10)

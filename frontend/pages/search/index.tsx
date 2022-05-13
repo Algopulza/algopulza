@@ -25,20 +25,21 @@ export default function Search() {
   const [currentPage, setPage] = useState(0)
 
   // 최초진입시 문제표시 api
-  const accessToken = useRecoilValue(accessTokenState)
-  const problemList = async () => {
-    await getProblems(accessToken)
-      .then(res => {
-        setRows(res.data.data)
-        // setEndPage(res.data.data.length/20)
-      })
-      .catch(err => console.log(err))
-  }
   useEffect(() => { 
+    const accessToken = useRecoilValue(accessTokenState)
+    const problemList = async () => {
+      await getProblems(accessToken)
+        .then(res => {
+          setRows(res.data.data)
+          // setEndPage(res.data.data.length/20)
+        })
+        .catch(err => console.log(err))
+    }
     problemList()
   }, [])
 
   // 검색 api
+  const accessToken = useRecoilValue(accessTokenState)
   const problemListSearch = async (text: any) => {
     setSearched(text)
     await getSearchProblems(accessToken, searched, 0)
