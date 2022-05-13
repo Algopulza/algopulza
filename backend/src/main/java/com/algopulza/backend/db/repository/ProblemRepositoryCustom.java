@@ -8,9 +8,7 @@ import java.util.Set;
 
 public interface ProblemRepositoryCustom {
 
-    List<ProblemRes> findProblemRes(Long memberId, String tierName, Integer tierLevel, Pageable pageable);
-
-    List<ProblemRes> findProblemResByTitleLike(Long memberId, String keyword, Pageable pageable);
+    List<ProblemRes> findProblemRes(Long memberId, String tierName, Integer tierLevel, String title, Pageable pageable);
 
     List<Long> findAllId();
 
