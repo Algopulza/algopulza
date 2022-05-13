@@ -1,57 +1,79 @@
 import styled from "styled-components";
-import Image from "next/image";
-import Seed1 from "../../../public/analysis/badge/seed1.png";
-import Seed2 from "../../../public/analysis/badge/seed2.png";
-import Seed3 from "../../../public/analysis/badge/seed3.png";
-import Seed4 from "../../../public/analysis/badge/seed4.png";
-import Seed5 from "../../../public/analysis/badge/seed5.png";
+import dynamic from "next/dynamic";
+import { getBadgeImage } from "../../../util/BadgeImage";
+
 
 const Container = styled.div`
-  width: 90%;
-  height: 90%;
+  width: 30vw;
+  height: 25vh;
   border-radius: 10px;
   box-shadow: 0px 4px 4px 0 rgba(0, 0, 0, 0.25);
   display: grid;
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: 2fr 2fr;
   padding: 1rem;
-`;
-
-const ProfileImage = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
 `;
 
 const RightContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-`;
-
-const NickName = styled.div`
-  display: flex;
-  flex-direction: row;
-`;
+  `;
 
 const Title = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   font-weight: bold;
-  font-size: 2rem;
+  /* font-size: 2rem; */
   margin-left: 1rem;
 `;
 
-export default function Badge() {
+type EXP = {exp : number}
+
+export default function Badge({exp}:EXP) {
+  const badge = getBadgeImage(exp).image
+  const ApexCharts = dynamic(() => import("react-apexcharts"), { ssr: false });
+  const data=getBadgeImage(exp).per
+  const grade=getBadgeImage(exp).grade
   return (
     <Container>
-      <ProfileImage>
-        <Image src={Seed1} alt="이미지를 찾을 수 없습니다." />
-      </ProfileImage>
+      <ApexCharts
+        type="radialBar"
+        series={data}
+        options={{
+          chart: {
+            height: 350,
+            type: 'radialBar',
+          },
+          plotOptions: {
+            radialBar: {
+              hollow: {
+                margin: 0,
+                size: '70%',
+                image: badge,
+                imageWidth: 64,
+                imageHeight: 64,
+                imageClipped: false
+              },
+              dataLabels: {
+                name: {
+                  show: false,
+                  color: '#fff'
+                },
+                value: {
+                  show: true,
+                  color: '#333',
+                  offsetY: 50,
+                  fontSize: '22px'
+                }
+              }
+            }
+          },
+        }}
+      />
       <RightContainer>
-        <NickName>
-          <Title>현재 새싹 등급이에요!</Title>
-        </NickName>
+          <Title>현재 {exp}P</Title>
+          <Title>현재 {grade} 등급이에요!</Title>
       </RightContainer>
     </Container>
   );
