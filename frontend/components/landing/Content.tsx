@@ -25,7 +25,7 @@ export default function Content() {
     <Container>
       <BrandName style={{marginTop: 30}}>알고ㅤ</BrandName>
       <BrandName style={{marginBottom: 30}}>ㅤ풀자</BrandName>
-      <BrandCatchphrase>막 풀지 말고, 알고 풀자!</BrandCatchphrase>
+      <BrandCatchphrase>막 풀지 말고, 알고 풀자!!!!!</BrandCatchphrase>
     </Container>
   )
 }
