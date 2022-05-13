@@ -14,6 +14,7 @@ import com.algopulza.backend.config.jwt.RoleType;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +25,7 @@ import java.util.Map;
 
 import static com.algopulza.backend.common.model.ResponseMessage.REFRESH_TOKEN;
 
+@Slf4j
 @Api(value = "회원관리 API", tags = {"member"})
 @RestController
 @RequiredArgsConstructor
@@ -75,8 +77,8 @@ public class MemberController {
             @ApiResponse(code = 401, message = ResponseMessage.UNAUTHORIZED, response = ErrorResponse.class),
             @ApiResponse(code = 403, message = ResponseMessage.ACCESS_DENIED, response = ErrorResponse.class),
             @ApiResponse(code = 404, message = ResponseMessage.NOT_FOUND, response = ErrorResponse.class)})
-    public ResponseEntity<BaseResponseBody> checkId(@RequestBody @ApiParam(value = "algopulza ID", required = true) String id) {
-        boolean isPresent =  memberService.checkId(id);
+    public ResponseEntity<BaseResponseBody> checkId(@RequestBody @ApiParam(value = "algopulza ID", required = true) CheckIdReq checkIdReq) {
+        boolean isPresent =  memberService.checkId(checkIdReq.getId());
 
         return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.CREATED, ResponseMessage.CHECK_DUPLICATE_ID, isPresent));
     }
