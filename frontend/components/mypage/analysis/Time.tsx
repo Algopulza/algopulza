@@ -14,16 +14,17 @@ const Container = styled.div`
   padding: 1rem;
   font-size: 1.5rem;
 `;
+
 type CODE = {
-  length:number
+  time:number
 }
-const Code = ({length}:CODE) => {
+const Time = ({time}:CODE) => {
   return (
     <Container>
-      <AnalyTitle>총 코드 길이</AnalyTitle>
-      {length}B
+      <AnalyTitle>총 걸린 시간</AnalyTitle>
+      {time} 분
     </Container>
   );
 };
 
-export default Code;
+export default Time;

@@ -1,17 +1,43 @@
 import styled from "styled-components";
 import dynamic from "next/dynamic";
 import AnalyTitle from "../../common/AnalyTitle";
+import { useEffect, useState } from "react";
+import { User } from "../../../pages/mypage";
+import { getAnalyTag } from "../../../api/flask/analysis/AnalyTag";
 
 const Container = styled.div`
-  width: 90%;
-  height: 90%;
+  width: 30vw;
+  height: 60vh;
   border-radius: 10px;
   box-shadow: 0px 4px 4px 0 rgba(0, 0, 0, 0.25);
   padding: 1rem;
 `;
 
-export default function solved() {
+export default function Solved({accessToken, bojId}:User) {
   const ApexCharts = dynamic(() => import("react-apexcharts"), { ssr: false });
+  const [label, setLabel] = useState<Array<string>>([]);
+  const [solved, setSolved] = useState<Array<number>>([]);
+
+  const AnalUser = async () => {
+    await getAnalyTag(accessToken, bojId)
+      .then((res) => {
+        const week = res.data;
+        let label_temp = [];
+        let solved_temp = [];
+        let idx = 0;
+        for (idx; idx < week.length; idx++) {
+          label_temp.push(week[idx].name);
+          solved_temp.push(week[idx].solvedcnt);
+        }
+        setLabel(label_temp);
+        setSolved(solved_temp);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    AnalUser();
+  }, []);
   return (
     <Container>
       <AnalyTitle>태그 별 해결 문제 수</AnalyTitle>
@@ -20,7 +46,7 @@ export default function solved() {
         series={[
           {
             name: "Tag",
-            data: [15, 18, 22, 21, 24, 16, 10, 11, 16, 20],
+            data: solved,
           },
         ]}
         options={{
@@ -39,18 +65,7 @@ export default function solved() {
             labels: {},
           },
           xaxis: {
-            categories: [
-              "deque",
-              "hashing",
-              "trees",
-              "bitmask",
-              "divide_and_conquer",
-              "euclidean",
-              "arbitrary_precision",
-              "pythagoras",
-              "geometry",
-              "combinatorics",
-            ],
+            categories: label,
             labels: {},
           },
           plotOptions: {
