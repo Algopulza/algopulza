@@ -21,6 +21,12 @@ export const memberIdState = atom({
   effects_UNSTABLE: [persistAtom]
 })
 
+export const algoIdState = atom({
+  key: 'algoIdState',
+  default: {},
+  effects_UNSTABLE: [persistAtom]
+})
+
 export const accessTokenState = atom({
   key: 'accessTokenState',
   default: '',
