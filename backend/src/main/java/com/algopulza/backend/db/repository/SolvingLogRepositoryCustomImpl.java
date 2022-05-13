@@ -99,18 +99,25 @@ public class SolvingLogRepositoryCustomImpl implements  SolvingLogRepositoryCust
     }
 
     @Override
-    public List<SolvedCountAnalysisRes> findCountByMemberId(Long memberId) {
+    public List<SolvedCountByYearAndMonthRes> countByStatusAndSubmitDate(Long memberId, String status) {
         return jpaQueryFactory
-                .select(Projections.constructor(SolvedCountAnalysisRes.class,
-                        qSolvingLog.createdTime.year(),
-                        qSolvingLog.createdTime.month(),
+                .select(Projections.constructor(SolvedCountByYearAndMonthRes.class,
+                        qSolvingLog.submitTime.year(),
+                        qSolvingLog.submitTime.month(),
                         qSolvingLog.count()
                 ))
                 .from(qSolvingLog)
-                .where(qSolvingLog.member.id.eq(memberId))
-                .groupBy(qSolvingLog.createdTime.year(), qSolvingLog.createdTime.month())
-                .orderBy(qSolvingLog.createdTime.asc())
+                .where(qSolvingLog.member.id.eq(memberId), qSolvingLog.submitTime.isNotNull(), eqStatus(status))
+                .groupBy(qSolvingLog.submitTime.year(), qSolvingLog.submitTime.month())
+                .orderBy(qSolvingLog.submitTime.asc())
                 .fetch();
+    }
+
+    private BooleanExpression eqStatus(String status) {
+        if (StringUtils.hasText(status)) {
+            return qSolvingLog.status.eq(status);
+        }
+        return null;
     }
 
     @Override

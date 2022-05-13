@@ -11,9 +11,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
-import java.util.List;
+import java.util.*;
 
 @RequiredArgsConstructor
 @Transactional
@@ -31,8 +30,32 @@ public class AnalysisServiceImpl implements AnalysisService {
     }
 
     @Override
-    public List<SolvedCountAnalysisRes> getSolvedCountAnalysisList(Long memberId) {
-        return solvingLogRepository.findCountByMemberId(memberId);
+    public List<SolvedCountByYearRes> getSolvedCountAnalysisList(Long memberId) {
+        // [{"year": 2022, "month": 1, "solvedCount": 10}, ...] 형태로 조회
+        List<SolvedCountByYearAndMonthRes> solvedCountByYearAndMonthResList = solvingLogRepository.countByStatusAndSubmitDate(memberId, "solved");
+
+        // [{"year": 2022, }, ...] 형태로 변환
+        Map<Integer, int[]> yearToSolvedCountMap = new HashMap<>();
+        List<SolvedCountByYearRes> solvedCountAnalysisList = new LinkedList<>();
+
+        for (SolvedCountByYearAndMonthRes solvedCountByYearAndMonthRes : solvedCountByYearAndMonthResList) {
+            int year = solvedCountByYearAndMonthRes.getYear();
+            int month = solvedCountByYearAndMonthRes.getMonth();
+            long solvedCount = solvedCountByYearAndMonthRes.getSolvedCount();
+
+            if (yearToSolvedCountMap.containsKey(year)) {
+                yearToSolvedCountMap.get(year)[month - 1] = (int) solvedCount;
+            } else {
+                int[] solvedCountArray = new int[12];
+                solvedCountArray[month - 1] = (int) solvedCount;
+                SolvedCountByYearRes solvedCountByYearRes = new SolvedCountByYearRes(year, solvedCountArray);
+
+                solvedCountAnalysisList.add(solvedCountByYearRes);
+                yearToSolvedCountMap.put(year, solvedCountArray);
+            }
+        }
+
+        return solvedCountAnalysisList;
     }
 
     @Override
