@@ -10,9 +10,12 @@ import com.algopulza.backend.common.model.ResponseMessage;
 import com.algopulza.backend.config.jwt.JwtUtil;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 @Api(value = "분석 정보 API", tags = {"analysis"})
 @RestController
@@ -91,6 +94,20 @@ public class AnalysisController {
         Long memberId = JwtUtil.getCurrentId();
         analysisService.addDetailSolvedProblem(memberId, addDetailSolvedProblemReq);
         return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.CREATED, ResponseMessage.POST_DETAIL_SOLVED_PROBLEM_SUCCESS));
+    }
+
+    @GetMapping("/solving-log")
+    @ApiOperation(value = "풀이 기록 조회", notes = "풀이 기록을 조회하는 API 입니다.")
+    @ApiImplicitParams({@ApiImplicitParam(name = "page", dataType = "integer", paramType = "query", defaultValue = "0"),
+            @ApiImplicitParam(name = "size", dataType = "integer", paramType = "query", defaultValue = "5")})
+    @ApiResponses({@ApiResponse(code = 200, message = ResponseMessage.GET_SOLVING_LOG_SUCCESS),
+            @ApiResponse(code = 400, message = ResponseMessage.BAD_REQUEST, response = ErrorResponse.class),
+            @ApiResponse(code = 401, message = ResponseMessage.UNAUTHORIZED, response = ErrorResponse.class),
+            @ApiResponse(code = 403, message = ResponseMessage.ACCESS_DENIED, response = ErrorResponse.class),
+            @ApiResponse(code = 404, message = ResponseMessage.NOT_FOUND, response = ErrorResponse.class)})
+    public ResponseEntity<BaseResponseBody> listSolvingLog(@ApiIgnore @PageableDefault(size = 5) Pageable pageable) {
+        Long memberId = JwtUtil.getCurrentId();
+        return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, ResponseMessage.GET_SOLVING_LOG_SUCCESS, analysisService.getSolvingLogList(memberId, pageable)));
     }
 
 }

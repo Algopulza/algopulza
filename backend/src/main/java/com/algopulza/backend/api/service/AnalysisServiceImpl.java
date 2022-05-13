@@ -7,9 +7,12 @@ import com.algopulza.backend.common.exception.handler.ErrorCode;
 import com.algopulza.backend.db.entity.*;
 import com.algopulza.backend.db.repository.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -63,7 +66,13 @@ public class AnalysisServiceImpl implements AnalysisService {
         solvingLog.setCodeLength(addDetailSolvedProblemReq.getCodeLength());
         solvingLog.setSolvingTime(addDetailSolvedProblemReq.getSolvingTime());
         solvingLog.setSubmitTime(addDetailSolvedProblemReq.getSubmitTime());
+        solvingLog.setUpdatedTime(ZonedDateTime.now().toLocalDateTime());
         solvingLogRepository.save(solvingLog);
+    }
+
+    @Override
+    public List<SolvingLogRes> getSolvingLogList(Long memberId, Pageable pageable) {
+        return solvingLogRepository.findByMemberId(memberId, pageable);
     }
 
 }

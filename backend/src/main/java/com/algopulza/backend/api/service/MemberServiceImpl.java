@@ -350,7 +350,7 @@ public class MemberServiceImpl implements MemberService {
         Optional<Member> member = Optional.ofNullable(memberRepository.findByBojId(bojId));
         member.ifPresent(selectMember->{
             // member가 푼 문제 리스트
-            List<Problem> problemList = solvingLogRepository.findByMember(selectMember);
+            List<Problem> problemList = solvingLogRepository.findProblemByMember(selectMember);
 
             // 안 풀었던 문제였다면 새로 추가
             if(!problemList.contains(problem)) {
