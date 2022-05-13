@@ -1,6 +1,7 @@
 package com.algopulza.backend.api.service;
 
 import com.algopulza.backend.api.request.member.*;
+import com.algopulza.backend.api.response.LoginMemberRes;
 import com.algopulza.backend.api.response.MemberRes;
 import com.algopulza.backend.api.response.TokenRes;
 import com.algopulza.backend.config.jwt.RoleType;
@@ -30,7 +31,7 @@ public interface MemberService {
 
     String extractBojIdFromImg(MultipartFile capturedImage);
 
-    MemberRes login(LoginReq loginReq);
+    LoginMemberRes login(LoginReq loginReq);
 
     boolean checkId(String id);
 }
