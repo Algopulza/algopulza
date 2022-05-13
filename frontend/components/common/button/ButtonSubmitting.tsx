@@ -7,7 +7,6 @@ const Button = styled.button`
   border: none;
   border-radius: 15px;
   box-shadow: 0px 4px 10px 6px rgba(0, 0, 0, 0.25);
-  font-size: 1.3vw;
   font-weight: 700;
   color: white;
   cursor: pointer;
@@ -23,6 +22,11 @@ type SubmittingProps = {
 
 export default function ButtonSubmitting({ submittingAttr, onClick }: SubmittingProps) {
   return (
-    <Button style={{width: `${submittingAttr.width}`}} onClick={onClick}>{submittingAttr.text}</Button>
+    <Button
+      style={{width: submittingAttr.width, fontSize: submittingAttr.fontSize}}
+      onClick={onClick}
+    >
+      {submittingAttr.text}
+    </Button>
   )
 }
