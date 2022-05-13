@@ -1,6 +1,7 @@
 package com.algopulza.backend.api.service;
 
 import com.algopulza.backend.api.request.member.*;
+import com.algopulza.backend.api.response.LoginMemberRes;
 import com.algopulza.backend.api.response.MemberRes;
 import com.algopulza.backend.api.response.TokenRes;
 import com.algopulza.backend.common.exception.DuplicatedException;
@@ -23,9 +24,14 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
+import java.util.StringTokenizer;
 import java.util.concurrent.atomic.AtomicReference;
 
 @Slf4j
@@ -75,7 +81,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public MemberRes login(LoginReq loginReq) {
+    public LoginMemberRes login(LoginReq loginReq) {
         String id = loginReq.getId();
         String password = loginReq.getPassword();
 
@@ -132,7 +138,12 @@ public class MemberServiceImpl implements MemberService {
         });
 
         MemberRes memberRes = getMember(member.get().getId());
-        return memberRes;
+        LoginMemberRes loginMemberRes = LoginMemberRes.builder()
+                .memberId(memberRes.getMemberId())
+                .algopluzaId(memberRes.getAlgopluzaId())
+                .bojId(memberRes.getBojId())
+                .build();
+        return loginMemberRes;
     }
 
     @Override
