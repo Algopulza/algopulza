@@ -39,27 +39,6 @@ public class ProblemRepositoryCustomImpl implements ProblemRepositoryCustom {
         );
     }
 
-    @Override
-    public List<ProblemRes> findProblemRes(Long memberId, String tierName, Integer tierLevel, Pageable pageable) {
-        return jpaQueryFactory.select(Projections.constructor(ProblemRes.class,
-                                      qProblem.id,
-                                      qProblem.bojId,
-                                      qProblem.title,
-                                      qTier.level,
-                                      qTier.name,
-                                      qProblem.acceptedCount,
-                                      qProblem.averageTryCount,
-                                      isMarked(memberId)
-                              ))
-                              .from(qProblem)
-                              .join(qTier).on(qProblem.tier.eq(qTier))
-                              .where(eqTierName(tierName), eqNumberInTierName(tierLevel))
-                              .orderBy(qProblem.bojId.asc())
-                              .offset(pageable.getOffset())
-                              .limit(pageable.getPageSize())
-                              .fetch();
-    }
-
     private BooleanExpression eqTierName(String tierName) {
         if (StringUtils.hasText(tierName)) {
             return qTier.name.eq(tierName);
@@ -74,8 +53,15 @@ public class ProblemRepositoryCustomImpl implements ProblemRepositoryCustom {
         return null;
     }
 
+    private BooleanExpression containTitle(String title) {
+        if (StringUtils.hasText(title)) {
+            return qProblem.title.contains(title);
+        }
+        return null;
+    }
+
     @Override
-    public List<ProblemRes> findProblemResByTitleLike(Long memberId, String keyword, Pageable pageable) {
+    public List<ProblemRes> findProblemRes(Long memberId, String tierName, Integer tierLevel, String title, Pageable pageable) {
         return jpaQueryFactory.select(Projections.constructor(ProblemRes.class,
                                       qProblem.id,
                                       qProblem.bojId,
@@ -88,7 +74,7 @@ public class ProblemRepositoryCustomImpl implements ProblemRepositoryCustom {
                               ))
                               .from(qProblem)
                               .join(qTier).on(qProblem.tier.eq(qTier))
-                              .where(qProblem.title.contains(keyword))
+                              .where(eqTierName(tierName), eqNumberInTierName(tierLevel), containTitle(title))
                               .orderBy(qProblem.bojId.asc())
                               .offset(pageable.getOffset())
                               .limit(pageable.getPageSize())

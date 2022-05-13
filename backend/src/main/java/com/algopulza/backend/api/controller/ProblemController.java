@@ -45,21 +45,12 @@ public class ProblemController {
     public ResponseEntity<BaseResponseBody> listProblem(
             @RequestParam(value = "tierName", required = false) String tierName,
             @RequestParam(value = "tierLevel", required = false) Integer tierLevel,
+            @RequestParam(value = "title", required = false) String title,
+            @RequestParam(value = "tagIds", required = false) String tagIds,
             @ApiIgnore @PageableDefault(size = 20) Pageable pageable
     ) {
         Long memberId = JwtUtil.getCurrentId();
-        return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, ResponseMessage.GET_PROBLEM_LIST_SUCCESS, problemService.getProblemList(memberId, tierName, tierLevel, pageable)));
-    }
-
-    @GetMapping("/search")
-    @ApiOperation(value = "문제 검색", notes = "제목으로 문제를 검색하는 API 입니다.")
-    @ApiImplicitParams({@ApiImplicitParam(name = "page", dataType = "integer", paramType = "query", defaultValue = "0"),
-            @ApiImplicitParam(name = "size", dataType = "integer", paramType = "query", defaultValue = "5")})
-    @ApiResponses({@ApiResponse(code = 200, message = ResponseMessage.SEARCH_PROBLEM_SUCCESS, response = ErrorResponse.class),
-            @ApiResponse(code = 400, message = ResponseMessage.BAD_REQUEST, response = ErrorResponse.class)})
-    public ResponseEntity<BaseResponseBody> listProblemByKeyword(@RequestParam String title, @ApiIgnore @PageableDefault(size = 5) Pageable pageable) {
-        Long memberId = JwtUtil.getCurrentId();
-        return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, ResponseMessage.SEARCH_PROBLEM_SUCCESS, problemService.getProblemListByTitle(memberId, title, pageable)));
+        return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, ResponseMessage.GET_PROBLEM_LIST_SUCCESS, problemService.getProblemList(memberId, tierName, tierLevel, title, tagIds, pageable)));
     }
 
     @GetMapping("/random-one")
@@ -96,7 +87,7 @@ public class ProblemController {
     }
 
     @PostMapping("/{problemId}/mark")
-    @ApiOperation(value = "풀어볼 문제 목록에 추가", notes = "풀어볼 문제로 등록하는 API 입니다.")
+    @ApiOperation(value = "즐겨찾기 목록에 추가", notes = "즐겨찾기로 등록하는 API 입니다.")
     @ApiResponses({@ApiResponse(code = 201, message = ResponseMessage.POST_PROBLEM_MARK),
             @ApiResponse(code = 400, message = ResponseMessage.BAD_REQUEST, response = ErrorResponse.class),
             @ApiResponse(code = 401, message = ResponseMessage.UNAUTHORIZED, response = ErrorResponse.class),
@@ -109,7 +100,7 @@ public class ProblemController {
     }
 
     @DeleteMapping("/{problemId}/mark")
-    @ApiOperation(value = "풀어볼 문제 목록에서 삭제", notes = "풀어볼 문제에서 삭제하는 API 입니다.")
+    @ApiOperation(value = "즐겨찾기 목록에서 삭제", notes = "즐겨찾기에서 삭제하는 API 입니다.")
     @ApiResponses({@ApiResponse(code = 200, message = ResponseMessage.DELETE_PROBLEM_MARK),
             @ApiResponse(code = 400, message = ResponseMessage.BAD_REQUEST, response = ErrorResponse.class),
             @ApiResponse(code = 401, message = ResponseMessage.UNAUTHORIZED, response = ErrorResponse.class),
@@ -122,7 +113,7 @@ public class ProblemController {
     }
 
     @GetMapping("/mark")
-    @ApiOperation(value = "풀어볼 문제 목록 조회", notes = "풀어볼 문제 목록을 조회하는 API 입니다.")
+    @ApiOperation(value = "즐겨찾기 목록 조회", notes = "즐겨찾기 목록을 조회하는 API 입니다.")
     @ApiResponses({@ApiResponse(code = 200, message = ResponseMessage.GET_PROBLEM_MARK),
             @ApiResponse(code = 400, message = ResponseMessage.BAD_REQUEST, response = ErrorResponse.class),
             @ApiResponse(code = 401, message = ResponseMessage.UNAUTHORIZED, response = ErrorResponse.class),
