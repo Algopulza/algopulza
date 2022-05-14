@@ -21,6 +21,7 @@ import org.springframework.http.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -155,7 +156,6 @@ public class MemberServiceImpl implements MemberService {
         return false;
     }
 
-
     @Override
     public void addMember(JoinReq joinReq){
         String id = joinReq.getId();
@@ -201,8 +201,12 @@ public class MemberServiceImpl implements MemberService {
         HttpEntity<String> entity = new HttpEntity<String>("", headers);
 
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<String> memberInfo
-                = restTemplate.exchange(SolvedacBaseUrl+"/user/show?handle="+bojId, HttpMethod.GET, entity, String.class);
+        ResponseEntity<String> memberInfo = null;
+        try {
+            memberInfo  = restTemplate.exchange(SolvedacBaseUrl+"/user/show?handle="+bojId, HttpMethod.GET, entity, String.class);
+        }catch (HttpClientErrorException e){
+            throw new NotFoundException(ErrorCode.NOT_FOUND_MEMBER);
+        }
 
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode jsonNode = null;
