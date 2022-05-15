@@ -44,11 +44,6 @@ export const pageState = atom({
   default: '',
 })
 
-export const languageSelectionState = atom({
-  key: 'languageSelectionState',
-  default: '',
-})
-
 export const loginState = atom({
   key: 'loginState',
   default: false,
@@ -74,5 +69,22 @@ export const solvedState = atom({
 })
 export const triedState = atom({
   key: 'triedState',
+  default: '',
+})
+
+export const problemIdState = atom({
+  key: 'problemIdState',
+  default: '',
+})
+export const memoryState = atom({
+  key: 'memoryState',
+  default: '',
+})
+export const runtimeState = atom({
+  key: 'runtimeState',
+  default: '',
+})
+export const languageState = atom({
+  key: 'languageState',
   default: '',
 })

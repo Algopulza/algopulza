@@ -1,11 +1,11 @@
-import { useState } from 'react'
 import InputTextField from '../../common/input/InputTextField'
 import ButtonSubmitting from '../../common/button/ButtonSubmitting'
 import styled from 'styled-components'
-import InputSelection from '../../common/input/InputSelection'
-import { useRecoilValue } from 'recoil'
-import { languageSelectionState, accessTokenState } from '../../../util/stateCollection'
 import { handleInfoClick } from '../../../util/inputHandlerCollection'
+import InputSelection from '../../common/input/InputSelection'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { problemIdState, memoryState, runtimeState, languageState, accessTokenState } from '../../../util/stateCollection'
+import { checkSpace } from '../../../util/validationCollection'
 
 const Container = styled.section`
   display: grid;
@@ -14,26 +14,16 @@ const Container = styled.section`
 `
 
 export default function FormInfo() {
-  const [problemBojId, setProblemBojId] = useState('')
-  const [memory, setMemory] = useState('')
-  const [runTime, setRunTime] = useState('')
-  const language = useRecoilValue(languageSelectionState)
+  const [problemId, setProblemId] = useRecoilState(problemIdState)
+  const [memory, setMemory] = useRecoilState(memoryState)
+  const [runtime, setRuntime] = useRecoilState(runtimeState)
+  const language = useRecoilValue(languageState)
   const accessToken = useRecoilValue(accessTokenState)
 
-  const handleIdChange = (event: any) => {
-    setProblemBojId(event.target.value)
-  }
-  const handleMemoryChange = (event: any) => {
-    setMemory(event.target.value)
-  }
-  const handleRunTimeChange = (event: any) => {
-    setRunTime(event.target.value)
-  }
-
   const info = {
-    'problemBojId': problemBojId,
+    'problemBojId': problemId,
     'memory': memory,
-    'runTime': runTime,
+    'runTime': runtime,
     'language': language,
     'codeLength': 0,
     'solvingTime': 0,
@@ -43,30 +33,35 @@ export default function FormInfo() {
   return (
     <Container>
       <div>
-        <InputTextField
-          textFieldAttr={{id: 'problemBojId', label:'문제 번호', marginRight: '0px', width: '15vw', password: false, autofocus: true}}
-          valid={true}
-          validMessage='문제 번호를 정확히 입력해 주세요.'
-          onChange={handleIdChange}
+       <InputTextField
+          textFieldAttr={{width: '15vw', id: 'problemId', label: 'Problem Id', marBot: '10px', marRig: '0px', isPw: false, isAf: false}}
+          valid={checkSpace}
+          errorMessage='문제 번호를 입력해주세요.'
+          setter={setProblemId}
           onKeyDown={() => {}}
         />
         <InputTextField
-          textFieldAttr={{id: 'memory', label:'메모리', marginRight: '0px', width: '15vw', password: false, autofocus: false}}
-          valid={true}
-          validMessage='메모리를 정확히 입력해 주세요.'
-          onChange={handleMemoryChange}
+          textFieldAttr={{width: '15vw', id: 'memory', label: 'Memory', marBot: '10px', marRig: '0px', isPw: false, isAf: false}}
+          valid={checkSpace}
+          errorMessage='메모리를 입력해주세요.'
+          setter={setMemory}
           onKeyDown={() => {}}
         />
         <InputTextField
-          textFieldAttr={{id: 'runTime', label:'실행시간', marginRight: '0px', width: '15vw', password: false, autofocus: false}}
-          valid={true}
-          validMessage='사용언어를 정확히 입력해 주세요.'
-          onChange={handleRunTimeChange}
+          textFieldAttr={{width: '15vw', id: 'runtime', label: 'Runtime', marBot: '10px', marRig: '0px', isPw: false, isAf: false}}
+          valid={checkSpace}
+          errorMessage='실행 시간을 입력해주세요.'
+          setter={setRuntime}
           onKeyDown={() => {}}
         />
         <InputSelection></InputSelection>
+        <p id="resultInfo" style={{fontSize: '1vw', marginTop: '10px', marginBottom: 0}}></p>
       </div>
-      <ButtonSubmitting submittingAttr={{text: '제공', width: '15vw', fontSize: '1.1vw'}} onClick={() => {handleInfoClick(event, info, accessToken)}} />
+      <ButtonSubmitting
+        submittingAttr={{text: '제공', width: '15vw', marBot: '15px', fontSize: '1.1vw'}}
+        isImportant={true}
+        onClick={() => {handleInfoClick(event, info, accessToken)}}
+      />
     </Container>
   )
 }
