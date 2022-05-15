@@ -1,10 +1,10 @@
-import { useState } from 'react'
 import InputTextField from '../../common/input/InputTextField'
 import ButtonSubmitting from '../../common/button/ButtonSubmitting'
-import { useRecoilValue } from 'recoil'
-import { accessTokenState, bojIdState } from '../../../util/stateCollection'
 import { axiosSolved } from '../../../util/axiosCollection'
 import styled from 'styled-components'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { accessTokenState, bojIdState, solvedState } from '../../../util/stateCollection'
+import { checkSpace } from '../../../util/validationCollection'
 
 const Container = styled.section`
   display: grid;
@@ -13,38 +13,35 @@ const Container = styled.section`
 `
 
 export default function FormSolved() {
-  const [solvedProblems, setSolvedProblems] = useState('')
-  const [valid, setValid] = useState(true)
+  const [solved, setSolved] = useRecoilState(solvedState)
   const bojId = useRecoilValue(bojIdState)
   const accessToken = useRecoilValue(accessTokenState)
+  let result = document.getElementById('resultSolved')
 
-  const handleChange = (event: any) => {
-    setSolvedProblems(event.target.value)
-  }
   const handleClick = (event: any) => {
-    if (solvedProblems.trim() === '') {
-      setValid(false)
-    } else {
-      setValid(true)
-      axiosSolved(bojId, solvedProblems, accessToken)
-        .then(res => {
-          console.log(res)
-          // event.target.value = null
-          // setSolvedProblems(event.target.value)
-        })
-    }
+    axiosSolved(bojId, solved, accessToken)
+      .then(res => {
+        result!.innerText = '감사합니다!'
+      })
   }
 
   return (
     <Container>
-      <InputTextField
-        textFieldAttr={{id: 'solved', label: '해결한 문제', marginRight: '0px', width: '15vw', password: false, autofocus: false}}
-        valid={valid}
-        validMessage='해결한(solved) 문제 목록을 정확히 입력해주세요.'
-        onChange={handleChange}
-        onKeyDown={() => {}}
+      <div>
+        <InputTextField
+          textFieldAttr={{width: '15vw', id: 'solved', label: 'Solved Problems', marBot: '10px', marRig: '0px', isPw: false, isAf: true}}
+          valid={checkSpace}
+          errorMessage='해결한 문제들을 입력해주세요.'
+          setter={setSolved}
+          onKeyDown={() => {}}
+        />
+        <p id="resultSolved" style={{fontSize: '1vw', marginTop: 0, marginBottom: 0}}></p>
+      </div>
+      <ButtonSubmitting
+        submittingAttr={{text: '제공', width: '15vw', marBot: '15px', fontSize: '1.1vw'}}
+        isImportant={true}
+        onClick={handleClick}
       />
-      <ButtonSubmitting submittingAttr={{text: '제공', width: '15vw', fontSize: '1.1vw'}} onClick={handleClick} />
     </Container>
   )
 }

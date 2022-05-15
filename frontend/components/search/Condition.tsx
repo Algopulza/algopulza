@@ -1,10 +1,12 @@
-import { useState } from 'react'
 import SelectionTier from './selection/SelectionTier'
 import SelectionLevel from './selection/SelectionLevel'
 import SelectionTag from './selection/SelectionTag'
 import InputTextField from '../common/input/InputTextField'
 import ButtonSearching from '../common/button/ButtonSearching'
 import styled from 'styled-components'
+import { useRecoilState } from 'recoil'
+import { keywordState } from '../../util/stateCollection'
+import { checkSpace } from '../../util/validationCollection'
 
 const Container = styled.section`
   display: grid;
@@ -35,32 +37,10 @@ const Col = styled.div<{size: number}>`
   max-height: 40em;
 `;
 
-export type TextFieldAttr = {
-  id: string,
-  label: string,
-  width: string,
-  password: boolean,
-  autofocus: boolean
-}
-
-export type SubmittingAttr = { text: string, width: string }
-
-const handleChange = () => {
-  // props 맞추기 위한 null 함수
-}
-
 export default function Condition(props: any) {
-  const [valid, setValid] = useState(true)
-  const [text, setText] = useState("")
+  const [keyword, setKeyword] = useRecoilState(keywordState)
+  const submitSearched = () => { props.propFunction(keyword) }
 
-  const handleChangeSearched = (event: any) => {
-    setText(event.target.value)
-  }
-  const submitSearched = () => {
-    props.propFunction(text)
-  }
-
-  
   return (
     <Container>
       <Subcontainer cond={true}>
@@ -71,11 +51,11 @@ export default function Condition(props: any) {
       
       <Subcontainer cond={false}>
         <InputTextField
-          textFieldAttr={{id: 'search', label: 'Search', width: '20vw', marginRight: '0px', password: false, autofocus: false}}
-          valid={valid}
-          validMessage='백준 아이디를 정확히 입력해 주세요.'
-          onChange={handleChangeSearched}
-          onKeyDown={handleChange}
+          textFieldAttr={{width: '20vw', id: 'keyword', label: 'Search', marBot: '10px', marRig: '0px', isPw: false, isAf: false}}
+          valid={checkSpace}
+          errorMessage='검색어를 입력해주세요.'
+          setter={setKeyword}
+          onKeyDown={() => {}}
         />
         <ButtonSearching
           submittingAttr={{text: '검색', width: '5vw'}}

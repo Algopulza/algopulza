@@ -3,10 +3,10 @@ import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
 import { useRecoilState } from 'recoil'
-import { languageSelectionState } from '../../../util/stateCollection'
+import { languageState } from '../../../util/stateCollection'
 
 export default function SelectionLevel() {
-  const [language, setLangauge] = useRecoilState(languageSelectionState)
+  const [language, setLangauge] = useRecoilState(languageState)
 
   const handleChange = (event: SelectChangeEvent) => {
     setLangauge(event.target.value as string)

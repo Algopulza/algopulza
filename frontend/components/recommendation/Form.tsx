@@ -1,15 +1,23 @@
+import Image from 'next/image'
 import styled from 'styled-components'
 import FormSolved from './form/FormSolved'
 import FormTried from './form/FormTried'
 import FormInfo from './form/FormInfo'
+import GuideImg from '../../public/contents/recommendation_yellow.png'
 
 const Container = styled.section`
   display: grid;
   grid-template-columns: 6fr 2fr 2fr;
-  height: 50vh;
+  height: 650px;
   margin-bottom: 80px;
   padding: 0vw 5vw;
   background: #FFC94D;
+`
+
+const Canvas = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 `
 
 const HistoryContainer = styled.div`
@@ -28,9 +36,10 @@ const InfoContainer = styled.div`
 export default function Form() {
   return (
     <Container>
-      <div style={{marginTop: 20}}>
-        문제에 대한 정보를 넣어주시면 더 강력한 추천이 가능합니다!
-      </div>
+      <Canvas>
+        <Image src={GuideImg} layout="responsive" height={980} alt="회원가입 가이드 이미지" />
+      </Canvas>
+
       <HistoryContainer>
         <FormSolved />
         <FormTried />
