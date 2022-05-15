@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react"
-import Grid from '@mui/material/Grid';
 import styled from "styled-components"
 import AnalyTitle from "../../common/AnalyTitle"
 import SolvedTable from "./SolvedLog/SolvedTable"
@@ -12,46 +11,55 @@ import { getSolvingLog } from "../../../api/back/analysis/SolvedTable"
 
 
 const Container = styled.div`
-  width: 90%;
+  width: 100%;
   height: 100%;
   border-radius: 10px;
   box-shadow: 0px 4px 4px 0 rgba(0, 0, 0, 0.25);
-  display: flex;
-  justify-content: center;
-  align-items: center;
   padding: 1rem;
-  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 `;
-const Subcontainer = styled.div`
+
+const Grid = styled.div`
+`;
+
+const Row = styled.div`
   display: flex;
   justify-content: center;
-`
+  gap: 2em;
+`;
+
+const Col = styled.div<{size: number}>`
+  display: flex;
+  flex: ${props => props.size};
+  justify-content: center;
+  max-height: 40em;
+`;
 
 const Solved = () => {
   const [rows, setRows] = useState([])
   const [currentPage, setPage] = useState(0)
+  const accessToken = useRecoilValue(accessTokenState)
 
   // 최초진입시 문제표시 api
+  const solvingLog = async () => {
+    await getSolvingLog(accessToken, 0, 20)
+      .then(res => {
+        // console.log(res.data.data.content)
+        setRows(res.data.data.content)
+      })
+      .catch(err => console.log(err))
+  }
   useEffect(() => { 
-    const accessToken = useRecoilValue(accessTokenState)
-    const solvingLog = async () => {
-      await getSolvingLog(accessToken, 0, 20)
-        .then(res => {
-          console.log(res.data.data)
-          setRows(res.data.data)
-        })
-        .catch(err => console.log(err))
-    }
     solvingLog()
   }, [])
 
   // page 검색 api
-  const accessToken = useRecoilValue(accessTokenState)
   const SolvingLogPage = async (page: any) => {
     setPage(page)
     await getSolvingLog(accessToken, currentPage, 10)
       .then(res => {
-        setRows(res.data.data)
+        setRows(res.data.data.content)
       })
       .catch(err => console.log(err))
   }
@@ -61,23 +69,14 @@ const Solved = () => {
 
   return (
     <Container>
-      <Grid container justifyContent="center">
-        <Grid><AnalyTitle>풀이 기록</AnalyTitle></Grid>
-        <Grid xs={12}>
-          <SolvedTable rows={rows}/>
-        </Grid>
-        <Grid>
-          <SolvedPagination propPage={SolvingLogPage}/>
-        </Grid>
-      </Grid>
+      <AnalyTitle>풀이 기록</AnalyTitle>
+      <Row>
+        <SolvedTable rows={rows}/>
+      </Row>
+      <Row>
+        <SolvedPagination propPage={SolvingLogPage}/>
+      </Row>
     </Container>
-    // <Container>
-    //   <AnalyTitle>풀이 기록</AnalyTitle>
-    //   <SolvedTable rows={rows}/>
-    //   <Subcontainer>
-    //     <SolvedPagination propPage={SolvingLogPage}/>
-    //   </Subcontainer>
-    // </Container>
   )
 }
 
