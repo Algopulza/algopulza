@@ -9,9 +9,11 @@ export type TextFieldAttr = {
   isAf: boolean
 }
 
+// Submitting Button Data Object
 export type SubmittingAttr = {
   text: string,
   width: string,
+  marBot: string,
   fontSize: string
 }
 
