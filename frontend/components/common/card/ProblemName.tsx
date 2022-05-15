@@ -27,10 +27,13 @@ const Title = styled.p`
   height: 80px;
   margin: 0;
   font-size: 1.2vw;
+  cursor: pointer;
+`
+
+const Core = styled.span`
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  cursor: pointer;
 `
 
 type HeaderProps = {
@@ -45,8 +48,6 @@ export default function ProblemName({ title, id, problemId, tier, bookmark }: He
   const backgroundColor = getBackgroundColor(tier)
   const accessToken = useRecoilValue(accessTokenState)
   const [isBookmark, setIsBookmark] = useState(bookmark)
-  // const [isBookmark, setIsBookmark] = useState(bookmark)
-  // setIsBookmark(bookmark)
 
   const handleClick = () => {
     const problemUrl = `https://www.acmicpc.net/problem/${id}`
@@ -88,7 +89,7 @@ export default function ProblemName({ title, id, problemId, tier, bookmark }: He
       </Canvas>
 
       <Title onClick={handleClick}>
-        {title}
+        <Core>{title}</Core>
       </Title>
     </Container>
   )
