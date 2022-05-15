@@ -1,9 +1,7 @@
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 import { useState } from 'react'
-import { useSetRecoilState } from 'recoil'
 import { TextFieldAttr } from '../../../util/dto'
-import { submitState } from '../../../util/stateCollection'
 
 type TextFieldProps = { 
   textFieldAttr: TextFieldAttr
@@ -15,12 +13,10 @@ type TextFieldProps = {
 
 export default function InputTextField({ textFieldAttr, valid, errorMessage, setter, onKeyDown }: TextFieldProps) {
   const [isValid, setIsValid] = useState(true)
-  const setSubmitCond = useSetRecoilState(submitState)
 
   const ChangeHandler = (event: any) => {
     setter(event.target.value)
     setIsValid(valid(event.target.value))
-    setSubmitCond(true)
   }
   const submitHandler = (event: any) => {
     event.preventDefault()

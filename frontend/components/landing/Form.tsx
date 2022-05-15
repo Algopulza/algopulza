@@ -4,11 +4,12 @@ import ButtonSubmitting from '../common/button/ButtonSubmitting'
 import ButtonRedirecting from '../common/button/ButtonRedirecting'
 import styled from 'styled-components'
 import { axiosLogin } from '../../util/axiosCollection'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { useRecoilState, useSetRecoilState } from 'recoil'
 import {
-  userInfoState, bojIdState, memberIdState, algoIdState, accessTokenState, refreshTokenState, idState, passwordState, submitState
+  bojIdState, memberIdState, algoIdState, accessTokenState, refreshTokenState, idState, passwordState, loginState
 } from '../../util/stateCollection'
 import { checkSpace } from '../../util/validationCollection'
+import { useEffect, useState } from 'react'
 
 const Container = styled.section`
   display: flex;
@@ -18,10 +19,9 @@ const Container = styled.section`
 `
 
 export default function Form() {
+  const [isLogin, setIsLogin] = useState(false)
   const [id, setId] = useRecoilState(idState)
   const [password, setPassword] = useRecoilState(passwordState)
-  const submitCond = useRecoilValue(submitState)
-  const setUserInfo = useSetRecoilState(userInfoState)
   const setBoj = useSetRecoilState(bojIdState)
   const setMember = useSetRecoilState(memberIdState)
   const setAlgo = useSetRecoilState(algoIdState)
@@ -29,48 +29,55 @@ export default function Form() {
   const setRefreshToken = useSetRecoilState(refreshTokenState)
   const router = useRouter()
 
+  useEffect(() => {
+    setIsLogin(window.localStorage.getItem('recoil-persist') !== null ? true : false)
+  }, [])
+
   const handleClick = () => {
-    if (submitCond) {
-    } else {
-      axiosLogin(id, password)
-        .then(res => {
-          setUserInfo(res.data.data.member)
-          setBoj(res.data.data.member.bojId)
-          setMember(res.data.data.member.memberId)
-          setAlgo(res.data.data.member.algopluzaId)
-          setAccessToken(res.data.data.token.accessToken)
-          setRefreshToken(res.data.data.token.refreshToken)
-          router.push('/recommendation')
-        })
-    }
+    axiosLogin(id, password)
+      .then(res => {
+        setBoj(res.data.data.member.bojId)
+        setMember(res.data.data.member.memberId)
+        setAlgo(res.data.data.member.algopluzaId)
+        setAccessToken(res.data.data.token.accessToken)
+        setRefreshToken(res.data.data.token.refreshToken)
+        setIsLogin(true)
+        router.push('/recommendation')
+      })
   }
   const handleKeyDown = (event: any) => {
-    if (event.key === 'Enter' && submitCond) {
+    if (event.key === 'Enter') {
       handleClick()
     }
   }
 
   return (
     <Container>
-      <div style={{marginBottom: 40}}>
-        <InputTextField
-          textFieldAttr={{width: '20vw', id: 'id', label: 'ID', marBot: '15px', marRig: '0px', isPw: false, isAf: true}}
-          valid={checkSpace}
-          errorMessage='알고풀자 아이디를 입력해 주세요.'
-          setter={setId}
-          onKeyDown={() => {}}
-        />
-        <InputTextField
-          textFieldAttr={{width: '20vw', id: 'password', label: 'Password', marBot: '0px', marRig: '0px', isPw: true, isAf: false}}
-          valid={checkSpace}
-          errorMessage='비밀번호를 입력해 주세요.'
-          setter={setPassword}
-          onKeyDown={handleKeyDown}
-        />
-      </div>
+      {isLogin ?
+        <></> :
+        <div style={{marginBottom: 40}}>
+          <InputTextField
+            textFieldAttr={{width: '20vw', id: 'id', label: 'ID', marBot: '15px', marRig: '0px', isPw: false, isAf: true}}
+            valid={checkSpace}
+            errorMessage='알고풀자 아이디를 입력해 주세요.'
+            setter={setId}
+            onKeyDown={() => {}}
+          />
+          <InputTextField
+            textFieldAttr={{width: '20vw', id: 'password', label: 'Password', marBot: '0px', marRig: '0px', isPw: true, isAf: false}}
+            valid={checkSpace}
+            errorMessage='비밀번호를 입력해 주세요.'
+            setter={setPassword}
+            onKeyDown={handleKeyDown}
+          />
+        </div>
+      }
 
       <div>
-        <ButtonSubmitting submittingAttr={{text: '로그인', width: '20vw', fontSize: '1.1vw'}} onClick={handleClick} />
+        {isLogin ?
+          <ButtonSubmitting submittingAttr={{text: '시작하기', width: '20vw', fontSize: '1.1vw'}} onClick={handleClick} /> :
+          <ButtonSubmitting submittingAttr={{text: '로그인', width: '20vw', fontSize: '1.1vw'}} onClick={handleClick} />
+        }
         <ButtonRedirecting />
       </div>
     </Container>

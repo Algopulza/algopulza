@@ -49,16 +49,19 @@ export const languageSelectionState = atom({
   default: '',
 })
 
+export const loginState = atom({
+  key: 'loginState',
+  default: false,
+})
+
 export const idState = atom({
   key: 'idState',
-  default: ''
+  default: '',
+  effects_UNSTABLE: [persistAtom]
 })
 export const passwordState = atom({
   key: 'passwordState',
-  default: ''
+  default: '',
+  effects_UNSTABLE: [persistAtom]
 })
 
-export const submitState = atom({
-  key: 'submitState',
-  default: false
-})
