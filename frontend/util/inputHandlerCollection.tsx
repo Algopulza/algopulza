@@ -22,12 +22,15 @@ export const handleSignupClick = (
 }
 
 export const handleInfoClick = (event: any, info: any, accessToken: string) => {
+  let result = document.getElementById('resultInfo')
+
   if (info.problemBojId.trim() === '') {
     console.log('not valid')
   } else {
     axiosInfo(info, accessToken)
       .then(res => {
-        console.log(res)
+        // console.log(res)
+        result!.innerText = '감사합니다!'
       })
   }
 }
