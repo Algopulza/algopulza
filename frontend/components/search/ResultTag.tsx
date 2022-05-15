@@ -21,7 +21,7 @@ const ResultTag = (props: any) => {
   return (
     <Row>
       {tagList && tagList.map((tag: any) => (
-        <Tag>#{tag.name}</Tag>
+        <Tag key={tag.name}>#{tag.name}</Tag>
         ))}
     </Row>
   );

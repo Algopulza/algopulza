@@ -38,9 +38,10 @@ const FavoriteList = (props: any) => {
   return (
     <Grid>
       {rows && rows.map((row: any) => (
-        <Row>
+        <Row
+          key={row.problemId}
+        >
           <FavoriteCard
-            key={row.problemId}
             id={row.problemId}
             bojId={row.problemBojId}
             title={row.title}
