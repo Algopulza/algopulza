@@ -1,15 +1,14 @@
-import { useState } from 'react'
 import { useRouter } from 'next/router'
 import InputTextField from '../common/input/InputTextField'
 import ButtonSubmitting from '../common/button/ButtonSubmitting'
 import ButtonRedirecting from '../common/button/ButtonRedirecting'
 import styled from 'styled-components'
 import { axiosLogin } from '../../util/axiosCollection'
-import { useSetRecoilState, useRecoilValue, useRecoilState } from 'recoil'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import {
-  userInfoState, bojIdState, memberIdState, algoIdState, accessTokenState, refreshTokenState, idState, passwordState
+  userInfoState, bojIdState, memberIdState, algoIdState, accessTokenState, refreshTokenState, idState, passwordState, submitState
 } from '../../util/stateCollection'
-import { validId, validPassword } from '../../util/validationCollection'
+import { checkSpace } from '../../util/validationCollection'
 
 const Container = styled.section`
   display: flex;
@@ -21,7 +20,7 @@ const Container = styled.section`
 export default function Form() {
   const [id, setId] = useRecoilState(idState)
   const [password, setPassword] = useRecoilState(passwordState)
-  // const [password, setPassword] = useState('')
+  const submitCond = useRecoilValue(submitState)
   const setUserInfo = useSetRecoilState(userInfoState)
   const setBoj = useSetRecoilState(bojIdState)
   const setMember = useSetRecoilState(memberIdState)
@@ -30,11 +29,8 @@ export default function Form() {
   const setRefreshToken = useSetRecoilState(refreshTokenState)
   const router = useRouter()
 
-  // const handleIdChange = (event: any) => { setId(event.target.value) }
-  // const handlePasswordChange = (event: any) => { setPassword(event.target.value) }
-
   const handleClick = () => {
-    if (false) {
+    if (submitCond) {
     } else {
       axiosLogin(id, password)
         .then(res => {
@@ -49,7 +45,7 @@ export default function Form() {
     }
   }
   const handleKeyDown = (event: any) => {
-    if (event.key === 'Enter') {
+    if (event.key === 'Enter' && submitCond) {
       handleClick()
     }
   }
@@ -58,17 +54,17 @@ export default function Form() {
     <Container>
       <div style={{marginBottom: 40}}>
         <InputTextField
-          textFieldAttr={{width: '20vw', id: 'id', label: 'ID', marginRight: '0px', password: false, autofocus: true}}
-          valid={validId}
-          validMessage='알고풀자 아이디를 정확히 입력해 주세요.'
-          state={setId}
+          textFieldAttr={{width: '20vw', id: 'id', label: 'ID', marBot: '15px', marRig: '0px', isPw: false, isAf: true}}
+          valid={checkSpace}
+          errorMessage='알고풀자 아이디를 입력해 주세요.'
+          setter={setId}
           onKeyDown={() => {}}
         />
         <InputTextField
-          textFieldAttr={{width: '20vw', id: 'password', marginRight: '0px', label: 'Password', password: true, autofocus: false}}
-          valid={validPassword}
-          validMessage='비밀번호를 정확히 입력해 주세요.'
-          state={setPassword}
+          textFieldAttr={{width: '20vw', id: 'password', label: 'Password', marBot: '0px', marRig: '0px', isPw: true, isAf: false}}
+          valid={checkSpace}
+          errorMessage='비밀번호를 입력해 주세요.'
+          setter={setPassword}
           onKeyDown={handleKeyDown}
         />
       </div>

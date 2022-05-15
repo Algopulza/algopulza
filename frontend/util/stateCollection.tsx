@@ -57,3 +57,8 @@ export const passwordState = atom({
   key: 'passwordState',
   default: ''
 })
+
+export const submitState = atom({
+  key: 'submitState',
+  default: false
+})

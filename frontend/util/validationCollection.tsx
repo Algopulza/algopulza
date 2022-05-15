@@ -1,12 +1,12 @@
-export const validId = (id: string) => {
-  if (id === '') {
+export const checkSpace = (item: string) => {
+  if (item === '') {
     return false
   } else {
     return true
   }
 }
 
-export const validPassword = (password: string) => {
+export const checkPassword = (password: string) => {
   if (password === '') {
     return false
   } else {

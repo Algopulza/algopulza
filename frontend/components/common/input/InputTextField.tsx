@@ -1,60 +1,54 @@
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
+import { useSetRecoilState } from 'recoil'
 import { TextFieldAttr } from '../../../util/dto'
-import { useRecoilState } from 'recoil'
-import { idState, passwordState } from '../../../util/stateCollection'
-import { validId } from '../../../util/validationCollection'
+import { submitState } from '../../../util/stateCollection'
 
 type TextFieldProps = { 
   textFieldAttr: TextFieldAttr
   valid(item: string): boolean
-  validMessage: string
+  errorMessage: string
+  setter: any
   onKeyDown(event: any): void
-  state: any
 }
 
-export default function InputTextField({ textFieldAttr, valid, validMessage, state, onKeyDown }: TextFieldProps) {
+export default function InputTextField({ textFieldAttr, valid, errorMessage, setter, onKeyDown }: TextFieldProps) {
   const [isValid, setIsValid] = useState(true)
+  const setSubmitCond = useSetRecoilState(submitState)
 
-  const handleChange = (event: any) => {
-    state(event.target.value)
-    console.log(valid(event.target.value))
+  const ChangeHandler = (event: any) => {
+    setter(event.target.value)
     setIsValid(valid(event.target.value))
+    setSubmitCond(true)
   }
-
   const submitHandler = (event: any) => {
     event.preventDefault()
   }
 
   return (
-    <Box
-      component="form"
-      noValidate
-      autoComplete="off"
-      onSubmit={submitHandler}
-    >
+    <Box component="form" onSubmit={submitHandler}>
       {isValid ?
         <TextField
-          sx={{width: textFieldAttr.width, marginBottom: 1, marginRight: textFieldAttr.marginRight}}
+          sx={{width: textFieldAttr.width, marginBottom: textFieldAttr.marBot, marginRight: textFieldAttr.marRig}}
           id={textFieldAttr.id}
           label={textFieldAttr.label}
-          type={textFieldAttr.password ? 'password' : ""}
-          autoFocus={textFieldAttr.autofocus ? true : false}
+          type={textFieldAttr.isPw ? 'password' : ""}
+          autoFocus={textFieldAttr.isAf ? true : false}
           variant="outlined"
           size="small"
-          onChange={handleChange}
+          onChange={ChangeHandler}
           onKeyDown={onKeyDown}
         /> :
         <TextField
           error
-          sx={{width: textFieldAttr.width}}
+          sx={{width: textFieldAttr.width, marginBottom: textFieldAttr.marBot, marginRight: textFieldAttr.marRig}}
           id={textFieldAttr.id}
-          label='Error'
-          helperText={validMessage}
-          autoFocus={textFieldAttr.autofocus ? true : false}
+          label={textFieldAttr.label}
+          type={textFieldAttr.isPw ? 'password' : ""}
+          helperText={errorMessage}
           size="small"
-          onChange={handleChange}
+          onChange={ChangeHandler}
           onKeyDown={onKeyDown}
         />
       }
