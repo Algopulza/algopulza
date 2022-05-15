@@ -1,10 +1,8 @@
-import ButtonSubmitting from '../button/ButtonSubmitting'
+import { useRouter } from 'next/router'
 import styled from 'styled-components'
 import { useRecoilValue } from 'recoil'
 import { accessTokenState, memberIdState } from '../../../util/stateCollection'
 import { axiosLogout } from '../../../util/axiosCollection'
-import { useEffect, useState } from 'react'
-import { useRouter } from 'next/router'
 
 const Container = styled.section`
   display: flex;
@@ -12,15 +10,20 @@ const Container = styled.section`
   margin-right: 20px;
 `
 
+const Text = styled.span`
+  margin-right: 20px;
+  font-size: 1vw;
+  color: '#545454';
+  cursor: pointer;
+  &:hover {
+    color: #FFC94D;
+  }
+`
+
 export default function Logout() {
   const router = useRouter()
   const memberId = useRecoilValue(memberIdState)
   const accessToken = useRecoilValue(accessTokenState)
-  const [isLogin, setIsLogin] = useState(true)
-
-  useEffect(() => {
-    setIsLogin(localStorage.getItem('recoil-persist') !== null ? true : false)
-  }, [])
 
   const handleClick = () => {
     axiosLogout(memberId, accessToken)
@@ -32,7 +35,7 @@ export default function Logout() {
 
   return (
     <Container>
-      {isLogin ? <ButtonSubmitting submittingAttr={{text: '로그아웃', width: '5vw', fontSize: '1.1vw'}} onClick={handleClick} /> : <></>}
+      <Text onClick={handleClick}>로그아웃</Text>
     </Container>
   )
 }

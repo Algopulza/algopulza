@@ -1,5 +1,10 @@
 import { axiosInfo, axiosSignup } from "./axiosCollection"
 
+export const sendMessage = (id: string) => {
+  const result = document.getElementById(id)
+  result!.innerText = '감사합니다!'
+}
+
 export const handleSignupClick = (
     event: any, img: any, id: string, password: string, pwConfrim: string, solvedProblems: string, triedProblems: string, router: any
   ) => {
@@ -22,12 +27,16 @@ export const handleSignupClick = (
 }
 
 export const handleInfoClick = (event: any, info: any, accessToken: string) => {
+  let result = document.getElementById('resultInfo')
+
   if (info.problemBojId.trim() === '') {
     console.log('not valid')
   } else {
     axiosInfo(info, accessToken)
       .then(res => {
-        console.log(res)
+        // console.log(res)
+        sendMessage('resultInfo')
       })
   }
 }
+

@@ -5,14 +5,13 @@ import UserInfo from "../../components/mypage/userInfo/Index";
 import Analysis from "../../components/mypage/analysis/Index";
 import Record from "../../components/mypage/record/Index";
 import { useRecoilValue } from "recoil";
-import { memberIdState, accessTokenState } from "../../util/stateCollection";
-import { useEffect, useState } from "react";
-import { getUserInfo } from "../../api/back/analysis/UserInfo";
+import { memberIdState, bojIdState, accessTokenState } from "../../util/stateCollection";
+import { useState } from "react";
 
 const Container = styled.div`
   display: grid;
   grid-template-rows: 1fr 0.1fr 1fr;
-  padding: 4rem 10rem;
+  padding: 3rem 3rem;
   max-height: 100vh;
 `;
 
@@ -39,28 +38,27 @@ const CategoryButton = styled.a`
   font-weight: bold;
 `
 
-const SubContainer = styled.div``;
+const SubContainer = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+export type User = {
+  accessToken : string
+  memberId : number
+  bojId : string
+}
 
 export default function Mypage() {
-  const [userInfo, setUserInfo] = useState();
   const [analysis, setAnalysis] = useState(true);
   const [record, setRecord] = useState(false);
 
   const accessToken = useRecoilValue(accessTokenState);
   const memberId = useRecoilValue(memberIdState);
+  const bojId = useRecoilValue(bojIdState);
 
-  const AnalUser = async () => {
-    await getUserInfo(accessToken, memberId)
-      .then((res) => {
-        console.log(res)
-        setUserInfo(res.data);
-      })
-      .catch((err) => console.log(err));
-  };
+ 
 
-  useEffect(() => {
-    AnalUser();
-  }, []);
 
   const showAnalysis = async() => {
     setAnalysis(true as any);
@@ -75,7 +73,7 @@ export default function Mypage() {
   return (
     <Container>
       <TopContainer>
-        <UserInfo />
+        <UserInfo accessToken={accessToken} memberId={memberId} bojId={bojId}/>
       </TopContainer>
       <Select>
       <CategoryButton onClick={showAnalysis} color={analysis?"black":"#C4C4C4"}>분석</CategoryButton>
@@ -83,7 +81,7 @@ export default function Mypage() {
       <CategoryButton onClick={showRecord} color={record?"black":"#C4C4C4"}>기록</CategoryButton>
       </Select>
       <SubContainer>
-          {analysis ? <Analysis /> : null}
+          {analysis ? <Analysis accessToken={accessToken} memberId={memberId} bojId={bojId}/> : null}
           {record ? <Record /> : null}
       </SubContainer>
     </Container>

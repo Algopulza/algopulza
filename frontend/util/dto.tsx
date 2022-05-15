@@ -1,16 +1,19 @@
 // TextInput Data Object
 export type TextFieldAttr = {
   width: string,
-  marginRight: string,
+  marBot: string,
+  marRig: string,
   id: string,
   label: string,
-  password: boolean,
-  autofocus: boolean
+  isPw: boolean,
+  isAf: boolean
 }
 
+// Submitting Button Data Object
 export type SubmittingAttr = {
   text: string,
   width: string,
+  marBot: string,
   fontSize: string
 }
 

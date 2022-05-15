@@ -21,6 +21,12 @@ export const memberIdState = atom({
   effects_UNSTABLE: [persistAtom]
 })
 
+export const algoIdState = atom({
+  key: 'algoIdState',
+  default: {},
+  effects_UNSTABLE: [persistAtom]
+})
+
 export const accessTokenState = atom({
   key: 'accessTokenState',
   default: '',
@@ -38,7 +44,52 @@ export const pageState = atom({
   default: '',
 })
 
-export const languageSelectionState = atom({
-  key: 'languageSelectionState',
+export const loginState = atom({
+  key: 'loginState',
+  default: false,
+})
+
+export const idState = atom({
+  key: 'idState',
+  default: '',
+  effects_UNSTABLE: [persistAtom]
+})
+export const passwordState = atom({
+  key: 'passwordState',
+  default: '',
+  effects_UNSTABLE: [persistAtom]
+})
+export const pwConfirmState = atom({
+  key: 'pwConfirmState',
+  default: '',
+})
+export const solvedState = atom({
+  key: 'solvedState',
+  default: '',
+})
+export const triedState = atom({
+  key: 'triedState',
+  default: '',
+})
+
+export const problemIdState = atom({
+  key: 'problemIdState',
+  default: '',
+})
+export const memoryState = atom({
+  key: 'memoryState',
+  default: '',
+})
+export const runtimeState = atom({
+  key: 'runtimeState',
+  default: '',
+})
+export const languageState = atom({
+  key: 'languageState',
+  default: '',
+})
+
+export const keywordState = atom({
+  key: 'keywordState',
   default: '',
 })

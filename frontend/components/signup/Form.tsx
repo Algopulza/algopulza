@@ -3,12 +3,14 @@ import { useRouter } from 'next/router'
 import InputTextField from '../common/input/InputTextField'
 import ButtonSubmitting from '../common/button/ButtonSubmitting'
 import ButtonRedirecting from '../common/button/ButtonRedirecting'
-import { Input } from 'reactstrap'
-import { axiosImg } from '../../util/axiosCollection'
-import { axiosId } from '../../util/axiosCollection'
-import { handleSignupClick } from '../../util/inputHandlerCollection'
 import styled from 'styled-components'
+import { Input } from 'reactstrap'
 import 'bootstrap/dist/css/bootstrap.css'
+import { axiosImg, axiosId } from '../../util/axiosCollection'
+import { handleSignupClick } from '../../util/inputHandlerCollection'
+import { useRecoilState } from 'recoil'
+import { idState, passwordState, pwConfirmState, solvedState, triedState } from '../../util/stateCollection'
+import { checkId, checkPassword, checkSpace } from '../../util/validationCollection'
 
 const Container = styled.section`
   display: flex;
@@ -21,11 +23,11 @@ export default function Form() {
   const [img, setImg] = useState({})
   const [pureImg, setPureImg] = useState('')
   const [imgName, setImgName] = useState('')
-  const [id, setId] = useState('')
-  const [password, setPassword] = useState('')
-  const [pwConfrim, setPwConfirm] = useState('')
-  const [sovled, setSolved] = useState('')
-  const [tried, setTried] = useState('')
+  const [id, setId] = useRecoilState(idState)
+  const [password, setPassword] = useRecoilState(passwordState)
+  const [pwConfirm, setPwConfirm] = useRecoilState(pwConfirmState)
+  const [solved, setSolved] = useRecoilState(solvedState)
+  const [tried, setTried] = useRecoilState(triedState)
   const router = useRouter()
 
   const handleImgChange = (event: any) => {
@@ -39,27 +41,13 @@ export default function Form() {
       setImg(newImgFormData)
     }
   }
-  const handleIdChange = (event: any) => {
-    setId(event.target.value)
-  }
-  const handlePasswordChange = (event: any) => {
-    setPassword(event.target.value)
-  }
-  const handlePwConfirmChange = (event: any) => {
-    setPwConfirm(event.target.value)
-  }
-  const handleSolvedChange = (event: any) => {
-    setSolved(event.target.value)
-  }
-  const handleTriedChange = (event: any) => {
-    setTried(event.target.value)
-  }
-  
   const handleImgClick = () => {
     axiosImg(img)
       .then(res => {
-        // console.log(res.data.data)
         setImgName(res.data.data)
+      })
+      .catch(error => {
+        setImgName('인증 불가')
       })
   }
   const handleIdClick = (event: any, id: string) => {
@@ -81,60 +69,65 @@ export default function Form() {
     <Container>
       <div style={{marginBottom: 20, textAlign: 'center'}}>
         <Input type='file' accept="image/*" onChange={handleImgChange} style={{width: '25vw', marginBottom: 10}} />
-        <ButtonSubmitting submittingAttr={{text: '인증', width: '25vw', fontSize: '1.1vw'}} onClick={handleImgClick} />
+        <ButtonSubmitting
+          submittingAttr={{text: '인증', width: '25vw', marBot: '0px', fontSize: '1vw'}}
+          isImportant={false}
+          onClick={handleImgClick}
+        />
         {imgName ? <p style={{fontSize: '1vw', marginTop: 10, marginBottom: 0}}>{`인증된 백준 ID: ${imgName}`}</p> : <></>}
       </div>
 
       <div style={{marginBottom: 20, textAlign: 'center'}}>
         <InputTextField
-          textFieldAttr={{id: 'id', label:'ID', width: '25vw', marginRight: '0px', password: false, autofocus: true}}
-          valid={true}
-          validMessage='아이디를 정확히 입력해 주세요.'
-          onChange={handleIdChange}
+          textFieldAttr={{width: '25vw', id: 'id', label: 'ID', marBot: '15px', marRig: '0px', isPw: false, isAf: true}}
+          valid={checkId}
+          errorMessage='2 글자 이상의 영문 소문자이어야 합니다.'
+          setter={setId}
           onKeyDown={() => {}}
         />
         <ButtonSubmitting
-          submittingAttr={{text: '중복 검사', width: '25vw', fontSize: '1.1vw'}} onClick={() => {handleIdClick(event, id)}}
+          submittingAttr={{text: '중복 확인', width: '25vw', marBot: '0px', fontSize: '1vw'}}
+          isImportant={false}
+          onClick={() => {handleIdClick(event, id)}}
         />
         <p id="idResult" style={{fontSize: '1vw', marginTop: 10, marginBottom: 0}}></p>
       </div>
 
       <div>
         <InputTextField
-          textFieldAttr={{id: 'password', label:'Password', marginRight: '0px', width: '25vw', password: true, autofocus: false}}
-          valid={true}
-          validMessage='비밀번호를 정확히 입력해 주세요.'
-          onChange={handlePasswordChange}
+          textFieldAttr={{width: '25vw', id: 'password', label: 'Password', marBot: '15px', marRig: '0px', isPw: true, isAf: false}}
+          valid={checkPassword}
+          errorMessage='8~14 글자의 영문 대소문자 및 특수문자이어야 합니다.'
+          setter={setPassword}
           onKeyDown={() => {}}
         />
         <InputTextField
-          textFieldAttr={
-            {id: 'passwordConfirmation', label:'Password Confirmation', marginRight: '0px', width: '25vw', password: true, autofocus: false}
-          }
-          valid={true}
-          validMessage='비빌번호를 정확히 입력해 주세요.'
-          onChange={handlePwConfirmChange}
+          textFieldAttr={{width: '25vw', id: 'pwConfirm', label: 'Password Check', marBot: '15px', marRig: '0px', isPw: true, isAf: false}}
+          valid={checkSpace}
+          errorMessage='비밀번호를 한번 더 입력해주세요.'
+          setter={setPwConfirm}
           onKeyDown={() => {}}
         />
         <InputTextField
-          textFieldAttr={{id: 'solved', label:'Solved Problems', width: '25vw', marginRight: '0px', password: false, autofocus: false}}
-          valid={true}
-          validMessage='풀이한 문제를 정확히 입력해 주세요.'
-          onChange={handleSolvedChange}
+          textFieldAttr={{width: '25vw', id: 'solved', label: 'Solved Problems', marBot: '15px', marRig: '0px', isPw: false, isAf: false}}
+          valid={checkSpace}
+          errorMessage='해결한 문제들을 입력해주세요.'
+          setter={setSolved}
           onKeyDown={() => {}}
         />
         <InputTextField
-          textFieldAttr={{id: 'tried', label:'Tried Problems', width: '25vw', marginRight: '0px', password: false, autofocus: false}}
-          valid={true}
-          validMessage='시도한 문제를 정확히 입력해 주세요.'
-          onChange={handleTriedChange}
+          textFieldAttr={{width: '25vw', id: 'tried', label: 'Tried Problems', marBot: '15px', marRig: '0px', isPw: false, isAf: false}}
+          valid={checkSpace}
+          errorMessage='시도한 문제들을 입력해주세요'
+          setter={setTried}
           onKeyDown={() => {}}
         />
         <div>
-          <ButtonSubmitting
-            submittingAttr={{text: '회원가입', width: '25vw', fontSize: '1.1vw'}}
-            onClick={() => {handleSignupClick(event, pureImg, id, password, pwConfrim, sovled, tried, router)}}
-          />
+        <ButtonSubmitting
+          submittingAttr={{text: '회원 가입', width: '25vw', marBot: '15px', fontSize: '1.1vw'}}
+          isImportant={true}
+          onClick={() => {handleSignupClick(event, pureImg, id, password, pwConfirm, solved, tried, router)}}
+        />
         </div>
         <ButtonRedirecting />
       </div>

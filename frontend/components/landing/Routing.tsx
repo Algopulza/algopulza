@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react'
 import ButtonRouting from '../common/button/ButtonRouting'
 import styled from 'styled-components'
+import { useEffect, useState } from 'react'
 
 const Container = styled.section`
   display: flex;
@@ -11,10 +11,10 @@ const Container = styled.section`
 export type RoutingAttr = { url: string, text: string }
 
 export default function Routing() {
+  const [isLogin, setIsLogin] = useState(false)
   useEffect(() => {
-    setIsLogin(localStorage.getItem('recoil-persist') !== null ? true : false)
+    setIsLogin(window.localStorage.getItem('recoil-persist') !== null ? true : false)
   }, [])
-  const [isLogin, setIsLogin] = useState(true)
 
   return (
     <Container>

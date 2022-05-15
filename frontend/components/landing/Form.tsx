@@ -1,13 +1,15 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
-import { axiosLogin } from '../../util/axiosCollection'
 import InputTextField from '../common/input/InputTextField'
 import ButtonSubmitting from '../common/button/ButtonSubmitting'
 import ButtonRedirecting from '../common/button/ButtonRedirecting'
 import styled from 'styled-components'
-import { useSetRecoilState } from 'recoil'
-import { userInfoState, bojIdState, memberIdState, accessTokenState, refreshTokenState } from '../../util/stateCollection'
-import { stringify } from 'querystring'
+import { axiosLogin } from '../../util/axiosCollection'
+import { useRecoilState, useSetRecoilState } from 'recoil'
+import {
+  bojIdState, memberIdState, algoIdState, accessTokenState, refreshTokenState, idState, passwordState, loginState
+} from '../../util/stateCollection'
+import { checkSpace } from '../../util/validationCollection'
 
 const Container = styled.section`
   display: flex;
@@ -17,35 +19,31 @@ const Container = styled.section`
 `
 
 export default function Form() {
-  const [id, setId] = useState('')
-  const [password, setPassword] = useState('')
-  const setUserInfo = useSetRecoilState(userInfoState)
+  const [isLogin, setIsLogin] = useState(false)
+  const [id, setId] = useRecoilState(idState)
+  const [password, setPassword] = useRecoilState(passwordState)
   const setBoj = useSetRecoilState(bojIdState)
   const setMember = useSetRecoilState(memberIdState)
+  const setAlgo = useSetRecoilState(algoIdState)
   const setAccessToken = useSetRecoilState(accessTokenState)
   const setRefreshToken = useSetRecoilState(refreshTokenState)
   const router = useRouter()
 
-  const handleIdChange = (event: any) => {
-    setId(event.target.value)
-  }
-  const handlePasswordChange = (event: any) => {
-    setPassword(event.target.value)
-  }
+  useEffect(() => {
+    setIsLogin(window.localStorage.getItem('recoil-persist') !== null ? true : false)
+  }, [])
+
   const handleClick = () => {
-    if (id.trim() === '') {
-    } else {
-      axiosLogin(id, password)
-        .then(res => {
-          // console.log(res.data.data)
-          setUserInfo(res.data.data.member)
-          setBoj(res.data.data.member.bojId)
-          setMember(res.data.data.member.memberId)
-          setAccessToken(res.data.data.token.accessToken)
-          setRefreshToken(res.data.data.token.refreshToken)
-          router.push('/recommendation')
-        })
-    }
+    axiosLogin(id, password)
+      .then(res => {
+        setBoj(res.data.data.member.bojId)
+        setMember(res.data.data.member.memberId)
+        setAlgo(res.data.data.member.algopluzaId)
+        setAccessToken(res.data.data.token.accessToken)
+        setRefreshToken(res.data.data.token.refreshToken)
+        setIsLogin(true)
+        router.push('/recommendation')
+      })
   }
   const handleKeyDown = (event: any) => {
     if (event.key === 'Enter') {
@@ -55,25 +53,46 @@ export default function Form() {
 
   return (
     <Container>
-      <div style={{marginBottom: 40}}>
-        <InputTextField
-          textFieldAttr={{width: '20vw', id: 'id', label: 'ID', marginRight: '0px', password: false, autofocus: true}}
-          valid={true}
-          validMessage='알고풀자 아이디를 정확히 입력해 주세요.'
-          onChange={handleIdChange}
-          onKeyDown={() => {}}
-        />
-        <InputTextField
-          textFieldAttr={{width: '20vw', id: 'password', marginRight: '0px', label: 'Password', password: true, autofocus: false}}
-          valid={true}
-          validMessage='비밀번호를 정확히 입력해 주세요.'
-          onChange={handlePasswordChange}
-          onKeyDown={handleKeyDown}
-        />
-      </div>
+      {isLogin ?
+        <></> :
+        <div style={{marginBottom: 40}}>
+          <InputTextField
+            textFieldAttr={{width: '20vw', id: 'id', label: 'ID', marBot: '15px', marRig: '0px', isPw: false, isAf: true}}
+            valid={checkSpace}
+            errorMessage='알고풀자 아이디를 입력해 주세요.'
+            setter={setId}
+            onKeyDown={() => {}}
+          />
+          <InputTextField
+            textFieldAttr={{width: '20vw', id: 'password', label: 'Password', marBot: '0px', marRig: '0px', isPw: true, isAf: false}}
+            valid={checkSpace}
+            errorMessage='비밀번호를 입력해 주세요.'
+            setter={setPassword}
+            onKeyDown={handleKeyDown}
+          />
+        </div>
+      }
 
       <div>
-        <ButtonSubmitting submittingAttr={{text: '로그인', width: '20vw', fontSize: '1.1vw'}} onClick={handleClick} />
+        {isLogin ?
+          <ButtonSubmitting
+            submittingAttr={{text: '시작하기', width: '20vw', marBot: '0px', fontSize: '1.1vw'}}
+            isImportant={true}
+            onClick={handleClick}
+          /> :
+          <div style={{display: 'flex', flexDirection: 'column'}}>
+            <ButtonSubmitting
+              submittingAttr={{text: '로그인', width: '20vw', marBot: '15px', fontSize: '1.1vw'}}
+              isImportant={true}
+              onClick={handleClick}
+            />
+            <ButtonSubmitting
+              submittingAttr={{text: '회원가입', width: '20vw', marBot: '0px', fontSize: '1vw'}}
+              isImportant={false}
+              onClick={() => {router.push('/signup')}}
+            />
+          </div>
+        }
         <ButtonRedirecting />
       </div>
     </Container>
