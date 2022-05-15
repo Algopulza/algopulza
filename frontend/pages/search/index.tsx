@@ -10,7 +10,7 @@ import { accessTokenState } from '../../util/stateCollection'
 import { getProblems, getSearchProblems } from '../../api/back/search/SearchProblems'
 
 const Container = styled.section`
-  padding: 2vh 5vw 0 5vw;
+  padding: 2vh 10vw 0 10vw;
 `
 
 const Subcontainer = styled.div`
@@ -23,29 +23,29 @@ export default function Search() {
   const [endpage, setEndPage] = useState(0)
   const [searched, setSearched] = useState("")
   const [currentPage, setPage] = useState(0)
+  const accessToken = useRecoilValue(accessTokenState)
 
   // 최초진입시 문제표시 api
+  const problemList = async () => {
+    await getProblems(accessToken)
+      .then(res => {
+        setRows(res.data.data.content)
+        // setEndPage(res.data.data.length/20)
+      })
+      .catch(err => console.log(err))
+  }
   useEffect(() => { 
-    const accessToken = useRecoilValue(accessTokenState)
-    const problemList = async () => {
-      await getProblems(accessToken)
-        .then(res => {
-          setRows(res.data.data)
-          // setEndPage(res.data.data.length/20)
-        })
-        .catch(err => console.log(err))
-    }
     problemList()
   }, [])
 
   // 검색 api
-  const accessToken = useRecoilValue(accessTokenState)
   const problemListSearch = async (text: any) => {
     setSearched(text)
-    await getSearchProblems(accessToken, searched, 0)
+    await getSearchProblems(accessToken, 10, 0, undefined, undefined, undefined, searched)
       .then(res => {
         console.log(searched, currentPage)
-        setRows(res.data.data)
+        console.log(res)
+        setRows(res.data.data.content)
       })
       .catch(err => console.log(err))
   }
@@ -56,10 +56,10 @@ export default function Search() {
   // page 검색 api
   const problemListPage = async (page: any) => {
     setPage(page)
-    await getSearchProblems(accessToken, searched, currentPage)
+    await getSearchProblems(accessToken, 10, currentPage, undefined, undefined, undefined, searched)
       .then(res => {
-        console.log(searched, currentPage)
-        setRows(res.data.data)
+        // console.log(searched, currentPage)
+        setRows(res.data.data.content)
       })
       .catch(err => console.log(err))
   }

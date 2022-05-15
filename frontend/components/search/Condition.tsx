@@ -18,6 +18,22 @@ const Subcontainer = styled.div<{ cond: boolean }>`
   justify-content: ${(props) => (props.cond ? "left" : "right")};
   align-items: center;
 `
+const Grid = styled.div`
+`;
+
+const Row = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  gap: 2em;
+`;
+
+const Col = styled.div<{size: number}>`
+  display: flex;
+  flex: ${props => props.size};
+  justify-content: center;
+  max-height: 40em;
+`;
 
 export type TextFieldAttr = {
   id: string,
