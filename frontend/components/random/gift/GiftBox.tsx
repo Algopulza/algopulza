@@ -34,6 +34,7 @@ export default function GiftBox({ text, img, data, random }: TextProps) {
         <Card
           key={data.bojId}
           id={data.bojId}
+          problemId={data.problemId}
           title={data.title}
           tier={data.tierName}
           level={data.tierLevel}
