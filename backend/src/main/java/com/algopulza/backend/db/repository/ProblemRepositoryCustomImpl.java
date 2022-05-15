@@ -5,9 +5,12 @@ import com.algopulza.backend.db.entity.*;
 import com.querydsl.core.types.*;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.JPAExpressions;
+import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
@@ -39,27 +42,6 @@ public class ProblemRepositoryCustomImpl implements ProblemRepositoryCustom {
         );
     }
 
-    @Override
-    public List<ProblemRes> findProblemRes(Long memberId, String tierName, Integer tierLevel, Pageable pageable) {
-        return jpaQueryFactory.select(Projections.constructor(ProblemRes.class,
-                                      qProblem.id,
-                                      qProblem.bojId,
-                                      qProblem.title,
-                                      qTier.level,
-                                      qTier.name,
-                                      qProblem.acceptedCount,
-                                      qProblem.averageTryCount,
-                                      isMarked(memberId)
-                              ))
-                              .from(qProblem)
-                              .join(qTier).on(qProblem.tier.eq(qTier))
-                              .where(eqTierName(tierName), eqNumberInTierName(tierLevel))
-                              .orderBy(qProblem.bojId.asc())
-                              .offset(pageable.getOffset())
-                              .limit(pageable.getPageSize())
-                              .fetch();
-    }
-
     private BooleanExpression eqTierName(String tierName) {
         if (StringUtils.hasText(tierName)) {
             return qTier.name.eq(tierName);
@@ -74,9 +56,24 @@ public class ProblemRepositoryCustomImpl implements ProblemRepositoryCustom {
         return null;
     }
 
+    private BooleanExpression containTitle(String title) {
+        if (StringUtils.hasText(title)) {
+            return qProblem.title.contains(title);
+        }
+        return null;
+    }
+
+    private BooleanExpression inTagId(Set<Long> tagIdSet) {
+        if (tagIdSet != null) {
+            return qProblemHasTag.tag.id.in(tagIdSet);
+        }
+        return null;
+    }
+
     @Override
-    public List<ProblemRes> findProblemResByTitleLike(Long memberId, String keyword, Pageable pageable) {
-        return jpaQueryFactory.select(Projections.constructor(ProblemRes.class,
+    public Page<ProblemRes> findProblemRes(Long memberId, String tierName, Integer tierLevel, String title, Set<Long> tagIdSet, Pageable pageable) {
+        // data query
+        List<ProblemRes> content = jpaQueryFactory.select(Projections.constructor(ProblemRes.class,
                                       qProblem.id,
                                       qProblem.bojId,
                                       qProblem.title,
@@ -85,14 +82,25 @@ public class ProblemRepositoryCustomImpl implements ProblemRepositoryCustom {
                                       qProblem.acceptedCount,
                                       qProblem.averageTryCount,
                                       isMarked(memberId)
-                              ))
+                              )).distinct()
                               .from(qProblem)
                               .join(qTier).on(qProblem.tier.eq(qTier))
-                              .where(qProblem.title.contains(keyword))
+                              .leftJoin(qProblemHasTag).on(qProblem.eq(qProblemHasTag.problem))
+                              .where(eqTierName(tierName), eqNumberInTierName(tierLevel), containTitle(title), inTagId(tagIdSet))
                               .orderBy(qProblem.bojId.asc())
                               .offset(pageable.getOffset())
                               .limit(pageable.getPageSize())
                               .fetch();
+
+        // count query
+        JPAQuery<Problem> countQuery = jpaQueryFactory
+                .select(qProblem)
+                .from(qProblem)
+                .join(qTier).on(qProblem.tier.eq(qTier))
+                .leftJoin(qProblemHasTag).on(qProblem.eq(qProblemHasTag.problem))
+                .where(eqTierName(tierName), eqNumberInTierName(tierLevel), containTitle(title), inTagId(tagIdSet));
+
+        return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchCount);
     }
 
     @Override

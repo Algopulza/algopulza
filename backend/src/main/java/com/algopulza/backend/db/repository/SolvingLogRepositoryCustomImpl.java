@@ -8,9 +8,12 @@ import com.algopulza.backend.db.entity.SolvingLog;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
+import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
@@ -33,8 +36,9 @@ public class SolvingLogRepositoryCustomImpl implements  SolvingLogRepositoryCust
     }
 
     @Override
-    public List<SolvingLogRes> findByMemberId(Long memberId, Pageable pageable) {
-        return jpaQueryFactory
+    public Page<SolvingLogRes> findByMemberId(Long memberId, Pageable pageable) {
+        // data query
+        List<SolvingLogRes> content = jpaQueryFactory
                 .select(Projections.constructor(SolvingLogRes.class,
                         qSolvingLog.problem.id,
                         qSolvingLog.problem.bojId,
@@ -50,6 +54,14 @@ public class SolvingLogRepositoryCustomImpl implements  SolvingLogRepositoryCust
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
+
+        // count query
+        JPAQuery<SolvingLog> countQuery = jpaQueryFactory
+                .select(qSolvingLog)
+                .from(qSolvingLog)
+                .where(qSolvingLog.member.id.eq(memberId));
+
+        return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchCount);
     }
 
     @Override
@@ -99,18 +111,25 @@ public class SolvingLogRepositoryCustomImpl implements  SolvingLogRepositoryCust
     }
 
     @Override
-    public List<SolvedCountAnalysisRes> findCountByMemberId(Long memberId) {
+    public List<SolvedCountByYearAndMonthRes> countByStatusAndSubmitDate(Long memberId, String status) {
         return jpaQueryFactory
-                .select(Projections.constructor(SolvedCountAnalysisRes.class,
-                        qSolvingLog.createdTime.year(),
-                        qSolvingLog.createdTime.month(),
+                .select(Projections.constructor(SolvedCountByYearAndMonthRes.class,
+                        qSolvingLog.submitTime.year(),
+                        qSolvingLog.submitTime.month(),
                         qSolvingLog.count()
                 ))
                 .from(qSolvingLog)
-                .where(qSolvingLog.member.id.eq(memberId))
-                .groupBy(qSolvingLog.createdTime.year(), qSolvingLog.createdTime.month())
-                .orderBy(qSolvingLog.createdTime.asc())
+                .where(qSolvingLog.member.id.eq(memberId), qSolvingLog.submitTime.isNotNull(), eqStatus(status))
+                .groupBy(qSolvingLog.submitTime.year(), qSolvingLog.submitTime.month())
+                .orderBy(qSolvingLog.submitTime.asc())
                 .fetch();
+    }
+
+    private BooleanExpression eqStatus(String status) {
+        if (StringUtils.hasText(status)) {
+            return qSolvingLog.status.eq(status);
+        }
+        return null;
     }
 
     @Override
