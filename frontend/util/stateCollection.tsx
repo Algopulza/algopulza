@@ -48,3 +48,12 @@ export const languageSelectionState = atom({
   key: 'languageSelectionState',
   default: '',
 })
+
+export const idState = atom({
+  key: 'idState',
+  default: ''
+})
+export const passwordState = atom({
+  key: 'passwordState',
+  default: ''
+})
