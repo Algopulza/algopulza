@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { accessTokenState, bojIdState, solvedState } from '../../../util/stateCollection'
 import { checkSpace } from '../../../util/validationCollection'
+import { sendMessage } from '../../../util/inputHandlerCollection'
 
 const Container = styled.section`
   display: grid;
@@ -16,12 +17,11 @@ export default function FormSolved() {
   const [solved, setSolved] = useRecoilState(solvedState)
   const bojId = useRecoilValue(bojIdState)
   const accessToken = useRecoilValue(accessTokenState)
-  let result = document.getElementById('resultSolved')
 
   const handleClick = (event: any) => {
     axiosSolved(bojId, solved, accessToken)
       .then(res => {
-        result!.innerText = '감사합니다!'
+        sendMessage('resultSolved')
       })
   }
 

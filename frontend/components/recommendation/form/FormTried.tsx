@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { accessTokenState, bojIdState, triedState } from '../../../util/stateCollection'
 import { checkSpace } from '../../../util/validationCollection'
+import { sendMessage } from '../../../util/inputHandlerCollection'
 
 const Container = styled.section`
   display: grid;
@@ -16,12 +17,11 @@ export default function FormTried() {
   const [tried, setTried] = useRecoilState(triedState)
   const bojId = useRecoilValue(bojIdState)
   const accessToken = useRecoilValue(accessTokenState)
-  let result = document.getElementById('resultTried')
 
   const handleClick = (event: any) => {
     axiosTried(bojId, tried, accessToken)
       .then(res => {
-        result!.innerText = '감사합니다!'
+        sendMessage('resultTried')
       })
   }
 
