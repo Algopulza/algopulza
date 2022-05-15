@@ -1,7 +1,3 @@
-import { useRecoilValue } from 'recoil'
-import { passwordState } from './stateCollection'
-
-
 export const checkSpace = (item: string) => {
   if (item.trim() === '') {
     return false
@@ -11,7 +7,7 @@ export const checkSpace = (item: string) => {
 }
 
 export const checkId = (id: string) => {
-  if (id === '') {
+  if (id.trim() === '') {
     return false
   } else {
     return true
@@ -19,9 +15,13 @@ export const checkId = (id: string) => {
 }
 
 export const checkPassword = (password: string) => {
-  if (password === '') {
+  if (password.trim() === '') {
     return false
   } else {
     return true
   }
+}
+
+export const nothing = (password: string) => {
+  return true
 }

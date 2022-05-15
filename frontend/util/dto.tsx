@@ -35,6 +35,7 @@ export type ProblemAttr = {
   key: number,
   title: string,
   bojId: number,
+  problemId: number,
   tierName: string,
   tierLevel: number,
   acceptedCount: number,

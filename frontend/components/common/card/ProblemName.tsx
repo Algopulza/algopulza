@@ -27,25 +27,27 @@ const Title = styled.p`
   height: 80px;
   margin: 0;
   font-size: 1.2vw;
+  cursor: pointer;
+`
+
+const Core = styled.span`
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  cursor: pointer;
 `
 
 type HeaderProps = {
   title: string,
   id: number,
+  problemId: number,
   tier: string,
   bookmark: boolean
 }
 
-export default function ProblemName({ title, id, tier, bookmark }: HeaderProps) {
+export default function ProblemName({ title, id, problemId, tier, bookmark }: HeaderProps) {
   const backgroundColor = getBackgroundColor(tier)
   const accessToken = useRecoilValue(accessTokenState)
   const [isBookmark, setIsBookmark] = useState(bookmark)
-  // const [isBookmark, setIsBookmark] = useState(bookmark)
-  // setIsBookmark(bookmark)
 
   const handleClick = () => {
     const problemUrl = `https://www.acmicpc.net/problem/${id}`
@@ -53,7 +55,7 @@ export default function ProblemName({ title, id, tier, bookmark }: HeaderProps) 
   }
 
   const handleBookmarkPutClick = () => {
-    axiosPutBookmark(id, accessToken)
+    axiosPutBookmark(problemId, accessToken)
       .then(res => {
         console.log(res)
         setIsBookmark(true)
@@ -61,7 +63,7 @@ export default function ProblemName({ title, id, tier, bookmark }: HeaderProps) 
   }
 
   const handleBookmarkDeleteClick = () => {
-    axiosDeleteBookmark(id, accessToken)
+    axiosDeleteBookmark(problemId, accessToken)
       .then(res => {
         console.log(res)
         setIsBookmark(false)
@@ -87,7 +89,7 @@ export default function ProblemName({ title, id, tier, bookmark }: HeaderProps) 
       </Canvas>
 
       <Title onClick={handleClick}>
-        {title}
+        <Core>{title}</Core>
       </Title>
     </Container>
   )
