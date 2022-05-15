@@ -88,3 +88,8 @@ export const languageState = atom({
   key: 'languageState',
   default: '',
 })
+
+export const keywordState = atom({
+  key: 'keywordState',
+  default: '',
+})
