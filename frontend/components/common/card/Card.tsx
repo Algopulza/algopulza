@@ -14,6 +14,7 @@ const Container = styled.section`
 type CardProps = {
   key: number,
   id: number,
+  problemId: number,
   title: string,
   tier: string,
   level: number,
@@ -21,10 +22,10 @@ type CardProps = {
   bookmark: boolean
 }
 
-export default function Card({key, id, title, tier, level, accept, bookmark}: CardProps) {
+export default function Card({key, id, problemId, title, tier, level, accept, bookmark}: CardProps) {
   return (
     <Container>
-      <ProblemName key={key} title={title} id={id} tier={tier} bookmark={bookmark} />
+      <ProblemName key={key} title={title} id={id} problemId={problemId} tier={tier} bookmark={bookmark} />
       <ProblemInfo key={key} id={id} tier={tier} level={level} accept={accept} />
     </Container>
   )
