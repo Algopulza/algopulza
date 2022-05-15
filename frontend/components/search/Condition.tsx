@@ -4,7 +4,9 @@ import SelectionTag from './selection/SelectionTag'
 import InputTextField from '../common/input/InputTextField'
 import ButtonSearching from '../common/button/ButtonSearching'
 import styled from 'styled-components'
-import { useState } from 'react'
+import { useRecoilState } from 'recoil'
+import { keywordState } from '../../util/stateCollection'
+import { checkSpace } from '../../util/validationCollection'
 
 const Container = styled.section`
   display: grid;
@@ -18,41 +20,48 @@ const Subcontainer = styled.div<{ cond: boolean }>`
   justify-content: ${(props) => (props.cond ? "left" : "right")};
   align-items: center;
 `
+const Grid = styled.div`
+`;
 
-export type TextFieldAttr = {
-  id: string,
-  label: string,
-  width: string,
-  password: boolean,
-  autofocus: boolean
-}
+const Row = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  gap: 2em;
+`;
 
-export type SubmittingAttr = { text: string, width: string }
+const Col = styled.div<{size: number}>`
+  display: flex;
+  flex: ${props => props.size};
+  justify-content: center;
+  max-height: 40em;
+`;
 
-const handleChange = () => {
-  // props 맞추기 위한 null 함수
-}
+export default function Condition(props: any) {
+  const [keyword, setKeyword] = useRecoilState(keywordState)
+  const submitSearched = () => { props.propFunction(keyword) }
 
-export default function Condition() {
-  const [valid, setValid] = useState(true)
-  
   return (
     <Container>
       <Subcontainer cond={true}>
-        <SelectionTier />
+        {/* <SelectionTier />
         <SelectionLevel />
-        <SelectionTag />
+        <SelectionTag /> */}
       </Subcontainer>
       
       <Subcontainer cond={false}>
         <InputTextField
-          textFieldAttr={{id: 'search', label: 'Search', width: '20vw', marginRight: '0px', password: false, autofocus: false}}
-          valid={valid}
-          validMessage='백준 아이디를 정확히 입력해 주세요.'
-          onChange={handleChange}
-          onKeyDown={handleChange}
+          textFieldAttr={{width: '20vw', id: 'keyword', label: 'Search', marBot: '10px', marRig: '0px', isPw: false, isAf: false}}
+          valid={checkSpace}
+          errorMessage='검색어를 입력해주세요.'
+          setter={setKeyword}
+          onKeyDown={() => {}}
         />
-        <ButtonSearching submittingAttr={{text: '검색', width: '5vw'}} />
+        <ButtonSearching
+          submittingAttr={{text: '검색', width: '5vw'}}
+          onClick={submitSearched}
+          onKeyDown={submitSearched}
+        />
       </Subcontainer>
     </Container>
   )

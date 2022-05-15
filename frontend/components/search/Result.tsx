@@ -1,58 +1,71 @@
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
-import TableCell from '@mui/material/TableCell'
+import TableCell, { tableCellClasses } from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
+import { styled } from '@mui/material/styles'
+import ResultTag from './ResultTag'
 
-function createData(
-  id: number,
-  problem: string,
-  tier: string,
-  level: number,
-  tag: string
-) {
-  return { id, problem, tier, level, tag }
-}
+const StyledTableCell = styled(TableCell)(() => ({
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor: '#FFC94D',
+    color: '#FFFFFF',
+    fontWeight: 'bold',
+  },
+}));
 
-const rows = [
-  createData(14403, '로봇 청소기', '골드', 5, '구현'),
-  createData(14403, '로봇 청소기', '골드', 5, '구현'),
-  createData(14403, '로봇 청소기', '골드', 5, '구현'),
-  createData(14403, '로봇 청소기', '골드', 5, '구현'),
-  createData(14403, '로봇 청소기', '골드', 5, '구현'),
-  createData(14403, '로봇 청소기', '골드', 5, '구현'),
-  createData(14403, '로봇 청소기', '골드', 5, '구현'),
-  createData(14403, '로봇 청소기', '골드', 5, '구현'),
-  createData(14403, '로봇 청소기', '골드', 5, '구현'),
-  createData(14403, '로봇 청소기', '골드', 5, '구현')
-]
+export default function Result(props: any) {
+  console.log(props)
+  const { rows } = props
+  const tierColor = (tier: string) => {
+    const coloredTier = tier
+    if (coloredTier=='Unrated') {
+      return (<b style={{color: '#c4c4c4'}}>{coloredTier}</b>)
+    } else if (coloredTier=='Bronze') {
+      return (<b style={{color: '#AD5600'}}>{coloredTier}</b>)
+    } else if (coloredTier=='Silver') {
+      return (<b style={{color: '#435F7A'}}>{coloredTier}</b>)
+    } else if (coloredTier=='Gold') {
+      return (<b style={{color: '#EC9A00'}}>{coloredTier}</b>)
+    } else if (coloredTier=='Platinum') {
+      return (<b style={{color: '#2BE3A5'}}>{coloredTier}</b>)
+    } else if (coloredTier=='Diamond') {
+      return (<b style={{color: '#00B4FC'}}>{coloredTier}</b>)
+    } else if (coloredTier=='Ruby') {
+      return (<b style={{color: '#FF0062'}}>{coloredTier}</b>)
+    }
+    return (<b style={{color: '#000000'}}>{coloredTier}</b>)
+  }
 
-export default function Result() {
   return (
     <TableContainer component={Paper} sx={{ marginBottom: '15px' }}>
-      <Table aria-label="search">
+      <Table aria-label="search" stickyHeader>
         <TableHead sx={{ background: '#FFC94D' }}>
           <TableRow>
-            <TableCell align="center">ID</TableCell>
-            <TableCell align="center">Problem</TableCell>
-            <TableCell align="center">Tier</TableCell>
-            <TableCell align="center">Level</TableCell>
-            <TableCell align="center">Tag</TableCell>
+            <StyledTableCell align="center" style={{ width: "10%" }}>ID</StyledTableCell>
+            <StyledTableCell align="center" style={{ width: "45%" }}>Problem</StyledTableCell>
+            <StyledTableCell align="center" style={{ width: "10%" }}>Tier</StyledTableCell>
+            <StyledTableCell align="center" style={{ width: "10%" }}>Level</StyledTableCell>
+            <StyledTableCell align="center" style={{ width: "25%" }}>Tag</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {rows && rows.map((row: any) => (
             <TableRow
-              key={row.id}
+              key={row.bojId}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
-              <TableCell align="center" component="th" scope="row">{row.id}</TableCell>
-              <TableCell align="center">{row.problem}</TableCell>
-              <TableCell align="center">{row.tier}</TableCell>
-              <TableCell align="center">{row.level}</TableCell>
-              <TableCell align="center">{row.tag}</TableCell>
+              <StyledTableCell align="center" component="th" scope="row">{row.bojId}</StyledTableCell>
+              <StyledTableCell align="center">{row.title}</StyledTableCell>
+              <StyledTableCell align="center">
+                {tierColor(row.tierName)}
+              </StyledTableCell>
+              <StyledTableCell align="center">{row.tierLevel}</StyledTableCell>
+              <StyledTableCell align="center">
+                <ResultTag tagList={row.tagList}/>
+              </StyledTableCell>
             </TableRow>
           ))}
         </TableBody>
