@@ -13,9 +13,9 @@ const Container = styled.div`
   grid-template-rows: 1fr 0.1fr 1fr;
   padding: 3rem 3rem;
   max-height: 100vh;
-`;
+`
 
-const TopContainer = styled.div``;
+const TopContainer = styled.div``
 
 const Select = styled.div`
   display: inline-flex;
@@ -41,7 +41,7 @@ const CategoryButton = styled.a`
 const SubContainer = styled.div`
   display: flex;
   justify-content: center;
-`;
+`
 
 export type User = {
   accessToken : string
@@ -50,25 +50,22 @@ export type User = {
 }
 
 export default function Mypage() {
-  const [analysis, setAnalysis] = useState(true);
-  const [record, setRecord] = useState(false);
+  const [analysis, setAnalysis] = useState(true)
+  const [record, setRecord] = useState(false)
 
-  const accessToken = useRecoilValue(accessTokenState);
-  const memberId = useRecoilValue(memberIdState);
-  const bojId = useRecoilValue(bojIdState);
-
- 
-
+  const accessToken = useRecoilValue(accessTokenState)
+  const memberId = useRecoilValue(memberIdState)
+  const bojId = useRecoilValue(bojIdState)
 
   const showAnalysis = async() => {
     setAnalysis(true as any);
     setRecord(false as any);
-  };
+  }
 
   const showRecord = async() => {
     setAnalysis(false as any);
     setRecord(true as any);
-  };
+  }
 
   return (
     <Container>
@@ -89,5 +86,5 @@ export default function Mypage() {
 }
 
 Mypage.getLayout = function getLayout(analysis: ReactElement) {
-  return <Layout>{analysis}</Layout>;
-};
+  return <Layout>{analysis}</Layout>
+}
