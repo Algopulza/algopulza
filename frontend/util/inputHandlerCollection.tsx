@@ -27,8 +27,6 @@ export const handleSignupClick = (
 }
 
 export const handleInfoClick = (event: any, info: any, accessToken: string) => {
-  let result = document.getElementById('resultInfo')
-
   if (info.problemBojId.trim() === '') {
     console.log('not valid')
   } else {

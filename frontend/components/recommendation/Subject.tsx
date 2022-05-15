@@ -28,6 +28,7 @@ export default function Subject({ subjectAttr }: SubjectProps) {
           <Card
             key={list.bojId}
             id={list.bojId}
+            problemId={list.problemId}
             title={list.title}
             tier={list.tierName}
             level={list.tierLevel}

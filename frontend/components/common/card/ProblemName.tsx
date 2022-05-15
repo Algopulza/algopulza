@@ -36,11 +36,12 @@ const Title = styled.p`
 type HeaderProps = {
   title: string,
   id: number,
+  problemId: number,
   tier: string,
   bookmark: boolean
 }
 
-export default function ProblemName({ title, id, tier, bookmark }: HeaderProps) {
+export default function ProblemName({ title, id, problemId, tier, bookmark }: HeaderProps) {
   const backgroundColor = getBackgroundColor(tier)
   const accessToken = useRecoilValue(accessTokenState)
   const [isBookmark, setIsBookmark] = useState(bookmark)
@@ -53,7 +54,7 @@ export default function ProblemName({ title, id, tier, bookmark }: HeaderProps) 
   }
 
   const handleBookmarkPutClick = () => {
-    axiosPutBookmark(id, accessToken)
+    axiosPutBookmark(problemId, accessToken)
       .then(res => {
         console.log(res)
         setIsBookmark(true)
@@ -61,7 +62,7 @@ export default function ProblemName({ title, id, tier, bookmark }: HeaderProps) 
   }
 
   const handleBookmarkDeleteClick = () => {
-    axiosDeleteBookmark(id, accessToken)
+    axiosDeleteBookmark(problemId, accessToken)
       .then(res => {
         console.log(res)
         setIsBookmark(false)

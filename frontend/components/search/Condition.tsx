@@ -6,7 +6,7 @@ import ButtonSearching from '../common/button/ButtonSearching'
 import styled from 'styled-components'
 import { useRecoilState } from 'recoil'
 import { keywordState } from '../../util/stateCollection'
-import { checkSpace } from '../../util/validationCollection'
+import { nothing } from '../../util/validationCollection'
 
 const Container = styled.section`
   display: grid;
@@ -52,7 +52,7 @@ export default function Condition(props: any) {
       <Subcontainer cond={false}>
         <InputTextField
           textFieldAttr={{width: '20vw', id: 'keyword', label: 'Search', marBot: '10px', marRig: '0px', isPw: false, isAf: false}}
-          valid={checkSpace}
+          valid={nothing}
           errorMessage='검색어를 입력해주세요.'
           setter={setKeyword}
           onKeyDown={() => {}}
