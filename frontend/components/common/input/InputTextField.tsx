@@ -14,16 +14,16 @@ type TextFieldProps = {
 export default function InputTextField({ textFieldAttr, valid, errorMessage, setter, onKeyDown }: TextFieldProps) {
   const [isValid, setIsValid] = useState(true)
 
-  const ChangeHandler = (event: any) => {
+  const handleChange = (event: any) => {
     setter(event.target.value)
     setIsValid(valid(event.target.value))
   }
-  const submitHandler = (event: any) => {
+  const handleSubmit = (event: any) => {
     event.preventDefault()
   }
 
   return (
-    <Box component="form" onSubmit={submitHandler}>
+    <Box component="form" onSubmit={handleSubmit}>
       {isValid ?
         <TextField
           sx={{width: textFieldAttr.width, marginBottom: textFieldAttr.marBot, marginRight: textFieldAttr.marRig}}
@@ -33,7 +33,7 @@ export default function InputTextField({ textFieldAttr, valid, errorMessage, set
           autoFocus={textFieldAttr.isAf ? true : false}
           variant="outlined"
           size="small"
-          onChange={ChangeHandler}
+          onChange={handleChange}
           onKeyDown={onKeyDown}
         /> :
         <TextField
@@ -44,7 +44,7 @@ export default function InputTextField({ textFieldAttr, valid, errorMessage, set
           type={textFieldAttr.isPw ? 'password' : ""}
           helperText={errorMessage}
           size="small"
-          onChange={ChangeHandler}
+          onChange={handleChange}
           onKeyDown={onKeyDown}
         />
       }

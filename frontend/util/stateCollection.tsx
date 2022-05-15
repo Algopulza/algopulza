@@ -64,4 +64,15 @@ export const passwordState = atom({
   default: '',
   effects_UNSTABLE: [persistAtom]
 })
-
+export const pwConfirmState = atom({
+  key: 'pwConfirmState',
+  default: '',
+})
+export const solvedState = atom({
+  key: 'solvedState',
+  default: '',
+})
+export const triedState = atom({
+  key: 'triedState',
+  default: '',
+})

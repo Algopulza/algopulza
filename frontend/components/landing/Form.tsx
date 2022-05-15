@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import InputTextField from '../common/input/InputTextField'
 import ButtonSubmitting from '../common/button/ButtonSubmitting'
@@ -9,7 +10,6 @@ import {
   bojIdState, memberIdState, algoIdState, accessTokenState, refreshTokenState, idState, passwordState, loginState
 } from '../../util/stateCollection'
 import { checkSpace } from '../../util/validationCollection'
-import { useEffect, useState } from 'react'
 
 const Container = styled.section`
   display: flex;
