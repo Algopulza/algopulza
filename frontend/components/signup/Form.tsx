@@ -2,7 +2,8 @@ import { useState } from 'react'
 import { useRouter } from 'next/router'
 import InputTextField from '../common/input/InputTextField'
 import ButtonSubmitting from '../common/button/ButtonSubmitting'
-import Helper from '../common/Helper'
+import ProblemHelper from './helper/ProblemHelper'
+import ExtensionHelper from './helper/ExtensionHelper'
 import ButtonRedirecting from '../common/button/ButtonRedirecting'
 import styled from 'styled-components'
 import { axiosId } from '../../util/axiosCollection'
@@ -67,7 +68,7 @@ export default function Form() {
               setter={setId}
               onKeyDown={() => {}}
             />
-            <p id="idResult" style={{fontSize: '1vw', marginTop: 0, marginBottom: 0}}></p>
+            <p id="idResult" style={{fontSize: '1vw', marginTop: 0, marginBottom: 0, color: 'red'}}></p>
           </div>
         </Cell>
         <Cell>
@@ -133,7 +134,7 @@ export default function Form() {
           />
         </Cell>
         <Cell>
-          <Helper />
+          <ProblemHelper />
         </Cell>
       </Row>
 
@@ -151,11 +152,17 @@ export default function Form() {
 
       <Row>
         <Cell>
-          <ButtonSubmitting
-            submittingAttr={{text: '회원 가입', width: '25vw', height: '2.5vw', marBot: '0px', fontSize: '1.1vw'}}
-            isImportant={true}
-            onClick={() => {handleSignupClick(event, id, bojId, password, solved, tried, isCheck, router)}}
-          />
+          <div>
+            <ButtonSubmitting
+              submittingAttr={{text: '회원 가입', width: '25vw', height: '2.5vw', marBot: '0px', fontSize: '1.1vw'}}
+              isImportant={true}
+              onClick={() => {handleSignupClick(event, id, bojId, password, pwConfirm, solved, tried, isCheck, router)}}
+            />
+            <p
+              id="signupResult"
+              style={{fontSize: '1vw', marginTop: 0, marginBottom: 0, color: 'red', textAlign: 'center'}}
+            />
+          </div>
         </Cell>
       </Row>
 
@@ -164,7 +171,7 @@ export default function Form() {
           <ButtonRedirecting />
         </Cell>
         <Cell>
-          <Helper />
+          <ExtensionHelper />
         </Cell>
       </Row>
     </Container>
