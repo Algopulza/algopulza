@@ -17,19 +17,28 @@ const Title = styled.p`
 export default function ExtensionHelper() {
   return (
     <Grid.Container justify="center" alignContent="center">
-      <Grid key={"right"}>
-        <Popover placement={"right"}>
+      <Grid key={"right-bottom"}>
+        <Popover placement={"right-bottom"}>
           <Popover.Trigger>
             <Button flat color="warning" auto style={{marginLeft: 10, fontSize: '1.2vw', borderRadius: '15px'}}>?</Button>
           </Popover.Trigger>
 
-          <Popover.Content css={{ p: "$3", background: '#FAFBED' }}>
+          <Popover.Content css={{ p: "$5" }}>
             <Canvas>
-              <Image src={GuideImg} layout="fixed" width={400} height={200} alt= "guide image" />
+              <Image src={GuideImg} layout="fixed" width={400} height={300} alt= "guide image" />
             </Canvas>
-            <Title>{`"알고풀자"만의 익스텐션을 설치하시면`}</Title>
-            <Title>{`스탑워치를 활용한 문제 풀이 시간 측정과`}</Title>
-            <Title>{`손쉬운 문제 풀이 정보 제공이 가능해집니다!`}</Title>
+            <Title>
+              <span style={{color: 'black', fontWeight: '700'}}>알고풀자 익스텐션</span>을 설치해 보세요!
+            </Title>
+            <Title>
+              <span style={{color: 'black', fontWeight: '700'}}>스톱워치</span>로 문제 풀이 시간을 쉽게 측정할 수 있으며,
+            </Title>
+            <Title>
+            <span style={{color: 'black', fontWeight: '700'}}>버튼 클릭 한번</span>으로 간단하게 문제 풀이 정보를 제공할 수 있습니다.
+            </Title>
+            <Title style={{marginTop: '20px'}}>
+              더 많이 제공해 주실수록, <span style={{color: 'black', fontWeight: '700'}}>맞춤 분석</span>이 가능해집니다!
+            </Title>
           </Popover.Content>
         </Popover>
       </Grid>
