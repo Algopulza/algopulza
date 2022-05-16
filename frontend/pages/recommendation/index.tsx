@@ -1,4 +1,4 @@
-import { ReactElement, useEffect, useState } from 'react'
+import { ReactElement, useState, useEffect } from 'react'
 import Layout from '../../components/common/Layout'
 import Form from '../../components/recommendation/Form'
 import Subject from '../../components/recommendation/Subject'
@@ -6,10 +6,10 @@ import styled from 'styled-components'
 
 import { useRecoilValue } from 'recoil'
 import { bojIdState, accessTokenState } from '../../util/stateCollection'
-import { getRecoTear } from '../../api/flask/recommend/RecoTear'
-import { getSolvedTear } from '../../api/flask/recommend/RecoSolvedTear'
-import { getRecoTag } from '../../api/flask/recommend/RecoTag'
 import { getRecoVul } from '../../api/flask/recommend/RecoVul'
+import { getRecoTag } from '../../api/flask/recommend/RecoTag'
+import { getSolvedTear } from '../../api/flask/recommend/RecoSolvedTear'
+import { getRecoTear } from '../../api/flask/recommend/RecoTear'
 
 const Container = styled.section`
   padding: 0vw 5vw;
@@ -26,11 +26,10 @@ export default function Recommendation() {
   const RecommendVul = async () => {
     await getRecoVul(accessToken, bojId)
       .then((res) => {
-        console.log(res)
+        // console.log(res)
         const list = res.data.slice(0, 5)
         setVulData(list)
       })
-      .catch((err) => console.log(err))
   }
 
   const RecommendTag = async () => {
@@ -39,7 +38,6 @@ export default function Recommendation() {
         const list = res.data.slice(0, 5)
         setTagData(list)
       })
-      .catch((err) => console.log(err))
   }
 
   const RecommendSolved = async () => {
@@ -48,7 +46,6 @@ export default function Recommendation() {
         const list = res.data.slice(0, 5)
         setSolvedData(list)
       })
-      .catch((err) => console.log(err))
   }
 
   const RecommendTear = async () => {
@@ -57,7 +54,6 @@ export default function Recommendation() {
         const list = res.data.slice(0, 5)
         setTearData(list)
       })
-      .catch((err) => console.log(err))
   }
 
   useEffect(() => {
@@ -68,26 +64,20 @@ export default function Recommendation() {
   }, [])
 
   const subjects = [
-    {title: '최근 자주 풀었던 태그들에 속하는 문제들을 추천해 드려요!', englishTitle: '', list: tagData},
-    {title: '최근 푼 문제 중 적게 푼 태그에서 문제들을 추천해 드려요!', englishTitle: '', list: vulData},
-    {title: '이미 푼 문제 중 티어에 맞게 문제들을 추천해 드려요!', englishTitle: '', list: solvedData},
-    {title: '유사한 티어의 유저와 비슷한 문제들을 추천해 드려요!', englishTitle: '', list: tearData}
+    {title: '최근에 자주 해결한 태그에 속하는 문제를 추천해 드려요!', englishTitle: '', list: tagData},
+    {title: '최근에 해결한 태그 중 적게 푼 태그에 속하는 문제를 추천해 드려요!', englishTitle: '', list: vulData},
+    {title: '해결했던 문제 중에서 현재 티어에 맞는 문제를 추천해 드려요!', englishTitle: '', list: solvedData},
+    {title: '유사 티어에 해당하는 유저가 해결한 문제를 추천해 드려요!', englishTitle: '', list: tearData}
   ]
 
   return (
     <>
       <Form />
       <Container>
-        {vulData ? (
-          <>
-            {subjects.map((subject) => ( <Subject key={subject.title} subjectAttr={subject} /> ))}
-          </>
-        ) : (
-          <div>기존에 푼 문제들을 상단에 제공해주세요!</div>
-        )}
+        {subjects.map((subject) => <Subject key={subject.title} subjectAttr={subject} />)}
       </Container>
     </>
-  );
+  )
 }
 
 Recommendation.getLayout = function getLayout(recommendation: ReactElement) {
