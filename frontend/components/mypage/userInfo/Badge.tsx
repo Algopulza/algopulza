@@ -5,9 +5,10 @@ import { getBadgeImage } from "../../../util/BadgeImage";
 
 const Container = styled.div`
   width: 30vw;
-  height: 25vh;
-  border-radius: 10px;
-  box-shadow: 0px 4px 4px 0 rgba(0, 0, 0, 0.25);
+  height: 23vh;
+  background: #FFFFFF;
+  box-shadow: 0px 2px 10px 5px rgba(0, 0, 0, 0.25);
+  border-radius: 15px;
   display: grid;
   grid-template-columns: 2fr 2fr;
   padding: 1rem;
@@ -42,7 +43,6 @@ export default function Badge({exp}:EXP) {
         series={data}
         options={{
           chart: {
-            height: 350,
             type: 'radialBar',
           },
           plotOptions: {

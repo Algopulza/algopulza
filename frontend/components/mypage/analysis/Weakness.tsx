@@ -1,17 +1,11 @@
 import styled from "styled-components";
 import dynamic from "next/dynamic";
-import AnalyTitle from "../../common/AnalyTitle";
 import { useEffect, useState } from "react";
 import { getAnalyWeek } from "../../../api/flask/analysis/AnalyWeek";
 import { User } from "../../../pages/mypage";
+import { fontWeight } from "@mui/system";
 
-const Container = styled.div`
-  width: 30vw;
-  height: 60vh;
-  border-radius: 10px;
-  box-shadow: 0px 4px 4px 0 rgba(0, 0, 0, 0.25);
-  padding: 1rem;
-`;
+const Container = styled.div``;
 
 export default function Weakness({accessToken, bojId}:User) {
   const ApexCharts = dynamic(() => import("react-apexcharts"), { ssr: false });
@@ -41,9 +35,10 @@ export default function Weakness({accessToken, bojId}:User) {
   
   return (
     <Container>
-      <AnalyTitle>취약점</AnalyTitle>
       <ApexCharts
         type="radar"
+        height={500}
+        width= {750}
         series={[
           {
             name: "Tag",
@@ -54,9 +49,13 @@ export default function Weakness({accessToken, bojId}:User) {
           theme: {
             mode: "light",
           },
+          grid:{
+            padding:{
+              top: 50,
+            }
+          },
           chart: {
             type: "radar",
-            height: "200%",
             background: "transparent",
           },
           stroke: {
@@ -66,17 +65,20 @@ export default function Weakness({accessToken, bojId}:User) {
           yaxis: {
             show: true,
             min: 0,
-            max: 2,
             tickAmount: 2,
           },
           xaxis: {
             categories: label,
+            labels:{
+              style:{
+                fontSize:'15px',
+                fontWeight:'bold'
+              }
+            }
           },
           plotOptions: {
             radar: {
-              size: 100,
-              offsetX: 0,
-              offsetY: 0,
+              size: 170,
               polygons: {
                 strokeColors: "#e8e8e8",
                 connectorColors: "#e8e8e8",

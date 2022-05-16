@@ -13,18 +13,6 @@ const Grid = styled.div`
   max-height: 40em;
 `;
 
-const Row = styled.div`
-  display: flex;
-  justify-content: center;
-  gap: 2em;
-`;
-
-const Col = styled.div<{size: number}>`
-  flex: ${props => props.size};
-  justify-content: center;
-  max-height: 40em;
-`;
-
 const Index = () => {
   return (
     <Container>

@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 const StyledTitle = styled.p`
   font-size: 1.5rem;
-  padding: 1rem;
 `;
 
 const AnalyTitle = (props:any) => {
