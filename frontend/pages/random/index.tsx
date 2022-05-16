@@ -33,14 +33,14 @@ export default function Random() {
   const RandomProblems = async () => {
     await getRandom(accessToken)
       .then(res => {
-        console.log(res.data.data)
+        // console.log(res.data.data)
         setData(res.data.data)
       })
   }
   useEffect(() => {
-    console.log(data)
+    // console.log(data)
     RandomProblems()
-    console.log(data)
+    // console.log(data)
   }, [])
 
   const subjects = [

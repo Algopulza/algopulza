@@ -14,7 +14,7 @@ export default function Layout({ children }: Props) {
   return (
     <>
       <NavBar />
-      <main>
+      <main style={{padding:""}}>
         {children}
       </main>
     </>
