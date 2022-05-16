@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 const Container = styled.section`
-  margin-top: 20px;
+  margin-top: 40px;
   text-align: center;
   color: #545454;
   cursor: pointer;

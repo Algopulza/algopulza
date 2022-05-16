@@ -11,10 +11,11 @@ import { axiosDeleteBookmark, axiosPutBookmark } from '../../../../util/axiosCol
 
 const Container = styled.div`
   width: 20vw;
-  height: 13vh;
-  border-radius: 10px;
-  box-shadow: 0px 4px 4px 0 rgba(0, 0, 0, 0.25);
+  background: #ffffff;
+  box-shadow: 3px 5px 12px 2px rgba(0, 0, 0, 0.25);
+  border-radius: 15px;
   padding: 1rem;
+  margin-bottom:1rem;
 `;
 
 const HeaderContainer = styled.div`

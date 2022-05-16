@@ -44,7 +44,7 @@ export default function Random() {
   }, [])
 
   const subjects = [
-    { title: '구현', englishTitle: 'Implementation', list: data.simulationList },
+    { title: '구현', englishTitle: 'Simulation', list: data.simulationList },
     { title: '다이내믹 프로그래밍', englishTitle: 'Dynamic Programming', list: data.dpList },
     { title: '그래프', englishTitle: 'Graph', list: data.graphList },
     { title: '그리디', englishTitle: 'Greedy', list: data.greedyList },

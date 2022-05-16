@@ -1,22 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import FavoriteCard from "../FavoriteCard/FavoriteCard";
 import styled from "styled-components";
-
-
-const Container = styled.div`
-  width: 100%;
-  height: 100%;
-  border-radius: 10px;
-  box-shadow: 0px 4px 4px 0 rgba(0, 0, 0, 0.25);
-  padding: 1rem;
-  overflow: auto;
-`;
 
 const Grid = styled.div`
   width: 100%;
   height: 80%;
   padding: 0.5rem;
-  overflow: auto;
+  overflow-y: auto;
+  margin-bottom: 30px;
 `;
 
 const Row = styled.div`

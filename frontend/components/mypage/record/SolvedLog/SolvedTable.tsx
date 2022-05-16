@@ -27,7 +27,7 @@ export default function SolvedTable(props: any) {
   }
   
   return (
-    <TableContainer component={Paper} sx={{ marginBottom: '15px', maxHeight: 350 }}>
+    <TableContainer component={Paper} sx={{ marginBottom: '15px', maxHeight: 500 }}>
       <Table stickyHeader aria-label="solved table">
         <TableHead sx={{ background: '#FFC94D' }}>
           <TableRow>
