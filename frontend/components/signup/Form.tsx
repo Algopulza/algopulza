@@ -1,8 +1,8 @@
+import { useState } from 'react'
 import { useRouter } from 'next/router'
-import Helper from '../common/Helper'
 import InputTextField from '../common/input/InputTextField'
 import ButtonSubmitting from '../common/button/ButtonSubmitting'
-import ButtonSubmittingPlain from '../common/button/ButtonSubmittingPlain'
+import Helper from '../common/Helper'
 import ButtonRedirecting from '../common/button/ButtonRedirecting'
 import styled from 'styled-components'
 import { axiosId } from '../../util/axiosCollection'
@@ -10,7 +10,6 @@ import { handleSignupClick } from '../../util/inputHandlerCollection'
 import { useRecoilState } from 'recoil'
 import { bojIdSignupState, idState, passwordState, pwConfirmState, solvedState, triedState } from '../../util/stateCollection'
 import { checkId, checkPassword, checkSpace, nothing } from '../../util/validationCollection'
-import { useState } from 'react'
 
 const Container = styled.section`
   display: flex;
@@ -64,7 +63,7 @@ export default function Form() {
             <InputTextField
               textFieldAttr={{width: '25vw', id: 'id', label: '아이디', marBot: '0', marRig: '0px', isPw: false, isAf: true}}
               valid={checkId}
-              errorMessage='2 글자 이상의 영문 소문자이어야 합니다.'
+              errorMessage='2 글자 이상의 영문자 및 숫자이어야 합니다.'
               setter={setId}
               onKeyDown={() => {}}
             />
@@ -72,7 +71,7 @@ export default function Form() {
           </div>
         </Cell>
         <Cell>
-          <ButtonSubmittingPlain
+          <ButtonSubmitting
             submittingAttr={{text: '중복 확인', width: '5vw', height: '2.5vw', marBot: '0px', fontSize: '1vw'}}
             isImportant={false}
             onClick={() => {handleIdClick(event, id)}}
@@ -100,7 +99,7 @@ export default function Form() {
           <InputTextField
             textFieldAttr={{width: '25vw', id: 'password', label: '비밀번호', marBot: '0px', marRig: '0px', isPw: true, isAf: false}}
             valid={checkPassword}
-            errorMessage='8~14 글자의 영문 대소문자 및 특수문자이어야 합니다.'
+            errorMessage='8~14 글자의 영문자 및 특수문자이어야 합니다.'
             setter={setPassword}
             onKeyDown={() => {}}
           />
@@ -113,8 +112,8 @@ export default function Form() {
         <Cell>
           <InputTextField
             textFieldAttr={{width: '25vw', id: 'pwConfirm', label: '비밀번호 확인', marBot: '0px', marRig: '0px', isPw: true, isAf: false}}
-            valid={checkSpace}
-            errorMessage='비밀번호를 한번 더 입력해주세요.'
+            valid={nothing}
+            errorMessage='동일한 비밀번호를 입력해주세요.'
             setter={setPwConfirm}
             onKeyDown={() => {}}
           />
@@ -128,7 +127,7 @@ export default function Form() {
           <InputTextField
             textFieldAttr={{width: '25vw', id: 'solved', label: '해결한 문제', marBot: '0px', marRig: '0px', isPw: false, isAf: false}}
             valid={checkSpace}
-            errorMessage='해결한 문제들을 입력해주세요.'
+            errorMessage='해결한 문제들을 공백 없이 입력해주세요.'
             setter={setSolved}
             onKeyDown={() => {}}
           />
@@ -143,7 +142,7 @@ export default function Form() {
           <InputTextField
             textFieldAttr={{width: '25vw', id: 'tried', label: '시도한 문제', marBot: '0px', marRig: '0px', isPw: false, isAf: false}}
             valid={checkSpace}
-            errorMessage='시도한 문제들을 입력해주세요'
+            errorMessage='시도한 문제들을 공백 없이 입력해주세요'
             setter={setTried}
             onKeyDown={() => {}}
           />

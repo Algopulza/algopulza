@@ -5,7 +5,7 @@ import { TextFieldAttr } from '../../../util/dto'
 
 type TextFieldProps = { 
   textFieldAttr: TextFieldAttr
-  valid(item: string): boolean
+  valid(item: any): boolean
   errorMessage: string
   setter: any
   onKeyDown(event: any): void
