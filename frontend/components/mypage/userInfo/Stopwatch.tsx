@@ -4,9 +4,8 @@ import styled from "styled-components"
 const Container = styled.section`
   display: grid;
   grid-template-columns: 1fr 1fr;
-  width: 90%;
-  height: 90%;
-  margin: 10px 10px 20px 10px;
+  width: 30vw;
+  height: 23vh;
   background: #FFFFFF;
   box-shadow: 0px 2px 10px 5px rgba(0, 0, 0, 0.25);
   border-radius: 15px;

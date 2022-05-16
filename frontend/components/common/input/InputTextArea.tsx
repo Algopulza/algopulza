@@ -5,13 +5,13 @@ import { TextFieldAttr } from '../../../util/dto'
 
 type TextFieldProps = { 
   textFieldAttr: TextFieldAttr
-  valid(item: any): boolean
+  valid(item: string): boolean
   errorMessage: string
   setter: any
   onKeyDown(event: any): void
 }
 
-export default function InputTextField({ textFieldAttr, valid, errorMessage, setter, onKeyDown }: TextFieldProps) {
+export default function InputTextArea({ textFieldAttr, valid, errorMessage, setter, onKeyDown }: TextFieldProps) {
   const [isValid, setIsValid] = useState(true)
 
   const handleChange = (event: any) => {
@@ -35,6 +35,9 @@ export default function InputTextField({ textFieldAttr, valid, errorMessage, set
           size="small"
           onChange={handleChange}
           onKeyDown={onKeyDown}
+          multiline
+          rows={2}
+          maxRows={2}
         /> :
         <TextField
           error
@@ -46,6 +49,9 @@ export default function InputTextField({ textFieldAttr, valid, errorMessage, set
           size="small"
           onChange={handleChange}
           onKeyDown={onKeyDown}
+          multiline
+          rows={2}
+          maxRows={2}
         />
       }
     </Box>

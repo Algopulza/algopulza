@@ -1,53 +1,48 @@
 import Image from 'next/image'
-import styled from 'styled-components'
 import FormSolved from './form/FormSolved'
 import FormTried from './form/FormTried'
-import FormInfo from './form/FormInfo'
-import GuideImg from '../../public/contents/recommendation_yellow.png'
+import styled from 'styled-components'
 
 const Container = styled.section`
   display: grid;
-  grid-template-columns: 6fr 2fr 2fr;
-  height: 650px;
+  grid-template-columns: 6fr 0.5fr 3fr;
+  height: 600px;
   margin-bottom: 80px;
   padding: 0vw 5vw;
   background: #FFC94D;
 `
 
-const Canvas = styled.div`
+const InputContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+`
+
+const Board = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-`
-
-const HistoryContainer = styled.div`
-  display: grid;
-  grid-template-rows: 5fr 5fr;
-  justify-content: center;
-  background: #FAFBED;
-`
-
-const InfoContainer = styled.div`
-  display: grid;
-  justify-content: center;
+  align-items: center;
+  width: 27vw;
+  height: 500px;
+  box-shadow: 0px 2px 10px 5px rgba(0, 0, 0, 0.25);
+  border-radius: 15px;
   background: #FAFBED;
 `
 
 export default function Form() {
   return (
     <Container>
-      <Canvas>
-        <Image src={GuideImg} layout="responsive" height={980} alt="회원가입 가이드 이미지" />
-      </Canvas>
+      {/* <Image src={GuideImg} layout="responsive" alt="풀이기록 제공방법 가이드 콘텐츠" /> */}
 
-      <HistoryContainer>
-        <FormSolved />
-        <FormTried />
-      </HistoryContainer>
+      <div></div>
 
-      <InfoContainer>
-        <FormInfo />
-      </InfoContainer>
+      <InputContainer>
+        <Board>
+          <FormSolved />
+          <FormTried />
+        </Board>
+      </InputContainer>
     </Container>
   )
 }
