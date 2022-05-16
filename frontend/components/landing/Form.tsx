@@ -1,7 +1,6 @@
 import { useRouter } from 'next/router'
 import InputTextField from '../common/input/InputTextField'
 import ButtonSubmitting from '../common/button/ButtonSubmitting'
-import ButtonRedirecting from '../common/button/ButtonRedirecting'
 import styled from 'styled-components'
 import { axiosLogin } from '../../util/axiosCollection'
 import { useRecoilState, useSetRecoilState } from 'recoil'
@@ -84,7 +83,6 @@ export default function Form() {
             onClick={() => {router.push('/signup')}}
           />
         </div>
-        <ButtonRedirecting />
       </div>
     </Container>
   )

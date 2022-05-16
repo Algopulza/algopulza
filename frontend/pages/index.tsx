@@ -1,5 +1,4 @@
 import Carousel from '../components/landing/Carousel'
-import Routing from '../components/landing/Routing'
 import Content from '../components/landing/Content'
 import Form from '../components/landing/Form'
 import styled from 'styled-components'
