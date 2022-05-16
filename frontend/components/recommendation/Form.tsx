@@ -1,5 +1,4 @@
 import Image from 'next/image'
-import GuideImg from '../../public/contents/recommendation_yellow.png'
 import FormSolved from './form/FormSolved'
 import FormTried from './form/FormTried'
 import styled from 'styled-components'
@@ -34,7 +33,7 @@ const Board = styled.div`
 export default function Form() {
   return (
     <Container>
-      <Image src={GuideImg} layout="responsive" alt="풀이기록 제공방법 가이드 콘텐츠" />
+      {/* <Image src={GuideImg} layout="responsive" alt="풀이기록 제공방법 가이드 콘텐츠" /> */}
 
       <div></div>
 

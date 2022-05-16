@@ -13,6 +13,7 @@ export type TextFieldAttr = {
 export type SubmittingAttr = {
   text: string,
   width: string,
+  height: string,
   marBot: string,
   fontSize: string
 }
