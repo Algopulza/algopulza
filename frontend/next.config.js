@@ -12,11 +12,11 @@ module.exports = {
     { dev, dir, outDir, distDir, buildId }
   ) {
     return {
-      'https://k6a408.p.ssafy.io/': { page: '/' },
-      'https://k6a408.p.ssafy.io/recommendation': { page: '/recommendation' },
-      'https://k6a408.p.ssafy.io/random': { page: '/random' },
-      'https://k6a408.p.ssafy.io/search': { page: '/search' },
-      'https://k6a408.p.ssafy.io/mypage': { page: '/mypage' },
+      '/': { page: '/' },
+      '/recommendation': { page: '/recommendation' },
+      '/random': { page: '/random' },
+      '/search': { page: '/search' },
+      '/mypage': { page: '/mypage' },
     }
   },
 }
