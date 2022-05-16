@@ -23,7 +23,7 @@ export const handleSignupClick = (
     } else {
       axiosSignup(id, bojId, password, solvedProblems, triedProblems)
         .then(res => {
-          // console.log(res.data.data)
+          console.log(res.data.data)
           router.push('/')
         })
     }

@@ -7,7 +7,7 @@ export const checkSpace = (item: string) => {
 }
 
 export const checkId = (id: string) => {
-  const idReg = /^[a-z0-9]{2,20}$/
+  const idReg = /^[a-z0-9]{2,}$/
   const idTrimmed = id.trim()
   return idReg.test(idTrimmed) ? true : false
 }
