@@ -10,12 +10,10 @@ import { getSolvingLog } from "../../../api/back/analysis/SolvedTable"
 import Link from "next/link"
 
 const Container = styled.div`
-  min-width: 100%;
-  min-height: 700px;
   background: #ffffff;
   box-shadow: 0px 2px 10px 5px rgba(0, 0, 0, 0.25);
   border-radius: 15px;
-  padding: 1rem;
+  padding: 0rem 1rem;
   display: flex;
   flex-direction: column;
 `;
@@ -69,7 +67,7 @@ const Solved = () => {
   // page 검색 api
   const SolvingLogPage = async (page: any) => {
     setPage(page)
-    await getSolvingLog(accessToken, currentPage, 10)
+    await getSolvingLog(accessToken, currentPage, 5)
       .then(res => {
         setRows(res.data.data.content)
       })

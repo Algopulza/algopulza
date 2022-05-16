@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 const Container = styled.section`
   display: flex;
+  align-items: baseline;
 `
 
 const Title = styled.section`
@@ -20,7 +21,7 @@ export default function SubjectTitle({ children }: SubjectProps) {
   return (
     <Container>
       <Title>{children.title}</Title>
-      <span style={{fontSize: "1.3vw"}}>{children.englishTitle}</span>
+      <span style={{fontSize: "1.3vw", color:"#818080"}}>{children.englishTitle}</span>
     </Container>
   )
 }

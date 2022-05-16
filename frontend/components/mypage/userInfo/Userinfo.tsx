@@ -4,8 +4,6 @@ import Image from "next/image";
 import profile from "../../../public/analysis/userinfo/user.png";
 
 const Container = styled.div`
-  width: 30vw;
-  height: 23vh;
   background: #ffffff;
   box-shadow: 0px 2px 10px 5px rgba(0, 0, 0, 0.25);
   border-radius: 15px;
@@ -57,9 +55,10 @@ flex-direction: row;
 margin-top: 1rem;
 `;
 
-const Text = styled.div`
+const Text = styled.span`
   font-weight: bold;
   color: #0864B9;
+  margin-left:5px;
 `
 
 type User = {
@@ -81,7 +80,7 @@ export default function Userinfo({algopluzaId, tierLevel, tierName, time}: User)
         <NickName>{algopluzaId}</NickName>
       </TopContainer>
       <BottomContainer>
-        알고리즘을 총 <Text>{time} 분</Text> 동안 풀었어요!
+        알고리즘을 총 <Text>{time}분</Text> 동안 풀었어요!
       </BottomContainer>
     </Container>
   );
