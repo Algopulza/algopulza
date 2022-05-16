@@ -1,17 +1,10 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import dynamic from "next/dynamic";
-import AnalyTitle from "../../common/AnalyTitle";
 import { getLanguages } from "../../../api/back/analysis/Language";
 import { User } from "../../../pages/mypage";
 
-const Container = styled.div`
-  width: 30vw;
-  height: 60vh;
-  border-radius: 10px;
-  box-shadow: 0px 4px 4px 0 rgba(0, 0, 0, 0.25);
-  padding: 1rem;
-`;
+const Container = styled.div``;
 
 const Language = ({accessToken}:User) => {
   const ApexCharts = dynamic(() => import("react-apexcharts"), { ssr: false });
@@ -27,7 +20,7 @@ const Language = ({accessToken}:User) => {
         let idx = 0;
         for (idx; idx < lan.length; idx++) {
           lan_temp.push(lan[idx].language);
-          per_temp.push(lan[idx].percentage);
+          per_temp.push(Number(lan[idx].percentage.toFixed(2)));
         }
         setLanguage(lan_temp);
         setPercent(per_temp);
@@ -40,15 +33,40 @@ const Language = ({accessToken}:User) => {
   }, []);
   return (
     <Container>
-      <AnalyTitle>사용언어 비율</AnalyTitle>
       <ApexCharts
         type="donut"
         series={percent}
+        height={500}
+        width= {750}
         options={{
+          dataLabels:{
+            enabled: true,
+            style:{
+              fontSize:"25px"
+            }
+          },
+          legend:{
+            show:true,
+            fontSize:'25px',
+          },
           plotOptions: {
             pie: {
-              customScale: 0.8
-            }
+              customScale: 0.9,
+              donut: {
+                size: "60%",
+                labels:{
+                  show: true,
+                  name:{
+                    fontSize: '60px',
+                  },
+                  value:{
+                    show: true,
+                    fontSize: '40px',
+                    offsetY: 50
+                  },
+                }
+              }
+            },
           },
             labels: language
         }}

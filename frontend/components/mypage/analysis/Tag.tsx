@@ -1,17 +1,10 @@
 import styled from "styled-components";
 import dynamic from "next/dynamic";
-import AnalyTitle from "../../common/AnalyTitle";
 import { useEffect, useState } from "react";
 import { User } from "../../../pages/mypage";
 import { getAnalyTag } from "../../../api/flask/analysis/AnalyTag";
 
-const Container = styled.div`
-  width: 30vw;
-  height: 60vh;
-  border-radius: 10px;
-  box-shadow: 0px 4px 4px 0 rgba(0, 0, 0, 0.25);
-  padding: 1rem;
-`;
+const Container = styled.div``;
 
 export default function Solved({accessToken, bojId}:User) {
   const ApexCharts = dynamic(() => import("react-apexcharts"), { ssr: false });
@@ -40,9 +33,10 @@ export default function Solved({accessToken, bojId}:User) {
   }, []);
   return (
     <Container>
-      <AnalyTitle>태그 별 해결 문제 수</AnalyTitle>
       <ApexCharts
         type="bar"
+        height={500}
+        width= {750}
         series={[
           {
             name: "Tag",
@@ -53,6 +47,12 @@ export default function Solved({accessToken, bojId}:User) {
           theme: {
             mode: "light",
           },
+          grid:{
+            padding:{
+              left: 50,
+              top: 50,
+            }
+          },
           chart: {
             background: "transparent",
           },
@@ -60,18 +60,24 @@ export default function Solved({accessToken, bojId}:User) {
             curve: "smooth",
             width: 2,
           },
-          yaxis: {
-            show: true,
-            labels: {},
-          },
           xaxis: {
             categories: label,
-            labels: {},
+            labels:{
+              style:{
+                fontSize:"15px",
+                fontWeight:"bold"
+              }
+            }
+          },
+          yaxis: {
+            labels:{
+              offsetX: 30,
+            }
           },
           plotOptions: {
             bar: {
               borderRadius: 4,
-              horizontal: true,
+              horizontal: false,
             },
           },
         }}

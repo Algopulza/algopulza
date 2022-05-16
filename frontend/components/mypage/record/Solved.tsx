@@ -7,20 +7,17 @@ import SolvedPagination from "./SolvedLog/SolvedPagination"
 import { useRecoilValue } from 'recoil'
 import { accessTokenState } from "../../../util/stateCollection"
 import { getSolvingLog } from "../../../api/back/analysis/SolvedTable"
-
-
+import Link from "next/link"
 
 const Container = styled.div`
-  width: 100%;
-  height: 100%;
-  border-radius: 10px;
-  box-shadow: 0px 4px 4px 0 rgba(0, 0, 0, 0.25);
+  min-width: 100%;
+  min-height: 700px;
+  background: #ffffff;
+  box-shadow: 0px 2px 10px 5px rgba(0, 0, 0, 0.25);
+  border-radius: 15px;
   padding: 1rem;
   display: flex;
   flex-direction: column;
-`;
-
-const Grid = styled.div`
 `;
 
 const Row = styled.div`
@@ -29,12 +26,27 @@ const Row = styled.div`
   gap: 2em;
 `;
 
-const Col = styled.div<{size: number}>`
-  display: flex;
-  flex: ${props => props.size};
-  justify-content: center;
-  max-height: 40em;
-`;
+const None = styled.div`
+  font-size: 2rem;
+  margin-bottom: 2rem;
+`
+
+const Button = styled.button`
+  height: 5rem;
+  width: 20rem;
+  font-size: 1.5rem;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0px 4px 10px 6px rgba(0, 0, 0, 0.25);
+  background-color: "#FAFBED";
+  color: ${(props) => (props.color ? props.color : "")};
+  font-weight: 700;
+  cursor: pointer;
+  &:hover {
+    background-color: #1A4568;
+  }
+  margin-top: 1rem;
+`
 
 const Solved = () => {
   const [rows, setRows] = useState([])
@@ -70,12 +82,20 @@ const Solved = () => {
   return (
     <Container>
       <AnalyTitle>풀이 기록</AnalyTitle>
+      {rows.length==0?
+      <div>
+        <None>아직 풀이 기록이 없습니다! 문제를 풀고 추천 탭에서 등록해주세요!</None>
+        <Link href="/recommendation"><Button>추천 페이지로 이동하기</Button></Link>
+      </div>:
+      <>
       <Row>
         <SolvedTable rows={rows}/>
       </Row>
       <Row>
         <SolvedPagination propPage={SolvingLogPage}/>
       </Row>
+      </>
+    }
     </Container>
   )
 }
