@@ -55,6 +55,9 @@ export default function Solved({accessToken, bojId}:User) {
           },
           chart: {
             background: "transparent",
+            toolbar:{
+              show:false
+            }
           },
           stroke: {
             curve: "smooth",
