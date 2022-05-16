@@ -4,7 +4,6 @@ import com.algopulza.backend.api.request.member.*;
 import com.algopulza.backend.api.response.LoginMemberRes;
 import com.algopulza.backend.api.response.MemberRes;
 import com.algopulza.backend.api.response.TokenRes;
-import com.algopulza.backend.common.exception.DuplicatedException;
 import com.algopulza.backend.common.exception.NotFoundException;
 import com.algopulza.backend.common.exception.handler.ErrorCode;
 import com.algopulza.backend.config.jwt.JwtTokenProvider;
@@ -160,15 +159,16 @@ public class MemberServiceImpl implements MemberService {
     public void addMember(JoinReq joinReq){
         String id = joinReq.getId();
         String password = getPasswordEncoder(joinReq.getPassword());
-        String bojId = extractBojIdFromImg(joinReq.getCapturedImage());
+        String bojId = joinReq.getBojId();
         String solvedProblems = joinReq.getSolvedProblems();
         String triedProblems = joinReq.getTriedProblems();
 
-        // DB에서 bojId로 가입한 회원 있는지 확인
-        Optional<Member> member = Optional.ofNullable(memberRepository.findByBojId(bojId));
-        if(member.isPresent()){  // 존재하면 예외 처리
-            throw new DuplicatedException(ErrorCode.DUPLICATE_BOJID);
-        }
+        // 백준 아이디 중복가입 가능
+//        // DB에서 bojId로 가입한 회원 있는지 확인
+//        Optional<Member> member = Optional.ofNullable(memberRepository.findByBojId(bojId));
+//        if(member.isPresent()){  // 존재하면 예외 처리
+//            throw new DuplicatedException(ErrorCode.DUPLICATE_BOJID);
+//        }
 
         // 존재하지 않다면 회원가입 정상 진행
         // bojId 이용해서 백준 사이트 회원정보 가져오기
@@ -180,11 +180,15 @@ public class MemberServiceImpl implements MemberService {
         // 풀었던 문제 번호 등록 (solved + tried)
         AddProblemReq addProblemReq = new AddProblemReq();
         addProblemReq.setBojId(bojId);
-        addProblemReq.setProblems(solvedProblems);
-        addSolvedProblem(addProblemReq);
 
-        addProblemReq.setProblems(triedProblems);
-        addTriedProblem(addProblemReq);
+        if(solvedProblems!=null){
+            addProblemReq.setProblems(solvedProblems);
+            addSolvedProblem(addProblemReq);
+        }
+        if(triedProblems!=null){
+            addProblemReq.setProblems(triedProblems);
+            addTriedProblem(addProblemReq);
+        }
     }
 
    private String getPasswordEncoder(String password) {
