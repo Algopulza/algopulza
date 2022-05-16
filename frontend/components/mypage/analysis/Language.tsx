@@ -49,6 +49,11 @@ const Language = ({accessToken}:User) => {
             show:true,
             fontSize:'25px',
           },
+          chart:{
+            toolbar:{
+              show:false
+            }
+          },
           plotOptions: {
             pie: {
               customScale: 0.9,

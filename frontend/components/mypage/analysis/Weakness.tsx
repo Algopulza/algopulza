@@ -3,7 +3,6 @@ import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import { getAnalyWeek } from "../../../api/flask/analysis/AnalyWeek";
 import { User } from "../../../pages/mypage";
-import { fontWeight } from "@mui/system";
 
 const Container = styled.div``;
 
@@ -57,6 +56,9 @@ export default function Weakness({accessToken, bojId}:User) {
           chart: {
             type: "radar",
             background: "transparent",
+            toolbar:{
+              show:false
+            }
           },
           stroke: {
             curve: "smooth",
