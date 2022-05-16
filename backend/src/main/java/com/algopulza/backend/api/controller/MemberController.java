@@ -147,7 +147,6 @@ public class MemberController {
         return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.CREATED, ResponseMessage.RENEWAL_MEMBER_INFO));
     }
 
-
     @GetMapping("/{memberId}")
     @ApiOperation(value = "회원 정보 조회하기", notes = "회원 id 값으로 회원 정보 조회 API 입니다.")
     @ApiResponses({@ApiResponse(code = 200, message = ResponseMessage.GET_MEMBER_INFO_SUCCESS, response = ErrorResponse.class),
