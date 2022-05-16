@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 public class ErrorResponse {
     private Integer statusCode;
     private String message;
+    private String errorCode;
     private List<Error> errors;
 
     private ErrorResponse(Integer statusCode, String message) {
@@ -23,12 +24,14 @@ public class ErrorResponse {
     private ErrorResponse(ErrorCode code) {
         this.statusCode = code.getStatus();
         this.message = code.getMessage();
+        this.errorCode = code.getCode();
         this.errors = new ArrayList<>();
     }
 
     private ErrorResponse(ErrorCode code, List<Error> errors) {
         this.statusCode = code.getStatus();
         this.message = code.getMessage();
+        this.errorCode = code.getCode();
         this.errors = errors;
     }
 
