@@ -27,7 +27,6 @@ type TextProps = {
 
 export default function GiftBox({ text, img, data, random }: TextProps) {
   const [isToggled, setIsToggled] = useState(false)
-  console.log(data)
   return (
     <Container>
       {isToggled ?

@@ -17,7 +17,7 @@ const StyledTableCell = styled(TableCell)(() => ({
 }));
 
 export default function Result(props: any) {
-  console.log(props)
+  // console.log(props)
   const { rows } = props
   const tierColor = (tier: string) => {
     const coloredTier = tier

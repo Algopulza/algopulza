@@ -31,8 +31,8 @@ const None = styled.div`
 
 const Button = styled.button`
   height: 5rem;
-  width: 20rem;
-  font-size: 1.5rem;
+  width: 15rem;
+  font-size: 1rem;
   border: none;
   border-radius: 15px;
   box-shadow: 0px 4px 10px 6px rgba(0, 0, 0, 0.25);
@@ -49,20 +49,21 @@ const Button = styled.button`
 const Solved = () => {
   const [rows, setRows] = useState([])
   const [currentPage, setPage] = useState(0)
+  const [total, setTotal] = useState(5)
   const accessToken = useRecoilValue(accessTokenState)
 
-  // 최초진입시 문제표시 api
-  const solvingLog = async () => {
-    await getSolvingLog(accessToken, 0, 20)
-      .then(res => {
-        // console.log(res.data.data.content)
-        setRows(res.data.data.content)
-      })
-      .catch(err => console.log(err))
-  }
-  useEffect(() => { 
-    solvingLog()
-  }, [])
+  // 최초진입시 문제표시 api => 왜 해놨는지 물어보기
+  // const solvingLog = async () => {
+  //   await getSolvingLog(accessToken, 0, 20)
+  //     .then(res => {
+  //       console.log(res.data.data)
+  //       setRows(res.data.data.content)
+  //     })
+  //     .catch(err => console.log(err))
+  // }
+  // useEffect(() => { 
+  //   solvingLog()
+  // }, [])
 
   // page 검색 api
   const SolvingLogPage = async (page: any) => {
@@ -70,6 +71,7 @@ const Solved = () => {
     await getSolvingLog(accessToken, currentPage, 5)
       .then(res => {
         setRows(res.data.data.content)
+        setTotal(res.data.data.totalPages)
       })
       .catch(err => console.log(err))
   }
@@ -90,7 +92,7 @@ const Solved = () => {
         <SolvedTable rows={rows}/>
       </Row>
       <Row>
-        <SolvedPagination propPage={SolvingLogPage}/>
+        <SolvedPagination propPage={SolvingLogPage} total={total}/>
       </Row>
       </>
     }
