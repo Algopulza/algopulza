@@ -1,9 +1,7 @@
 package com.algopulza.backend.api.service;
 
 import com.algopulza.backend.api.request.member.*;
-import com.algopulza.backend.api.response.LoginMemberRes;
-import com.algopulza.backend.api.response.MemberRes;
-import com.algopulza.backend.api.response.TokenRes;
+import com.algopulza.backend.api.response.*;
 import com.algopulza.backend.common.exception.DuplicatedException;
 import com.algopulza.backend.common.exception.NotFoundException;
 import com.algopulza.backend.common.exception.handler.ErrorCode;
@@ -16,6 +14,10 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -24,14 +26,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.BufferedReader;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
-import java.util.StringTokenizer;
+import java.time.ZonedDateTime;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
 @Slf4j
@@ -187,7 +185,82 @@ public class MemberServiceImpl implements MemberService {
         addTriedProblem(addProblemReq);
     }
 
-   private String getPasswordEncoder(String password) {
+    @Override
+    public void collectSolvingLog(Long memberId) {
+        Member member = memberRepository.findById(memberId).orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND_MEMBER));
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.add("Accept", "*/*");
+        headers.add("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.64 Safari/537.36");
+
+        HttpEntity<String> entity = new HttpEntity<String>("", headers);
+
+        RestTemplate restTemplate = new RestTemplate();
+        String response;
+        try {
+            response = restTemplate.exchange("https://www.acmicpc.net/user/" + member.getBojId(), HttpMethod.GET, entity, String.class).getBody();
+        } catch (Exception e) {
+            throw new NotFoundException(ErrorCode.NOT_FOUND_MEMBER);
+        }
+
+        Elements problemListElements = Jsoup.parse(response).getElementsByClass("problem-list");
+
+        if (problemListElements.size() < 2) {
+            return;
+        }
+
+        List<SolvingLog> solvingLogList = solvingLogRepository.findByMember(member);
+        // solving_log에 이미 존재하는 문제의 BOJ ID
+        Map<Integer, Integer> existBojProblemId = new HashMap<>();
+        for (int index = 0; index < solvingLogList.size(); index++) {
+            existBojProblemId.put(solvingLogList.get(index).getProblem().getBojId(), index);
+        }
+
+        // 푼 문제 리스트
+        Elements problemElements = problemListElements.get(0).children();
+        for (Element problemElement : problemElements) {
+            setSolvingLogList(Integer.parseInt(problemElement.text()), "solved", member, existBojProblemId, solvingLogList);
+        }
+
+        // 맞았지만 만접을 받지 못한 문제, 시도했지만 맞지 못한 문제
+        problemElements = problemListElements.get(1).children();
+        for (Element problemElement : problemElements) {
+            setSolvingLogList(Integer.parseInt(problemElement.text()), "tried", member, existBojProblemId, solvingLogList);
+        }
+
+        if (problemListElements.size() >= 3) {
+            problemElements = problemListElements.get(2).children();
+            for (Element problemElement : problemElements) {
+                setSolvingLogList(Integer.parseInt(problemElement.text()), "tried", member, existBojProblemId, solvingLogList);
+            }
+        }
+
+        solvingLogRepository.saveAll(solvingLogList);
+    }
+
+    private void setSolvingLogList(int bojProblemId, String status, Member member, Map<Integer, Integer> existBojProblemId, List<SolvingLog> solvingLogList) {
+        SolvingLog solvingLog;
+        Problem problem;
+        if (existBojProblemId.containsKey(bojProblemId)) {
+            solvingLog = solvingLogList.get(existBojProblemId.get(bojProblemId));
+            problem = solvingLog.getProblem();
+        } else {
+            solvingLog = new SolvingLog();
+            problem = problemRepository.findByBojId(bojProblemId).orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND_PROBLEM));
+        }
+
+        solvingLog.setMember(member);
+        solvingLog.setProblem(problem);
+        solvingLog.setStatus(status);
+        solvingLog.setUpdatedTime(ZonedDateTime.now().toLocalDateTime());
+
+        if (!existBojProblemId.containsKey(bojProblemId)) {
+            solvingLogList.add(solvingLog);
+        }
+    }
+
+    private String getPasswordEncoder(String password) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         String securePassword = encoder.encode(password);
         return securePassword;
@@ -351,25 +424,25 @@ public class MemberServiceImpl implements MemberService {
             newMember.setAlgopulzaPassword(password);
             newMember.setBojId(bojId);
             newMember.setTier(selectTier);
-            newMember.setProfileImage(profileImage.substring(1,profileImage.length()-1));
+            newMember.setProfileImage(profileImage.substring(1, profileImage.length() - 1));
             newMember.setSolveCount(Integer.parseInt(finalJsonNode.get("solvedCount").toString()));
             newMember.setExp(2); // 신규회원은 첫방문으로 경험치 2부터 시작
             memberRepository.save(newMember);
-        }, ()->{
+        }, () -> {
             new NotFoundException(ErrorCode.NOT_FOUND_TIER);
         });
 
     }
 
-    private void addProblem(String bojId, int problemId, String status) {
-        Problem problem = problemRepository.findByBojId(problemId).orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND_PROBLEM));
-        Optional<Member> member = Optional.ofNullable(memberRepository.findByBojId(bojId));
-        member.ifPresent(selectMember->{
+    private void addProblem(String bojMemberId, int bojProblemId, String status) {
+        Problem problem = problemRepository.findByBojId(bojProblemId).orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND_PROBLEM));
+        Optional<Member> member = Optional.ofNullable(memberRepository.findByBojId(bojMemberId));
+        member.ifPresent(selectMember -> {
             // member가 푼 문제 리스트
             List<Problem> problemList = solvingLogRepository.findProblemByMember(selectMember);
 
             // 안 풀었던 문제였다면 새로 추가
-            if(!problemList.contains(problem)) {
+            if (!problemList.contains(problem)) {
                 SolvingLog solvingLog = new SolvingLog();
                 solvingLog.setMember(selectMember);
                 solvingLog.setProblem(problem);

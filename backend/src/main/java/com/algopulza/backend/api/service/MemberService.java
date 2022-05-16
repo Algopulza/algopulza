@@ -15,6 +15,8 @@ public interface MemberService {
 
     void addMember(JoinReq joinReq);
 
+    void collectSolvingLog(Long memberId);
+
     void modifyMember(ModifyMemberReq modifyMemberReq);
 
     String createToken(Long id, RoleType roleType);

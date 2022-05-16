@@ -10,8 +10,7 @@ import com.algopulza.backend.common.exception.handler.ErrorCode;
 import com.algopulza.backend.common.exception.handler.ErrorResponse;
 import com.algopulza.backend.common.model.BaseResponseBody;
 import com.algopulza.backend.common.model.ResponseMessage;
-import com.algopulza.backend.config.jwt.JwtTokenProvider;
-import com.algopulza.backend.config.jwt.RoleType;
+import com.algopulza.backend.config.jwt.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
@@ -82,6 +81,19 @@ public class MemberController {
         boolean isPresent =  memberService.checkId(checkIdReq.getId());
 
         return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.CREATED, ResponseMessage.CHECK_DUPLICATE_ID, isPresent));
+    }
+
+    @PostMapping("/collect")
+    @ApiOperation(value = "백준 풀이 정보 수집", notes = "백준 풀이 정보 수집 API 입니다.")
+    @ApiResponses({@ApiResponse(code = 201, message = ResponseMessage.POST_SOLVING_LOG_SUCCESS),
+            @ApiResponse(code = 400, message = ResponseMessage.BAD_REQUEST, response = ErrorResponse.class),
+            @ApiResponse(code = 401, message = ResponseMessage.UNAUTHORIZED, response = ErrorResponse.class),
+            @ApiResponse(code = 403, message = ResponseMessage.ACCESS_DENIED, response = ErrorResponse.class),
+            @ApiResponse(code = 404, message = ResponseMessage.NOT_FOUND, response = ErrorResponse.class)})
+    public ResponseEntity<BaseResponseBody> addSolvingInfo() {
+        Long memberId = JwtUtil.getCurrentId();
+        memberService.collectSolvingLog(memberId);
+        return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.CREATED, ResponseMessage.POST_SOLVING_LOG_SUCCESS));
     }
 
     @PostMapping("/extractBojId")
