@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image'
 import bookmarkYellow from '../../../../public/common/bookmark_yellow.png'
-import bookmarkFilled from '../../../../public/common/bookmark_filled.png'
+import bookmarkEmpty from '../../../../public/common/bookmark_empty.png'
 import styled from 'styled-components';
 import { getBackgroundColor } from '../../../../util/backgroundColor';
 
@@ -108,7 +108,7 @@ const FavoriteCard = (props: any) => {
               alt="bookmark yellow image" /> :
             <Image
               onClick={() => {handleBookmarkPutClick()}}
-              src={bookmarkFilled}
+              src={bookmarkEmpty}
               alt="bookmark filled image"
             />
           }
