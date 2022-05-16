@@ -22,7 +22,7 @@ export default function FormTried() {
   const handleClick = (event: any) => {
     axiosTried(bojId, tried, accessToken)
       .then(res => {
-        sendMessage('resultTried')
+        sendMessage('resultTried', '감사합니다!')
       })
   }
 
@@ -39,7 +39,7 @@ export default function FormTried() {
         <p id="resultTried" style={{fontSize: '0.8vw', marginTop: 0, marginBottom: 0}}></p>
       </div>
       <ButtonSubmitting
-        submittingAttr={{text: '시도한 문제 제공', width: '12.5vw', marBot: '0', fontSize: '1vw'}}
+        submittingAttr={{text: '시도한 문제 제공', width: '12.5vw', height: '2.5vw', marBot: '0', fontSize: '1vw'}}
         isImportant={true}
         onClick={handleClick}
       />

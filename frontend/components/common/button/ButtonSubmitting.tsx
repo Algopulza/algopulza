@@ -27,6 +27,7 @@ export default function ButtonSubmitting({ submittingAttr, isImportant, onClick 
     <Button
       style={{
         width: submittingAttr.width,
+        height: submittingAttr.height,
         marginBottom: submittingAttr.marBot,
         fontSize: submittingAttr.fontSize
       }}

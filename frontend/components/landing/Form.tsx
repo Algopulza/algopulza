@@ -9,6 +9,7 @@ import {
   bojIdState, memberIdState, algoIdState, accessTokenState, refreshTokenState, idState, passwordState, loginState
 } from '../../util/stateCollection'
 import { checkSpace } from '../../util/validationCollection'
+import { sendLongMessage } from '../../util/inputHandlerCollection'
 
 const Container = styled.section`
   display: flex;
@@ -36,6 +37,9 @@ export default function Form() {
         setAccessToken(res.data.data.token.accessToken)
         setRefreshToken(res.data.data.token.refreshToken)
         router.push('/recommendation')
+      })
+      .catch(err => {
+        sendLongMessage('loginResult', '아이디와 비밀번호를 정확히 입력해주세요.')
       })
   }
   const handleKeyDown = (event: any) => {
@@ -66,12 +70,16 @@ export default function Form() {
       <div>
         <div style={{display: 'flex', flexDirection: 'column'}}>
           <ButtonSubmitting
-            submittingAttr={{text: '로그인', width: '20vw', marBot: '25px', fontSize: '1.1vw'}}
+            submittingAttr={{text: '로그인', width: '20vw', height: '2.5vw', marBot: '0px', fontSize: '1.1vw'}}
             isImportant={true}
             onClick={handleClick}
           />
+          <p
+            id="loginResult"
+            style={{fontSize: '1vw', marginTop: 0, marginBottom: '15px', color: 'red', textAlign: 'center'}}
+          />
           <ButtonSubmitting
-            submittingAttr={{text: '회원가입', width: '20vw', marBot: '0px', fontSize: '1vw'}}
+            submittingAttr={{text: '회원가입', width: '20vw', height: '2.5vw', marBot: '0px', fontSize: '1vw'}}
             isImportant={false}
             onClick={() => {router.push('/signup')}}
           />

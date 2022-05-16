@@ -7,21 +7,21 @@ export const checkSpace = (item: string) => {
 }
 
 export const checkId = (id: string) => {
-  if (id.trim() === '') {
-    return false
-  } else {
-    return true
-  }
+  const idReg = /^[a-z0-9]{2,20}$/
+  const idTrimmed = id.trim()
+  return idReg.test(idTrimmed) ? true : false
 }
 
 export const checkPassword = (password: string) => {
-  if (password.trim() === '') {
-    return false
-  } else {
-    return true
-  }
+  const passwordReg = /^(?=.*[a-zA-Z])((?=.*\W)).{8,14}$/
+  const pwTrimmed = password.trim()
+  return passwordReg.test(pwTrimmed) ? true : false
 }
 
-export const nothing = (password: string) => {
+// export const checkPwConfirm = ({ password, pwConfirm }: any) => {
+//   return password === pwConfirm ? true : false
+// }
+
+export const nothing = (item: string) => {
   return true
 }

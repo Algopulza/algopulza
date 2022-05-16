@@ -41,15 +41,6 @@ export const axiosTried = (bojId: string, problems: string, accessToken: string)
   }
 })
 
-export const axiosImg = (img: any) => axios({
-  url: 'https://k6a408.p.ssafy.io/api/v1/members/extractBojId',
-  method: 'post',
-  headers: {
-    'Content-Type': 'multipart/form-data'
-  },
-  data: img
-})
-
 export const axiosId = (id: string) => axios({
   url: `https://k6a408.p.ssafy.io/api/v1/members/checkId`,
   method: 'post',
@@ -58,13 +49,16 @@ export const axiosId = (id: string) => axios({
   }
 })
 
-export const axiosSignup = ( formData: any ) => axios({
+export const axiosSignup = ( id: string, bojId: string, password: string, solved: string, tried: string ) => axios({
     url: `https://k6a408.p.ssafy.io/api/v1/members/join`,
     method: 'post',
-    headers: {
-      'Content-Type': 'multipart/form-data'
-    },
-    data: formData
+    params: {
+      'id': id,
+      'bojId': bojId,
+      'password': password,
+      'solvedProblems': solved,
+      'triedProblems': tried
+    }
 })
 
 export const axiosInfo = ( info: object, accessToken: string ) => axios({
