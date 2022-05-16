@@ -44,9 +44,9 @@ export default function Form() {
 
   const handleIdClick = (event: any, id: string) => {
     if (id.trim() === '') {
-      console.log('not valid')
+      // console.log('not valid')
     } else {
-      console.log(`전송id: ${id}`)
+      // console.log(`전송id: ${id}`)
       axiosId(id)
         .then(res => {
           const idResult = document.getElementById('idResult')

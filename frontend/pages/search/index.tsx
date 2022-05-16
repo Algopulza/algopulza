@@ -43,8 +43,8 @@ export default function Search() {
     setSearched(text)
     await getSearchProblems(accessToken, 10, 0, undefined, undefined, undefined, searched)
       .then(res => {
-        console.log(searched, currentPage)
-        console.log(res)
+        // console.log(searched, currentPage)
+        // console.log(res)
         setRows(res.data.data.content)
       })
       .catch(err => console.log(err))
