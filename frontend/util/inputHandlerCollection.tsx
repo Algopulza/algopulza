@@ -1,25 +1,27 @@
 import { axiosInfo, axiosSignup } from "./axiosCollection"
 
-export const sendMessage = (id: string) => {
+export const sendMessage = (id: string, message: string) => {
   const result = document.getElementById(id)
-  result!.innerText = '감사합니다!'
+  result!.innerText = message
   setTimeout(() => {result!.innerText = ''}, 1000)
 }
 
-export const handleSignupClick = (
-    event: any, img: any, id: string, password: string, pwConfrim: string, solvedProblems: string, triedProblems: string, router: any
-  ) => {
-    if (password !== pwConfrim) {
-      console.log('not valid')
-    } else {
-      const formData = new FormData()
-      formData.append('capturedImage', img)
-      formData.append('id', id)
-      formData.append('password', password)
-      formData.append('solvedProblems', solvedProblems)
-      formData.append('triedProblems', triedProblems)
+export const sendLongMessage = (id: string, message: string) => {
+  const result = document.getElementById(id)
+  result!.innerText = message
+}
 
-      axiosSignup(formData)
+export const handleSignupClick = (
+    event: any, id: string, bojId: string, password: string, pwConfirm: string, solvedProblems: string, triedProblems: string, isCheck: boolean, router: any
+  ) => {
+    if (isCheck) {
+      console.log('not valid')
+      sendLongMessage('signupResult', '아이디 중복체크를 먼저 해주세요!')
+    } else if (password !== pwConfirm) {
+      console.log('not same')
+      sendLongMessage('signupResult', '비밀번호가 일치하지 않습니다.')
+    } else {
+      axiosSignup(id, bojId, password, solvedProblems, triedProblems)
         .then(res => {
           // console.log(res.data.data)
           router.push('/')
@@ -34,7 +36,7 @@ export const handleInfoClick = (event: any, info: any, accessToken: string) => {
     axiosInfo(info, accessToken)
       .then(res => {
         // console.log(res)
-        sendMessage('resultInfo')
+        sendMessage('resultInfo', '감사합니다!')
       })
   }
 }
