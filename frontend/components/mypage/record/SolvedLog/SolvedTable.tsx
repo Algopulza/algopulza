@@ -27,13 +27,13 @@ export default function SolvedTable(props: any) {
   }
   
   return (
-    <TableContainer component={Paper} sx={{ marginBottom: '15px', maxHeight: 350 }}>
+    <TableContainer component={Paper} sx={{ marginBottom: '15px', maxHeight: 500 }}>
       <Table stickyHeader aria-label="solved table">
         <TableHead sx={{ background: '#FFC94D' }}>
           <TableRow>
-            <StyledTableCell align="center" style={{ width: "15%" }}>문제번호</StyledTableCell>
-            <StyledTableCell align="center" style={{ width: "40%" }}>제목</StyledTableCell>
-            <StyledTableCell align="center" style={{ width: "15%" }}>풀이상태</StyledTableCell>
+            <StyledTableCell align="center" style={{ width: "15%" }}>문제 번호</StyledTableCell>
+            <StyledTableCell align="center" style={{ width: "40%" }}>문제 제목</StyledTableCell>
+            <StyledTableCell align="center" style={{ width: "15%" }}>풀이 상태</StyledTableCell>
             <StyledTableCell align="center" style={{ width: "10%" }}>언어</StyledTableCell>
             <StyledTableCell align="center" style={{ width: "10%" }}>메모리</StyledTableCell>
             <StyledTableCell align="center" style={{ width: "10%" }}>런타임</StyledTableCell>

@@ -10,7 +10,6 @@ const Container = styled.div`
 `;
 
 const Grid = styled.div`
-  max-height: 40em;
 `;
 
 const Index = () => {

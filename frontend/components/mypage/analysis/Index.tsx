@@ -19,21 +19,23 @@ const Select = styled.div`
   font-weight: bold;
 `
 
-const CategoryButton = styled.button`
-  height: 3rem;
-  width: 10rem;
-  font-size: 1rem;
+const CategoryButton = styled.button<{bg:string, hbg:string, hc:string}>`
+  height: 2rem;
+  width: 8rem;
+  font-size: 0.8rem;
   border: none;
   border-radius: 15px;
   box-shadow: 0px 4px 10px 6px rgba(0, 0, 0, 0.25);
-  background-color: "#FAFBED";
+  background-color: ${(props) => (props.bg ? props.bg : "")};
   color: ${(props) => (props.color ? props.color : "")};
   font-weight: 700;
   cursor: pointer;
   &:hover {
-    background-color: #1A4568;
+    background-color: ${(props) => (props.hbg ? props.hbg : "")};
+    color:  ${(props) => (props.hc ? props.hc : "")};
   }
   margin-top: 1rem;
+  margin-left: 13rem;
 `
 
 const SubContainer = styled.div`
@@ -80,10 +82,10 @@ const Index = ({accessToken, memberId, bojId}:User) => {
   return (
     <Container>
       <Select>
-        <CategoryButton onClick={showWeakness} color={weakness?"black":"#C4C4C4"}>취약점</CategoryButton>
-        <CategoryButton onClick={showLanguage} color={language?"black":"#C4C4C4"}>사용언어 비율</CategoryButton>
-        <CategoryButton onClick={showTag} color={tag?"black":"#C4C4C4"}>태그 별 해결 문제 수</CategoryButton>
-        <CategoryButton onClick={showMonth} color={month?"black":"#C4C4C4"}>월 별 문제 풀이 갯수</CategoryButton>
+        <CategoryButton onClick={showWeakness} color={weakness?"white":"#939292"} bg={weakness?"#FFC94D":"white"} hbg={weakness?"#EA9800":"#fff2d9"} hc={weakness?"white":"#939292"}>취약점</CategoryButton>
+        <CategoryButton onClick={showLanguage} color={language?"white":"#939292"} bg={language?"#FFC94D":"white"} hbg={language?"#EA9800":"#fff2d9"} hc={language?"white":"#939292"}>사용언어 비율</CategoryButton>
+        <CategoryButton onClick={showTag} color={tag?"white":"#939292"} bg={tag?"#FFC94D":"white"} hbg={tag?"#EA9800":"#fff2d9"} hc={tag?"white":"#939292"}>태그 별 해결 문제 수</CategoryButton>
+        <CategoryButton onClick={showMonth} color={month?"white":"#939292"} bg={month?"#FFC94D":"white"} hbg={month?"#EA9800":"#fff2d9"} hc={month?"white":"#939292"}>월 별 문제 풀이 갯수</CategoryButton>
       </Select>
 
       <SubContainer>
