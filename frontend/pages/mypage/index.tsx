@@ -6,12 +6,6 @@ import Analysis from "../../components/mypage/analysis/Index";
 import Record from "../../components/mypage/record/Index";
 import { useRecoilValue } from "recoil";
 import { memberIdState, bojIdState, accessTokenState } from "../../util/stateCollection";
-import Seed1 from "../../public/analysis/badge/seed1.png"
-import Seed2 from "../../public/analysis/badge/seed2.png"
-import Seed3 from "../../public/analysis/badge/seed3.png"
-import Seed4 from "../../public/analysis/badge/seed4.png"
-import Seed5 from "../../public/analysis/badge/seed5.png"
-import Image from "next/image";
 
 const Container = styled.div`
   display: grid;
@@ -33,11 +27,6 @@ export default function Mypage() {
 
   return (
     <Container>
-    <Image src={Seed1} alt="이미지를 찾을 수 없습니다." />
-    <Image src={Seed2} alt="이미지를 찾을 수 없습니다." />
-    <Image src={Seed3} alt="이미지를 찾을 수 없습니다." />
-    <Image src={Seed4} alt="이미지를 찾을 수 없습니다." />
-    <Image src={Seed5} alt="이미지를 찾을 수 없습니다." />
         <UserInfo accessToken={accessToken} memberId={memberId} bojId={bojId}/>
         <Analysis accessToken={accessToken} memberId={memberId} bojId={bojId}/> 
         <Record />
