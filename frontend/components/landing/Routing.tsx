@@ -1,5 +1,6 @@
 import ButtonRouting from '../common/button/ButtonRouting'
 import styled from 'styled-components'
+import { useEffect, useState } from 'react'
 
 const Container = styled.section`
   display: flex;
@@ -10,10 +11,14 @@ const Container = styled.section`
 export type RoutingAttr = { url: string, text: string }
 
 export default function Routing() {
+  const [isLogin, setIsLogin] = useState(false)
+  useEffect(() => {
+    setIsLogin(window.localStorage.getItem('recoil-persist') !== null ? true : false)
+  }, [])
+
   return (
     <Container>
-      <ButtonRouting routingAttr={{url: '/recommendation', text: '비회원 로그인'}}  />
-      <ButtonRouting routingAttr={{url: '/signup', text: '회원 가입'}}  />
+      {isLogin ? <></> : <ButtonRouting routingAttr={{url: '/signup', text: '회원 가입'}} />}
     </Container>
   )
 }

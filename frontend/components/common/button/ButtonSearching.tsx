@@ -16,11 +16,15 @@ const Button = styled.button`
 `
 
 type SubmittingProps = {
-  submittingAttr: any
+  submittingAttr: any,
+  onClick(event: any): void,
+  onKeyDown(event: any): void,
 }
 
-export default function ButtonSearching({ submittingAttr }: SubmittingProps) {
+export default function ButtonSearching({ submittingAttr, onClick, onKeyDown }: SubmittingProps) {
   return (
-    <Button style={{width: `${submittingAttr.width}`}}>{submittingAttr.text}</Button>
+    <Button style={{width: `${submittingAttr.width}`}} onClick={onClick} onKeyDown={onKeyDown}>
+      {submittingAttr.text}
+    </Button>
   )
 }

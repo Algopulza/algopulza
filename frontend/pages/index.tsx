@@ -12,7 +12,7 @@ const Container = styled.section`
 
 const Subcontainer = styled.div`
   display: grid;
-  grid-template-rows: 10vh 45vh 45vh;
+  grid-template-rows: 50vh 50vh;
 `
 
 export default function Landing() {
@@ -21,7 +21,6 @@ export default function Landing() {
       <Carousel />
 
       <Subcontainer>
-        <Routing />
         <Content />
         <Form />
       </Subcontainer>
