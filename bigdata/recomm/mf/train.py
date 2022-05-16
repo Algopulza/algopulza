@@ -22,7 +22,7 @@ def train_level(app, mongodb):
 
 
         # 티어에 해당하는 유저 id 목록 불러오기
-        query = "SELECT id FROM member WHERE tier IN (%s, %s, %s);"
+        query = "SELECT id FROM member WHERE tier IN (%s, %s, %s, %s, %s);"
         user_ids = app.mysql_db.execute(query, tiers)
         user_ids = [{
             'user_id': i['id'],
