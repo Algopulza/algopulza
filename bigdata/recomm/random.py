@@ -103,11 +103,13 @@ def recomm_random_solved(app, mongodb, userid):
             WHERE member_id = :user_id AND problem_id = :problem_id 
         """), {'user_id': user_id, 'problem_id': r['problemId']}).fetchone()
         marked = is_marked
+        print(marked)
         if marked:
             if marked[0] == r['problemId']:
                 r['problemMark'] = True
         else:
             r['problemMark'] = False
+        print(r)
 
     problem = dumps(problem)
     

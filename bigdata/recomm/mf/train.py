@@ -10,9 +10,9 @@ import json
 def train_level(app, mongodb):
     res_json = []
     # 난이도별로 모델 생성
-    for t in range(1, 31):
+    for t in range(1, 31-3+1):
     # for i in range(1):
-        tiers = [t-1, t, t+1]
+        tiers = [t-1, t, t+1, t+2, t+3]
         # tiers = [3, 9, 14]
         print('tiers: ', tiers)
 
