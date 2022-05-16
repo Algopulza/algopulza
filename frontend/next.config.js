@@ -13,10 +13,10 @@ module.exports = {
   ) {
     return {
       '/': { page: '/' },
-      '/recommendation': { page: '/recommendation' },
-      '/random': { page: '/random' },
-      '/search': { page: '/search' },
-      '/mypage': { page: '/mypage' },
+      '/recommendation': { page: '/recommendation/' },
+      '/random': { page: '/random/' },
+      '/search': { page: '/search/' },
+      '/mypage': { page: '/mypage/' },
     }
   },
 }
