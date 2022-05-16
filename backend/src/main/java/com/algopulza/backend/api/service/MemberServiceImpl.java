@@ -21,6 +21,7 @@ import org.springframework.http.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -112,9 +113,6 @@ public class MemberServiceImpl implements MemberService {
                     selectMember.setSolveCount(curSolveCount);
                 }
 
-                // login_log 추가
-                addLoginlog(selectMember.getId());
-
                 // 경험치 관리
                 // 로그인 로그 확인 -> 오늘 첫 방문이면 +2 , 오늘첫방문+어제도방문이면 +3
                 switch (checkDay(bojId)){
@@ -127,6 +125,9 @@ public class MemberServiceImpl implements MemberService {
                     case "second" :
                         break;
                 }
+
+                // login_log 추가
+                addLoginlog(selectMember.getId());
 
             }
             else{
@@ -154,7 +155,6 @@ public class MemberServiceImpl implements MemberService {
         }
         return false;
     }
-
 
     @Override
     public void addMember(JoinReq joinReq){
@@ -201,8 +201,12 @@ public class MemberServiceImpl implements MemberService {
         HttpEntity<String> entity = new HttpEntity<String>("", headers);
 
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<String> memberInfo
-                = restTemplate.exchange(SolvedacBaseUrl+"/user/show?handle="+bojId, HttpMethod.GET, entity, String.class);
+        ResponseEntity<String> memberInfo = null;
+        try {
+            memberInfo  = restTemplate.exchange(SolvedacBaseUrl+"/user/show?handle="+bojId, HttpMethod.GET, entity, String.class);
+        }catch (HttpClientErrorException e){
+            throw new NotFoundException(ErrorCode.NOT_FOUND_MEMBER);
+        }
 
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode jsonNode = null;
@@ -353,7 +357,7 @@ public class MemberServiceImpl implements MemberService {
             newMember.setTier(selectTier);
             newMember.setProfileImage(profileImage.substring(1,profileImage.length()-1));
             newMember.setSolveCount(Integer.parseInt(finalJsonNode.get("solvedCount").toString()));
-            newMember.setExp(2); // 신규회원은 첫방문으로 경험치 2부터 시작
+            newMember.setExp(0);
             memberRepository.save(newMember);
         }, ()->{
             new NotFoundException(ErrorCode.NOT_FOUND_TIER);
@@ -405,22 +409,25 @@ public class MemberServiceImpl implements MemberService {
 
             // 이전 모든 로그인 로그 기록
             List<LocalDateTime> loginLog = loginLogRepository.findLoginLog(selectMember);
+            if(loginLog.size()==0){
+                status.set("first");
+            }else {
+                // 가장 최근 로그인 로그 기록 확인
+                LocalDateTime latelyLogin = loginLog.get(loginLog.size() - 1);
+                String lately = latelyLogin.getYear() + "" + latelyLogin.getMonthValue() + "" + latelyLogin.getDayOfMonth() + "";
 
-            // 가장 최근 로그인 로그 기록 확인
-            LocalDateTime latelyLogin = loginLog.get(loginLog.size()-1);
-            String lately = latelyLogin.getYear() + ""+ latelyLogin.getMonthValue() + ""+ latelyLogin.getDayOfMonth() + "";
-
-            // 오늘 이미 방문했었으면 second 리턴
-            if(lately.equals(today)){
-                status.set("second");
-            }
-            // 오늘 첫 방문이고
-            else{
-                if(lately.equals(yesterday)){
-                    // 어제 방문한 기록이 있으면
-                    status.set("visited");
-                }else{
-                    status.set("first");
+                // 오늘 이미 방문했었으면 second 리턴
+                if (lately.equals(today)) {
+                    status.set("second");
+                }
+                // 오늘 첫 방문이고
+                else {
+                    if (lately.equals(yesterday)) {
+                        // 어제 방문한 기록이 있으면
+                        status.set("visited");
+                    } else {
+                        status.set("first");
+                    }
                 }
             }
         });
