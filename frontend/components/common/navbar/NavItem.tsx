@@ -18,6 +18,8 @@ type NavItemProps = {
 }
 
 export default function NavItem({ navItemAttr, isLocated, onClick }: NavItemProps) {
+  console.log(navItemAttr.url)
+  console.log(isLocated)
   return (
     <Link href={navItemAttr.url}>
       <a>

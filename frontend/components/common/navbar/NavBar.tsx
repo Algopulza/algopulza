@@ -22,10 +22,11 @@ export default function NavBar() {
   useEffect(() => {
     const currentUrl = window.location.href.split('/').pop()
     clickHandler('/' + currentUrl)
-  })
+    console.log(currentUrl)
+  },[]);
   const [page, setPage] = useRecoilState(pageState)
   const clickHandler = (path: string) => setPage(path)
-
+  console.log(page)
   return (
     <Container>
       <Brand />
