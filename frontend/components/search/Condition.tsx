@@ -51,7 +51,7 @@ export default function Condition(props: any) {
       
       <Subcontainer cond={false}>
         <InputTextField
-          textFieldAttr={{width: '20vw', id: 'keyword', label: 'Search', marBot: '10px', marRig: '0px', isPw: false, isAf: false}}
+          textFieldAttr={{width: '20vw', id: 'keyword', label: '제목', marBot: '10px', marRig: '0px', isPw: false, isAf: false}}
           valid={nothing}
           errorMessage='검색어를 입력해주세요.'
           setter={setKeyword}

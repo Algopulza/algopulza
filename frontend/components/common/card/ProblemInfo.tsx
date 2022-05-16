@@ -36,17 +36,17 @@ export default function ProblemInfo({ id, tier, level, accept }: BodyProps) {
   return (
     <Container>
       <Item>
-        <Title>ID</Title>
+        <Title>문제번호</Title>
         <Value>{id}</Value>
       </Item>
 
       <Item>
-        <Title>TIER</Title>
+        <Title>티어</Title>
         <Value>{tier + " " + level.toString()}</Value>
       </Item>
 
       <Item>
-        <Title>SOL</Title>
+        <Title>제출횟수</Title>
         <Value>{accept.toLocaleString("ko-KR")}</Value>
       </Item>
     </Container>
