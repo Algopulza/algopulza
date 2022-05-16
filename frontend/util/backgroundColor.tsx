@@ -1,18 +1,18 @@
 export const getBackgroundColor = (tier: string) =>{
   switch (tier) {
    case 'Bronze':
-     return ('#E5C5B6')
+     return ('#683400')
    case 'Silver':
-     return ('#D5DCE3')
+     return ('#485460')
    case 'Gold':
-     return ('#FFF7CB')
+     return ('#EA9800')
    case 'Platinum':
-     return ('#D3F3E1')
+     return ('#08C586')
    case 'Diamond':
-     return ('#BEDBF9')
+     return ('#009EDD')
    case 'Ruby':
-     return ('#FF9999')
+     return ('#D00050')
    default:
-     return ('#A0A0A0')
+     return ('#000000')
   }
 }

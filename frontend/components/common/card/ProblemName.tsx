@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import bookmarkYellow from '../../../public/common/bookmark_yellow.png'
-import bookmarkFilled from '../../../public/common/bookmark_filled.png'
+import bookmarkEmpty from '../../../public/common/bookmark_empty.png'
 import { getBackgroundColor } from '../../../util/backgroundColor'
 import styled from 'styled-components'
 import { useRecoilValue } from 'recoil'
@@ -31,6 +31,8 @@ const Title = styled.p`
 `
 
 const Core = styled.span`
+  color: #FFFFFF;
+  font-size: 1.2rem;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -81,7 +83,7 @@ export default function ProblemName({ title, id, problemId, tier, bookmark }: He
             alt="bookmark yellow image" /> :
           <Image
             onClick={() => {handleBookmarkPutClick()}}
-            src={bookmarkFilled}
+            src={bookmarkEmpty}
             layout="responsive"
             alt="bookmark filled image"
           />

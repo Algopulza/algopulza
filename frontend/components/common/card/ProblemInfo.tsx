@@ -1,48 +1,54 @@
-import styled from 'styled-components'
+import styled from "styled-components";
 
 const Container = styled.section`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   height: 100px;
-`
+`;
 
 const Item = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-`
+`;
 
 const Title = styled.p`
   margin: 0;
   font-size: 0.9vw;
-  color: '#545454';
-`
+  color: #9b9b9b;
+`;
+
+const Value = styled.p`
+  margin: 0;
+  font-size: 0.9vw;
+  color: #000000;
+`;
 
 type BodyProps = {
-  id: number,
-  tier: string,
-  level: number,
-  accept: number
-}
+  id: number;
+  tier: string;
+  level: number;
+  accept: number;
+};
 
 export default function ProblemInfo({ id, tier, level, accept }: BodyProps) {
   return (
     <Container>
       <Item>
         <Title>ID</Title>
-        <Title>{id}</Title>
+        <Value>{id}</Value>
       </Item>
 
       <Item>
         <Title>TIER</Title>
-        <Title>{tier + ' ' + level.toString()}</Title>
+        <Value>{tier + " " + level.toString()}</Value>
       </Item>
 
       <Item>
         <Title>SOL</Title>
-        <Title>{accept.toLocaleString('ko-KR')}</Title>
+        <Value>{accept.toLocaleString("ko-KR")}</Value>
       </Item>
     </Container>
-  )
+  );
 }
