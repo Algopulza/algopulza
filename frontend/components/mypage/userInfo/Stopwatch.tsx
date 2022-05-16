@@ -3,39 +3,41 @@ import styled from "styled-components"
 
 const Container = styled.section`
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  width: 30vw;
-  height: 23vh;
+  grid-template-rows: 1fr 1fr;
   background: #FFFFFF;
   box-shadow: 0px 2px 10px 5px rgba(0, 0, 0, 0.25);
   border-radius: 15px;
+  padding : 1.5rem 0;
 `
 
 const TimeArea = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
   align-items: center;
-  padding: 0 20px;
+  padding: 0 150px;
 `
 
 const ButtonArea = styled.div`
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+  padding: 0 100px;
 `
 
 const Time = styled.div`
   text-align: center;
-  font-size: 1.5vw;
+  font-size: 2vw;
 `
 
 const Button = styled.button`
-  width: 3vw;
-  height: 3vw;
+  width: 4.5rem;
+  height: 2.5rem;
   background: #FFC94D;
   border: none;
   border-radius: 15px;
-  font-size: 1.1vw;
+  font-size: 1rem;
+  font-weight: bold;
+  color: white;
   cursor: pointer;
 `
 

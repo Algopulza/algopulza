@@ -66,7 +66,7 @@ export default function Form() {
       <div>
         <div style={{display: 'flex', flexDirection: 'column'}}>
           <ButtonSubmitting
-            submittingAttr={{text: '로그인', width: '20vw', marBot: '15px', fontSize: '1.1vw'}}
+            submittingAttr={{text: '로그인', width: '20vw', marBot: '25px', fontSize: '1.1vw'}}
             isImportant={true}
             onClick={handleClick}
           />

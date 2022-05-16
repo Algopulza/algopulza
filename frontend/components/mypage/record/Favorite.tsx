@@ -9,12 +9,10 @@ import { getFavorites } from "../../../api/back/analysis/Favorite";
 import FavoriteList from "./FavoriteCard/FavoriteList";
 
 const Container = styled.div`
-  min-width: 100%;
-  min-height: 700px;
   background: #ffffff;
   box-shadow: 0px 2px 10px 5px rgba(0, 0, 0, 0.25);
   border-radius: 15px;
-  padding: 1rem;
+  padding: 0rem 1rem;
   display: flex;
   flex-direction: column;
 `;

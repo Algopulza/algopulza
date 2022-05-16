@@ -1,11 +1,11 @@
 import styled from "styled-components";
 import dynamic from "next/dynamic";
 import { getBadgeImage } from "../../../util/BadgeImage";
+import Image from 'next/image'
+import Seed1 from '../../../public/analysis/badge/seed1.png'
 
 
 const Container = styled.div`
-  width: 30vw;
-  height: 23vh;
   background: #FFFFFF;
   box-shadow: 0px 2px 10px 5px rgba(0, 0, 0, 0.25);
   border-radius: 15px;

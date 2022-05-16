@@ -6,18 +6,19 @@ const Container = styled.section`
   justify-content: center;
   height: 13vh;
   padding: 0 4vw;
-  color: #FFFFFF;
+`
+
+const Text = styled.p`
+  margin: 0;
+  font-size: 1.1vw;
+  color: #7e6427;
 `
 
 const Title = styled.p`
   margin: 0;
   font-size: 2.2vw;
   font-weight: 700;
-`
-
-const Text = styled.p`
-  margin: 0;
-  font-size: 1.1vw;
+  color: #3c2c06;
 `
 
 export default function GiftDescription() {
