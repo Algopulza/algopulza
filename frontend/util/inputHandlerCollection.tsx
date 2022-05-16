@@ -3,6 +3,7 @@ import { axiosInfo, axiosSignup } from "./axiosCollection"
 export const sendMessage = (id: string) => {
   const result = document.getElementById(id)
   result!.innerText = '감사합니다!'
+  setTimeout(() => {result!.innerText = ''}, 1000)
 }
 
 export const handleSignupClick = (
