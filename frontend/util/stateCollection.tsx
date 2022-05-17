@@ -96,3 +96,12 @@ export const filterTagState = atom({
   key: 'filterTagState',
   default: '',
 })
+
+export const stopwatchProbIdState = atom({
+  key: 'stopwatchProbIdState',
+  default: '',
+})
+export const stopwatchMinState = atom({
+  key: 'stopwatchMinState',
+  default: 0,
+})

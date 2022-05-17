@@ -20,8 +20,9 @@ type NavItemProps = {
 export default function NavItem({ navItemAttr, isLocated, onClick }: NavItemProps) {
   return (
     <Link href={navItemAttr.url}>
-      <a onClick={() => onClick(navItemAttr.url)}>
+      <a>
         <Text
+          onClick={() => onClick(navItemAttr.url)}
           cond={navItemAttr.url == isLocated ? true : false}
         >
           {navItemAttr.item}

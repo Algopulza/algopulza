@@ -1,7 +1,11 @@
 import styled from 'styled-components'
-import { SubmittingAttr } from '../../../util/dto'
+import { SubmittingAttr } from '../../../../util/dto'
+import ReplayIcon from '@mui/icons-material/Replay'
 
 const Button = styled.button<{ cond: boolean }>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border: none;
   border-radius: 5px;
   background-color: ${(props) => (props.cond ? "#FFC94D" : "#545454")}; //#FAFBED
@@ -18,7 +22,7 @@ type SubmittingProps = {
   onClick(event: any): void
 }
 
-export default function ButtonSubmitting({ submittingAttr, isImportant, onClick }: SubmittingProps) {
+export default function ImgButtonReset({ submittingAttr, isImportant, onClick }: SubmittingProps) {
   return (
     <Button
       style={{
@@ -30,7 +34,7 @@ export default function ButtonSubmitting({ submittingAttr, isImportant, onClick 
       cond={isImportant}
       onClick={onClick}
     >
-      {submittingAttr.text}
+      <ReplayIcon />
     </Button>
   )
 }

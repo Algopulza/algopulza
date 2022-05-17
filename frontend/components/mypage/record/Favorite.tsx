@@ -1,12 +1,20 @@
 import React, { useEffect, useState } from "react";
 import AnalyTitle from "../../common/AnalyTitle";
 import AnalyCard from "../../common/card/AnalyCard";
+import styled from "styled-components";
 
 import { useRecoilValue } from 'recoil'
 import { accessTokenState } from '../../../util/stateCollection'
 import { getFavorites } from "../../../api/back/analysis/Favorite";
 import FavoriteList from "./FavoriteCard/FavoriteList";
 
+const None = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 5rem;
+  min-height: 8rem;
+font-size: 1.5rem;
+`
 const Favorite = () => {
   const accessToken = useRecoilValue(accessTokenState)
   const [rows, setRows] = useState([])
@@ -26,7 +34,7 @@ const Favorite = () => {
     <AnalyCard>
       <AnalyTitle>즐겨찾기</AnalyTitle>
       {rows.length==0?
-      <div>아직 즐겨찾기 항목이 없습니다! 맘에 드는 카드의 별을 눌러 즐겨찾기를 해보세요 :)</div>:
+      <None>즐겨찾기한 문제가 없어요</None>:
       <FavoriteList
         rows={rows}
       />}
