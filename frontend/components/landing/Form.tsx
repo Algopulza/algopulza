@@ -67,23 +67,21 @@ export default function Form() {
         />
       </div>
 
-      <div>
-        <div style={{display: 'flex', flexDirection: 'column'}}>
-          <ButtonSubmitting
-            submittingAttr={{text: '로그인', width: '10vw', height: '2.3vw', marBot: '0px', fontSize: '1.1vw'}}
-            isImportant={true}
-            onClick={handleClick}
-          />
-          <p
-            id="loginResult"
-            style={{fontSize: '1vw', marginTop: 0, marginBottom: '15px', color: 'red', textAlign: 'center'}}
-          />
-          <ButtonSubmitting
-            submittingAttr={{text: '회원가입', width: '10vw', height: '2.3vw', marBot: '0px', fontSize: '1vw'}}
-            isImportant={false}
-            onClick={() => {router.push('/signup')}}
-          />
-        </div>
+      <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+        <ButtonSubmitting
+          submittingAttr={{text: '로그인', width: '10vw', height: '2.3vw', marBot: '0px', fontSize: '1.1vw'}}
+          isImportant={true}
+          onClick={handleClick}
+        />
+        <p
+          id="loginResult"
+          style={{fontSize: '0.9vw', marginTop: '5px', marginBottom: '15px', color: 'red', textAlign: 'center'}}
+        />
+        <ButtonSubmitting
+          submittingAttr={{text: '회원가입', width: '10vw', height: '2.3vw', marBot: '0px', fontSize: '1vw'}}
+          isImportant={false}
+          onClick={() => {router.push('/signup')}}
+        />
       </div>
     </Container>
   )

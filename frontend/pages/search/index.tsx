@@ -9,6 +9,7 @@ import { useRecoilState, useRecoilValue } from 'recoil'
 import { accessTokenState, filterLevelState, filterTagState, filterTierState } from '../../util/stateCollection'
 import { getProblems, getSearchProblems } from '../../api/back/search/SearchProblems'
 import { AnyKindOfDictionary } from 'lodash'
+import ButtonFloating from '../../components/common/button/ButtonFloating'
 
 const Container = styled.section`
   padding: 2vh 10vw 0 10vw;
@@ -72,6 +73,7 @@ export default function Search() {
           totalPage={totalpage}
         />
       </Subcontainer>
+      <ButtonFloating />
     </Container>
   )
 }
