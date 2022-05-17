@@ -85,7 +85,6 @@ public class ProblemRepositoryCustomImpl implements ProblemRepositoryCustom {
                               )).distinct()
                               .from(qProblem)
                               .join(qTier).on(qProblem.tier.eq(qTier))
-                              .leftJoin(qProblemHasTag).on(qProblem.eq(qProblemHasTag.problem))
                               .where(eqTierName(tierName), eqNumberInTierName(tierLevel), containTitle(title), inTagId(tagIdSet))
                               .orderBy(qProblem.bojId.asc())
                               .offset(pageable.getOffset())
@@ -97,7 +96,6 @@ public class ProblemRepositoryCustomImpl implements ProblemRepositoryCustom {
                 .select(qProblem)
                 .from(qProblem)
                 .join(qTier).on(qProblem.tier.eq(qTier))
-                .leftJoin(qProblemHasTag).on(qProblem.eq(qProblemHasTag.problem))
                 .where(eqTierName(tierName), eqNumberInTierName(tierLevel), containTitle(title), inTagId(tagIdSet));
 
         return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchCount);
