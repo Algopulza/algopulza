@@ -2,9 +2,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/router'
 import InputTextField from '../common/input/InputTextField'
 import ButtonSubmitting from '../common/button/ButtonSubmitting'
-import ProblemHelper from './helper/ProblemHelper'
-import ExtensionHelper from './helper/ExtensionHelper'
-import ButtonRedirecting from '../common/button/ButtonRedirecting'
+import ProblemHelper from './ProblemHelper'
 import styled from 'styled-components'
 import { axiosId } from '../../util/axiosCollection'
 import { handleSignupClick } from '../../util/inputHandlerCollection'
@@ -163,15 +161,6 @@ export default function Form() {
               style={{fontSize: '1vw', marginTop: 0, marginBottom: 0, color: 'red', textAlign: 'center'}}
             />
           </div>
-        </Cell>
-      </Row>
-
-      <Row>
-        <Cell>
-          <ButtonRedirecting />
-        </Cell>
-        <Cell>
-          <ExtensionHelper />
         </Cell>
       </Row>
     </Container>
