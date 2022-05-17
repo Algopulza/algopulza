@@ -64,39 +64,4 @@ public class AnalysisServiceImpl implements AnalysisService {
         return solvingLogRepository.findStatisticsByMemberId(memberId);
     }
 
-    @Override
-    public void addDetailSolvedProblem(Long memberId, AddDetailSolvedProblemReq addDetailSolvedProblemReq) {
-        String status = "solved";
-        Member member = memberRepository.findById(memberId)
-                                        .orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND_MEMBER));
-        Problem problem = problemRepository.findByBojId(addDetailSolvedProblemReq.getProblemBojId())
-                                           .orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND_PROBLEM));
-
-        // language 정보가 없다면 language가 null값인 정보로 조회
-        if (addDetailSolvedProblemReq.getLanguage() == null) {
-            addDetailSolvedProblemReq.setLanguage("null");
-        }
-
-        // member가 problem 문제를 language로 푼 기록이 있다면 업데이트, 없다면 새로 추가
-        SolvingLog solvingLog = solvingLogRepository.findByProblemAndLanguage(member, problem, addDetailSolvedProblemReq.getLanguage())
-                                                    .orElse(new SolvingLog());
-
-        solvingLog.setMember(member);
-        solvingLog.setProblem(problem);
-        solvingLog.setStatus(status);
-        solvingLog.setMemory(addDetailSolvedProblemReq.getMemory());
-        solvingLog.setRunTime(addDetailSolvedProblemReq.getRunTime());
-        solvingLog.setLanguage(addDetailSolvedProblemReq.getLanguage());
-        solvingLog.setCodeLength(addDetailSolvedProblemReq.getCodeLength());
-        solvingLog.setSolvingTime(addDetailSolvedProblemReq.getSolvingTime());
-        solvingLog.setSubmitTime(addDetailSolvedProblemReq.getSubmitTime());
-        solvingLog.setUpdatedTime(ZonedDateTime.now().toLocalDateTime());
-        solvingLogRepository.save(solvingLog);
-    }
-
-    @Override
-    public Page<SolvingLogRes> getSolvingLogList(Long memberId, Pageable pageable) {
-        return solvingLogRepository.findByMemberId(memberId, pageable);
-    }
-
 }
