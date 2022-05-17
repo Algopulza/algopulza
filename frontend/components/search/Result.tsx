@@ -33,10 +33,6 @@ const TextRow = styled.div`
 `;
 
 export default function Result(props: any) {
-<<<<<<< HEAD
-  // console.log(props)
-=======
->>>>>>> feature/S06P31A408-300
   const { rows } = props
   const tierColor = (tier: string) => {
     const coloredTier = tier
