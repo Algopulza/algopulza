@@ -2,7 +2,7 @@ import styled from "styled-components";
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import { getAnalyWeek } from "../../../api/flask/analysis/AnalyWeek";
-import { User } from "../../../pages/mypage";
+import { User } from "../../../pages/my-page";
 import { fontWeight } from "@mui/system";
 
 const Container = styled.div``;

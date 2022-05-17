@@ -1,11 +1,11 @@
 import styled from "styled-components";
 import { ReactElement } from "react";
-import Layout from "../../components/common/Layout";
-import UserInfo from "../../components/mypage/userInfo/Index";
-import Analysis from "../../components/mypage/analysis/Index";
-import Record from "../../components/mypage/record/Index";
+import Layout from "../components/common/Layout";
+import UserInfo from "../components/mypage/userInfo/Index";
+import Analysis from "../components/mypage/analysis/Index";
+import Record from "../components/mypage/record/Index";
 import { useRecoilValue } from "recoil";
-import { memberIdState, bojIdState, accessTokenState } from "../../util/stateCollection";
+import { memberIdState, bojIdState, accessTokenState } from "../util/stateCollection";
 
 const Container = styled.div`
   display: grid;

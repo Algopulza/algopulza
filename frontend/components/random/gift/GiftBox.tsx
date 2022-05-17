@@ -7,9 +7,10 @@ import styled from 'styled-components'
 const Container = styled.section`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
   height: 40vh;
+  padding-bottom: 20px;
 `
 
 const Canvas = styled.div`

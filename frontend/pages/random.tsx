@@ -1,12 +1,12 @@
 import { ReactElement, useEffect, useState } from 'react'
-import Layout from '../../components/common/Layout'
-import Gift from '../../components/random/Gift'
-import Subject from '../../components/recommendation/Subject'
+import Layout from '../components/common/Layout'
+import Gift from '../components/random/Gift'
+import Subject from '../components/recommendation/Subject'
 import styled from 'styled-components'
 
 import { useRecoilValue } from 'recoil'
-import { accessTokenState } from '../../util/stateCollection'
-import { getRandom } from '../../api/back/ramdom/Random'
+import { accessTokenState } from '../util/stateCollection'
+import { getRandom } from '../api/back/ramdom/Random'
 
 const Container = styled.section`
   padding: 0vw 5vw;

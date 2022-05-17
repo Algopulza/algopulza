@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
-import { User } from "../../../pages/mypage";
+import { User } from "../../../pages/my-page";
 import { getAnalyTag } from "../../../api/flask/analysis/AnalyTag";
 
 const Container = styled.div``;

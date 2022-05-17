@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import dynamic from "next/dynamic";
 import { getSolved } from "../../../api/back/analysis/Solved";
-import { User } from "../../../pages/mypage";
+import { User } from "../../../pages/my-page";
 import { fontWeight } from "@mui/system";
 
 const Container = styled.div``;
