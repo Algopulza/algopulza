@@ -8,7 +8,7 @@ const Container = styled.section`
 `
 
 const MainText = styled.div`
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   font-size: 3vw;
   color: #282828;
 `

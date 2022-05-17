@@ -20,7 +20,7 @@ const FormArea = styled.div`
   grid-template-rows: 1fr 1fr;
   width: 25vw;
   height: 75vh;
-  padding: 5vh;
+  padding: 5vh 0;
   border-radius: 10px;
   background: #FFFFFF;
   /* opacity: 90%; */
