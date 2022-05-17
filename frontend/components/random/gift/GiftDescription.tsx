@@ -11,14 +11,14 @@ const Container = styled.section`
 const Text = styled.p`
   margin: 0;
   font-size: 1.1vw;
-  color: #7e6427;
+  color: #FFFFFF;
 `
 
 const Title = styled.p`
   margin: 0;
   font-size: 2.2vw;
   font-weight: 700;
-  color: #3c2c06;
+  color: #FFFFFF;
 `
 
 export default function GiftDescription() {

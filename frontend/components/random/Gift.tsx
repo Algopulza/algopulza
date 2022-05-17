@@ -1,20 +1,19 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from "react"
 import styled from 'styled-components'
 import GiftDescription from './gift/GiftDescription'
 import GiftBox from './gift/GiftBox'
 import ImgGiftBoxBlue from '../../public/random/giftbox_blue.png'
 import ImgGiftBoxRed from '../../public/random/giftbox_red.png'
 import _ from 'lodash'
-import axios from "axios";
-import { getRandomOne } from "../../api/back/ramdom/RandomOne";
-import { getRandBox } from "../../api/flask/random/RandBox";
+import { getRandomOne } from "../../api/back/ramdom/RandomOne"
+import { getRandBox } from "../../api/flask/random/RandBox"
 import { useRecoilValue } from "recoil";
-import { bojIdState, accessTokenState } from "../../util/stateCollection";
+import { bojIdState, accessTokenState } from "../../util/stateCollection"
 
 const Container = styled.section`
   margin-bottom: 80px;
   height: 50vh;
-  background: #FFC94D;
+  background: #282828;
 `
 
 const Boxes = styled.div`
@@ -23,41 +22,38 @@ const Boxes = styled.div`
   padding: 0 2vw;
 `
 
-  function Gift() {
+function Gift() {
   const [dataRed, setDataRed] = useState<object>([]);
   const [dataBlue, setDataBlue] = useState<object>([]);
   const range = _.range(2)
   const buttonTexts = ['수준을 고려해서 추천 받고 싶다면', '수준에 관계 없이 추천 받고 싶다면']
   const images = [ImgGiftBoxBlue, ImgGiftBoxRed]
   const data = [dataBlue, dataRed]
-  const accessToken = useRecoilValue(accessTokenState);
-  const bojId = useRecoilValue(bojIdState);
+  const accessToken = useRecoilValue(accessTokenState)
+  const bojId = useRecoilValue(bojIdState)
 
   const RandomBlue = async () => {
     await getRandBox(accessToken, bojId)
       .then((res) => {
         const data = res.data[0]
-        setDataBlue(data);
+        setDataBlue(data)
       })
-      .catch((err) => console.log(err));
-  };
+  }
 
   const RandomRed = async () => {
     await getRandomOne(accessToken)
       .then((res) => {
         const data = res.data.data
-        setDataRed(data);
+        setDataRed(data)
       })
-      .catch((err) => console.log(err));
-  };
-
+  }
   
   const random = [RandomBlue, RandomRed]
 
   useEffect(() => {
-    RandomBlue();
-    RandomRed();
-  }, []);
+    RandomBlue()
+    RandomRed()
+  }, [])
 
   return (
     <Container>
@@ -70,4 +66,4 @@ const Boxes = styled.div`
   )
 }
 
-export default Gift;
+export default Gift

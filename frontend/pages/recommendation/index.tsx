@@ -1,6 +1,6 @@
 import { ReactElement, useState, useEffect } from 'react'
 import Layout from '../../components/common/Layout'
-import Form from '../../components/recommendation/Form'
+import Gift from '../../components/random/Gift'
 import Subject from '../../components/recommendation/Subject'
 import styled from 'styled-components'
 
@@ -26,7 +26,6 @@ export default function Recommendation() {
   const RecommendVul = async () => {
     await getRecoVul(accessToken, bojId)
       .then((res) => {
-        // console.log(res)
         const list = res.data.slice(0, 5)
         setVulData(list)
       })
@@ -72,7 +71,7 @@ export default function Recommendation() {
 
   return (
     <>
-      <Form />
+      <Gift />
       <Container>
         {subjects.map((subject) => <Subject key={subject.title} subjectAttr={subject} />)}
       </Container>
