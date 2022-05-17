@@ -36,6 +36,11 @@ const Solved = () => {
   const [total, setTotal] = useState(5)
   const accessToken = useRecoilValue(accessTokenState)
 
+  const handleClick = () => {
+    const problemUrl = `https://www.acmicpc.net`
+    window.open(problemUrl)
+  }
+
   // page 검색 api
   const SolvingLogPage = async (page: any) => {
     setPage(page)
@@ -56,7 +61,7 @@ const Solved = () => {
       <AnalyTitle>풀이 기록</AnalyTitle>
       {rows.length==0?
       <Sub>
-        <None><a href="https://www.acmicpc.net" target='_blank' style={{color:"blue"}}>acmicpc.net</a> 에 제출한 문제가 없어요</None>
+        <None><span onClick={handleClick} style={{color:"blue", cursor:"pointer"}}>acmicpc.net</span> 에 제출한 문제가 없어요</None>
       </Sub>:
       <>
       <Row>
