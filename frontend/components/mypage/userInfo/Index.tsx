@@ -1,17 +1,16 @@
-import React, { useEffect, useState } from "react";
-import styled from "styled-components";
-import Userinfo from "./Userinfo";
-import Badge from "./Badge";
-import Stopwatch from "./stopwatch/Stopwatch";
-import { getUserInfo } from "../../../api/back/analysis/UserInfo";
-import { getStatistic } from "../../../api/back/analysis/Statistic";
-import { User } from "../../../pages/mypage";
+import React, { useEffect, useState } from "react"
+import styled from "styled-components"
+import Userinfo from "./Userinfo"
+import Stopwatch from "./stopwatch/Stopwatch"
+import { getUserInfo } from "../../../api/back/analysis/UserInfo"
+import { getStatistic } from "../../../api/back/analysis/Statistic"
+import { User } from "../../../pages/mypage"
 
 const Container = styled.div`
   display: grid;
   grid-template-columns: 1fr 2fr;
   gap: 2rem;
-`;
+`
 
 const Index = ({accessToken, memberId}:User) => {
   const [userInfo, setUserInfo] = useState({
@@ -19,7 +18,7 @@ const Index = ({accessToken, memberId}:User) => {
     tierLevel:0,
     tierName:"",
     exp:0
-  });
+  })
   
   const [timeInfo, setTimeInfo] = useState({totalSolvingTime:0})
   const time = timeInfo.totalSolvingTime
@@ -43,14 +42,14 @@ const Index = ({accessToken, memberId}:User) => {
   useEffect(() => {
     AnalUser()
     Time()
-  }, []);
+  }, [])
 
   return (
     <Container>
       {userInfo?<Userinfo algopluzaId={userInfo.algopluzaId} tierLevel={userInfo.tierLevel} tierName={userInfo.tierName} time={time} exp={userInfo.exp}/>:null}
       <Stopwatch />
     </Container>
-  );
-};
+  )
+}
 
-export default Index;
+export default Index
