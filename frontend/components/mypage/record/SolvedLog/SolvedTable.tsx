@@ -15,7 +15,6 @@ const StyledTableCell = styled(TableCell)(() => ({
   },
 }));
 
-
 export default function SolvedTable(props: any) {
   const { rows } = props
   const statusColor = (status: string) => {
@@ -51,7 +50,7 @@ export default function SolvedTable(props: any) {
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <StyledTableCell align="center" component="th" scope="row">{row.problemBojId}</StyledTableCell>
-              <StyledTableCell align="left"
+              <StyledTableCell align="center"
               onClick={handleClick}>
                 {row.problemTitle}
               </StyledTableCell>
