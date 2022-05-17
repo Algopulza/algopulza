@@ -1,0 +1,79 @@
+plugins {
+    id 'org.springframework.boot' version '2.5.7'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'com.ewerk.gradle.plugins.querydsl' version '1.0.10'
+    id 'java'
+}
+
+group = 'com.algopulza'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+// QueryDSL
+def querydslDir = "$buildDir/generated/querydsl"
+
+querydsl {
+    jpa = true
+    querydslSourcesDir = querydslDir
+    library = 'com.querydsl:querydsl-apt'
+}
+
+sourceSets {
+    main.java.srcDir querydslDir
+}
+
+compileQuerydsl {
+    options.annotationProcessorPath = configurations.querydsl
+}
+
+configurations {
+    querydsl.extendsFrom compileClasspath
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+// End
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // JPA
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    // MySQL
+    implementation 'mysql:mysql-connector-java'
+    // QueryDSL
+    implementation 'com.querydsl:querydsl-jpa'
+    // Lombok
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    // Validation
+    implementation 'org.springframework.boot:spring-boot-starter-validation:2.6.2'
+    // Security
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    // JWT
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.2'
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.2'
+    // Swagger
+    implementation 'io.springfox:springfox-boot-starter:3.0.0'
+    // AWS (S3)
+    implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+    // WebClient
+    implementation 'org.springframework.boot:spring-boot-starter-webflux:2.6.6'
+    // File
+    implementation group: 'commons-fileupload', name: 'commons-fileupload', version: '1.3.1'
+    implementation 'commons-io:commons-io:2.6'
+    // HTML Parser (Jsoup)
+    implementation 'org.jsoup:jsoup:1.15.1'
+
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
