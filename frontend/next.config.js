@@ -8,17 +8,17 @@ const nextConfig = {
   },
 
   trailingSlash: true,
-  
+
   exportPathMap: async function (
     defaultPathMap,
     { dev, dir, outDir, distDir, buildId }
   ) {
     return {
-      '/': { page: '/' },
-      '/recommendation/': { page: '/recommendation' },
-      '/random/': { page: '/random' },
-      '/search/': { page: '/search' },
-      '/mypage/': { page: '/mypage' }
+      '/index.html': { page: '/' },
+      '/recommendation/index.html': { page: '/recommendation' },
+      '/random/index.html': { page: '/random' },
+      '/search/index.html': { page: '/search' },
+      '/mypage/index.html': { page: '/mypage' }
     }
   }
 }
