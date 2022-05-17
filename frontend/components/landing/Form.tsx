@@ -69,7 +69,7 @@ export default function Form() {
       <div>
         <div style={{display: 'flex', flexDirection: 'column'}}>
           <ButtonSubmitting
-            submittingAttr={{text: '로그인', width: '20vw', height: '2.5vw', marBot: '0px', fontSize: '1.1vw'}}
+            submittingAttr={{text: '로그인', width: '10vw', height: '2.3vw', marBot: '0px', fontSize: '1.1vw'}}
             isImportant={true}
             onClick={handleClick}
           />
@@ -78,7 +78,7 @@ export default function Form() {
             style={{fontSize: '1vw', marginTop: 0, marginBottom: '15px', color: 'red', textAlign: 'center'}}
           />
           <ButtonSubmitting
-            submittingAttr={{text: '회원가입', width: '20vw', height: '2.5vw', marBot: '0px', fontSize: '1vw'}}
+            submittingAttr={{text: '회원가입', width: '10vw', height: '2.3vw', marBot: '0px', fontSize: '1vw'}}
             isImportant={false}
             onClick={() => {router.push('/signup')}}
           />
