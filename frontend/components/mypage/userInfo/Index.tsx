@@ -5,7 +5,7 @@ import Badge from "./Badge";
 import Stopwatch from "./Stopwatch";
 import { getUserInfo } from "../../../api/back/analysis/UserInfo";
 import { getStatistic } from "../../../api/back/analysis/Statistic";
-import { User } from "../../../pages/my-page";
+import { User } from "../../../pages/mypage";
 
 const Container = styled.div`
   display: grid;

@@ -4,7 +4,7 @@ import Weakness from "./Weakness";
 import Tag from "./Tag";
 import Language from "./Language";
 import Month from "./Month";
-import { User } from "../../../pages/my-page";
+import { User } from "../../../pages/mypage";
 
 const Container = styled.div`
   display: grid;

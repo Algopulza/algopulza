@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import dynamic from "next/dynamic";
 import { getLanguages } from "../../../api/back/analysis/Language";
-import { User } from "../../../pages/my-page";
+import { User } from "../../../pages/mypage";
 
 const Container = styled.div``;
 
