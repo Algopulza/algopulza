@@ -4,7 +4,11 @@ import { useEffect, useState } from "react";
 import { getAnalyWeek } from "../../../api/flask/analysis/AnalyWeek";
 import { User } from "../../../pages/mypage";
 
-const Container = styled.div``;
+const Container = styled.div`
+display: flex;
+justify-content: center;
+align-items: center;
+`;
 
 export default function Weakness({accessToken, bojId}:User) {
   const ApexCharts = dynamic(() => import("react-apexcharts"), { ssr: false });
@@ -45,13 +49,45 @@ export default function Weakness({accessToken, bojId}:User) {
           },
         ]}
         options={{
+          responsive:[{
+            breakpoint : 1290,
+            options: {
+              chart:{
+                width: 450,
+                height: 300,
+              },
+              xaxis:{
+                labels:{
+                  show:true,
+                  style:{
+                   fontSize:"10px" 
+                  }
+                }
+              },
+              plotOptions: {
+                radar: {
+                  size: 100
+                },
+              },
+            },   
+        },
+        {
+          breakpoint : 780,
+          options: {
+            chart:{
+              width: 350,
+              height: 250,
+            },
+            xaxis:{
+              labels:{
+                show:false,
+              }
+            },
+          },   
+      }
+      ],
           theme: {
             mode: "light",
-          },
-          grid:{
-            padding:{
-              top: 50,
-            }
           },
           chart: {
             type: "radar",

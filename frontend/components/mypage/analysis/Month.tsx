@@ -3,9 +3,12 @@ import styled from "styled-components";
 import dynamic from "next/dynamic";
 import { getSolved } from "../../../api/back/analysis/Solved";
 import { User } from "../../../pages/mypage";
-import { fontWeight } from "@mui/system";
 
-const Container = styled.div``;
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 const Month = ({accessToken}:User) => {
   const ApexCharts = dynamic(() => import("react-apexcharts"), { ssr: false });
@@ -39,12 +42,33 @@ const Month = ({accessToken}:User) => {
         height={450}
         width= {750}
         options={{
-          grid:{
-            padding:{
-              left: 50,
-              top: 50,
-            }
-          },
+          responsive:[{
+            breakpoint : 1290,
+            options: {
+              chart:{
+                width: 450,
+                height: 300,
+              },
+              xaxis: {
+                 labels:{
+                  style:{
+                    fontSize:"10px",
+                    fontWeight:"bold"
+                  }
+                }
+              },
+            },   
+        },
+        {
+          breakpoint : 780,
+          options: {
+            chart:{
+              width: 350,
+              height: 250,
+            },
+          },   
+      }
+      ],
           chart: {
             type: 'line',
             dropShadow: {
@@ -80,7 +104,7 @@ const Month = ({accessToken}:User) => {
           },
           yaxis: {
             labels:{
-              offsetX: 30,
+              offsetX: -10,
             }
           },
         }}
