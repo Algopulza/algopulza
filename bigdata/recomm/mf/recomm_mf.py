@@ -31,23 +31,31 @@ def recomm_mf(app, mongodb, userid):
 
 
     # 추천 문제 데이터 불러오기
-    ## 해당 티어, 해당 유저, 아직 안푼, 0.5점 이상
+    ## 해당 티어, 해당 유저
     collection = mongodb.member_problem_mf
     problem_tag = collection.find({
         '$and': [
             {'tier': user_tier },
             {'data.memberId': user_id },
-            {'data.problemId': {'$nin': solved_id_list}},
-            {'data.predicted_r': {'$gte': 0.5}},
+            # {'data.problemId': {'$nin': solved_id_list}},
+            # {'data.predicted_r': {'$gte': 0.5}},
     ]})
-    problem_id_list = list(problem_tag)
+    problem_tag_list = list(problem_tag)
+    
+    # 푼 문제 제외
+    problem_id_list = []
+    for problem_t in problem_tag_list[0]['data']:        
+        cond = problem_t['problemId'] not in solved_id_list
+        # cond = problem_t['predicted_r'] >= 0.5
+        if cond:
+            problem_id_list.append(problem_t)
 
     ## 유저 티어에 해당하는 추천 문제 데이터 없는 경우 return
     if len(problem_id_list) == 0:
         return 'empty'
     
     # 추천 문제 리스트 df 형태로 변형 및 predicted_r 높은순으로 정렬
-    problem_id_list = problem_id_list[0]['data']
+    problem_id_list = problem_id_list
     problem_id_df = pd.DataFrame(problem_id_list).sort_values('predicted_r', ascending=False)
     
     # 난이도 필터링
@@ -62,7 +70,7 @@ def recomm_mf(app, mongodb, userid):
 
     ### 추천 문제 전달 ###
     recomm_list = list(recomm_problems)
-
+    # print(recomm_list)
     # 즐겨찾기 정보 추가
     for r in recomm_list:
         is_marked = app.mysql_db.execute(text("""
