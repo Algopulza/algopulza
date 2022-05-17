@@ -52,24 +52,12 @@ const Solved = () => {
   const [total, setTotal] = useState(5)
   const accessToken = useRecoilValue(accessTokenState)
 
-  // 최초진입시 문제표시 api => 왜 해놨는지 물어보기
-  // const solvingLog = async () => {
-  //   await getSolvingLog(accessToken, 0, 20)
-  //     .then(res => {
-  //       console.log(res.data.data)
-  //       setRows(res.data.data.content)
-  //     })
-  //     .catch(err => console.log(err))
-  // }
-  // useEffect(() => { 
-  //   solvingLog()
-  // }, [])
-
   // page 검색 api
   const SolvingLogPage = async (page: any) => {
     setPage(page)
     await getSolvingLog(accessToken, currentPage, 5)
       .then(res => {
+        console.log(res)
         setRows(res.data.data.content)
         setTotal(res.data.data.totalPages)
       })
