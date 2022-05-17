@@ -2,13 +2,14 @@ import styled from 'styled-components'
 import { SubmittingAttr } from '../../../util/dto'
 
 const Button = styled.button<{ cond: boolean }>`
-  border: none;
+  border: 2px solid #d4d4d4;
   border-radius: 10px;
-  background-color: ${(props) => (props.cond ? "#FFC94D" : "#545454")}; //#FAFBED
-  color: #FFFFFF;
+  background: transparent;
+  /* background-color: ${(props) => (props.cond ? "#FFC94D" : "#545454")}; //#FAFBED */
+  color: #000000;
   cursor: pointer;
   &:hover {
-    background-color: ${(props) => (props.cond ? "#FFCF62" : "#5C5C5C")};
+    background-color: ${(props) => (props.cond ? "#FFCF62" : "#efefef")};
   }
 `
 
@@ -18,7 +19,7 @@ type SubmittingProps = {
   onClick(event: any): void
 }
 
-export default function ButtonSubmitting({ submittingAttr, isImportant, onClick }: SubmittingProps) {
+export default function ButtonSubmittingOutlined({ submittingAttr, isImportant, onClick }: SubmittingProps) {
   return (
     <Button
       style={{
