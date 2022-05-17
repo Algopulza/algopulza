@@ -15,8 +15,4 @@ public interface AnalysisService {
 
     SolvingLogStatisticsRes getSolvingLogStatistics(Long memberId);
 
-    void addDetailSolvedProblem(Long memberId, AddDetailSolvedProblemReq addDetailSolvedProblemReq);
-
-    Page<SolvingLogRes> getSolvingLogList(Long memberId, Pageable pageable);
-
 }

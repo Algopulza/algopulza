@@ -1,13 +1,13 @@
 import { ReactElement, useEffect, useState } from 'react'
-import Condition from '../../components/search/Condition'
-import Result from '../../components/search/Result'
-import SearchPagination from '../../components/search/SearchPagination'
-import Layout from '../../components/common/Layout'
+import Condition from '../components/search/Condition'
+import Result from '../components/search/Result'
+import SearchPagination from '../components/search/SearchPagination'
+import Layout from '../components/common/Layout'
 import styled from 'styled-components'
 
 import { useRecoilValue } from 'recoil'
-import { accessTokenState } from '../../util/stateCollection'
-import { getProblems, getSearchProblems } from '../../api/back/search/SearchProblems'
+import { accessTokenState } from '../util/stateCollection'
+import { getProblems, getSearchProblems } from '../api/back/search/SearchProblems'
 
 const Container = styled.section`
   padding: 2vh 10vw 0 10vw;

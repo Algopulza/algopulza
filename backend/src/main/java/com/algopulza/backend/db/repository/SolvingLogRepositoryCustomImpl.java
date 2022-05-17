@@ -1,10 +1,7 @@
 package com.algopulza.backend.db.repository;
 
 import com.algopulza.backend.api.response.*;
-import com.algopulza.backend.db.entity.Member;
-import com.algopulza.backend.db.entity.Problem;
-import com.algopulza.backend.db.entity.QSolvingLog;
-import com.algopulza.backend.db.entity.SolvingLog;
+import com.algopulza.backend.db.entity.*;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
@@ -90,7 +87,7 @@ public class SolvingLogRepositoryCustomImpl implements  SolvingLogRepositoryCust
                 return qSolvingLog.language.isNull();
             }
             // language가 null이거나 language인 값들을 찾는다.
-            return qSolvingLog.language.eq(language).or(qSolvingLog.language.isNull());
+            return qSolvingLog.language.equalsIgnoreCase(language).or(qSolvingLog.language.isNull());
         }
         // language 조건을 적용하지 않는다.
         return null;

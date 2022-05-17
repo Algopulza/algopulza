@@ -1,15 +1,15 @@
 import { ReactElement, useState, useEffect } from 'react'
-import Layout from '../../components/common/Layout'
-import Gift from '../../components/random/Gift'
-import Subject from '../../components/recommendation/Subject'
+import Layout from '../components/common/Layout'
+import Gift from '../components/random/Gift'
+import Subject from '../components/recommendation/Subject'
 import styled from 'styled-components'
 
 import { useRecoilValue } from 'recoil'
-import { bojIdState, accessTokenState } from '../../util/stateCollection'
-import { getRecoVul } from '../../api/flask/recommend/RecoVul'
-import { getRecoTag } from '../../api/flask/recommend/RecoTag'
-import { getSolvedTear } from '../../api/flask/recommend/RecoSolvedTear'
-import { getRecoTear } from '../../api/flask/recommend/RecoTear'
+import { bojIdState, accessTokenState } from '../util/stateCollection'
+import { getRecoVul } from '../api/flask/recommend/RecoVul'
+import { getRecoTag } from '../api/flask/recommend/RecoTag'
+import { getSolvedTear } from '../api/flask/recommend/RecoSolvedTear'
+import { getRecoTear } from '../api/flask/recommend/RecoTear'
 
 const Container = styled.section`
   padding: 0vw 5vw;
