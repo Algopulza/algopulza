@@ -1,7 +1,0 @@
-﻿solvedac:
-  baseurl: https://solved.ac/api/v3
-  problems:
-    get:
-      size: 100
-      defaultStart: 1000
-      defaultEnd: 25500
