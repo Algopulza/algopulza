@@ -9,7 +9,7 @@ import java.util.Set;
 
 public interface ProblemRepositoryCustom {
 
-    Page<ProblemRes> findProblemRes(Long memberId, String tierName, Integer tierLevel, String title, Set<Long> tagIdSet, Pageable pageable);
+    Page<ProblemRes> findProblemRes(Long memberId, String tierName, Integer tierLevel, String title, List<Long> problemIdList, Pageable pageable);
 
     List<Long> findAllId();
 
