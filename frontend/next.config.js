@@ -1,22 +1,10 @@
 /** @type {import('next').NextConfig} */
-
-module.exports = {
+const nextConfig = {
   reactStrictMode: true,
   images: {
-    loader: 'imgix',
-    path: 'https://k6a408.p.ssafy.io/',
+    loader: "akamai",
+    path: "/",
   },
-  trailingSlash: true,
-  exportPathMap: async function (
-    defaultPathMap,
-    { dev, dir, outDir, distDir, buildId }
-  ) {
-    return {
-      '/': { page: '/' },
-      '/recommendation': { page: '/recommendation/' },
-      '/random': { page: '/random/' },
-      '/search': { page: '/search/' },
-      '/mypage': { page: '/mypage/' },
-    }
-  },
-}
+};
+
+module.exports = nextConfig;
