@@ -15,7 +15,7 @@ const nextConfig = {
   ) {
     return {
       '/index/': { page: '/' },
-      '/recommendation/': { page: '/recommendatio/' },
+      '/recommendation/': { page: '/recommendation/' },
       '/random/': { page: '/random/' },
       '/search/': { page: '/search/' },
       '/mypage/': { page: '/mypage/' }
