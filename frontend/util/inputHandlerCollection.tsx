@@ -1,4 +1,5 @@
-import { axiosInfo, axiosSignup } from "./axiosCollection"
+import { axiosInfo, axiosSignup, axiosStopwatch } from "./axiosCollection"
+import { checkStopwatch } from "./validationCollection"
 
 export const sendMessage = (id: string, message: string) => {
   const result = document.getElementById(id)
@@ -41,3 +42,31 @@ export const handleInfoClick = (event: any, info: any, accessToken: string) => {
   }
 }
 
+export const handleStopwatchClick = (event: any, problemBojId: string, solvingTime: number, accessToken: string) => {
+  const now = Date()
+
+  const info = {
+    'problemBojId': problemBojId,
+    'memory': 0,
+    'runTime': 0,
+    'language': '',
+    'codeLength': 0,
+    'solvingTime': solvingTime,
+    'submitTime': now
+  }
+
+  if (checkStopwatch(problemBojId)) {
+    axiosStopwatch(info, accessToken)
+      .then(res => {
+        console.log(res)
+        sendMessage('stopwatchResult', '감사합니다!')
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  } else if (problemBojId === '' || Number(problemBojId) < 1000) {
+    sendMessage('stopwatchResult', '문제 번호를 입력해주세요.')
+  } else if (solvingTime === 0) {
+    sendMessage('stopwatchResult', '문제 풀이 시간이 기록되지 않았습니다.')
+  }
+}
