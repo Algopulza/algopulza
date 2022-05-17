@@ -1,18 +1,7 @@
 import styled from "styled-components";
 import dynamic from "next/dynamic";
 import { getBadgeImage } from "../../../util/BadgeImage";
-import Image from 'next/image'
-import Seed1 from '../../../public/analysis/badge/seed1.png'
-
-
-const Container = styled.div`
-  background: #FFFFFF;
-  box-shadow: 0px 2px 10px 5px rgba(0, 0, 0, 0.25);
-  border-radius: 15px;
-  display: grid;
-  grid-template-columns: 2fr 2fr;
-  padding: 1rem;
-`;
+import AnalyCard from "../../common/card/AnalyCard";
 
 const RightContainer = styled.div`
   display: flex;
@@ -25,7 +14,6 @@ const Title = styled.div`
   justify-content: center;
   align-items: center;
   font-weight: bold;
-  /* font-size: 2rem; */
   margin-left: 1rem;
 `;
 
@@ -37,7 +25,7 @@ export default function Badge({exp}:EXP) {
   const data=getBadgeImage(exp).per
   const grade=getBadgeImage(exp).grade
   return (
-    <Container>
+    <AnalyCard>
       <ApexCharts
         type="radialBar"
         series={data}
@@ -75,6 +63,6 @@ export default function Badge({exp}:EXP) {
           <Title>현재 {exp}P</Title>
           <Title>현재 {grade} 등급이에요!</Title>
       </RightContainer>
-    </Container>
+    </AnalyCard>
   );
 }
