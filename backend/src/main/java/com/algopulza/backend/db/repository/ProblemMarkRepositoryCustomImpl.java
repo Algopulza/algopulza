@@ -15,6 +15,7 @@ public class ProblemMarkRepositoryCustomImpl implements ProblemMarkRepositoryCus
     private final JPAQueryFactory jpaQueryFactory;
     private final QProblemMark qProblemMark = QProblemMark.problemMark;
     private final QProblem qProblem = QProblem.problem;
+    private final QTier qTier = QTier.tier;
 
     @Override
     public List<ProblemMarkRes> findProblemByTypeFlag(Long memberId, int typeFlag) {
@@ -22,10 +23,13 @@ public class ProblemMarkRepositoryCustomImpl implements ProblemMarkRepositoryCus
                 .select(Projections.constructor(ProblemMarkRes.class,
                         qProblem.id,
                         qProblem.bojId,
-                        qProblem.title
+                        qProblem.title,
+                        qTier.level,
+                        qTier.name
                 ))
                 .from(qProblemMark)
                 .join(qProblem).on(qProblemMark.problem.eq(qProblem))
+                .join(qTier).on(qProblem.tier.eq(qTier))
                 .where(qProblemMark.member.id.eq(memberId))
                 .orderBy(qProblemMark.createdTime.desc())
                 .fetch();

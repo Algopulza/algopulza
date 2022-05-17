@@ -1,49 +1,42 @@
-import Image from 'next/image'
-import BrandLogo from '../public/common/brand_logo.png'
-import Carousel from '../components/landing/Carousel'
 import Content from '../components/landing/Content'
 import Form from '../components/landing/Form'
 import styled from 'styled-components'
 
 const Container = styled.section`
   display: grid;
-  grid-template-columns: 60vw 40vw;
+  grid-template-columns: 40vw 60vw;
   height: 100vh;
+  background: #282828;
 `
 
 const Subcontainer = styled.div`
-  display: grid;
-  grid-template-rows: 5vh 10vh 35vh 50vh;
-`
-
-const Row = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-`
-
-const Cell = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
 `
 
+const FormArea = styled.div`
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  width: 25vw;
+  height: 75vh;
+  padding: 5vh 0;
+  border-radius: 10px;
+  background: #FFFFFF;
+  /* opacity: 90%; */
+`
+
 export default function Landing() {
   return (
     <Container>
-      <Carousel />
-
       <Subcontainer>
-        <div></div>
-        <Row>
-          <div></div>
-          <Cell>
-            <Image src={BrandLogo} layout="fixed" width={100} height={100} alt="brand logo image" />
-          </Cell>
-          <div></div>
-        </Row>
-        <Content />
-        <Form />
+        <FormArea>
+          <Content />
+          <Form />
+        </FormArea>
       </Subcontainer>
+
+      <div></div>
     </Container>
   )
 }

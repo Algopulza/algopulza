@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/router'
 import InputTextField from '../common/input/InputTextField'
 import ButtonSubmitting from '../common/button/ButtonSubmitting'
+import ButtonSubmittingOutlined from '../common/button/ButtonSubmittingOutlined'
 import ProblemHelper from './ProblemHelper'
 import styled from 'styled-components'
 import { axiosId } from '../../util/axiosCollection'
@@ -14,19 +15,24 @@ const Container = styled.section`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  padding: 0 2.5vw;
 `
 
 const Row = styled.div`
   display: grid;
-  grid-template-columns: 8fr 2.5fr;
-  align-items: center;
+  grid-template-columns: 3fr 1fr;
   margin-bottom: 10px;
-  width: 40vw;
 `
 
-const Cell = styled.div`
+const CellLeft = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
+  align-items: center;
+`
+
+const CellRight = styled.div`
+  display: flex;
+  justify-content: flex-end;
   align-items: center;
 `
 
@@ -57,10 +63,10 @@ export default function Form() {
   return (
     <Container>     
       <Row>
-        <Cell>
+        <CellLeft>
           <div>
             <InputTextField
-              textFieldAttr={{width: '25vw', id: 'id', label: '아이디', marBot: '0', marRig: '0px', isPw: false, isAf: true}}
+              textFieldAttr={{width: '14vw', id: 'id', label: '아이디', marBot: '0', marRig: '0px', isPw: false, isAf: true}}
               valid={checkId}
               errorMessage='2 글자 이상의 영문자 및 숫자이어야 합니다.'
               setter={setId}
@@ -68,100 +74,89 @@ export default function Form() {
             />
             <p id="idResult" style={{fontSize: '1vw', marginTop: 0, marginBottom: 0, color: 'red'}}></p>
           </div>
-        </Cell>
-        <Cell>
-          <ButtonSubmitting
-            submittingAttr={{text: '중복 확인', width: '5vw', height: '2.5vw', marBot: '0px', fontSize: '1vw'}}
+        </CellLeft>
+        <CellRight>
+          <ButtonSubmittingOutlined
+            submittingAttr={{text: '중복 확인', width: '4.3vw', height: '2.6vw', marBot: '0px', fontSize: '0.8vw'}}
             isImportant={false}
             onClick={() => {handleIdClick(event, id)}}
           />
-        </Cell>
-        <div></div>
+        </CellRight>
       </Row>
 
       <Row>
-        <Cell>
+        <CellLeft>
           <InputTextField
-            textFieldAttr={{width: '25vw', id: 'bojId', label: '백준 아이디', marBot: '0', marRig: '0px', isPw: false, isAf: false}}
+            textFieldAttr={{width: '14vw', id: 'bojId', label: '백준 아이디', marBot: '0', marRig: '0px', isPw: false, isAf: false}}
             valid={nothing}
             errorMessage='백준 아이디를 입력해주세요.'
             setter={setBojId}
             onKeyDown={() => {}}
           />
-        </Cell>
-        <div></div>
-        <div></div>
+        </CellLeft>
       </Row>
 
       <Row>
-        <Cell>
+        <CellLeft>
           <InputTextField
-            textFieldAttr={{width: '25vw', id: 'password', label: '비밀번호', marBot: '0px', marRig: '0px', isPw: true, isAf: false}}
+            textFieldAttr={{width: '14vw', id: 'password', label: '비밀번호', marBot: '0px', marRig: '0px', isPw: true, isAf: false}}
             valid={checkPassword}
             errorMessage='8~14 글자의 영문자 및 특수문자이어야 합니다.'
             setter={setPassword}
             onKeyDown={() => {}}
           />
-        </Cell>
-        <div></div>
-        <div></div>
+        </CellLeft>
       </Row>
 
       <Row>
-        <Cell>
+        <CellLeft>
           <InputTextField
-            textFieldAttr={{width: '25vw', id: 'pwConfirm', label: '비밀번호 확인', marBot: '0px', marRig: '0px', isPw: true, isAf: false}}
+            textFieldAttr={{width: '14vw', id: 'pwConfirm', label: '비밀번호 확인', marBot: '20px', marRig: '0px', isPw: true, isAf: false}}
             valid={nothing}
             errorMessage='동일한 비밀번호를 입력해주세요.'
             setter={setPwConfirm}
             onKeyDown={() => {}}
           />
-        </Cell>
-        <div></div>
-        <div></div>
+        </CellLeft>
       </Row>
 
       <Row>
-        <Cell>
+        <CellLeft>
           <InputTextField
-            textFieldAttr={{width: '25vw', id: 'solved', label: '해결한 문제', marBot: '0px', marRig: '0px', isPw: false, isAf: false}}
+            textFieldAttr={{width: '14vw', id: 'solved', label: '해결한 문제', marBot: '0px', marRig: '0px', isPw: false, isAf: false}}
             valid={checkSpace}
             errorMessage='해결한 문제들을 공백 없이 입력해주세요.'
             setter={setSolved}
             onKeyDown={() => {}}
           />
-        </Cell>
-        <Cell>
+        </CellLeft>
+        <CellRight>
           <ProblemHelper />
-        </Cell>
+        </CellRight>
       </Row>
 
       <Row>
-        <Cell>
+        <CellLeft>
           <InputTextField
-            textFieldAttr={{width: '25vw', id: 'tried', label: '시도한 문제', marBot: '0px', marRig: '0px', isPw: false, isAf: false}}
+            textFieldAttr={{width: '14vw', id: 'tried', label: '시도한 문제', marBot: '20px', marRig: '0px', isPw: false, isAf: false}}
             valid={checkSpace}
             errorMessage='시도한 문제들을 공백 없이 입력해주세요'
             setter={setTried}
             onKeyDown={() => {}}
           />
-        </Cell>
+        </CellLeft>
       </Row>
 
-      <Row>
-        <Cell>
-          <div>
-            <ButtonSubmitting
-              submittingAttr={{text: '회원 가입', width: '25vw', height: '2.5vw', marBot: '0px', fontSize: '1.1vw'}}
-              isImportant={true}
-              onClick={() => {handleSignupClick(event, id, bojId, password, pwConfirm, solved, tried, isCheck, router)}}
-            />
-            <p
-              id="signupResult"
-              style={{fontSize: '1vw', marginTop: 0, marginBottom: 0, color: 'red', textAlign: 'center'}}
-            />
-          </div>
-        </Cell>
+      <Row style={{display: 'flex', justifyContent: 'center'}}>
+        <ButtonSubmitting
+          submittingAttr={{text: '회원 가입', width: '10vw', height: '2.3vw', marBot: '0px', fontSize: '1.1vw'}}
+          isImportant={true}
+          onClick={() => {handleSignupClick(event, id, bojId, password, pwConfirm, solved, tried, isCheck, router)}}
+        />
+        <p
+          id="signupResult"
+          style={{fontSize: '1vw', marginTop: 0, marginBottom: 0, color: 'red', textAlign: 'center'}}
+        />
       </Row>
     </Container>
   )

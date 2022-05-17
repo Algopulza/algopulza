@@ -17,11 +17,13 @@ const Title = styled.p`
 
 export default function ProblemHelper() {
   return (
-    <Grid.Container justify="center" alignContent="center">
+    <Grid.Container justify="flex-end" alignContent="center">
       <Grid key={"right"}>
         <Popover placement={"right"}>
           <Popover.Trigger>
-            <Button flat color="warning" auto style={{marginLeft: 10, fontSize: '1.2vw', borderRadius: '15px'}}>?</Button>
+            <Button flat color="warning" auto style={{
+              fontSize: '1.2vw', borderRadius: '10px', width: '4.3vw', height: '2.6vw'
+            }}>?</Button>
           </Popover.Trigger>
 
           <Popover.Content css={{ p: "$5" }}>

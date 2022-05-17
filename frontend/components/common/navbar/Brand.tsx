@@ -7,6 +7,7 @@ const Title = styled.span`
   padding-left: 40px;
   font-size: 1.8vw;
   font-weight: 700;
+  color: #FFFFFF;
 `
 
 export default function BrandName() {
