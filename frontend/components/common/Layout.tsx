@@ -9,7 +9,7 @@ export default function Layout({ children }: Props) {
   return (
     <>
       <NavBar />
-      <main style={{marginBottom: "80"}}>
+      <main>
         {children}
       </main>
     </>

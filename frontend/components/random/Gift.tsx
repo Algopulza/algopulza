@@ -11,8 +11,11 @@ import { useRecoilValue } from "recoil";
 import { bojIdState, accessTokenState } from "../../util/stateCollection"
 
 const Container = styled.section`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 55vh;
   margin-bottom: 80px;
-  height: 50vh;
   background: #282828;
 `
 

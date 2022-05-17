@@ -4,8 +4,8 @@ const Container = styled.section`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  height: 13vh;
-  padding: 0 4vw;
+  height: 15vh;
+  padding: 0 3.5vw;
 `
 
 const Text = styled.p`
@@ -16,8 +16,7 @@ const Text = styled.p`
 
 const Title = styled.p`
   margin: 0;
-  font-size: 2.2vw;
-  font-weight: 700;
+  font-size: 2vw;
   color: #FFFFFF;
 `
 
