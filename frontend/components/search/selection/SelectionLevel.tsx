@@ -1,11 +1,13 @@
-import { useState } from 'react'
+
 import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
+import { useRecoilState } from 'recoil'
+import { filterLevelState } from '../../../util/stateCollection'
 
 export default function SelectionLevel() {
-  const [level, setLevel] = useState('')
+  const [level, setLevel] = useRecoilState(filterLevelState)
 
   const handleChange = (event: SelectChangeEvent) => {
     setLevel(event.target.value as string)
@@ -21,6 +23,7 @@ export default function SelectionLevel() {
         label="Level"
         onChange={handleChange}
       >
+        <MenuItem value={''}>전체</MenuItem>
         <MenuItem value={1}>1</MenuItem>
         <MenuItem value={2}>2</MenuItem>
         <MenuItem value={3}>3</MenuItem>

@@ -1,29 +1,28 @@
 import React from 'react';
 import styled from "styled-components";
 
-const Grid = styled.div`
-  
-`;
-
-const Row = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: start;
-  gap: 0.5em;
+const TextRow = styled.div`
+  display: block;
+  width: 20em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  float: 'left';
 `;
 
 const Tag = styled.span`
-  color: #c4c4c4;
+  font-size: 0.8em;
+  color: #282828;
 `;
 
 const ResultTag = (props: any) => {
   const {tagList} = props
   return (
-    <Row>
+    <TextRow>
       {tagList && tagList.map((tag: any) => (
-        <Tag key={tag.name}>#{tag.name}</Tag>
+        <Tag key={tag.name}># {tag.name}  </Tag>
         ))}
-    </Row>
+    </TextRow>
   );
 };
 
