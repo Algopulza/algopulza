@@ -5,7 +5,7 @@ import Solved from "./Solved";
 
 const Container = styled.div`
   display: grid;
-  grid-template-columns: 1fr 3fr;
+  grid-template-columns: 4fr 8.3fr;
   gap: 2em;
 `;
 
@@ -14,12 +14,8 @@ const Grid = styled.div``;
 const Index = () => {
   return (
     <Container>
-      <Grid>
         <Favorite />
-      </Grid>
-      <Grid>
         <Solved />
-      </Grid>
     </Container>
   );
 };

@@ -9,8 +9,8 @@ import AnalyCard from "../../common/card/AnalyCard";
 
 const Container = styled.div`
   display: grid;
-  grid-template-columns: 0.5fr 1fr;
-  max-height: 500px;
+  grid-template-columns: 0.1fr 1fr;
+  gap: 2rem;
 `;
 
 const Select = styled.div`
@@ -76,10 +76,10 @@ const Index = ({accessToken, memberId, bojId}:User) => {
   return (
     <Container>
       <Select>
-        <CategoryButton onClick={showWeakness} color={weakness?"white":"#939292"} bg={weakness?"#FFC94D":"white"} hbg={weakness?"#EA9800":"#fff2d9"} hc={weakness?"white":"#939292"}>취약점</CategoryButton>
-        <CategoryButton onClick={showLanguage} color={language?"white":"#939292"} bg={language?"#FFC94D":"white"} hbg={language?"#EA9800":"#fff2d9"} hc={language?"white":"#939292"}>사용언어 비율</CategoryButton>
-        <CategoryButton onClick={showTag} color={tag?"white":"#939292"} bg={tag?"#FFC94D":"white"} hbg={tag?"#EA9800":"#fff2d9"} hc={tag?"white":"#939292"}>태그 별 해결 문제 수</CategoryButton>
-        <CategoryButton onClick={showMonth} color={month?"white":"#939292"} bg={month?"#FFC94D":"white"} hbg={month?"#EA9800":"#fff2d9"} hc={month?"white":"#939292"}>월 별 문제 풀이 갯수</CategoryButton>
+        <CategoryButton onClick={showWeakness} color={weakness?"white":"white"} bg={weakness?"#282828":"#A1A1A1"} hbg={weakness?"#404040":"#8F8F8F"} hc={weakness?"white":"white"}>취약점</CategoryButton>
+        <CategoryButton onClick={showLanguage} color={language?"white":"white"} bg={language?"#282828":"#A1A1A1"} hbg={language?"#404040":"#8F8F8F"} hc={language?"white":"white"}>사용언어 비율</CategoryButton>
+        <CategoryButton onClick={showTag} color={tag?"white":"white"} bg={tag?"#282828":"#A1A1A1"} hbg={tag?"#404040":"#8F8F8F"} hc={tag?"white":"white"}>태그 별 해결 문제 수</CategoryButton>
+        <CategoryButton onClick={showMonth} color={month?"white":"white"} bg={month?"#282828":"#A1A1A1"} hbg={month?"#404040":"#8F8F8F"} hc={month?"white":"white"}>월 별 문제 풀이 갯수</CategoryButton>
       </Select>
 
       <AnalyCard>

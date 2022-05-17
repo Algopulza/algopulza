@@ -6,14 +6,14 @@ const TimeArea = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
   align-items: center;
-  padding: 0 150px;
+  padding:0 3rem;
 `
 
 const ButtonArea = styled.div`
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  padding: 0 100px;
+  margin-top: 1rem;
 `
 
 const Time = styled.div`
@@ -51,7 +51,7 @@ export default function Stopwatch() {
   }, [isRunning])
 
   return (
-    <AnalyCard>
+    <AnalyCard padding="1rem">
       <TimeArea >
         <Time>{("0" + Math.floor((time / 3600000) % 60)).slice(-2)}</Time>
         <Time>:</Time>
