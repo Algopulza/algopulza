@@ -45,6 +45,8 @@ const FavoriteList = (props: any) => {
             id={row.problemId}
             bojId={row.problemBojId}
             title={row.title}
+            tierName={row.tierName}
+            tierLevel={row.tierLevel}
           />
         </Row>
       ))}

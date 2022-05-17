@@ -93,3 +93,18 @@ export const keywordState = atom({
   key: 'keywordState',
   default: '',
 })
+
+export const filterTierState = atom({
+  key: 'filterTierState',
+  default: '',
+})
+
+export const filterLevelState = atom({
+  key: 'filterLevelState',
+  default: '',
+})
+
+export const filterTagState = atom({
+  key: 'filterTagState',
+  default: '',
+})

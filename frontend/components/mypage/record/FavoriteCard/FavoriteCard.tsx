@@ -70,8 +70,7 @@ const ProblemTitle = styled.div`
 
 
 const FavoriteCard = (props: any) => {
-  // const backgroundColor = getBackgroundColor(tierName)
-  // const backgroundColor = getBackgroundColor(tier)
+  const backgroundColor = getBackgroundColor(props.tierName)
   const accessToken = useRecoilValue(accessTokenState)
   const [isBookmark, setIsBookmark] = useState(true)
 
@@ -115,7 +114,7 @@ const FavoriteCard = (props: any) => {
         </Canvas>
       </HeaderContainer>
       <SubContainer>
-        <Tier bg={'Silver'}>3</Tier>
+        <Tier bg={backgroundColor}>{props.tierLevel}</Tier>
         <ProblemTitle onClick={handleClick}>
           {props.title}
         </ProblemTitle>

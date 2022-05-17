@@ -39,7 +39,7 @@ const Favorite = () => {
   const accessToken = useRecoilValue(accessTokenState)
   const [rows, setRows] = useState([])
 
-  // 최초진입시 문제표시 api
+  // 문제표시 api
   const favoriteList = async () => {
     await getFavorites(accessToken)
       .then(res => {
