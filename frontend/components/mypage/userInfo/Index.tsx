@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Userinfo from "./Userinfo";
-import Stopwatch from "./Stopwatch";
+import Badge from "./Badge";
+import Stopwatch from "./stopwatch/Stopwatch";
 import { getUserInfo } from "../../../api/back/analysis/UserInfo";
 import { getStatistic } from "../../../api/back/analysis/Statistic";
 import { User } from "../../../pages/mypage";

@@ -18,10 +18,16 @@ export const checkPassword = (password: string) => {
   return passwordReg.test(pwTrimmed) ? true : false
 }
 
-// export const checkPwConfirm = ({ password, pwConfirm }: any) => {
-//   return password === pwConfirm ? true : false
-// }
-
 export const nothing = (item: string) => {
   return true
+}
+
+export const checkStopwatch = (probId: string) => {
+  const probIdReg = /^[0-9]/
+  const probIdTrimmed = probId.trim()
+  return probIdReg.test(probIdTrimmed) && Number(probIdTrimmed) >= 1000 ? true : false
+}
+
+export const checkStopwatchMin = (min: string) => {
+  return min === '00' ? false : true
 }
