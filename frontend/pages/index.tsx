@@ -1,10 +1,11 @@
 import Content from '../components/landing/Content'
 import Form from '../components/landing/Form'
 import styled from 'styled-components'
+import Carousel from '../components/landing/Carousel'
 
 const Container = styled.section`
   display: grid;
-  grid-template-columns: 40vw 60vw;
+  grid-template-columns: 40vw 5vw 40vw 15vw;
   height: 100vh;
   background: #282828;
 `
@@ -23,7 +24,6 @@ const FormArea = styled.div`
   padding: 5vh 0;
   border-radius: 10px;
   background: #FFFFFF;
-  /* opacity: 90%; */
 `
 
 export default function Landing() {
@@ -35,6 +35,10 @@ export default function Landing() {
           <Form />
         </FormArea>
       </Subcontainer>
+
+      <div></div>
+
+      <Carousel />
 
       <div></div>
     </Container>

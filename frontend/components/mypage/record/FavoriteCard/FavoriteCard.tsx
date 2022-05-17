@@ -10,7 +10,7 @@ import { accessTokenState } from '../../../../util/stateCollection'
 import { axiosDeleteBookmark, axiosPutBookmark } from '../../../../util/axiosCollection';
 
 const Container = styled.div`
-  width: 20vw;
+  width: 15vw;
   background: #ffffff;
   box-shadow: 3px 5px 12px 2px rgba(0, 0, 0, 0.25);
   border-radius: 15px;
@@ -69,10 +69,8 @@ const ProblemTitle = styled.div`
   cursor: pointer;
 `;
 
-
 const FavoriteCard = (props: any) => {
-  // const backgroundColor = getBackgroundColor(tierName)
-  // const backgroundColor = getBackgroundColor(tier)
+  const backgroundColor = getBackgroundColor(props.tierName)
   const accessToken = useRecoilValue(accessTokenState)
   const [isBookmark, setIsBookmark] = useState(true)
 
@@ -94,7 +92,7 @@ const FavoriteCard = (props: any) => {
         setIsBookmark(false)
       })
   }
-  
+
   return (
     <Container>
       <HeaderContainer>
@@ -114,7 +112,7 @@ const FavoriteCard = (props: any) => {
         </Canvas>
       </HeaderContainer>
       <SubContainer>
-        <Tier bg={'Silver'}>3</Tier>
+        <Tier bg={backgroundColor}>{props.tierLevel}</Tier>
         <ProblemTitle onClick={handleClick}>
           {props.title}
         </ProblemTitle>

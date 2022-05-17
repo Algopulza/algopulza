@@ -9,14 +9,14 @@ import { axiosPutBookmark, axiosDeleteBookmark } from '../../../util/axiosCollec
 import { useState } from 'react'
 
 const Container = styled.section`
-  height: 140px;
-  padding: 10px;
-  border-radius: 15px 15px 0 0;
+  height: 14vh;
+  padding: 1vh;
+  border-radius: 10px 10px 0 0;
 `
 
 const Canvas = styled.div`
   width: 1.3vw;
-  height: 20px;
+  height: 2vh;
   cursor: pointer;
 `
 
@@ -24,7 +24,7 @@ const Title = styled.p`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 80px;
+  height: 10vh;
   margin: 0;
   font-size: 1.2vw;
   cursor: pointer;

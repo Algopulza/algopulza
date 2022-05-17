@@ -72,12 +72,12 @@ export default function Form() {
               setter={setId}
               onKeyDown={() => {}}
             />
-            <p id="idResult" style={{fontSize: '1vw', marginTop: 0, marginBottom: 0, color: 'red'}}></p>
+            <p id="idResult" style={{fontSize: '0.9vw', marginTop: 0, marginBottom: 0, color: 'red'}}></p>
           </div>
         </CellLeft>
         <CellRight>
           <ButtonSubmittingOutlined
-            submittingAttr={{text: '중복 확인', width: '4.3vw', height: '2.6vw', marBot: '0px', fontSize: '0.8vw'}}
+            submittingAttr={{text: '중복확인', width: '4.3vw', height: '2.6vw', marBot: '0px', fontSize: '0.8vw'}}
             isImportant={false}
             onClick={() => {handleIdClick(event, id)}}
           />
@@ -148,15 +148,17 @@ export default function Form() {
       </Row>
 
       <Row style={{display: 'flex', justifyContent: 'center'}}>
-        <ButtonSubmitting
-          submittingAttr={{text: '회원 가입', width: '10vw', height: '2.3vw', marBot: '0px', fontSize: '1.1vw'}}
-          isImportant={true}
-          onClick={() => {handleSignupClick(event, id, bojId, password, pwConfirm, solved, tried, isCheck, router)}}
-        />
-        <p
-          id="signupResult"
-          style={{fontSize: '1vw', marginTop: 0, marginBottom: 0, color: 'red', textAlign: 'center'}}
-        />
+        <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+          <ButtonSubmitting
+            submittingAttr={{text: '회원 가입', width: '10vw', height: '2.3vw', marBot: '0px', fontSize: '1.1vw'}}
+            isImportant={true}
+            onClick={() => {handleSignupClick(event, id, bojId, password, pwConfirm, solved, tried, isCheck, router)}}
+          />
+          <p
+            id="signupResult"
+            style={{fontSize: '0.9vw', marginTop: '5px', marginBottom: 0, color: 'red', textAlign: 'center'}}
+          />
+        </div>
       </Row>
     </Container>
   )

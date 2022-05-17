@@ -38,7 +38,7 @@ export default class CustomDocument extends Document {
           />
         </Head>
 
-        <body style={{paddingBottom: 80}}>
+        <body>
           <Main />
           <NextScript />
         </body>

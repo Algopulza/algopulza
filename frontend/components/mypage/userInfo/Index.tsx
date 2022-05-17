@@ -10,7 +10,7 @@ import { User } from "../../../pages/mypage";
 const Container = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  gap: 1rem;
+  gap: 2rem;
 `;
 
 const Index = ({accessToken, memberId}:User) => {

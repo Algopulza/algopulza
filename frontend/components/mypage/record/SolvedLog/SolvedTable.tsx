@@ -15,7 +15,6 @@ const StyledTableCell = styled(TableCell)(() => ({
   },
 }));
 
-
 export default function SolvedTable(props: any) {
   const { rows } = props
   const statusColor = (status: string) => {
@@ -24,6 +23,11 @@ export default function SolvedTable(props: any) {
       return (<b style={{color: '#009874'}}>{coloredStatus}</b>)
     }
     return (<b style={{color: '#E45624'}}>{coloredStatus}</b>)
+  }
+  const handleClick = (event: any) => {
+    console.log(event)
+    // const problemUrl = `https://www.acmicpc.net/problem/${bojId}`
+    // window.open(problemUrl)
   }
   
   return (
@@ -46,7 +50,10 @@ export default function SolvedTable(props: any) {
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <StyledTableCell align="center" component="th" scope="row">{row.problemBojId}</StyledTableCell>
-              <StyledTableCell align="left">{row.problemTitle}</StyledTableCell>
+              <StyledTableCell align="center"
+              onClick={handleClick}>
+                {row.problemTitle}
+              </StyledTableCell>
               <StyledTableCell align="center">
                 {statusColor(row.status)}
               </StyledTableCell>

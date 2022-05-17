@@ -3,8 +3,7 @@ import FavoriteCard from "../FavoriteCard/FavoriteCard";
 import styled from "styled-components";
 
 const Grid = styled.div`
-  width: 100%;
-  height: 80%;
+  max-height:57vh;
   padding: 0.5rem;
   overflow-y: auto;
   margin-bottom: 30px;
@@ -15,14 +14,6 @@ const Row = styled.div`
   justify-content: center;
   gap: 2em;
 `;
-
-const Col = styled.div<{size: number}>`
-  display: flex;
-  flex: ${props => props.size};
-  justify-content: center;
-  max-height: 40em;
-`;
-
 
 const FavoriteList = (props: any) => {
   const { rows } = props
@@ -36,6 +27,8 @@ const FavoriteList = (props: any) => {
             id={row.problemId}
             bojId={row.problemBojId}
             title={row.title}
+            tierName={row.tierName}
+            tierLevel={row.tierLevel}
           />
         </Row>
       ))}

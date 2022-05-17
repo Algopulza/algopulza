@@ -1,23 +1,20 @@
 import styled from "styled-components";
 import dynamic from "next/dynamic";
 import { getBadgeImage } from "../../../util/BadgeImage";
-import Image from 'next/image'
-import Seed1 from '../../../public/analysis/badge/seed1.png'
+import AnalyCard from "../../common/card/AnalyCard";
+import Image from "next/image";
 
-
-const Container = styled.div`
-  background: #FFFFFF;
-  box-shadow: 0px 2px 10px 5px rgba(0, 0, 0, 0.25);
-  border-radius: 15px;
-  display: grid;
-  grid-template-columns: 2fr 2fr;
-  padding: 1rem;
-`;
+const Temp = styled.div`
+  width:10vw;
+  height:10vh;
+`
 
 const RightContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  width:4vw;
+  margin-left: auto;
   `;
 
 const Title = styled.div`
@@ -25,8 +22,8 @@ const Title = styled.div`
   justify-content: center;
   align-items: center;
   font-weight: bold;
-  /* font-size: 2rem; */
-  margin-left: 1rem;
+  margin-left: 0.1rem;
+  font-size: 0.8rem;
 `;
 
 type EXP = {exp : number}
@@ -37,7 +34,12 @@ export default function Badge({exp}:EXP) {
   const data=getBadgeImage(exp).per
   const grade=getBadgeImage(exp).grade
   return (
-    <Container>
+    <AnalyCard dp="grid" gtc="1fr 1fr">
+        <RightContainer>
+        <Image src={badge} width={25} height={50} alt="뱃지 사진이 이상해요" />
+          <Title>{exp} XP</Title>
+      </RightContainer>
+      <Temp>
       <ApexCharts
         type="radialBar"
         series={data}
@@ -49,11 +51,7 @@ export default function Badge({exp}:EXP) {
             radialBar: {
               hollow: {
                 margin: 0,
-                size: '70%',
-                image: badge,
-                imageWidth: 64,
-                imageHeight: 64,
-                imageClipped: false
+                size: '50',
               },
               dataLabels: {
                 name: {
@@ -63,18 +61,15 @@ export default function Badge({exp}:EXP) {
                 value: {
                   show: true,
                   color: '#333',
-                  offsetY: 50,
-                  fontSize: '22px'
+                  fontSize: '0.7rem'
                 }
               }
             }
           },
         }}
       />
-      <RightContainer>
-          <Title>현재 {exp}P</Title>
-          <Title>현재 {grade} 등급이에요!</Title>
-      </RightContainer>
-    </Container>
+      </Temp>
+
+    </AnalyCard>
   );
 }

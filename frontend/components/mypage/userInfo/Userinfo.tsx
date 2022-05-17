@@ -2,17 +2,7 @@ import styled from "styled-components";
 import { getBackgroundColor } from "../../../util/backgroundColor";
 import Image from "next/image";
 import profile from "../../../public/analysis/userinfo/user.png";
-
-const Container = styled.div`
-  background: #ffffff;
-  box-shadow: 0px 2px 10px 5px rgba(0, 0, 0, 0.25);
-  border-radius: 15px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 1rem;
-`;
+import AnalyCard from "../../common/card/AnalyCard";
 
 const TopContainer = styled.div`
   display: flex;
@@ -71,7 +61,7 @@ type User = {
 export default function Userinfo({algopluzaId, tierLevel, tierName, time}: User) {
   const backgroundColor = getBackgroundColor(tierName);
   return (
-    <Container>
+    <AnalyCard>
       <TopContainer>
         <ProfileImage>
           <Image src={profile} alt="이미지를 찾을 수 없습니다." />
@@ -82,6 +72,6 @@ export default function Userinfo({algopluzaId, tierLevel, tierName, time}: User)
       <BottomContainer>
         알고리즘을 총 <Text>{time}분</Text> 동안 풀었어요!
       </BottomContainer>
-    </Container>
+      </AnalyCard>
   );
 }

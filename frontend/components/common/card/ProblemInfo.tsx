@@ -3,7 +3,7 @@ import styled from "styled-components";
 const Container = styled.section`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  height: 100px;
+  height: 10vh;
 `;
 
 const Item = styled.div`
