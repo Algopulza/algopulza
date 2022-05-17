@@ -12,7 +12,7 @@ const Container = styled.div`
   display: grid;
   grid-template-rows: 0.1fr 0.1fr 0.1fr;
   gap: 2rem;
-  padding: 3vh 10vw;
+  padding: 80px 10vw;
 `
 
 export type User = {

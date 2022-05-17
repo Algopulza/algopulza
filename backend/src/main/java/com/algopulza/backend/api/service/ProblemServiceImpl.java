@@ -219,8 +219,14 @@ public class ProblemServiceImpl implements ProblemService {
             }
         }
 
+        // 태그 조건이 있다면 태그를 가진 Problem ID를 먼저 조회해온다.
+        List<Long> problemIdList = null;
+        if (tagIdSet != null) {
+            problemIdList = problemHasTagRepository.findProblemIdByTagId(tagIdSet);
+        }
+
         // Problem List 조회
-        Page<ProblemRes> problemResList = problemRepository.findProblemRes(memberId, tierName, tierLevel, title, tagIdSet, pageable);
+        Page<ProblemRes> problemResList = problemRepository.findProblemRes(memberId, tierName, tierLevel, title, problemIdList, pageable);
 
         // Problem별로 Tag List 조회
         for (ProblemRes problemRes : problemResList) {

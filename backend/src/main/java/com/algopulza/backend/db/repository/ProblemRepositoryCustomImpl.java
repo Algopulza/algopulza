@@ -63,15 +63,15 @@ public class ProblemRepositoryCustomImpl implements ProblemRepositoryCustom {
         return null;
     }
 
-    private BooleanExpression inTagId(Set<Long> tagIdSet) {
-        if (tagIdSet != null) {
-            return qProblemHasTag.tag.id.in(tagIdSet);
+    private BooleanExpression inId(List<Long> problemIdList) {
+        if (problemIdList == null) {
+            return null;
         }
-        return null;
+        return qProblem.id.in(problemIdList);
     }
 
     @Override
-    public Page<ProblemRes> findProblemRes(Long memberId, String tierName, Integer tierLevel, String title, Set<Long> tagIdSet, Pageable pageable) {
+    public Page<ProblemRes> findProblemRes(Long memberId, String tierName, Integer tierLevel, String title, List<Long> problemIdList, Pageable pageable) {
         // data query
         List<ProblemRes> content = jpaQueryFactory.select(Projections.constructor(ProblemRes.class,
                                       qProblem.id,
@@ -85,8 +85,7 @@ public class ProblemRepositoryCustomImpl implements ProblemRepositoryCustom {
                               )).distinct()
                               .from(qProblem)
                               .join(qTier).on(qProblem.tier.eq(qTier))
-                              .leftJoin(qProblemHasTag).on(qProblem.eq(qProblemHasTag.problem))
-                              .where(eqTierName(tierName), eqNumberInTierName(tierLevel), containTitle(title), inTagId(tagIdSet))
+                              .where(eqTierName(tierName), eqNumberInTierName(tierLevel), containTitle(title), inId(problemIdList))
                               .orderBy(qProblem.bojId.asc())
                               .offset(pageable.getOffset())
                               .limit(pageable.getPageSize())
@@ -97,8 +96,7 @@ public class ProblemRepositoryCustomImpl implements ProblemRepositoryCustom {
                 .select(qProblem)
                 .from(qProblem)
                 .join(qTier).on(qProblem.tier.eq(qTier))
-                .leftJoin(qProblemHasTag).on(qProblem.eq(qProblemHasTag.problem))
-                .where(eqTierName(tierName), eqNumberInTierName(tierLevel), containTitle(title), inTagId(tagIdSet));
+                .where(eqTierName(tierName), eqNumberInTierName(tierLevel), containTitle(title), inId(problemIdList));
 
         return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchCount);
     }
