@@ -1,11 +1,12 @@
-import { useState } from 'react'
 import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
+import { useRecoilState } from 'recoil'
+import { filterTierState } from '../../../util/stateCollection'
 
 export default function SelectionTier() {
-  const [tier, setTier] = useState('')
+  const [tier, setTier] = useRecoilState(filterTierState)
 
   const handleChange = (event: SelectChangeEvent) => {
     setTier(event.target.value as string)
@@ -21,10 +22,11 @@ export default function SelectionTier() {
         label="Tier"
         onChange={handleChange}
       >
-        <MenuItem value={'bronze'}>브론즈</MenuItem>
-        <MenuItem value={'silver'}>실버</MenuItem>
-        <MenuItem value={'gold'}>골드</MenuItem>
-        <MenuItem value={'platinum'}>플래티넘</MenuItem>
+        <MenuItem value={''}>전체</MenuItem>
+        <MenuItem value={'Bronze'}>브론즈</MenuItem>
+        <MenuItem value={'Silver'}>실버</MenuItem>
+        <MenuItem value={'Gold'}>골드</MenuItem>
+        <MenuItem value={'Platinum'}>플래티넘</MenuItem>
       </Select>
     </FormControl>
   );

@@ -3,9 +3,11 @@ import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
+import { useRecoilState } from 'recoil'
+import { filterTagState } from '../../../util/stateCollection'
 
 export default function SelectionTag() {
-  const [tag, setTag] = useState('')
+  const [tag, setTag] = useRecoilState(filterTagState)
 
   const handleChange = (event: SelectChangeEvent) => {
     setTag(event.target.value as string)
@@ -21,14 +23,15 @@ export default function SelectionTag() {
         label="Tag"
         onChange={handleChange}
       >
-        <MenuItem value={'impl'}>구현</MenuItem>
-        <MenuItem value={'dp'}>DP</MenuItem>
-        <MenuItem value={'graph'}>그래프</MenuItem>
-        <MenuItem value={'greedy'}>그리디</MenuItem>
-        <MenuItem value={'sorting'}>정렬</MenuItem>
-        <MenuItem value={'bfs'}>BFS</MenuItem>
-        <MenuItem value={'dfs'}>DFS</MenuItem>
-        <MenuItem value={'comb'}>조합론</MenuItem>
+        <MenuItem value={''}>전체</MenuItem>
+        <MenuItem value={46}>구현</MenuItem>
+        <MenuItem value={16}>DP</MenuItem>
+        <MenuItem value={4}>그래프</MenuItem>
+        <MenuItem value={21}>그리디</MenuItem>
+        <MenuItem value={43}>정렬</MenuItem>
+        <MenuItem value={54}>BFS</MenuItem>
+        <MenuItem value={55}>DFS</MenuItem>
+        <MenuItem value={3}>조합론</MenuItem>
       </Select>
     </FormControl>
   )

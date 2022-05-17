@@ -8,6 +8,7 @@ import { useRecoilState } from 'recoil'
 import { keywordState } from '../../util/stateCollection'
 import { nothing } from '../../util/validationCollection'
 
+
 const Container = styled.section`
   display: grid;
   grid-template-columns: 5fr 5fr;
@@ -20,22 +21,7 @@ const Subcontainer = styled.div<{ cond: boolean }>`
   justify-content: ${(props) => (props.cond ? "left" : "right")};
   align-items: center;
 `
-const Grid = styled.div`
-`;
 
-const Row = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: start;
-  gap: 2em;
-`;
-
-const Col = styled.div<{size: number}>`
-  display: flex;
-  flex: ${props => props.size};
-  justify-content: center;
-  max-height: 40em;
-`;
 
 export default function Condition(props: any) {
   const [keyword, setKeyword] = useRecoilState(keywordState)
@@ -44,14 +30,14 @@ export default function Condition(props: any) {
   return (
     <Container>
       <Subcontainer cond={true}>
-        {/* <SelectionTier />
+        <SelectionTier />
         <SelectionLevel />
-        <SelectionTag /> */}
+        <SelectionTag />
       </Subcontainer>
       
-      <Subcontainer cond={false}>
+      <Subcontainer cond={false}>          
         <InputTextField
-          textFieldAttr={{width: '20vw', id: 'keyword', label: '제목', marBot: '10px', marRig: '0px', isPw: false, isAf: false}}
+          textFieldAttr={{width: '20vw', id: 'keyword', label: 'Search', marBot: '10px', marRig: '0px', isPw: false, isAf: false}}
           valid={nothing}
           errorMessage='검색어를 입력해주세요.'
           setter={setKeyword}

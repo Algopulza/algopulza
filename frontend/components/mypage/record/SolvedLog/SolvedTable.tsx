@@ -25,6 +25,11 @@ export default function SolvedTable(props: any) {
     }
     return (<b style={{color: '#E45624'}}>{coloredStatus}</b>)
   }
+  const handleClick = (event: any) => {
+    console.log(event)
+    // const problemUrl = `https://www.acmicpc.net/problem/${bojId}`
+    // window.open(problemUrl)
+  }
   
   return (
     <TableContainer component={Paper} sx={{ marginBottom: '15px', maxHeight: 500 }}>
@@ -46,7 +51,10 @@ export default function SolvedTable(props: any) {
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <StyledTableCell align="center" component="th" scope="row">{row.problemBojId}</StyledTableCell>
-              <StyledTableCell align="left">{row.problemTitle}</StyledTableCell>
+              <StyledTableCell align="left"
+              onClick={handleClick}>
+                {row.problemTitle}
+              </StyledTableCell>
               <StyledTableCell align="center">
                 {statusColor(row.status)}
               </StyledTableCell>

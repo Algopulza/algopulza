@@ -9,7 +9,7 @@ export default function SearchPagination(props: any) {
   return (
     <Stack spacing={2}>
       <Pagination
-       count={10} size="large" shape="rounded"
+       count={props.totalPage} size="large" shape="rounded"
        onClick={submitPage}
        />
     </Stack>
