@@ -11,6 +11,7 @@ import { getRecoTag } from '../../api/flask/recommend/RecoTag'
 import { getSolvedTear } from '../../api/flask/recommend/RecoSolvedTear'
 import { getRecoTear } from '../../api/flask/recommend/RecoTear'
 import { CircularProgress } from "@mui/material";
+import ButtonFloating from '../../components/common/button/ButtonFloating'
 
 const Container = styled.section`
   padding: 0vh 5vw;
@@ -97,14 +98,15 @@ export default function Recommendation() {
             <CircularProgress sx={{ display: 'flex', justifyContent: 'center', marginBottom:"1rem" , color: '#282828' }}/>
             <div>사용자에게 맞는 추천 문제를 뽑아오고 있어요!</div>
           </SubContainer>
-        </CircularProgressContainer>
-        :
+          <ButtonFloating />
+        </CircularProgressContainer> :
         <>
-      <Gift />
-      <Container>
-        {subjects.map((subject) => <Subject key={subject.title} subjectAttr={subject} />)}
-      </Container>
-      </>
+          <Gift />
+          <Container>
+            {subjects.map((subject) => <Subject key={subject.title} subjectAttr={subject} />)}
+          </Container>
+          <ButtonFloating />
+        </>
       }
     </>
   )
