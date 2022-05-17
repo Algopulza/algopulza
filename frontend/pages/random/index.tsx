@@ -7,6 +7,7 @@ import styled from 'styled-components'
 import { useRecoilValue } from 'recoil'
 import { accessTokenState } from '../../util/stateCollection'
 import { getRandom } from '../../api/back/ramdom/Random'
+import ButtonFloating from '../../components/common/button/ButtonFloating'
 
 const Container = styled.section`
   padding: 0vw 5vw;
@@ -65,6 +66,7 @@ export default function Random() {
       <Container>
         {subjects.map(subject => <Subject key={subject.title} subjectAttr={subject} />)}
       </Container>
+      <ButtonFloating />
     </>
   )
 }

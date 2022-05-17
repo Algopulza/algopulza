@@ -6,6 +6,7 @@ import Analysis from "../../components/mypage/analysis/Index";
 import Record from "../../components/mypage/record/Index";
 import { useRecoilValue } from "recoil";
 import { memberIdState, bojIdState, accessTokenState } from "../../util/stateCollection";
+import ButtonFloating from "../../components/common/button/ButtonFloating";
 
 const Container = styled.div`
   display: grid;
@@ -27,9 +28,10 @@ export default function Mypage() {
 
   return (
     <Container>
-        <UserInfo accessToken={accessToken} memberId={memberId} bojId={bojId}/>
-        <Analysis accessToken={accessToken} memberId={memberId} bojId={bojId}/> 
-        <Record />
+      <UserInfo accessToken={accessToken} memberId={memberId} bojId={bojId}/>
+      <Analysis accessToken={accessToken} memberId={memberId} bojId={bojId}/> 
+      <Record />
+      <ButtonFloating />
     </Container>
   );
 }

@@ -8,6 +8,7 @@ import styled from 'styled-components'
 import { useRecoilValue } from 'recoil'
 import { accessTokenState } from '../../util/stateCollection'
 import { getProblems, getSearchProblems } from '../../api/back/search/SearchProblems'
+import ButtonFloating from '../../components/common/button/ButtonFloating'
 
 const Container = styled.section`
   padding: 2vh 10vw 0 10vw;
@@ -81,6 +82,7 @@ export default function Search() {
           // count={endPage}
         />
       </Subcontainer>
+      <ButtonFloating />
     </Container>
   )
 }
