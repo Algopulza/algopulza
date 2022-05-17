@@ -27,3 +27,7 @@ export const checkStopwatch = (probId: string) => {
   const probIdTrimmed = probId.trim()
   return probIdReg.test(probIdTrimmed) && Number(probIdTrimmed) >= 1000 ? true : false
 }
+
+export const checkStopwatchMin = (min: string) => {
+  return min === '00' ? false : true
+}

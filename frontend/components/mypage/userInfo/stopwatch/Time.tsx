@@ -3,8 +3,6 @@ import ImgButtonPlay from '../../../common/button/imgButton/ImgButtonPlay'
 import ImgButtonPause from '../../../common/button/imgButton/ImgButtonPause'
 import ImgButtonReset from '../../../common/button/imgButton/ImgButtonReset'
 import styled from "styled-components"
-import { useSetRecoilState } from 'recoil'
-import { stopwatchMinState } from '../../../../util/stateCollection'
 
 const Container = styled.div`
   display: flex;
@@ -22,7 +20,6 @@ const Digit = styled.div`
 export default function Time() {
   const [time, setTime] = useState(0)
   const [isRunning, setIsRunning] = useState(false)
-  const setStopwatchMinState = useSetRecoilState(stopwatchMinState)
 
   useEffect(() => {
     let interval: any
@@ -30,7 +27,6 @@ export default function Time() {
     if (isRunning) {
       interval = setInterval(() => {
         setTime((prev) => prev + 10)
-        setStopwatchMinState(Math.floor((time / 60000) % 60))
       }, 10)
     } else {
       clearInterval(interval)
@@ -43,7 +39,7 @@ export default function Time() {
       <Container style={{marginRight: 10}}>
         <Digit>{("0" + Math.floor((time / 3600000) % 60)).slice(-2)}</Digit>
         <Digit>:</Digit>
-        <Digit>{("0" + Math.floor((time / 60000) % 60)).slice(-2)}</Digit>
+        <Digit id="min">{("0" + Math.floor((time / 60000) % 60)).slice(-2)}</Digit>
         <Digit>:</Digit>
         <Digit>{("0" + Math.floor((time / 1000) % 60)).slice(-2)}</Digit>
         <Digit>:</Digit>
@@ -74,7 +70,6 @@ export default function Time() {
             onClick={() => {
               setIsRunning(false)
               setTime(0)
-              setStopwatchMinState(0)
             }}
           />
         </div>
