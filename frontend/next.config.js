@@ -14,11 +14,11 @@ const nextConfig = {
     { dev, dir, outDir, distDir, buildId }
   ) {
     return {
-      '/index.html': { page: '/' },
-      '/recommendation/index.html': { page: '/recommendation' },
-      '/random/index.html': { page: '/random' },
-      '/search/index.html': { page: '/search' },
-      '/mypage/index.html': { page: '/mypage' }
+      '/index/': { page: '/' },
+      '/recommendation/': { page: '/recommendatio/' },
+      '/random/': { page: '/random/' },
+      '/search/': { page: '/search/' },
+      '/mypage/': { page: '/mypage/' }
     }
   }
 }
