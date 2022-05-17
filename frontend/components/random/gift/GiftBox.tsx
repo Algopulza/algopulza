@@ -7,13 +7,13 @@ import styled from 'styled-components'
 const Container = styled.section`
   display: flex;
   flex-direction: column;
-  justify-content: end;
+  justify-content: center;
   align-items: center;
-  height: 35vh;
+  height: 40vh;
 `
 
 const Canvas = styled.div`
-  margin-bottom: 20px;
+  margin-bottom: 25px;
   width: 13vw;
   cursor: pointer;
 `
@@ -27,7 +27,6 @@ type TextProps = {
 
 export default function GiftBox({ text, img, data, random }: TextProps) {
   const [isToggled, setIsToggled] = useState(false)
-  console.log(data)
   return (
     <Container>
       {isToggled ?

@@ -59,7 +59,7 @@ export default function ProblemName({ title, id, problemId, tier, bookmark }: He
   const handleBookmarkPutClick = () => {
     axiosPutBookmark(problemId, accessToken)
       .then(res => {
-        console.log(res)
+        // console.log(res)
         setIsBookmark(true)
       })
   }
@@ -67,7 +67,7 @@ export default function ProblemName({ title, id, problemId, tier, bookmark }: He
   const handleBookmarkDeleteClick = () => {
     axiosDeleteBookmark(problemId, accessToken)
       .then(res => {
-        console.log(res)
+        // console.log(res)
         setIsBookmark(false)
       })
   }

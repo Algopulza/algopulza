@@ -11,6 +11,7 @@ const Container = styled.section`
   grid-template-columns: 30vw 40vw 30vw;
   align-items: center;
   height: 8vh;
+  background: #282828;
 `
 
 const Pages = styled.div`
@@ -22,10 +23,9 @@ export default function NavBar() {
   useEffect(() => {
     const currentUrl = window.location.href.split('/').pop()
     clickHandler('/' + currentUrl)
-  })
+  },[]);
   const [page, setPage] = useRecoilState(pageState)
   const clickHandler = (path: string) => setPage(path)
-
   return (
     <Container>
       <Brand />

@@ -5,12 +5,13 @@ const Container = styled.section`
   display: flex;
   justify-content: end;
   align-items: center;
+  font-size: 0.9vw;
 `
 
 export default function Routing() {
   return (
     <Container>
-      <ButtonRouting routingAttr={{url: '/', text: '로그인'}}  />
+      <ButtonRouting routingAttr={{url: '/', text: '이전으로'}}  />
     </Container>
   )
 }

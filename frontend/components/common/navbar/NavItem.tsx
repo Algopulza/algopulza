@@ -5,7 +5,7 @@ import { NavItemAttr } from '../../../util/dto'
 const Text = styled.span<{ cond: boolean }>`
   margin: 0 3vw 0 3vw;
   font-size: 1.3vw;
-  color: ${(props) => (props.cond ? "#FFC94D" : "#000000")};
+  color: ${(props) => (props.cond ? "#FFFFFF" : "#cdcaca")};
   &:hover {
     color: #FFC94D;
   }
@@ -20,10 +20,9 @@ type NavItemProps = {
 export default function NavItem({ navItemAttr, isLocated, onClick }: NavItemProps) {
   return (
     <Link href={navItemAttr.url}>
-      <a>
+      <a onClick={() => onClick(navItemAttr.url)}>
         <Text
           cond={navItemAttr.url == isLocated ? true : false}
-          onClick={() => onClick(navItemAttr.url)}
         >
           {navItemAttr.item}
         </Text>

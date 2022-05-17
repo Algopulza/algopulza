@@ -84,7 +84,6 @@ const FavoriteCard = (props: any) => {
   const handleBookmarkPutClick = () => {
     axiosPutBookmark(props.id, accessToken)
       .then(res => {
-        console.log(res)
         setIsBookmark(true)
       })
   }
@@ -92,7 +91,6 @@ const FavoriteCard = (props: any) => {
   const handleBookmarkDeleteClick = () => {
     axiosDeleteBookmark(props.id, accessToken)
       .then(res => {
-        console.log(res)
         setIsBookmark(false)
       })
   }
