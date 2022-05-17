@@ -13,7 +13,7 @@ const Container = styled.section`
 const Text = styled.span`
   margin-right: 20px;
   font-size: 1vw;
-  color: '#545454';
+  color: #FFFFFF;
   cursor: pointer;
   &:hover {
     color: #FFC94D;

@@ -4,21 +4,20 @@ const Container = styled.section`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  height: 13vh;
-  padding: 0 4vw;
+  height: 15vh;
+  padding: 0 3.5vw;
 `
 
 const Text = styled.p`
   margin: 0;
   font-size: 1.1vw;
-  color: #7e6427;
+  color: #FFFFFF;
 `
 
 const Title = styled.p`
   margin: 0;
-  font-size: 2.2vw;
-  font-weight: 700;
-  color: #3c2c06;
+  font-size: 2vw;
+  color: #FFFFFF;
 `
 
 export default function GiftDescription() {

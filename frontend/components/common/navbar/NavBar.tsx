@@ -11,6 +11,7 @@ const Container = styled.section`
   grid-template-columns: 30vw 40vw 30vw;
   align-items: center;
   height: 8vh;
+  background: #282828;
 `
 
 const Pages = styled.div`
