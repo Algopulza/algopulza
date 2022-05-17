@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 const Container = styled.section`
   display: grid;
-  grid-template-columns: 60vw 40vw;
+  grid-template-columns: 40vw 60vw;
   height: 100vh;
   background: #282828;
 `
@@ -29,14 +29,14 @@ const FormArea = styled.div`
 export default function Landing() {
   return (
     <Container>
-      <div></div>
-
       <Subcontainer>
         <FormArea>
           <Content />
           <Form />
         </FormArea>
       </Subcontainer>
+
+      <div></div>
     </Container>
   )
 }
