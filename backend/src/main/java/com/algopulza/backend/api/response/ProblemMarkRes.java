@@ -13,4 +13,8 @@ public class ProblemMarkRes {
 
     private String title;
 
+    private int tierLevel;
+
+    private String tierName;
+
 }
