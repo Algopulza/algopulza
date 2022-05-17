@@ -4,7 +4,7 @@ import Card from '../common/card/Card'
 import styled from 'styled-components'
 
 const Container = styled.section`
-  margin-bottom: 80px;
+margin-bottom: 80px;
 `
 
 const Cards = styled.div`
@@ -21,7 +21,7 @@ export default function Subject({ subjectAttr }: SubjectProps) {
 
   return (
     <Container>
-      <SubjectTitle>{subjectAttr}</SubjectTitle>
+     {lists ? <SubjectTitle>{subjectAttr}</SubjectTitle> : null}
       
       <Cards>
         {lists && lists.map((list: ProblemAttr) =>

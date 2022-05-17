@@ -9,7 +9,7 @@ import { memberIdState, bojIdState, accessTokenState } from "../../util/stateCol
 
 const Container = styled.div`
   display: grid;
-  grid-template-rows: 0.2fr 0.8fr 0.5fr;
+  /* grid-template-rows: 0.2fr 0.8fr 0.5fr; */
   padding: 3vh 10vw;
   gap: 3rem;
 `

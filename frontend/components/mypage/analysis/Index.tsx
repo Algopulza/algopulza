@@ -5,6 +5,7 @@ import Tag from "./Tag";
 import Language from "./Language";
 import Month from "./Month";
 import { User } from "../../../pages/mypage";
+import AnalyCard from "../../common/card/AnalyCard";
 
 const Container = styled.div`
   display: grid;
@@ -36,13 +37,6 @@ const CategoryButton = styled.button<{bg:string, hbg:string, hc:string}>`
   }
   margin-top: 1rem;
   margin-left: 13rem;
-`
-
-const SubContainer = styled.div`
-  background: #ffffff;
-  box-shadow: 0px 2px 10px 5px rgba(0, 0, 0, 0.25);
-  border-radius: 15px;
-  max-width: 800px;
 `
 
 const Index = ({accessToken, memberId, bojId}:User) => {
@@ -88,12 +82,12 @@ const Index = ({accessToken, memberId, bojId}:User) => {
         <CategoryButton onClick={showMonth} color={month?"white":"#939292"} bg={month?"#FFC94D":"white"} hbg={month?"#EA9800":"#fff2d9"} hc={month?"white":"#939292"}>월 별 문제 풀이 갯수</CategoryButton>
       </Select>
 
-      <SubContainer>
+      <AnalyCard>
         {weakness ? <Weakness accessToken={accessToken} memberId={memberId} bojId={bojId}/> : null}
         {tag ? <Tag accessToken={accessToken} memberId={memberId} bojId={bojId}/> : null}
         {language ? <Language accessToken={accessToken} memberId={memberId} bojId={bojId}/> : null}
         {month ? <Month accessToken={accessToken} memberId={memberId} bojId={bojId}/> : null}
-      </SubContainer>
+      </AnalyCard>
     </Container>
   );
 };
