@@ -1,14 +1,6 @@
 import { useState, useEffect } from 'react'
 import styled from "styled-components"
-
-const Container = styled.section`
-  display: grid;
-  grid-template-rows: 1fr 1fr;
-  background: #FFFFFF;
-  box-shadow: 0px 2px 10px 5px rgba(0, 0, 0, 0.25);
-  border-radius: 15px;
-  padding : 1.5rem 0;
-`
+import AnalyCard from "../../common/card/AnalyCard";
 
 const TimeArea = styled.div`
   display: grid;
@@ -59,7 +51,7 @@ export default function Stopwatch() {
   }, [isRunning])
 
   return (
-    <Container>
+    <AnalyCard>
       <TimeArea >
         <Time>{("0" + Math.floor((time / 3600000) % 60)).slice(-2)}</Time>
         <Time>:</Time>
@@ -78,6 +70,6 @@ export default function Stopwatch() {
         <Button style={{background: '#545454', color: '#FFFFFF'}} onClick={() => setTime(0)}>리셋</Button>
         <Button style={{background: '#1A4568', color: '#FFFFFF'}} onClick={() => {}}>전송</Button>
       </ButtonArea>
-    </Container>
+    </AnalyCard>
   )
 }

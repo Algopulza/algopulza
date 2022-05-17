@@ -1,6 +1,6 @@
-import Routing from "../components/signup/Routing"
-import Content from "../components/signup/Content"
-import Form from "../components/signup/Form"
+import Routing from "../../components/signup/Routing"
+import Content from "../../components/signup/Content"
+import Form from "../../components/signup/Form"
 import styled from "styled-components"
 
 const Container = styled.section`

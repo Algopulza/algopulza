@@ -9,8 +9,7 @@ const Container = styled.div`
   gap: 2em;
 `;
 
-const Grid = styled.div`
-`;
+const Grid = styled.div``;
 
 const Index = () => {
   return (
