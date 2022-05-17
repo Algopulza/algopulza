@@ -18,10 +18,10 @@ const Subcontainer = styled.div`
 
 const FormArea = styled.div`
   display: grid;
-  grid-template-rows: 0.5fr 1.5fr 8fr;
+  grid-template-rows: 0.3fr 1.7fr 8fr;
   width: 25vw;
   height: 75vh;
-  padding: 5vh 0;
+  padding: 3vh 0;
   border-radius: 10px;
   background: #FFFFFF;
   /* opacity: 90%; */

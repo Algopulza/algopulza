@@ -66,7 +66,7 @@ export default function Form() {
         <CellLeft>
           <div>
             <InputTextField
-              textFieldAttr={{width: '15vw', id: 'id', label: '아이디', marBot: '0', marRig: '0px', isPw: false, isAf: true}}
+              textFieldAttr={{width: '14vw', id: 'id', label: '아이디', marBot: '0', marRig: '0px', isPw: false, isAf: true}}
               valid={checkId}
               errorMessage='2 글자 이상의 영문자 및 숫자이어야 합니다.'
               setter={setId}
@@ -87,7 +87,7 @@ export default function Form() {
       <Row>
         <CellLeft>
           <InputTextField
-            textFieldAttr={{width: '15vw', id: 'bojId', label: '백준 아이디', marBot: '0', marRig: '0px', isPw: false, isAf: false}}
+            textFieldAttr={{width: '14vw', id: 'bojId', label: '백준 아이디', marBot: '0', marRig: '0px', isPw: false, isAf: false}}
             valid={nothing}
             errorMessage='백준 아이디를 입력해주세요.'
             setter={setBojId}
@@ -99,7 +99,7 @@ export default function Form() {
       <Row>
         <CellLeft>
           <InputTextField
-            textFieldAttr={{width: '15vw', id: 'password', label: '비밀번호', marBot: '0px', marRig: '0px', isPw: true, isAf: false}}
+            textFieldAttr={{width: '14vw', id: 'password', label: '비밀번호', marBot: '0px', marRig: '0px', isPw: true, isAf: false}}
             valid={checkPassword}
             errorMessage='8~14 글자의 영문자 및 특수문자이어야 합니다.'
             setter={setPassword}
@@ -111,7 +111,7 @@ export default function Form() {
       <Row>
         <CellLeft>
           <InputTextField
-            textFieldAttr={{width: '15vw', id: 'pwConfirm', label: '비밀번호 확인', marBot: '20px', marRig: '0px', isPw: true, isAf: false}}
+            textFieldAttr={{width: '14vw', id: 'pwConfirm', label: '비밀번호 확인', marBot: '20px', marRig: '0px', isPw: true, isAf: false}}
             valid={nothing}
             errorMessage='동일한 비밀번호를 입력해주세요.'
             setter={setPwConfirm}
@@ -123,7 +123,7 @@ export default function Form() {
       <Row>
         <CellLeft>
           <InputTextField
-            textFieldAttr={{width: '15vw', id: 'solved', label: '해결한 문제', marBot: '0px', marRig: '0px', isPw: false, isAf: false}}
+            textFieldAttr={{width: '14vw', id: 'solved', label: '해결한 문제', marBot: '0px', marRig: '0px', isPw: false, isAf: false}}
             valid={checkSpace}
             errorMessage='해결한 문제들을 공백 없이 입력해주세요.'
             setter={setSolved}
@@ -138,7 +138,7 @@ export default function Form() {
       <Row>
         <CellLeft>
           <InputTextField
-            textFieldAttr={{width: '15vw', id: 'tried', label: '시도한 문제', marBot: '20px', marRig: '0px', isPw: false, isAf: false}}
+            textFieldAttr={{width: '14vw', id: 'tried', label: '시도한 문제', marBot: '20px', marRig: '0px', isPw: false, isAf: false}}
             valid={checkSpace}
             errorMessage='시도한 문제들을 공백 없이 입력해주세요'
             setter={setTried}
