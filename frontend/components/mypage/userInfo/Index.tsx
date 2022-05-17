@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Userinfo from "./Userinfo";
 import Badge from "./Badge";
-import Stopwatch from "./Stopwatch";
+import Stopwatch from "./stopwatch/Stopwatch";
 import { getUserInfo } from "../../../api/back/analysis/UserInfo";
 import { getStatistic } from "../../../api/back/analysis/Statistic";
 import { User } from "../../../pages/mypage";
@@ -47,8 +47,8 @@ const Index = ({accessToken, memberId}:User) => {
 
   return (
     <Container>
-      {userInfo?<Userinfo algopluzaId={userInfo.algopluzaId} tierLevel={userInfo.tierLevel} tierName={userInfo.tierName} time={time}/>:null}
-      {userInfo?<Badge exp={userInfo.exp} />:null}
+      {/* {userInfo?<Userinfo algopluzaId={userInfo.algopluzaId} tierLevel={userInfo.tierLevel} tierName={userInfo.tierName} time={time}/>:null}
+      {userInfo?<Badge exp={userInfo.exp} />:null} */}
       <Stopwatch />
     </Container>
   );
