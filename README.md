@@ -33,7 +33,7 @@
 
 👨‍👨‍👦‍  인원 (총 5인)
 
-🧑 박상현 : 팀장, Frontend, Extension 
+🧑 박상현 : 팀장, Frontend
 
 🧑 강동원 : Frontend, Data Analysis
 
