@@ -7,7 +7,6 @@ import Record from "../../components/mypage/record/Index";
 import { useRecoilValue } from "recoil";
 import { memberIdState, bojIdState, accessTokenState } from "../../util/stateCollection";
 import ButtonFloating from "../../components/common/button/ButtonFloating";
-import { NextSeo } from 'next-seo';
 
 const Container = styled.div`
   display: grid;
@@ -30,23 +29,6 @@ export default function Mypage() {
   return (
     
     <Container>
-      <NextSeo
-				title="마이페이지"
-				description="여러분의 풀이를 분석하고 기록해드려요"
-				openGraph={{
-					type: 'website',
-					url: 'https://www.algopulza.day/mypage',
-					title: '막 풀지 말고, 알고 풀자!',
-					description: '여러분의 풀이를 분석하고 기록해드려요',
-					images: [
-						{
-							url: 'https://www.algopulza.day/common/brand_logo.png',
-              alt: '로고 사진'
-						},
-					],
-          site_name: "알고 풀자",
-				}}
-			/>
       <UserInfo accessToken={accessToken} memberId={memberId} bojId={bojId}/>
       <Analysis accessToken={accessToken} memberId={memberId} bojId={bojId}/> 
       <Record />

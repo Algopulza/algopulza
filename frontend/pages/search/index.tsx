@@ -4,7 +4,6 @@ import Result from '../../components/search/Result'
 import SearchPagination from '../../components/search/SearchPagination'
 import Layout from '../../components/common/Layout'
 import styled from 'styled-components'
-import { NextSeo } from 'next-seo';
 
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { accessTokenState, filterLevelState, filterTagState, filterTierState } from '../../util/stateCollection'
@@ -62,23 +61,6 @@ export default function Search() {
 
   return (
     <Container>
-        <NextSeo
-				title="검색"
-				description="문제를 검색해보아요"
-				openGraph={{
-					type: 'website',
-					url: 'https://www.algopulza.day/search',
-					title: '막 풀지 말고, 알고 풀자!',
-					description: '문제를 검색해보아요',
-					images: [
-						{
-							url: 'https://www.algopulza.day/common/brand_logo.png',
-              alt: '로고 사진'
-						},
-					],
-          site_name: "알고 풀자",
-				}}
-			/>
       <Condition
         propFunction={problemListSearch}
       />
