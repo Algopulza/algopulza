@@ -17,10 +17,10 @@ public class JwtUtil {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         Long id = null;
-        if(authentication.getPrincipal() instanceof UserDetails){
+        if (authentication.getPrincipal() instanceof UserDetails) {
             UserDetails springSecurityUser = (UserDetails) authentication.getPrincipal();
             id = Long.valueOf(springSecurityUser.getUsername());
-        }else if(authentication.getPrincipal() instanceof Long){
+        } else if (authentication.getPrincipal() instanceof Long) {
             id = (Long) authentication.getPrincipal();
         }
 
