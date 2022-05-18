@@ -8,6 +8,8 @@ import { bojIdState, memberIdState, algoIdState, accessTokenState, refreshTokenS
 import { checkSpace } from '../../util/validationCollection'
 import { sendLongMessage } from '../../util/inputHandlerCollection'
 import ButtonRouting from '../common/button/ButtonRouting'
+import { showToast } from '../common/alert/Alert'
+import { ToastContainer } from 'react-toastify'
 
 const Container = styled.section`
   display: flex;
@@ -38,7 +40,8 @@ export default function Form() {
         router.push('/recommendation')
       })
       .catch(err => {
-        sendLongMessage('loginResult', '아이디와 비밀번호를 정확히 입력해주세요.')
+        // sendLongMessage('loginResult', '아이디와 비밀번호를 정확히 입력해주세요.')
+        showToast('아이디와 비밀번호를 정확히 입력해주세요.')
       })
   }
   const handleKeyDown = (event: any) => {
@@ -67,10 +70,10 @@ export default function Form() {
       </div>
 
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <p
+        {/* <p
           id="loginResult"
           style={{fontSize: '0.9vw', marginTop: '0px', marginBottom: '15px', color: 'red', textAlign: 'center'}}
-        />
+        /> */}
         <ButtonSubmitting
           submittingAttr={{text: '로그인', width: '10vw', height: '2.3vw', marBot: '10px', fontSize: '1.1vw'}}
           isImportant={true}
