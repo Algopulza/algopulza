@@ -1,3 +1,9 @@
+// navbar
+export type NavItemAttr = {
+  page: string,
+  url: string
+}
+
 // TextInput Data Object
 export type TextFieldAttr = {
   width: string,
@@ -18,11 +24,6 @@ export type SubmittingAttr = {
   fontSize: string
 }
 
-// NavItem Data Object
-export type NavItemAttr = {
-  item: string,
-  url: string
-}
 
 // Subject Data Object
 export type SubjectAttr = {

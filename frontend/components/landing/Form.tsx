@@ -4,9 +4,7 @@ import ButtonSubmitting from '../common/button/ButtonSubmitting'
 import styled from 'styled-components'
 import { axiosLogin } from '../../util/axiosCollection'
 import { useRecoilState, useSetRecoilState } from 'recoil'
-import {
-  bojIdState, memberIdState, algoIdState, accessTokenState, refreshTokenState, idState, passwordState, loginState
-} from '../../util/stateCollection'
+import { bojIdState, memberIdState, algoIdState, accessTokenState, refreshTokenState, idState, passwordState } from '../../util/stateCollection'
 import { checkSpace } from '../../util/validationCollection'
 import { sendLongMessage } from '../../util/inputHandlerCollection'
 
@@ -21,9 +19,9 @@ const Container = styled.section`
 export default function Form() {
   const [id, setId] = useRecoilState(idState)
   const [password, setPassword] = useRecoilState(passwordState)
-  const setBoj = useSetRecoilState(bojIdState)
-  const setMember = useSetRecoilState(memberIdState)
-  const setAlgo = useSetRecoilState(algoIdState)
+  const setAlgoId = useSetRecoilState(algoIdState)
+  const setBojId = useSetRecoilState(bojIdState)
+  const setMemberId = useSetRecoilState(memberIdState)
   const setAccessToken = useSetRecoilState(accessTokenState)
   const setRefreshToken = useSetRecoilState(refreshTokenState)
   const router = useRouter()
@@ -31,9 +29,9 @@ export default function Form() {
   const handleClick = () => {
     axiosLogin(id, password)
       .then(res => {
-        setBoj(res.data.data.member.bojId)
-        setMember(res.data.data.member.memberId)
-        setAlgo(res.data.data.member.algopluzaId)
+        setAlgoId(res.data.data.member.algopluzaId)
+        setBojId(res.data.data.member.bojId)
+        setMemberId(res.data.data.member.memberId)
         setAccessToken(res.data.data.token.accessToken)
         setRefreshToken(res.data.data.token.refreshToken)
         router.push('/recommendation')
