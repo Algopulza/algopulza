@@ -1,11 +1,11 @@
+import Carousel from '../components/landing/Carousel'
 import Content from '../components/landing/Content'
 import Form from '../components/landing/Form'
 import styled from 'styled-components'
-import Carousel from '../components/landing/Carousel'
 
 const Container = styled.section`
   display: grid;
-  grid-template-columns: 40vw 5vw 40vw 15vw;
+  grid-template-columns: 40vw 10vw 40vw 10vw;
   height: 100vh;
   background: #282828;
 `
@@ -22,7 +22,7 @@ const FormArea = styled.div`
   width: 25vw;
   height: 75vh;
   padding: 5vh 0;
-  border-radius: 10px;
+  border-radius: 5px;
   background: #FFFFFF;
 `
 
