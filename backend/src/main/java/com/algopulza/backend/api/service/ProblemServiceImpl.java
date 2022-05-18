@@ -269,27 +269,6 @@ public class ProblemServiceImpl implements ProblemService {
     }
 
     /**
-     * 풀었던 문제들 중 랜덤으로 5개를 반환
-     */
-    @Override
-    public List<ProblemRes> getRandomSolvedProblemList(Long memberId) {
-        // memberId가 푼 문제의 Id 리스트
-        List<Long> problemIdList = problemRepository.findProblemIdByStatus(memberId, "solved");
-        Set<Long> problemIdSet = new HashSet<>();
-
-        // 반환할 문제 정보 개수 (푼 문제의 수가 5개보다 적다면 푼 문제 모두 반환)
-        int selectCount = Math.min(problemIdList.size(), 5);
-
-        // 랜덤으로 5개 선택
-        while (problemIdSet.size() < selectCount) {
-            problemIdSet.add(problemIdList.get((int) (Math.random() * problemIdList.size())));
-        }
-
-        // 랜덤으로 선택된 5개의 문제 아이디로 문제 정보 조회
-        return problemRepository.findProblemResByIdSet(memberId, problemIdSet);
-    }
-
-    /**
      * 한 종류의 랜덤 문제 리스트를 반환
      * type: 종류 (0: 태그별, 1: 레벨별)
      * condition: 조회 조건 (type이 0이면 태그의 boj_tag_id, 1이면 tier table의 level column 시작값)

@@ -21,8 +21,6 @@ public interface ProblemService {
 
     RandomListRes getRandomProblemList(Long memberId);
 
-    List<ProblemRes> getRandomSolvedProblemList(Long memberId);
-
     List<ProblemRes> getRandomProblemListByCondition(Long memberId, int type, Object condition, int count);
 
     void addProblemMark(Long memberId, Long problemId, int typeFlag);

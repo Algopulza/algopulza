@@ -75,17 +75,6 @@ public class ProblemController {
         return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, ResponseMessage.GET_PROBLEM_LIST_SUCCESS, problemService.getRandomProblemList(memberId)));
     }
 
-    @GetMapping("/random-solved")
-    @ApiOperation(value = "풀었던 문제 랜덤 리스트 조회", notes = "풀었던 문제 랜덤 리스트를 조회하는 API 입니다.")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = ResponseMessage.GET_PROBLEM_LIST_SUCCESS, response = ErrorResponse.class),
-            @ApiResponse(code = 400, message = ResponseMessage.BAD_REQUEST, response = ErrorResponse.class)
-    })
-    public ResponseEntity<BaseResponseBody> listRandomSolvedProblem() {
-        Long memberId = JwtUtil.getCurrentId();
-        return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, ResponseMessage.GET_PROBLEM_LIST_SUCCESS, problemService.getRandomSolvedProblemList(memberId)));
-    }
-
     @PostMapping("/{problemId}/mark")
     @ApiOperation(value = "즐겨찾기 목록에 추가", notes = "즐겨찾기로 등록하는 API 입니다.")
     @ApiResponses({@ApiResponse(code = 201, message = ResponseMessage.POST_PROBLEM_MARK),

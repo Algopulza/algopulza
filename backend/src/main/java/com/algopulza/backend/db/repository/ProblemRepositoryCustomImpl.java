@@ -144,15 +144,6 @@ public class ProblemRepositoryCustomImpl implements ProblemRepositoryCustom {
     }
 
     @Override
-    public List<Long> findProblemIdByStatus(Long memberId, String status) {
-        return jpaQueryFactory.select(qSolvingLog.problem.id)
-                              .distinct()
-                              .from(qSolvingLog)
-                              .where(qSolvingLog.member.id.eq(memberId), qSolvingLog.status.eq(status))
-                              .fetch();
-    }
-
-    @Override
     public List<ProblemRes> findProblemResByIdSet(Long memberId, Set<Long> idSet) {
         return jpaQueryFactory.select(Projections.constructor(ProblemRes.class,
                                       qProblem.id,
