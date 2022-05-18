@@ -81,6 +81,18 @@ def save_data(app, mongodb):
         'status': t['status'],
     } for t in data_solving_log]
 
+    # 태그별 총 문제 개수
+    data_tagId_count = app.mysql_db.execute(text("""
+        SELECT tag_id, COUNT(*)
+        FROM test.problem_has_tag
+        GROUP BY tag_id;
+    """)).fetchall()
+
+    tagId_count = [{
+        'tagId': c['tag_id'],
+        'probCnt': c['COUNT(*)'],
+    } for c in data_tagId_count]
+
 
     # 문제-태그 정보 저장
     merged_df1 = pd.merge(problem_tag_df, tag_df, how='left')
@@ -112,5 +124,12 @@ def save_data(app, mongodb):
     collection = mongodb.solving_log
     collection.delete_many({})
     collection.insert_many(solving_log_json)
+
+    # 태그별 총 문제 개수
+    tagId_count_json = json.dumps(tagId_count, ensure_ascii=False)
+    tagId_count_json = json.loads(tagId_count_json)
+    collection = mongodb.tagId_count
+    collection.delete_many({})
+    collection.insert_many(tagId_count_json)
 
     return 
