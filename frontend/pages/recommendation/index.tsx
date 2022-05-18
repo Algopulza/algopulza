@@ -5,12 +5,12 @@ import Subject from '../../components/recommendation/Subject'
 import styled from 'styled-components'
 
 import { useRecoilValue } from 'recoil'
-import { bojIdState, accessTokenState } from '../../util/stateCollection'
+import { bojIdState, accessTokenState, algoIdState } from '../../util/stateCollection'
 import { getRecoVul } from '../../api/flask/recommend/RecoVul'
 import { getRecoTag } from '../../api/flask/recommend/RecoTag'
 import { getSolvedTear } from '../../api/flask/recommend/RecoSolvedTear'
 import { getRecoTear } from '../../api/flask/recommend/RecoTear'
-import { CircularProgress } from "@mui/material";
+import { CircularProgress } from "@mui/material"
 import ButtonFloating from '../../components/common/button/ButtonFloating'
 
 const Container = styled.section`
@@ -38,6 +38,7 @@ export default function Recommendation() {
   const [tearData, setTearData] = useState()
   const accessToken = useRecoilValue(accessTokenState)
   const bojId = useRecoilValue(bojIdState)
+  const algoId = useRecoilValue(algoIdState)
 
   const RecommendVul = async () => {
     await getRecoVul(accessToken, bojId)
@@ -76,18 +77,17 @@ export default function Recommendation() {
     RecommendTag()
     RecommendSolved()
     RecommendTear()
-    console.log(1)
   }, [])
 
   useEffect(() =>{
     setTimeout(() => {setAlert(false)},2000)
-  },[])
+  }, [])
 
   const subjects = [
-    {title: '최근에 자주 해결한 태그에 속하는 문제를 추천해 드려요!', englishTitle: '', list: tagData},
-    {title: '최근에 해결한 태그 중 적게 푼 태그에 속하는 문제를 추천해 드려요!', englishTitle: '', list: vulData},
-    {title: '해결했던 문제 중에서 현재 티어에 맞는 문제를 추천해 드려요!', englishTitle: '', list: solvedData},
-    {title: '유사 티어에 해당하는 유저가 해결한 문제를 추천해 드려요!', englishTitle: '', list: tearData}
+    {title: `# ${algoId}님이 많이 푼 문제 유형 🧐`, englishTitle: '', list: tagData},
+    {title: `# ${algoId}님이 적게 푼 문제 유형 🧐`, englishTitle: '', list: vulData},
+    {title: `# ${algoId}님이 풀었던 문제 🧐`, englishTitle: '', list: solvedData},
+    {title: `# 다른 유저가 많이 푼 문제 유형 🧐`, englishTitle: '', list: tearData}
   ]
 
   return (

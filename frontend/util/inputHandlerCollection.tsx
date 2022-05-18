@@ -45,26 +45,24 @@ export const handleInfoClick = (event: any, info: any, accessToken: string) => {
 export const handleStopwatchClick = (event: any, problemBojId: string, solvingTime: number, accessToken: string) => {
   const min = document.getElementById('min')!.textContent
   // console.log(Number(min))
+  const here = new Date()
 
   const info = {
     'problemBojId': problemBojId,
-    'memory': 0,
-    'runTime': 0,
-    'language': '',
-    'codeLength': 0,
     'solvingTime': Number(min),
-    'submitTime': ''
+    'submitTime': here
   }
 
-  if (checkStopwatch(problemBojId) && checkStopwatchMin(min!)) {
+  if (checkStopwatch(problemBojId)) { // checkStopwatch(problemBojId) && checkStopwatchMin(min!)
     axiosStopwatch(info, accessToken)
       .then(res => {
-        // console.log(res)
+        console.log(res)
         sendMessage('stopwatchResult', '감사합니다!')
       })
   } else if (problemBojId === '' || Number(problemBojId) < 1000) {
     sendLongMessage('stopwatchResult', '문제 번호를 입력해주세요.')
-  } else if (min === '00') {
-    sendLongMessage('stopwatchResult', '문제 풀이 시간이 너무 짧습니다.')
   }
+  // else if (min === '00') {
+  //   sendLongMessage('stopwatchResult', '문제 풀이 시간이 너무 짧습니다.')
+  // }
 }
