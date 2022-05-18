@@ -9,6 +9,7 @@ import {
 } from '../../util/stateCollection'
 import { checkSpace } from '../../util/validationCollection'
 import { sendLongMessage } from '../../util/inputHandlerCollection'
+import ButtonRouting from '../common/button/ButtonRouting'
 
 const Container = styled.section`
   display: flex;
@@ -67,21 +68,22 @@ export default function Form() {
         />
       </div>
 
-      <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <p
+          id="loginResult"
+          style={{fontSize: '0.9vw', marginTop: '0px', marginBottom: '15px', color: 'red', textAlign: 'center'}}
+        />
         <ButtonSubmitting
-          submittingAttr={{text: '로그인', width: '10vw', height: '2.3vw', marBot: '0px', fontSize: '1.1vw'}}
+          submittingAttr={{text: '로그인', width: '10vw', height: '2.3vw', marBot: '10px', fontSize: '1.1vw'}}
           isImportant={true}
           onClick={handleClick}
         />
-        <p
-          id="loginResult"
-          style={{fontSize: '0.9vw', marginTop: '5px', marginBottom: '15px', color: 'red', textAlign: 'center'}}
-        />
         <ButtonSubmitting
-          submittingAttr={{text: '회원가입', width: '10vw', height: '2.3vw', marBot: '0px', fontSize: '1vw'}}
+          submittingAttr={{text: '비회원으로 이용하기', width: '10vw', height: '2.3vw', marBot: '10px', fontSize: '1vw'}}
           isImportant={false}
-          onClick={() => {router.push('/signup')}}
+          onClick={() => {router.push('/random')}}
         />
+        <ButtonRouting routingAttr={{url: '/signup', text: '회원가입'}}  />
       </div>
     </Container>
   )
