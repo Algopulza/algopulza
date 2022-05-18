@@ -67,7 +67,12 @@ export default function PopupLogin() {
         <DialogTitle>{"잠시만요!"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="stopwatch">
-            <p>회원 가입을 하시면 풀이기록에 기반하여 맞춤 문제와 실력 분석 서비스를 제공 받을 수 있어요!</p>
+            <p>
+              <span style={{color: 'black', fontWeight: 700}}>회원 가입</span>하시면 풀이기록에 기반하여
+            </p>
+            <p>
+              <span style={{color: 'black', fontWeight: 700}}>맞춤 문제</span>와 <span style={{color: 'black', fontWeight: 700}}>실력 분석 서비스</span>를 제공 받을 수 있어요!
+            </p>
             <p>정말 비회원으로 로그인하시겠어요?</p>
           </DialogContentText>
         </DialogContent>
