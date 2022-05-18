@@ -7,7 +7,7 @@ import styled from 'styled-components'
 import { axiosId } from '../../util/axiosCollection'
 import { handleSignupClick } from '../../util/inputHandlerCollection'
 import { useRecoilState } from 'recoil'
-import { bojIdSignupState, idState, passwordState, pwConfirmState, solvedState, triedState } from '../../util/stateCollection'
+import { bojIdSignupState, idState, passwordState, pwConfirmState } from '../../util/stateCollection'
 import { checkId, checkPassword, nothing } from '../../util/validationCollection'
 import { showToast } from '../common/alert/Alert'
 
@@ -38,22 +38,21 @@ const CellRight = styled.div`
 
 export default function Form() {
   const [isCheck, setIsCheck] = useState(false)
+  const [isSame, setIsSame] = useState(false)
   const [id, setId] = useRecoilState(idState)
   const [bojId, setBojId] = useRecoilState(bojIdSignupState)
   const [password, setPassword] = useRecoilState(passwordState)
   const [pwConfirm, setPwConfirm] = useRecoilState(pwConfirmState)
-  const [solved, setSolved] = useRecoilState(solvedState)
-  const [tried, setTried] = useRecoilState(triedState)
   const router = useRouter()
 
   const handleIdClick = (event: any, id: string) => {
     if (id.trim() === '') {
-      // console.log('not valid')
+      showToast('아이디를 먼저 입력해주세요.')
     } else {
-      // console.log(`전송id: ${id}`)
       axiosId(id)
         .then(res => {
-          setIsCheck(res.data.data)
+          setIsCheck(true)
+          setIsSame(res.data.data)
           { res.data.data ?
             showToast('중복된 아이디입니다.') :
             showToast('가능한 아이디입니다.')
@@ -123,7 +122,7 @@ export default function Form() {
         <ButtonSubmitting
           submittingAttr={{text: '회원 가입', width: '10vw', height: '2.3vw', marBot: '0px', fontSize: '1.1vw'}}
           isImportant={true}
-          onClick={() => {handleSignupClick(event, id, bojId, password, pwConfirm, solved, tried, isCheck, router)}}
+          onClick={() => {handleSignupClick(event, id, bojId, password, pwConfirm, isCheck, isSame, router)}}
         />
       </Row>
     </Container>

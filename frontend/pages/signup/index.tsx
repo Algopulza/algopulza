@@ -40,7 +40,7 @@ export default function Signup() {
             <Form />
           </FormArea>
         </Subcontainer>
-        
+
         <div></div>
 
         <Carousel />

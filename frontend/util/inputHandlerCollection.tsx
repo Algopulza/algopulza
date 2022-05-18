@@ -1,26 +1,30 @@
 import { showToast } from '../components/common/alert/Alert'
 import { axiosInfo, axiosSignup, axiosStopwatch } from './axiosCollection'
 import { getCurrentTime } from './getCurrentTime'
-import { checkStopwatch} from './validationCollection'
+import { checkId, checkPassword, checkStopwatch} from './validationCollection'
 
 // 이벤트 핸들러
 export const handleSignupClick = (
-    event: any, id: string, bojId: string, password: string, pwConfirm: string, solvedProblems: string, triedProblems: string, isCheck: boolean, router: any
+    event: any, id: string, bojId: string, password: string, pwConfirm: string, isCheck: boolean, isSame: boolean, router: any
   ) => {
-    if (isCheck) {
-      // console.log('not valid')
-      showToast('아이디 중복체크를 먼저 해주세요!')
+    if (id.trim() === '' || bojId.trim() === '' || password.trim() === '') {
+      showToast('입력 폼을 완성해주세요.')
+    } else if (!checkId(id)) {
+      showToast('유효하지 않은 아이디입니다.')
+    } else if (!checkPassword(password)) {
+      showToast('유효하지 않은 비밀번호입니다.')
     } else if (password !== pwConfirm) {
-      // console.log('not same')
       showToast('비밀번호가 일치하지 않습니다.')
+    } else if (!isCheck) {
+      showToast('아이디 중복 검사를 실시해주세요.')
+    } else if (isSame) {
+      showToast('중복된 아이디입니다.')
     } else {
-      axiosSignup(id, bojId, password, solvedProblems, triedProblems)
+      axiosSignup(id, bojId, password)
         .then(res => {
-          // console.log(res.data.data)
           router.push('/')
         })
         .catch(err => {
-          // console.log(err.response.data.errorCode === 'M002')
           if (err.response.data.errorCode === 'M002') {
             showToast('먼저 solved.ac에 가입해주세요!')
           }

@@ -28,18 +28,22 @@ export default function Form() {
   const router = useRouter()
 
   const handleClick = () => {
-    axiosLogin(id, password)
-      .then(res => {
-        setAlgoId(res.data.data.member.algopluzaId)
-        setBojId(res.data.data.member.bojId)
-        setMemberId(res.data.data.member.memberId)
-        setAccessToken(res.data.data.token.accessToken)
-        setRefreshToken(res.data.data.token.refreshToken)
-        router.push('/recommendation')
-      })
-      .catch(err => {
-        showToast('아이디와 비밀번호를 정확히 입력해주세요.')
-      })
+    if (id.trim() !== '' || password.trim() !== '') {
+      axiosLogin(id, password)
+        .then(res => {
+          setAlgoId(res.data.data.member.algopluzaId)
+          setBojId(res.data.data.member.bojId)
+          setMemberId(res.data.data.member.memberId)
+          setAccessToken(res.data.data.token.accessToken)
+          setRefreshToken(res.data.data.token.refreshToken)
+          router.push('/recommendation')
+        })
+        .catch(err => {
+          showToast('아이디와 비밀번호를 정확히 입력해주세요.')
+        })
+    } else {
+      showToast('아이디와 비밀번호를 정확히 입력해주세요.')
+    }
   }
   const handleKeyDown = (event: any) => {
     if (event.key === 'Enter') {
