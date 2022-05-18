@@ -19,8 +19,6 @@ public interface ProblemRepositoryCustom {
 
     List<Long> findProblemIdByBojTagId(int bojTagId);
 
-    List<Long> findProblemIdByStatus(Long memberId, String status);
-
     List<ProblemRes> findProblemResByIdSet(Long memberId, Set<Long> idSet);
 
 }
