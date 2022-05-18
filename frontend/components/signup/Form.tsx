@@ -3,13 +3,13 @@ import { useRouter } from 'next/router'
 import InputTextField from '../common/input/InputTextField'
 import ButtonSubmitting from '../common/button/ButtonSubmitting'
 import ButtonSubmittingOutlined from '../common/button/ButtonSubmittingOutlined'
-import ProblemHelper from './ProblemHelper'
 import styled from 'styled-components'
 import { axiosId } from '../../util/axiosCollection'
 import { handleSignupClick } from '../../util/inputHandlerCollection'
 import { useRecoilState } from 'recoil'
 import { bojIdSignupState, idState, passwordState, pwConfirmState, solvedState, triedState } from '../../util/stateCollection'
-import { checkId, checkPassword, checkSpace, nothing } from '../../util/validationCollection'
+import { checkId, checkPassword, nothing } from '../../util/validationCollection'
+import { showToast } from '../common/alert/Alert'
 
 const Container = styled.section`
   display: flex;
@@ -53,9 +53,11 @@ export default function Form() {
       // console.log(`전송id: ${id}`)
       axiosId(id)
         .then(res => {
-          const idResult = document.getElementById('idResult')
-          idResult!.innerText = res.data.data ? '중복입니다.' : '가능합니다.'
           setIsCheck(res.data.data)
+          { res.data.data ?
+            showToast('중복된 아이디입니다.') :
+            showToast('가능한 아이디입니다.')
+          }
         })
     }
   }
@@ -64,16 +66,13 @@ export default function Form() {
     <Container>     
       <Row>
         <CellLeft>
-          <div>
-            <InputTextField
-              textFieldAttr={{width: '14vw', id: 'id', label: '아이디', marBot: '0', marRig: '0px', isPw: false, isAf: true}}
-              valid={checkId}
-              errorMessage='2 글자 이상의 영문자 및 숫자이어야 합니다.'
-              setter={setId}
-              onKeyDown={() => {}}
-            />
-            <p id="idResult" style={{fontSize: '0.9vw', marginTop: 0, marginBottom: 0, color: 'red'}}></p>
-          </div>
+          <InputTextField
+            textFieldAttr={{width: '14vw', id: 'id', label: '아이디', marBot: '0', marRig: '0px', isPw: false, isAf: true}}
+            valid={checkId}
+            errorMessage='2 글자 이상의 영문자 및 숫자이어야 합니다.'
+            setter={setId}
+            onKeyDown={() => {}}
+          />
         </CellLeft>
         <CellRight>
           <ButtonSubmittingOutlined
@@ -121,17 +120,11 @@ export default function Form() {
       </Row>
 
       <Row style={{display: 'flex', justifyContent: 'center'}}>
-        <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-          <ButtonSubmitting
-            submittingAttr={{text: '회원 가입', width: '10vw', height: '2.3vw', marBot: '0px', fontSize: '1.1vw'}}
-            isImportant={true}
-            onClick={() => {handleSignupClick(event, id, bojId, password, pwConfirm, solved, tried, isCheck, router)}}
-          />
-          <p
-            id="signupResult"
-            style={{fontSize: '0.9vw', marginTop: '5px', marginBottom: 0, color: 'red', textAlign: 'center'}}
-          />
-        </div>
+        <ButtonSubmitting
+          submittingAttr={{text: '회원 가입', width: '10vw', height: '2.3vw', marBot: '0px', fontSize: '1.1vw'}}
+          isImportant={true}
+          onClick={() => {handleSignupClick(event, id, bojId, password, pwConfirm, solved, tried, isCheck, router)}}
+        />
       </Row>
     </Container>
   )

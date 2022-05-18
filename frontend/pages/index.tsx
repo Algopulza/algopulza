@@ -46,7 +46,7 @@ export default function Landing() {
         <div></div>
         
       </Container>
-      <ToastContainer style={{ width: '25vw', fontSize: '1.1vw', color: '#282828' }} />
+      <ToastContainer limit={1} style={{ width: '25vw', fontSize: '1.1vw', color: '#282828' }} />
     </>
   )
 }
