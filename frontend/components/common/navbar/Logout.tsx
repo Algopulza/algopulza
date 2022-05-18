@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
-import { useRecoilValue } from 'recoil'
-import { accessTokenState, memberIdState } from '../../../util/stateCollection'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
+import { accessTokenState, idState, memberIdState, passwordState } from '../../../util/stateCollection'
 import { axiosLogout } from '../../../util/axiosCollection'
 
 const Container = styled.section`
@@ -24,11 +24,15 @@ export default function Logout() {
   const router = useRouter()
   const memberId = useRecoilValue(memberIdState)
   const accessToken = useRecoilValue(accessTokenState)
+  const setId = useSetRecoilState(idState)
+  const setPassword = useSetRecoilState(passwordState)
 
   const handleClick = () => {
     axiosLogout(memberId, accessToken)
       .then(res => {
         localStorage.removeItem('recoil-persist')
+        setId('')
+        setPassword('')
         router.push('/')
       })
   }
