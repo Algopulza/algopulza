@@ -82,10 +82,6 @@ public class SolvingLogRepositoryCustomImpl implements  SolvingLogRepositoryCust
 
     private BooleanExpression eqLanguage(String language) {
         if (StringUtils.hasText(language)) {
-            if ("null".equals(language)) {
-                // language가 null인 값들을 찾는다.
-                return qSolvingLog.language.isNull();
-            }
             // language가 null이거나 language인 값들을 찾는다.
             return qSolvingLog.language.equalsIgnoreCase(language).or(qSolvingLog.language.isNull());
         }
