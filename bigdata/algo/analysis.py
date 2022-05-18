@@ -69,7 +69,7 @@ def core_tag(app, mongodb, userid):
     solved_tag_df = pd.merge(solved_tag_df, tag_total_df[['bojTagId','tagId','probCnt']])
     # (해결한 문제 수)/(총 문제 수) 비율 산출
     # solved_tag_df['core_tag_ratio'] = round(solved_tag_df['id'] / solved_tag_df['probCnt'] * 100, 2)
-    solved_tag_df['solvedCnt'] = round(solved_tag_df['id'] / solved_tag_df['probCnt'] * 100, 2)
+    solved_tag_df['solvedcnt'] = round(solved_tag_df['id'] / solved_tag_df['probCnt'] * 100, 2)
 
 
     # 태그 정보 불러오기
