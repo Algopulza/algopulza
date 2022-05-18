@@ -9,7 +9,7 @@ import { styled } from '@mui/material/styles'
 
 const StyledTableCell = styled(TableCell)(() => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: '#FFC94D',
+    backgroundColor: '#282828',
     color: '#FFFFFF',
     fontWeight: 'bold',
   },
