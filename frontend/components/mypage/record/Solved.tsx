@@ -46,7 +46,7 @@ const Solved = () => {
     setPage(page)
     await getSolvingLog(accessToken, currentPage, 5)
       .then(res => {
-        console.log(res)
+        // console.log(res)
         setRows(res.data.data.content)
         setTotalPage(res.data.data.totalPages)
       })
