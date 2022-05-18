@@ -12,4 +12,6 @@ public interface AnalysisService {
 
     SolvingLogStatisticsRes getSolvingLogStatistics(Long memberId);
 
+    List<WeaknessRes> getWeaknessList(Long memberId, int count);
+
 }
