@@ -3,6 +3,12 @@ import { recoilPersist } from 'recoil-persist'
 
 const { persistAtom } = recoilPersist()
 
+// navbar
+export const pageState = atom({
+  key: 'pageState',
+  default: '',
+})
+
 export const userInfoState = atom({
   key: 'userInfoState',
   default: {},
@@ -39,10 +45,7 @@ export const refreshTokenState = atom({
   effects_UNSTABLE: [persistAtom]
 })
 
-export const pageState = atom({
-  key: 'pageState',
-  default: '',
-})
+
 export const loginState = atom({
   key: 'loginState',
   default: false,
