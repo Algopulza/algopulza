@@ -11,7 +11,7 @@ import ResultTag from './ResultTag'
 
 
 const StyledTableCell = styled(TableCell)`
-  background-color: #FFC94D;
+  background-color: #282828;
   color: #FFFFFF;
   font-weight: 'bold';
 `;
@@ -64,11 +64,11 @@ export default function Result(props: any) {
         <TableHead sx={{ background: '#FFC94D' }}>
           <TableRow>
             <StylesProvider injectFirst>
-              <StyledTableCell align="center" style={{ width: "10%" }}>ID</StyledTableCell>
-              <StyledTableCell align="center" style={{ width: "45%" }}>Problem</StyledTableCell>
-              <StyledTableCell align="center" style={{ width: "10%" }}>Tier</StyledTableCell>
-              <StyledTableCell align="center" style={{ width: "10%" }}>Level</StyledTableCell>
-              <StyledTableCell align="center" style={{ width: "25%" }}>Tag</StyledTableCell>
+              <StyledTableCell align="center" style={{ width: "10%" }}>문제번호</StyledTableCell>
+              <StyledTableCell align="center" style={{ width: "45%" }}>문제제목</StyledTableCell>
+              <StyledTableCell align="center" style={{ width: "10%" }}>티어</StyledTableCell>
+              <StyledTableCell align="center" style={{ width: "10%" }}>레벨</StyledTableCell>
+              <StyledTableCell align="center" style={{ width: "25%" }}>태그</StyledTableCell>
             </StylesProvider>
           </TableRow>
         </TableHead>

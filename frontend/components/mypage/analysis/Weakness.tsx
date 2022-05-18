@@ -18,6 +18,7 @@ export default function Weakness({accessToken, bojId}:User) {
   const AnalUser = async () => {
     await getAnalyWeek(accessToken, bojId)
       .then((res) => {
+        console.log(res)
         const week = res.data;
         let label_temp = [];
         let solved_temp = [];

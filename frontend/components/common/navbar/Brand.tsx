@@ -4,18 +4,19 @@ import { pageState } from '../../../util/stateCollection'
 import styled from 'styled-components'
 
 const Title = styled.span`
-  padding-left: 40px;
+  margin-left: 40px;
   font-size: 1.8vw;
   font-weight: 700;
   color: #FFFFFF;
+  cursor: pointer;
 `
 
 export default function BrandName() {
   const [page, setPage] = useRecoilState(pageState)
 
   return (
-    <span onClick={() => setPage('/recommendation')}>
-      <Link href="/recommendation"><a><Title>알고풀자</Title></a></Link>
+    <span>
+      <Link href="/recommendation"><Title onClick={() => setPage('/recommendation')}>알고풀자</Title></Link>
     </span>
   )
 }

@@ -63,10 +63,10 @@ export default function Userinfo({algopluzaId, time, exp}: User) {
   const badge = getBadgeImage(exp).image
 
   return (
-    <AnalyCard>
+    <AnalyCard> 
       <TopContainer>
         <ProfileImage>
-          <Image src={badge} layout="responsive" width={500} height={500} alt="뱃지 사진이 이상해요" />
+          <Image src={badge} layout="responsive" width={300} height={300}  alt="뱃지 사진이 이상해요" />
           <EXP>{exp}xp</EXP>
         </ProfileImage>
         <NickName>{algopluzaId}</NickName>
