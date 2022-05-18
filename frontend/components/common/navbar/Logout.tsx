@@ -1,8 +1,9 @@
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
-import { useRecoilValue, useSetRecoilState } from 'recoil'
-import { accessTokenState, idState, memberIdState, passwordState } from '../../../util/stateCollection'
+import { useRecoilValue } from 'recoil'
+import { accessTokenState, memberIdState } from '../../../util/stateCollection'
 import { axiosLogout } from '../../../util/axiosCollection'
+import { useEffect, useState } from 'react'
 
 const Container = styled.section`
   display: flex;
@@ -24,22 +25,26 @@ export default function Logout() {
   const router = useRouter()
   const memberId = useRecoilValue(memberIdState)
   const accessToken = useRecoilValue(accessTokenState)
-  const setId = useSetRecoilState(idState)
-  const setPassword = useSetRecoilState(passwordState)
+  const [isLogin, setIsLogin] = useState(true)
+
+  useEffect(() => {
+    setIsLogin(window.localStorage.getItem('recoil-persist') !== null ? true : false)
+  }, [])
 
   const handleClick = () => {
     axiosLogout(memberId, accessToken)
       .then(res => {
         localStorage.removeItem('recoil-persist')
-        setId('')
-        setPassword('')
         router.push('/')
       })
+  }
+  const handleClickNotUser = () => {
+    router.push('/')
   }
 
   return (
     <Container>
-      <Text onClick={handleClick}>로그아웃</Text>
+      <Text onClick={isLogin ? handleClick : handleClickNotUser}>{isLogin ? '로그아웃' : '뒤로가기'}</Text>
     </Container>
   )
 }
