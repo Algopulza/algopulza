@@ -3,6 +3,7 @@ import Layout from '../../components/common/Layout'
 import Gift from '../../components/random/Gift'
 import Subject from '../../components/recommendation/Subject'
 import styled from 'styled-components'
+import { NextSeo } from 'next-seo';
 
 import { useRecoilValue } from 'recoil'
 import { accessTokenState } from '../../util/stateCollection'
@@ -61,6 +62,23 @@ export default function Random() {
 
   return (
     <>
+      <NextSeo
+				title="랜덤"
+				description="랜덤하게 문제를 받아보세요"
+				openGraph={{
+					type: 'website',
+					url: 'https://www.algopulza.day/random',
+					title: '막 풀지 말고, 알고 풀자!',
+					description: '랜덤하게 문제를 받아보세요요',
+					images: [
+						{
+							url: 'https://www.algopulza.day/common/brand_logo.png',
+              alt: '로고 사진'
+						},
+					],
+          site_name: "알고 풀자",
+				}}
+			/>
       <Gift />
 
       <Container>
