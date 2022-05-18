@@ -1,4 +1,5 @@
 import { axiosInfo, axiosSignup, axiosStopwatch } from "./axiosCollection"
+import { getCurrentTime } from "./getCurrentTime"
 import { checkStopwatch, checkStopwatchMin } from "./validationCollection"
 
 export const sendMessage = (id: string, message: string) => {
@@ -42,18 +43,18 @@ export const handleInfoClick = (event: any, info: any, accessToken: string) => {
   }
 }
 
-export const handleStopwatchClick = (event: any, problemBojId: string, solvingTime: number, accessToken: string) => {
+export const handleStopwatchClick = (event: any, problemBojId: string, language: string, accessToken: string) => {
   const min = document.getElementById('min')!.textContent
-  // console.log(Number(min))
-  const here = new Date()
+  const currentTime = getCurrentTime()
 
   const info = {
     'problemBojId': problemBojId,
     'solvingTime': Number(min),
-    'submitTime': here
+    'language': language,
+    'submitTime': currentTime
   }
 
-  if (checkStopwatch(problemBojId)) { // checkStopwatch(problemBojId) && checkStopwatchMin(min!)
+  if (checkStopwatch(problemBojId)) {
     axiosStopwatch(info, accessToken)
       .then(res => {
         console.log(res)
@@ -62,7 +63,4 @@ export const handleStopwatchClick = (event: any, problemBojId: string, solvingTi
   } else if (problemBojId === '' || Number(problemBojId) < 1000) {
     sendLongMessage('stopwatchResult', '문제 번호를 입력해주세요.')
   }
-  // else if (min === '00') {
-  //   sendLongMessage('stopwatchResult', '문제 풀이 시간이 너무 짧습니다.')
-  // }
 }
