@@ -66,8 +66,8 @@ export default function NavItemMenu({ url, currentUrl, onClick }: NavItemProps) 
         }}
         style={{ marginTop: 5 }}
       >
-        <MenuItem onClick={handleCloseTag}>유형</MenuItem>
-        <MenuItem onClick={handleCloseLev}>레벨</MenuItem>
+        <MenuItem onClick={handleCloseTag}>유형 랜덤</MenuItem>
+        <MenuItem onClick={handleCloseLev}>레벨 랜덤</MenuItem>
       </Menu>
     </>
   )

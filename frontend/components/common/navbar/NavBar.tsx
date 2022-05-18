@@ -38,7 +38,6 @@ export default function NavBar() {
       <Section>
         <NavItem navItemAttr={{page: '추천', url: '/recommendation'}} currentUrl={page} onClick={clickHandler} />
         <NavItemMenu url='/random' currentUrl={page} onClick={clickHandler} />
-        {/* <NavItem navItemAttr={{page: '랜덤', url: '/random'}} currentUrl={page} onClick={clickHandler} /> */}
         <NavItem navItemAttr={{page: '검색', url: '/search'}} currentUrl={page} onClick={clickHandler} />
         <NavItem navItemAttr={{page: '마이페이지', url: '/mypage'}} currentUrl={page} onClick={clickHandler} />
       </Section>

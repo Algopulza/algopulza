@@ -6,8 +6,9 @@ import { axiosLogin } from '../../util/axiosCollection'
 import { useRecoilState, useSetRecoilState } from 'recoil'
 import { bojIdState, memberIdState, algoIdState, accessTokenState, refreshTokenState, idState, passwordState } from '../../util/stateCollection'
 import { checkSpace } from '../../util/validationCollection'
-import { sendLongMessage } from '../../util/inputHandlerCollection'
 import ButtonRouting from '../common/button/ButtonRouting'
+import { showToast } from '../common/alert/Alert'
+import PopupLogin from '../common/alert/PopupLogin'
 
 const Container = styled.section`
   display: flex;
@@ -28,18 +29,22 @@ export default function Form() {
   const router = useRouter()
 
   const handleClick = () => {
-    axiosLogin(id, password)
-      .then(res => {
-        setAlgoId(res.data.data.member.algopluzaId)
-        setBojId(res.data.data.member.bojId)
-        setMemberId(res.data.data.member.memberId)
-        setAccessToken(res.data.data.token.accessToken)
-        setRefreshToken(res.data.data.token.refreshToken)
-        router.push('/recommendation')
-      })
-      .catch(err => {
-        sendLongMessage('loginResult', '아이디와 비밀번호를 정확히 입력해주세요.')
-      })
+    if (id.trim() !== '' || password.trim() !== '') {
+      axiosLogin(id, password)
+        .then(res => {
+          setAlgoId(res.data.data.member.algopluzaId)
+          setBojId(res.data.data.member.bojId)
+          setMemberId(res.data.data.member.memberId)
+          setAccessToken(res.data.data.token.accessToken)
+          setRefreshToken(res.data.data.token.refreshToken)
+          router.push('/recommendation')
+        })
+        .catch(err => {
+          showToast('아이디와 비밀번호를 정확히 입력해주세요.')
+        })
+    } else {
+      showToast('아이디와 비밀번호를 정확히 입력해주세요.')
+    }
   }
   const handleKeyDown = (event: any) => {
     if (event.key === 'Enter') {
@@ -67,20 +72,17 @@ export default function Form() {
       </div>
 
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <p
-          id="loginResult"
-          style={{fontSize: '0.9vw', marginTop: '0px', marginBottom: '15px', color: 'red', textAlign: 'center'}}
-        />
         <ButtonSubmitting
-          submittingAttr={{text: '로그인', width: '10vw', height: '2.3vw', marBot: '10px', fontSize: '1.1vw'}}
+          submittingAttr={{text: '로그인', width: '12vw', height: '2.3vw', marBot: '10px', fontSize: '1.1vw'}}
           isImportant={true}
           onClick={handleClick}
         />
-        <ButtonSubmitting
-          submittingAttr={{text: '비회원으로 이용하기', width: '10vw', height: '2.3vw', marBot: '10px', fontSize: '1vw'}}
+        {/* <ButtonSubmitting
+          submittingAttr={{text: '비회원으로 이용하기', width: '12vw', height: '2.3vw', marBot: '10px', fontSize: '1vw'}}
           isImportant={false}
           onClick={() => {router.push('/random')}}
-        />
+        /> */}
+        <PopupLogin />
         <ButtonRouting routingAttr={{url: '/signup', text: '회원가입'}}  />
       </div>
     </Container>

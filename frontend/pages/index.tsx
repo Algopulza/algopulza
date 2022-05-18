@@ -1,7 +1,9 @@
+import { ToastContainer } from 'react-toastify'
 import Carousel from '../components/landing/Carousel'
 import Content from '../components/landing/Content'
 import Form from '../components/landing/Form'
 import styled from 'styled-components'
+import 'react-toastify/dist/ReactToastify.css'
 
 const Container = styled.section`
   display: grid;
@@ -28,19 +30,23 @@ const FormArea = styled.div`
 
 export default function Landing() {
   return (
-    <Container>
-      <Subcontainer>
-        <FormArea>
-          <Content />
-          <Form />
-        </FormArea>
-      </Subcontainer>
+    <>
+      <Container>
+        <Subcontainer>
+          <FormArea>
+            <Content />
+            <Form />
+          </FormArea>
+        </Subcontainer>
 
-      <div></div>
+        <div></div>
 
-      <Carousel />
+        <Carousel />
 
-      <div></div>
-    </Container>
+        <div></div>
+        
+      </Container>
+      <ToastContainer limit={1} style={{ width: '25vw', fontSize: '1.1vw', color: '#282828' }} />
+    </>
   )
 }
