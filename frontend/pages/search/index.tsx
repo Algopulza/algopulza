@@ -7,12 +7,11 @@ import styled from 'styled-components'
 
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { accessTokenState, filterLevelState, filterTagState, filterTierState } from '../../util/stateCollection'
-import { getProblems, getSearchProblems } from '../../api/back/search/SearchProblems'
-import { AnyKindOfDictionary } from 'lodash'
+import { getSearchProblems } from '../../api/back/search/SearchProblems'
 import ButtonFloating from '../../components/common/button/ButtonFloating'
 
 const Container = styled.section`
-  padding: 2vh 10vw 0 10vw;
+  padding: 2vh 10vw 80px 10vw;
 `
 
 const Subcontainer = styled.div`
@@ -22,9 +21,9 @@ const Subcontainer = styled.div`
 
 export default function Search() {
   const [rows, setRows] = useState([])
+  const [currentPage, setPage] = useState(0)
   const [totalpage, setTotalPage] = useState(0)
   const [searched, setSearched] = useState("")
-  const [currentPage, setPage] = useState(0)
   const [tier, setTier] = useRecoilState(filterTierState)
   const [level, setLevel] = useRecoilState(filterLevelState)
   const [tag, setTag] = useRecoilState(filterTagState)
@@ -35,7 +34,7 @@ export default function Search() {
     setSearched(text)
     await getSearchProblems(accessToken, 10, 0, tier, level, tag, searched)
       .then(res => {
-        console.log(res.data.data)
+        // console.log(res.data.data)
         setTotalPage(res.data.data.totalPages)
         setRows(res.data.data.content)
       })
@@ -50,7 +49,7 @@ export default function Search() {
     setPage(page)
     await getSearchProblems(accessToken, 10, currentPage, undefined, undefined, undefined, searched)
       .then(res => {
-        console.log(res.data.data)
+        // console.log(res.data.data)
         setRows(res.data.data.content)
       })
       .catch(err => console.log(err))
@@ -58,6 +57,7 @@ export default function Search() {
   useEffect(() => { 
     problemListPage(currentPage)
   }, [currentPage])
+
 
   return (
     <Container>
@@ -69,7 +69,8 @@ export default function Search() {
       />
       <Subcontainer>
         <SearchPagination
-          propPage={problemListPage}
+          page={currentPage}
+          setPage={setPage}
           totalPage={totalpage}
         />
       </Subcontainer>

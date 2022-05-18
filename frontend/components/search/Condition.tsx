@@ -1,19 +1,19 @@
 import SelectionTier from './selection/SelectionTier'
 import SelectionLevel from './selection/SelectionLevel'
 import SelectionTag from './selection/SelectionTag'
-import InputTextField from '../common/input/InputTextField'
-import ButtonSearching from '../common/button/ButtonSearching'
 import styled from 'styled-components'
 import { useRecoilState } from 'recoil'
 import { keywordState } from '../../util/stateCollection'
-import { nothing } from '../../util/validationCollection'
+import TextField from '@mui/material/TextField'
+import IconButton from '@mui/material/IconButton';
 
 
 const Container = styled.section`
   display: grid;
   grid-template-columns: 5fr 5fr;
-  align-items: center;
-  margin-bottom: 20px;
+  align-items: end;
+  margin-top: 20px;
+  margin-bottom: 10px;
 `
 
 const Subcontainer = styled.div<{ cond: boolean }>`
@@ -22,10 +22,12 @@ const Subcontainer = styled.div<{ cond: boolean }>`
   align-items: center;
 `
 
-
 export default function Condition(props: any) {
   const [keyword, setKeyword] = useRecoilState(keywordState)
   const submitSearched = () => { props.propFunction(keyword) }
+  const handleChange = (event: any) => {
+    setKeyword(event.target.value.trim())
+  }
 
   return (
     <Container>
@@ -35,18 +37,21 @@ export default function Condition(props: any) {
         <SelectionTag />
       </Subcontainer>
       
-      <Subcontainer cond={false}>          
-        <InputTextField
-          textFieldAttr={{width: '20vw', id: 'keyword', label: 'Search', marBot: '10px', marRig: '0px', isPw: false, isAf: false}}
-          valid={nothing}
-          errorMessage='검색어를 입력해주세요.'
-          setter={setKeyword}
-          onKeyDown={() => {}}
-        />
-        <ButtonSearching
-          submittingAttr={{text: '검색', width: '5vw'}}
-          onClick={submitSearched}
-          onKeyDown={submitSearched}
+      <Subcontainer cond={false}>  
+        <TextField
+          sx={{width: '30vw', marginBottom: '10px', marginRight: '0px'}}
+          id="keyword"
+          variant="outlined"
+          size="small"
+          value={keyword}
+          onChange={handleChange}
+          InputProps={{endAdornment:
+            <IconButton
+              onClick={submitSearched}
+              onKeyDown={submitSearched}
+            >
+              🔍
+            </IconButton>}}
         />
       </Subcontainer>
     </Container>
