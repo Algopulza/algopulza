@@ -8,6 +8,7 @@ import { bojIdState, memberIdState, algoIdState, accessTokenState, refreshTokenS
 import { checkSpace } from '../../util/validationCollection'
 import ButtonRouting from '../common/button/ButtonRouting'
 import { showToast } from '../common/alert/Alert'
+import PopupLogin from '../common/alert/PopupLogin'
 
 const Container = styled.section`
   display: flex;
@@ -76,11 +77,12 @@ export default function Form() {
           isImportant={true}
           onClick={handleClick}
         />
-        <ButtonSubmitting
+        {/* <ButtonSubmitting
           submittingAttr={{text: '비회원으로 이용하기', width: '12vw', height: '2.3vw', marBot: '10px', fontSize: '1vw'}}
           isImportant={false}
           onClick={() => {router.push('/random')}}
-        />
+        /> */}
+        <PopupLogin />
         <ButtonRouting routingAttr={{url: '/signup', text: '회원가입'}}  />
       </div>
     </Container>

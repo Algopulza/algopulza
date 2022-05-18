@@ -21,7 +21,7 @@ const Subcontainer = styled.div`
 
 const FormArea = styled.div`
   display: grid;
-  grid-template-rows: 0.3fr 1.7fr 8fr;
+  grid-template-rows: 0.3fr 2.7fr 7fr;
   width: 25vw;
   height: 75vh;
   padding: 3vh 0;
