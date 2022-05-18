@@ -8,7 +8,7 @@ import DialogTitle from '@mui/material/DialogTitle'
 import Slide from '@mui/material/Slide'
 import { TransitionProps } from '@mui/material/transitions'
 import { useRecoilValue } from 'recoil'
-import { accessTokenState, stopwatchLangauge, stopwatchProbIdState } from '../../../util/stateCollection'
+import { accessTokenState, stopwatchHourState, stopwatchLangauge, stopwatchMinState, stopwatchProbIdState, stopwatchSecState } from '../../../util/stateCollection'
 import { handleStopwatchClick } from '../../../util/inputHandlerCollection'
 
 const Transition = React.forwardRef(function Transition(
@@ -24,17 +24,21 @@ export default function Popup() {
   const [open, setOpen] = React.useState(false)
   const stopwatchProbId = useRecoilValue(stopwatchProbIdState)
   const language = useRecoilValue(stopwatchLangauge)
-  const hour = document.getElementById('hour')!.textContent
-  const min = document.getElementById('min')!.textContent
-  const sec = document.getElementById('sec')!.textContent
+  const hour = useRecoilValue(stopwatchHourState)
+  const min = useRecoilValue(stopwatchMinState)
+  const sec = useRecoilValue(stopwatchSecState)
   const accessToken = useRecoilValue(accessTokenState)
 
   const handleClickOpen = () => {
     setOpen(true)
   }
 
-  const handleClose = () => {
+  const handleCloseWithAgree = () => {
     handleStopwatchClick(event, stopwatchProbId, language, accessToken)
+    setOpen(false)
+  }
+
+  const handleCloseWithDisgree = () => {
     setOpen(false)
   }
 
@@ -51,7 +55,7 @@ export default function Popup() {
         open={open}
         TransitionComponent={Transition}
         keepMounted
-        onClose={handleClose}
+        onClose={handleCloseWithDisgree}
       >
         <DialogTitle>{"제출하시겠습니까?"}</DialogTitle>
         <DialogContent>
@@ -62,8 +66,8 @@ export default function Popup() {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Disagree</Button>
-          <Button onClick={handleClose}>Agree</Button>
+          <Button onClick={handleCloseWithDisgree}>Disagree</Button>
+          <Button onClick={handleCloseWithAgree}>Agree</Button>
         </DialogActions>
       </Dialog>
     </div>

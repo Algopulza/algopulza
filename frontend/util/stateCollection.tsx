@@ -98,11 +98,20 @@ export const stopwatchProbIdState = atom({
   key: 'stopwatchProbIdState',
   default: '',
 })
+export const stopwatchLangauge = atom({
+  key: 'stopwatchLangaugeState',
+  default: '',
+})
+
+export const stopwatchHourState = atom({
+  key: 'stopwatchHourState',
+  default: 0,
+})
 export const stopwatchMinState = atom({
   key: 'stopwatchMinState',
   default: 0,
 })
-export const stopwatchLangauge = atom({
-  key: 'stopwatchLangaugeState',
-  default: '',
+export const stopwatchSecState = atom({
+  key: 'stopwatchSecState',
+  default: 0,
 })
