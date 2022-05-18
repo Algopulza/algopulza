@@ -24,15 +24,6 @@ public class SolvingLogRepositoryCustomImpl implements  SolvingLogRepositoryCust
     QSolvingLog qSolvingLog = QSolvingLog.solvingLog;
 
     @Override
-    public List<Problem> findProblemByMember(Member member) {
-        return jpaQueryFactory
-                .select(qSolvingLog.problem)
-                .from(qSolvingLog)
-                .where(qSolvingLog.member.eq(member))
-                .fetch();
-    }
-
-    @Override
     public Page<SolvingLogRes> findByMemberId(Long memberId, Pageable pageable) {
         // data query
         List<SolvingLogRes> content = jpaQueryFactory
@@ -59,16 +50,6 @@ public class SolvingLogRepositoryCustomImpl implements  SolvingLogRepositoryCust
                 .where(qSolvingLog.member.id.eq(memberId));
 
         return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchCount);
-    }
-
-    @Override
-    public List<SolvingLog> findByProblem(Member member, Problem problem) {
-        return jpaQueryFactory
-                .select(qSolvingLog)
-                .from(qSolvingLog)
-                .where(qSolvingLog.member.eq(member))
-                .where(qSolvingLog.problem.eq(problem))
-                .fetch();
     }
 
     @Override
