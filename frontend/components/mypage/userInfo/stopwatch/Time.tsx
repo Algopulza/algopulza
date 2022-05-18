@@ -86,7 +86,7 @@ export default function Time() {
             />
           </div>
         }
-        <div style={{marginRight: 10}}>
+        <div style={{marginRight: 20}}>
           <ImgButtonReset
             submittingAttr={{text: 'reset', width: '2.2vw', height: '2.2vw', marBot: '0px', fontSize: '1.1vw'}}
             isImportant={false}
