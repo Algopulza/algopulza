@@ -7,8 +7,6 @@ import org.springframework.data.domain.Pageable;
 
 public interface SolvingLogService {
 
-    void collectSolvingLog(Long memberId);
-
     void addSolvingLogFromString(Long memberId, String status, String problemBojIdString);
 
     void addSolvingLog(Long memberId, AddDetailSolvedProblemReq addDetailSolvedProblemReq);
