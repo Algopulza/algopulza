@@ -120,33 +120,6 @@ export default function Form() {
         </CellLeft>
       </Row>
 
-      <Row>
-        <CellLeft>
-          <InputTextField
-            textFieldAttr={{width: '14vw', id: 'solved', label: '해결한 문제', marBot: '0px', marRig: '0px', isPw: false, isAf: false}}
-            valid={checkSpace}
-            errorMessage='해결한 문제들을 공백 없이 입력해주세요.'
-            setter={setSolved}
-            onKeyDown={() => {}}
-          />
-        </CellLeft>
-        <CellRight>
-          <ProblemHelper />
-        </CellRight>
-      </Row>
-
-      <Row>
-        <CellLeft>
-          <InputTextField
-            textFieldAttr={{width: '14vw', id: 'tried', label: '시도한 문제', marBot: '20px', marRig: '0px', isPw: false, isAf: false}}
-            valid={checkSpace}
-            errorMessage='시도한 문제들을 공백 없이 입력해주세요'
-            setter={setTried}
-            onKeyDown={() => {}}
-          />
-        </CellLeft>
-      </Row>
-
       <Row style={{display: 'flex', justifyContent: 'center'}}>
         <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
           <ButtonSubmitting
