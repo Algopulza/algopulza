@@ -1,18 +1,11 @@
 package com.algopulza.backend.api.service;
 
-import com.algopulza.backend.api.request.AddDetailSolvedProblemReq;
 import com.algopulza.backend.api.response.*;
-import com.algopulza.backend.common.exception.NotFoundException;
-import com.algopulza.backend.common.exception.handler.ErrorCode;
-import com.algopulza.backend.db.entity.*;
 import com.algopulza.backend.db.repository.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.ZonedDateTime;
 import java.util.*;
 
 @RequiredArgsConstructor

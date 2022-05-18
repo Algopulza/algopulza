@@ -71,8 +71,6 @@ public class MemberController {
         String refreshToken = memberService.createRefreshToken(memberRes.getMemberId());
         TokenRes tokenRes = new TokenRes(token, refreshToken);
 
-        solvingLogService.collectSolvingLog(memberRes.getMemberId());
-
         Map<String, Object> result = new HashMap<>();
         result.put("member", memberRes);
         result.put("token", tokenRes);

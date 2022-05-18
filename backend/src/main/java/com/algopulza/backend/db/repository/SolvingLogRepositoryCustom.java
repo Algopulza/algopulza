@@ -11,11 +11,7 @@ import java.util.Optional;
 
 public interface SolvingLogRepositoryCustom {
 
-    List<Problem> findProblemByMember(Member member);
-
     Page<SolvingLogRes> findByMemberId(Long memberId, Pageable pageable);
-
-    List<SolvingLog> findByProblem(Member member, Problem problem);
 
     Optional<SolvingLog> findByProblemAndLanguage(Member member, Problem problem, String language);
 
