@@ -1,13 +1,12 @@
 FROM node:14-alpine
 
-WORKDIR /usr/src/next
-COPY package*.json ./
+WORKDIR /usr/src/app
 
-RUN npm install recoil-persist --force
-RUN npm install @mui/styles --force
-RUN npm install
-COPY ./ ./
+COPY package*.json ./
+RUN npm i -y
+RUN npm i recoil-persist --force
+RUN npm i @mui/styles --force
+COPY . .
 
 RUN npm run build
-
 CMD [ "npm" , "run" , "start"]
