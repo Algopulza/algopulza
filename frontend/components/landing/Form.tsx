@@ -36,6 +36,8 @@ export default function Form() {
           setBojId(res.data.data.member.bojId)
           setMemberId(res.data.data.member.memberId)
           setAccessToken(res.data.data.token.accessToken)
+          const cookieKV = 'accessToken=' + res.data.data.token.accessToken
+          document.cookie=cookieKV
           setRefreshToken(res.data.data.token.refreshToken)
           router.push('/recommendation')
         })
@@ -77,11 +79,6 @@ export default function Form() {
           isImportant={true}
           onClick={handleClick}
         />
-        {/* <ButtonSubmitting
-          submittingAttr={{text: '비회원으로 이용하기', width: '12vw', height: '2.3vw', marBot: '10px', fontSize: '1vw'}}
-          isImportant={false}
-          onClick={() => {router.push('/random')}}
-        /> */}
         <PopupLogin />
         <ButtonRouting routingAttr={{url: '/signup', text: '회원가입'}}  />
       </div>
