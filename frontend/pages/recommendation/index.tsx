@@ -3,7 +3,6 @@ import Layout from '../../components/common/Layout'
 import Gift from '../../components/random/Gift'
 import Subject from '../../components/recommendation/Subject'
 import styled from 'styled-components'
-import { NextSeo } from 'next-seo';
 
 import { useRecoilValue } from 'recoil'
 import { bojIdState, accessTokenState, algoIdState } from '../../util/stateCollection'
@@ -93,23 +92,6 @@ export default function Recommendation() {
 
   return (
     <>
-      <NextSeo
-				title="추천"
-				description="여러분의 풀이를 기반으로 문제를 추천해줘요"
-				openGraph={{
-					type: 'website',
-					url: 'https://www.algopulza.day/recommendation',
-					title: '막 풀지 말고, 알고 풀자!',
-					description: '여러분의 풀이를 기반으로 문제를 추천해줘요',
-					images: [
-						{
-							url: 'https://www.algopulza.day/common/brand_logo.png',
-              alt: '로고 사진'
-						},
-					],
-          site_name: "알고 풀자",
-				}}
-			/>
       {alert?
         <CircularProgressContainer>
           <SubContainer>
