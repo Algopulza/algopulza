@@ -59,18 +59,8 @@ def create_app(test_config=None):
     @app.route('/')
     def hello():
         return '<p> hello </p>'
-
-    # sql data fetch test
-    @app.route("/test")
-    def sql_test():
-        tmp = app.mysql_db.execute(text("""
-            SELECT * FROM problem WHERE id <= 320
-        """)).fetchall()
-        tmp2 = [{
-            'id': t['id'],'name': t['title'],
-        } for t in tmp]
-        tmp2 = jsonify(tmp2)
-        return tmp2
+    
+    #### 데이터 저장 ####
 
     # 전체 문제데이터 변형 후 저장
     @app.route("/save-data")
@@ -85,6 +75,79 @@ def create_app(test_config=None):
         res = train.train_level(app, mongodb)
         return '<p>model saved</p>'
     
+
+
+    #### 분석 ####
+
+    # 많이 푼 문제 유형
+    @app.route('/freq-tag/<userid>')
+    def user_freq(userid):
+        """
+        분석: 유저가 많이 푼 태그와 태그별 해결비율 반환
+        """
+        res = user_freq_tag.user_freq_tag(app, mongodb, userid)
+        return res
+
+    # 취약태그 분석
+    @app.route('/vulnerability/<userid>')
+    def user_vul(userid):
+        """
+        분석:
+             유저가 적게 푼 태그와 태그별 취약점수 반환
+            * 취약점수 = (실패비율) * (태그별 가중치)
+                * 실패비율 = (태그별 tried 수) / (태그별 전체 제출 횟수)
+                * 태그별 가중치 = (태그별 문제 수) / (전체 문제 수)
+        """
+        res = user_vulnerability.user_vulnerability(app, mongodb, userid)
+        return res
+
+
+    #### 문제 추천 ####
+
+
+    # 많이 푼 유형 문제 추천
+    @app.route('/recomm/freq-tag/<userid>')
+    def recomm_freq(userid):
+        """
+        추천:
+            유저가 푼 주요 8개 태그 중 많이 푼 태그 4개 선택
+            해당 태그 중 안 푼 문제 추천
+        주요문제유형 하나라도 풀면 추천 가능
+        """
+        res = freq_tag.recomm_freq_tag(app, mongodb, userid)
+        if res == 'empty':
+            print('empty mf recomm problems list')
+            return ''
+        return res
+
+    # 적게 푼 유형 문제 추천
+    @app.route('/recomm/vulnerability/<userid>')
+    def recomm_vul(userid):
+        """
+        추천:
+            유저가 푼 주요 8개 태그 중 적게 푼 태그 4개 선택
+            해당 태그 중 안 푼 문제 추천
+        주요문제유형 하나라도 풀면 추천 가능
+        """
+        res = vulnerability.recomm_vulnerability(app, mongodb, userid)
+        if res == 'empty':
+            print('empty vulnerable recomm problems list')
+            return ''
+        return res
+
+    # 풀었던 문제 무작위 추천
+    @app.route('/random-solved/<userid>')
+    def rand_solved(userid):
+        """
+        추천: 이미 푼 문제 10개 랜덤추천
+        한문제라도 풀면 추천 가능
+        """
+        res = random.recomm_random_solved(app, mongodb, userid)
+        if res == 'empty':
+            print('empty solved problems list')
+            return ''
+        return res
+
     # 유사티어 유저 문제 추천
     @app.route("/recomm/mf-model/<userid>")
     def recomm_mf_model(userid):
@@ -93,6 +156,10 @@ def create_app(test_config=None):
             print('empty mf recomm problems list')
             return ''
         return res
+
+
+    #### 기타 랜덤 ####
+
 
     # 자신 티어 +-1 level 문제 1개 랜덤추천
     @app.route('/random-level/<userid>')
@@ -105,42 +172,6 @@ def create_app(test_config=None):
     def rand(userid):
         rand_problem = random.recomm_random(app, mongodb, userid)
         return rand_problem
-
-    # 이미 푼 자신 티어 +-1 level 문제 10개 랜덤추천
-    @app.route('/random-solved/<userid>')
-    def rand_solved(userid):
-        rand_problem = random.recomm_random_solved(app, mongodb, userid)
-        return rand_problem
-
-    # 유저 취약태그 분석
-    @app.route('/vulnerability/<userid>')
-    def user_vul(userid):
-        res = user_vulnerability.user_vulnerability(app, mongodb, userid)
-        return res
-
-    # 유저 취약태그 문제 추천
-    @app.route('/recomm/vulnerability/<userid>')
-    def recomm_vul(userid):
-        res = vulnerability.recomm_vulnerability(app, mongodb, userid)
-        if res == 'empty':
-            print('empty vulnerable recomm problems list')
-            return ''
-        return res
-
-    # 유저 많이푼태그 분석
-    @app.route('/freq-tag/<userid>')
-    def user_freq(userid):
-        res = user_freq_tag.user_freq_tag(app, mongodb, userid)
-        return res
-
-    # 유저 많이푼태그 문제 추천
-    @app.route('/recomm/freq-tag/<userid>')
-    def recomm_freq(userid):
-        res = freq_tag.recomm_freq_tag(app, mongodb, userid)
-        if res == 'empty':
-            print('empty mf recomm problems list')
-            return ''
-        return res
 
     return app
 

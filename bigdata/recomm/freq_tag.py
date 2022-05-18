@@ -31,6 +31,7 @@ def recomm_freq_tag(app, mongodb, userid):
     } for s in solving_log]
     solving_log = json.dumps(solving_log, ensure_ascii=False)
     solved_df = pd.read_json(solving_log)
+    
     if len(solved_df) == 0:
         return 'empty'
 
@@ -44,17 +45,19 @@ def recomm_freq_tag(app, mongodb, userid):
     problem_tag_df = pd.merge(solved_df, problem_tag_df)
 
 
-    ##################
-    # 많이푼문제 분석 #
-    ##################
+    ###################
+    # 많이푼 유형 분석 #
+    ###################
 
 
     # 푼 문제 목록 추출
+    tagIds = [6, 7, 25, 33, 97, 102, 126, 127]
     problem_tag_df_solved = problem_tag_df.loc[problem_tag_df['status']=='solved']
+    problem_tag_df_solved = problem_tag_df_solved.loc[problem_tag_df_solved['bojTagId'].isin(tagIds) ]
     # 태그별로 문제 많이 푼 순으로 태그 나열
     solved_tag = problem_tag_df_solved.groupby('bojTagId').count().sort_values('bojId', ascending=False).reset_index()['bojTagId']
     # list 형태로 변형
-    solved_tag_list = list(solved_tag)
+    solved_tag_list = list(solved_tag)[:4]
     # 푼 문제 평균 레벨 추출
     solved_levels = {}
     for solved_tag in solved_tag_list:
@@ -62,13 +65,11 @@ def recomm_freq_tag(app, mongodb, userid):
         cond_list = list(problem_tag_df_solved.loc[cond]['level'])
         solved_levels[solved_tag] = int(sum(cond_list)/len(cond_list))
 
-    # print('푼 문제 태그 목록 : ', solved_tag_list)
-    # print('푼 문제 난이도(내림차순) : ', solved_levels)
+    print('푼 문제 태그 목록 : ', solved_tag_list)
+    print('푼 문제 난이도(내림차순) : ', solved_levels)
 
     # 추천할 태그 목록
-    recomm_tag_list = solved_tag_list[:10]
-    recomm_tag_list = list(set(recomm_tag_list))
-    print('추천 태그 목록: ', recomm_tag_list)
+    recomm_tag_list = solved_tag_list
 
 
     ##################
@@ -87,26 +88,18 @@ def recomm_freq_tag(app, mongodb, userid):
 
     # 태그
     for tag in recomm_tag_list:
-        # 태그 해결한 적 있다면 해당 해결 태그 난이도 저장
-        if tag in solved_levels:
-            tag_level = solved_levels[tag]
-        else:
-            print('error')
-            tag_level = 0
-        # print('tag: ', tag, 'tag level: ', tag_level)
-        
         # 추천 문제 난이도 태그별로 조정(level +- 2)
+        tag_level = solved_levels[tag]
         recomm_tag_level = [tag_level]
         for i in range(2):
+            if tag_level-(i+1) >= 0: recomm_tag_level.append(tag_level-(i+1))
             recomm_tag_level.append(tag_level+(i+1))
-            if tag_level-(i+1) >= 0:
-                recomm_tag_level.append(tag_level-(i+1))
         # print('recomm tag levels: ', sorted(recomm_tag_level))
         
         # 태그가 일치하면서 해당 난이도에 포함되는 문제 추출
         tmp_df = df.loc[(df['bojTagId']==tag)&(df['level'].isin(recomm_tag_level))]
         # 푼사람 많은 순, 평균시도횟수 적은순으로 문제 10개 추출
-        tmp_df = tmp_df.sort_values(['acceptedCount', 'averageTryCount'], ascending=[False, True])[:10]
+        # tmp_df = tmp_df.sort_values(['acceptedCount', 'averageTryCount'], ascending=[False, True])[:10]
         # df row 추가
         recomm_df = pd.concat([recomm_df, tmp_df])
 

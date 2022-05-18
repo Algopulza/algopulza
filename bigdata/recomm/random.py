@@ -1,5 +1,6 @@
 from sqlalchemy import text
 from bson.json_util import dumps
+import random
 
 def recomm_random(app, mongodb, userid):
     ##################
@@ -73,33 +74,40 @@ def recomm_random_solved(app, mongodb, userid):
         'tier': i['tier'],
     } for i in id_tier]
     user_id = id_tier[0]['user_id']
-    tier = id_tier[0]['tier']
-    tiers = [tier-1, tier, tier+1]
+    # tier = id_tier[0]['tier']
+    # tiers = [tier-1, tier, tier+1]
     
     # 유저의 solving log 불러오기
     collection = mongodb.solving_log
-    solving_log = collection.find({
-        '$and': [{'memberId': user_id }, {'status': 'solved'}]},
-        {'_id':0, 'problemId':1})
+    solving_log = collection.find(
+        {'$and': [{'memberId': user_id }, {'status': 'solved'}]},
+        {'_id':0, 'problemId':1}
+    )
     solved_id_list = [s['problemId'] for s in list(solving_log)]
-
+    
+    if len(solved_id_list) == 0:
+        print('no solved problem')
+        return 'empty'
 
     #############
     # 문제 추천 #
     #############
 
     # 문제-태그 정보(problem_tag) 불러오기
-    # 아직 안풀었고 내 티어 +-1 난이도 문제 10개 랜덤 추출
+    # 이미 풀었고 내 티어 +-1 난이도 문제 10개 랜덤 추출
     collection = mongodb.problem_tag_nest
     problem = collection.aggregate([
         {'$match': {'problemId': { '$in': solved_id_list}}},
-        {'$match': {'level': {'$in': tiers}}},
+        # {'$match': {'level': {'$in': tiers}}},
         {'$sample': {'size': 10}},
         ])
 
     # json으로 형태변환
     problem = list(problem)
-
+    print(len(problem))
+    if len(problem) == 0: return 'empty'
+    if len(problem) >= 10: random.sample(problem, 10)
+    
     # 즐겨찾기 정보 추가
     for r in problem:
         is_marked = app.mysql_db.execute(text("""
@@ -107,13 +115,12 @@ def recomm_random_solved(app, mongodb, userid):
             WHERE member_id = :user_id AND problem_id = :problem_id 
         """), {'user_id': user_id, 'problem_id': r['problemId']}).fetchone()
         marked = is_marked
-        print(marked)
+        # print(marked)
         if marked:
             if marked[0] == r['problemId']:
                 r['problemMark'] = True
         else:
             r['problemMark'] = False
-        print(r)
 
     problem = dumps(problem)
     
