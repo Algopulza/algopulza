@@ -94,7 +94,7 @@ export default function Recommendation() {
   return (
     <>
       <NextSeo
-				title="마이페이지"
+				title="추천"
 				description="여러분의 풀이를 기반으로 문제를 추천해줘요"
 				openGraph={{
 					type: 'website',
