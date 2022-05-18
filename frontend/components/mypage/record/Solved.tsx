@@ -33,7 +33,7 @@ font-size: 1.5rem;
 const Solved = () => {
   const [rows, setRows] = useState([])
   const [currentPage, setPage] = useState(0)
-  const [total, setTotal] = useState(5)
+  const [totalpage, setTotalPage] = useState(1)
   const accessToken = useRecoilValue(accessTokenState)
 
   const handleClick = () => {
@@ -48,7 +48,7 @@ const Solved = () => {
       .then(res => {
         console.log(res)
         setRows(res.data.data.content)
-        setTotal(res.data.data.totalPages)
+        setTotalPage(res.data.data.totalPages)
       })
       .catch(err => console.log(err))
   }
@@ -68,7 +68,11 @@ const Solved = () => {
         <SolvedTable rows={rows}/>
       </Row>
       <Row>
-        <SolvedPagination propPage={SolvingLogPage} total={total}/>
+        <SolvedPagination
+          page={currentPage}
+          setPage={setPage}
+          total={totalpage}
+        />
       </Row>
       </>
     }
