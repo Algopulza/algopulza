@@ -1,5 +1,6 @@
 import Brand from './Brand'
 import NavItem from './NavItem'
+import NavItemMenu from './NavItemMenu'
 import Logout from './Logout'
 import styled from 'styled-components'
 import { useEffect } from 'react'
@@ -19,6 +20,7 @@ const Container = styled.section`
 const Section = styled.div`
   display: flex;
   justify-content: center;
+  align-items: center;
 `
 
 export default function NavBar() {
@@ -35,7 +37,8 @@ export default function NavBar() {
 
       <Section>
         <NavItem navItemAttr={{page: '추천', url: '/recommendation'}} currentUrl={page} onClick={clickHandler} />
-        <NavItem navItemAttr={{page: '랜덤', url: '/random'}} currentUrl={page} onClick={clickHandler} />
+        <NavItemMenu url='/random' currentUrl={page} onClick={clickHandler} />
+        {/* <NavItem navItemAttr={{page: '랜덤', url: '/random'}} currentUrl={page} onClick={clickHandler} /> */}
         <NavItem navItemAttr={{page: '검색', url: '/search'}} currentUrl={page} onClick={clickHandler} />
         <NavItem navItemAttr={{page: '마이페이지', url: '/mypage'}} currentUrl={page} onClick={clickHandler} />
       </Section>

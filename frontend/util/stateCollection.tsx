@@ -9,6 +9,12 @@ export const pageState = atom({
   default: '',
 })
 
+// navbar random menu
+export const menuState = atom({
+  key: 'menuState',
+  default: '',
+})
+
 export const userInfoState = atom({
   key: 'userInfoState',
   default: {},
