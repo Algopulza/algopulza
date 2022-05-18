@@ -1,8 +1,10 @@
+import { ToastContainer } from 'react-toastify'
 import Routing from '../../components/signup/Routing'
 import Content from '../../components/signup/Content'
 import Form from '../../components/signup/Form'
 import styled from 'styled-components'
 import Carousel from '../../components/landing/Carousel'
+import 'react-toastify/dist/ReactToastify.css'
 
 const Container = styled.section`
   display: grid;
@@ -19,7 +21,7 @@ const Subcontainer = styled.div`
 
 const FormArea = styled.div`
   display: grid;
-  grid-template-rows: 0.3fr 1.7fr 8fr;
+  grid-template-rows: 0.3fr 2.7fr 7fr;
   width: 25vw;
   height: 75vh;
   padding: 3vh 0;
@@ -29,20 +31,23 @@ const FormArea = styled.div`
 
 export default function Signup() {
   return (
-    <Container>
-      <Subcontainer>
-        <FormArea>
-          <Routing />
-          <Content />
-          <Form />
-        </FormArea>
-      </Subcontainer>
-      
-      <div></div>
+    <>
+      <Container>
+        <Subcontainer>
+          <FormArea>
+            <Routing />
+            <Content />
+            <Form />
+          </FormArea>
+        </Subcontainer>
 
-      <Carousel />
+        <div></div>
 
-      <div></div>
-    </Container>
+        <Carousel />
+
+        <div></div>
+      </Container>
+      <ToastContainer limit={1} style={{ width: '25vw', fontSize: '1.1vw', color: '#282828' }} />
+    </>
   )
 }

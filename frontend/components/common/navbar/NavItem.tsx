@@ -2,7 +2,7 @@ import { NavItemAttr } from '../../../util/dto'
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
 
-const Text = styled.span<{ cond: boolean }>`
+const Text = styled.div<{ cond: boolean }>`
   margin: 0 3vw 0 3vw;
   font-size: 1.3vw;
   color: ${(props) => (props.cond ? "#FFC94D" : "#cdcaca")};
