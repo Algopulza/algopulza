@@ -28,6 +28,12 @@ export const handleSignupClick = (
           // console.log(res.data.data)
           router.push('/')
         })
+        .catch(err => {
+          // console.log(err.response.data.errorCode === 'M002')
+          if (err.response.data.errorCode === 'M002') {
+            sendLongMessage('signupResult', '백준 ID를 입력해 주세요.')
+          }
+        })
     }
 }
 
