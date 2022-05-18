@@ -6,6 +6,7 @@ const Text = styled.span<{ cond: boolean }>`
   margin: 0 3vw 0 3vw;
   font-size: 1.3vw;
   color: ${(props) => (props.cond ? "#FFC94D" : "#cdcaca")};
+  cursor: pointer;
   &:hover {
     color: #FFC94D;
   }
@@ -26,8 +27,6 @@ export default function NavItem({ navItemAttr, isLocated, onClick }: NavItemProp
       >
         {navItemAttr.item}
       </Text>
-      {/* <a>
-      </a> */}
     </Link>
   )
 }
