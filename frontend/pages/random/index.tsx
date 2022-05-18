@@ -5,7 +5,7 @@ import Subject from '../../components/recommendation/Subject'
 import styled from 'styled-components'
 
 import { useRecoilValue } from 'recoil'
-import { accessTokenState } from '../../util/stateCollection'
+import { accessTokenState, menuState } from '../../util/stateCollection'
 import { getRandom } from '../../api/back/ramdom/Random'
 import ButtonFloating from '../../components/common/button/ButtonFloating'
 
@@ -14,6 +14,7 @@ const Container = styled.section`
 `
 
 export default function Random() {
+  const menu = useRecoilValue(menuState)
   const [data, setData] = useState(
     {
       simulationList: [],
@@ -44,7 +45,7 @@ export default function Random() {
     // console.log(data)
   }, [])
 
-  const subjects = [
+  const subjectTag = [
     { title: '구현', englishTitle: 'Simulation', list: data.simulationList },
     { title: '다이내믹 프로그래밍', englishTitle: 'Dynamic Programming', list: data.dpList },
     { title: '그래프', englishTitle: 'Graph', list: data.graphList },
@@ -52,7 +53,10 @@ export default function Random() {
     { title: '정렬', englishTitle: 'Sorting', list: data.sortingList },
     { title: '너비 우선 탐색', englishTitle: 'BFS', list: data.bfsList },
     { title: '깊이 우선 탐색', englishTitle: 'DFS', list: data.dfsList },
-    { title: '조합론', englishTitle: 'Combinatorics', list: data.combinationList },
+    { title: '조합론', englishTitle: 'Combinatorics', list: data.combinationList }
+  ]
+
+  const subjectLevel = [
     { title: '브론즈', englishTitle: 'Bronze', list: data.bronzeList },
     { title: '실버', englishTitle: 'Silver', list: data.silverList },
     { title: '골드', englishTitle: 'Gold', list: data.goldList },
@@ -64,7 +68,11 @@ export default function Random() {
       <Gift />
 
       <Container>
-        {subjects.map(subject => <Subject key={subject.title} subjectAttr={subject} />)}
+        {
+          menu === 'tag' ?
+          subjectTag.map(subject => <Subject key={subject.title} subjectAttr={subject} />) :
+          subjectLevel.map(subject => <Subject key={subject.title} subjectAttr={subject} />)
+        }
       </Container>
       <ButtonFloating />
     </>
