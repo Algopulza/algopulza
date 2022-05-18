@@ -5,6 +5,7 @@ from flask_cors import CORS
 from sqlalchemy import create_engine, text
 from recomm import vulnerability, user_vulnerability, freq_tag, user_freq_tag, save_data, random, random_level
 from recomm.mf import train, recomm_mf
+from algo import analysis, recomm
 
 
 # set을 list로 변환 후 JSON으로 변환할 수 있도록 커스텀 엔코더 작성
@@ -88,18 +89,28 @@ def create_app(test_config=None):
         res = user_freq_tag.user_freq_tag(app, mongodb, userid)
         return res
 
-    # 취약태그 분석
+    # 주요 문제유형 분석(핵심 태그 분석)
     @app.route('/vulnerability/<userid>')
-    def user_vul(userid):
+    def core_tag(userid):
         """
         분석:
-             유저가 적게 푼 태그와 태그별 취약점수 반환
-            * 취약점수 = (실패비율) * (태그별 가중치)
-                * 실패비율 = (태그별 tried 수) / (태그별 전체 제출 횟수)
-                * 태그별 가중치 = (태그별 문제 수) / (전체 문제 수)
+            6개 핵심 태그 분석
+            (태그별 해결한 문제수) / (태그별 전체 문제수)
         """
-        res = user_vulnerability.user_vulnerability(app, mongodb, userid)
+        res = analysis.core_tag(app, mongodb, userid)
         return res
+
+    # @app.route('/vulnerability/<userid>')
+    # def user_vul(userid):
+    #     """
+    #     분석:
+    #          유저가 적게 푼 태그와 태그별 취약점수 반환
+    #         * 취약점수 = (실패비율) * (태그별 가중치)
+    #             * 실패비율 = (태그별 tried 수) / (태그별 전체 제출 횟수)
+    #             * 태그별 가중치 = (태그별 문제 수) / (전체 문제 수)
+    #     """
+    #     res = user_vulnerability.user_vulnerability(app, mongodb, userid)
+    #     return res
 
 
     #### 문제 추천 ####
