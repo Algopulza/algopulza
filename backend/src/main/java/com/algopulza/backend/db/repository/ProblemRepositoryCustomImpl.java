@@ -4,6 +4,7 @@ import com.algopulza.backend.api.response.ProblemRes;
 import com.algopulza.backend.db.entity.*;
 import com.querydsl.core.types.*;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -32,6 +33,10 @@ public class ProblemRepositoryCustomImpl implements ProblemRepositoryCustom {
      * 즐겨찾기 문제로 표시되어있는지 여부 반환
      */
     private Expression<Boolean> isMarked(Long memberId) {
+        // memberId가 없을때(비회원)는 무조건 false로 반환
+        if (memberId == null) {
+            return Expressions.asBoolean(false);
+        }
         return ExpressionUtils.as(
                 JPAExpressions.select(qProblemMark.count().eq(1L))
                               .from(qProblemMark)

@@ -49,8 +49,7 @@ public class ProblemController {
             @RequestParam(value = "tagIds", required = false) String tagIds,
             @ApiIgnore @PageableDefault(size = 5) Pageable pageable
     ) {
-        Long memberId = JwtUtil.getCurrentId();
-        return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, ResponseMessage.GET_PROBLEM_LIST_SUCCESS, problemService.getProblemList(memberId, tierName, tierLevel, title, tagIds, pageable)));
+        return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, ResponseMessage.GET_PROBLEM_LIST_SUCCESS, problemService.getProblemList(tierName, tierLevel, title, tagIds, pageable)));
     }
 
     @GetMapping("/random-one")

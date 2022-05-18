@@ -208,7 +208,7 @@ public class ProblemServiceImpl implements ProblemService {
      * 필터링 조건이 있다면 필터링해서 반환, 없다면 전체 문제 반환
      */
     @Override
-    public Page<ProblemRes> getProblemList(Long memberId, String tierName, Integer tierLevel, String title, String tagIds, Pageable pageable) {
+    public Page<ProblemRes> getProblemList(String tierName, Integer tierLevel, String title, String tagIds, Pageable pageable) {
         // 1,2,3 형태의 태그 ID 리스트를 Set<Long> 형태로 변환
         Set<Long> tagIdSet = null;
         if (tagIds != null) {
@@ -226,7 +226,7 @@ public class ProblemServiceImpl implements ProblemService {
         }
 
         // Problem List 조회
-        Page<ProblemRes> problemResList = problemRepository.findProblemRes(memberId, tierName, tierLevel, title, problemIdList, pageable);
+        Page<ProblemRes> problemResList = problemRepository.findProblemRes(null, tierName, tierLevel, title, problemIdList, pageable);
 
         // Problem별로 Tag List 조회
         for (ProblemRes problemRes : problemResList) {
