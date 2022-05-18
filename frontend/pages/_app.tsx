@@ -20,7 +20,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   return <RecoilRoot>
     {getLayout(
       <>
-        <DefaultSeo {...DEFAULT_SEO} />
+        {/* <DefaultSeo {...DEFAULT_SEO} /> */}
         <Component {...pageProps} />
       </>
     )}
