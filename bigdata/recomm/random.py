@@ -20,7 +20,9 @@ def recomm_random(app, mongodb, userid):
     
     # 유저의 solving log 불러오기
     collection = mongodb.solving_log
-    solving_log = collection.find({'memberId': user_id }, {'_id':0, 'problemId':1})
+    solving_log = collection.find({
+        '$and': [{'memberId': user_id }, {'status': 'solved'}]},
+        {'_id':0, 'problemId':1})
     solved_id_list = [s['problemId'] for s in list(solving_log)]
 
 
@@ -76,7 +78,9 @@ def recomm_random_solved(app, mongodb, userid):
     
     # 유저의 solving log 불러오기
     collection = mongodb.solving_log
-    solving_log = collection.find({'memberId': user_id }, {'_id':0, 'problemId':1})
+    solving_log = collection.find({
+        '$and': [{'memberId': user_id }, {'status': 'solved'}]},
+        {'_id':0, 'problemId':1})
     solved_id_list = [s['problemId'] for s in list(solving_log)]
 
 

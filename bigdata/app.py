@@ -76,7 +76,7 @@ def create_app(test_config=None):
     @app.route("/save-data")
     def save_dat():
         res_problem_tag_data = save_data.save_data(app, mongodb)
-        res_mf_data = save_mf_model()
+        # res_mf_data = save_mf_model()
         return '<p>data saved</p>'
 
     # 유사티어 유저 mf 모델 저장
