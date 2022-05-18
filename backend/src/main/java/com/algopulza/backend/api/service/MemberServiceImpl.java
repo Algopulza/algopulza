@@ -55,7 +55,6 @@ public class MemberServiceImpl implements MemberService {
                 .level(member.getTier().getId())
                 .tierName(member.getTier().getName())
                 .tierLevel(member.getTier().getLevel())
-                .solveCount(member.getSolveCount())
                 .exp(member.getExp())
                 .build();
         return memberRes;
@@ -93,12 +92,6 @@ public class MemberServiceImpl implements MemberService {
                 }, ()-> {
                     new NotFoundException(ErrorCode.NOT_FOUND_TIER);
                 });
-
-                // 기존 solveCount와 다르면
-                int curSolveCount = Integer.parseInt(finalJsonNode.get("solvedCount").toString());
-                if (selectMember.getSolveCount() != curSolveCount) {
-                    selectMember.setSolveCount(curSolveCount);
-                }
 
                 // 경험치 관리
                 // 로그인 로그 확인 -> 오늘 첫 방문이면 +2 , 오늘첫방문+어제도방문이면 +3
@@ -232,7 +225,6 @@ public class MemberServiceImpl implements MemberService {
         newMember.setBojId(bojId);
         newMember.setTier(tier);
         newMember.setProfileImage(profileImage.substring(1, profileImage.length() - 1));
-        newMember.setSolveCount(Integer.parseInt(finalJsonNode.get("solvedCount").toString()));
         newMember.setExp(0);
         memberRepository.save(newMember);
 

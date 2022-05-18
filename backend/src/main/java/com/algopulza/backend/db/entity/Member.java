@@ -41,9 +41,6 @@ public class Member extends BaseTimeEntity implements UserDetails {
     private String profileImage;
 
     @Column
-    private int solveCount;
-
-    @Column
     private int exp;
 
     @Column
