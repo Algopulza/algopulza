@@ -37,11 +37,11 @@ export default function Time() {
   return (
     <>
       <Container style={{marginRight: 10}}>
-        <Digit>{("0" + Math.floor((time / 3600000) % 60)).slice(-2)}</Digit>
+        <Digit id="hour">{("0" + Math.floor((time / 3600000) % 60)).slice(-2)}</Digit>
         <Digit>:</Digit>
         <Digit id="min">{("0" + Math.floor((time / 60000) % 60)).slice(-2)}</Digit>
         <Digit>:</Digit>
-        <Digit>{("0" + Math.floor((time / 1000) % 60)).slice(-2)}</Digit>
+        <Digit id="sec">{("0" + Math.floor((time / 1000) % 60)).slice(-2)}</Digit>
         <Digit>:</Digit>
         <Digit>{("0" + ((time / 10) % 100)).slice(-2)}</Digit>
       </Container>

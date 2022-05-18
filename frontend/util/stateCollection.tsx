@@ -43,7 +43,6 @@ export const pageState = atom({
   key: 'pageState',
   default: '',
 })
-
 export const loginState = atom({
   key: 'loginState',
   default: false,
@@ -86,12 +85,10 @@ export const filterTierState = atom({
   key: 'filterTierState',
   default: '',
 })
-
 export const filterLevelState = atom({
   key: 'filterLevelState',
   default: '',
 })
-
 export const filterTagState = atom({
   key: 'filterTagState',
   default: '',
@@ -104,4 +101,8 @@ export const stopwatchProbIdState = atom({
 export const stopwatchMinState = atom({
   key: 'stopwatchMinState',
   default: 0,
+})
+export const stopwatchLangauge = atom({
+  key: 'stopwatchLangaugeState',
+  default: '',
 })
