@@ -5,7 +5,7 @@ import SearchPagination from '../../components/search/SearchPagination'
 import Layout from '../../components/common/Layout'
 import styled from 'styled-components'
 
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilValue } from 'recoil'
 import { accessTokenState, filterLevelState, filterTagState, filterTierState } from '../../util/stateCollection'
 import { getSearchProblems } from '../../api/back/search/SearchProblems'
 import ButtonFloating from '../../components/common/button/ButtonFloating'
@@ -24,9 +24,9 @@ export default function Search() {
   const [currentPage, setPage] = useState(0)
   const [totalpage, setTotalPage] = useState(0)
   const [searched, setSearched] = useState("")
-  const [tier, setTier] = useRecoilState(filterTierState)
-  const [level, setLevel] = useRecoilState(filterLevelState)
-  const [tag, setTag] = useRecoilState(filterTagState)
+  const tier= useRecoilValue(filterTierState)
+  const level = useRecoilValue(filterLevelState)
+  const tag = useRecoilValue(filterTagState)
   const accessToken = useRecoilValue(accessTokenState)
 
   // 검색 api
@@ -44,6 +44,7 @@ export default function Search() {
   }
   useEffect(() => { 
     problemListSearch(searched)
+    console.log(1)
   }, [searched, tier, level, tag])
 
   // page 검색 api
