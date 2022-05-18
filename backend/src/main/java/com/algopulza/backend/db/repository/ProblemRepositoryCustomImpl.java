@@ -113,57 +113,60 @@ public class ProblemRepositoryCustomImpl implements ProblemRepositoryCustom {
 
     @Override
     public ProblemRes findProblemResById(Long memberId, Long id) {
-        return jpaQueryFactory.select(Projections.constructor(ProblemRes.class,
-                                      qProblem.id,
-                                      qProblem.bojId,
-                                      qProblem.title,
-                                      qTier.level,
-                                      qTier.name,
-                                      qProblem.acceptedCount,
-                                      qProblem.averageTryCount,
-                                      isMarked(memberId)
-                              ))
-                              .from(qProblem)
-                              .join(qTier).on(qProblem.tier.eq(qTier))
-                              .where(qProblem.id.eq(id))
-                              .fetchOne();
+        return jpaQueryFactory
+                .select(Projections.constructor(ProblemRes.class,
+                        qProblem.id,
+                        qProblem.bojId,
+                        qProblem.title,
+                        qTier.level,
+                        qTier.name,
+                        qProblem.acceptedCount,
+                        qProblem.averageTryCount,
+                        isMarked(memberId))
+                )
+                .from(qProblem)
+                .join(qTier).on(qProblem.tier.eq(qTier))
+                .where(qProblem.id.eq(id))
+                .fetchOne();
     }
 
     @Override
     public List<Long> findProblemIdByTierNameSet(Set<String> tierNameSet) {
-        return jpaQueryFactory.select(qProblem.id)
-                              .from(qProblem)
-                              .join(qTier).on(qProblem.tier.eq(qTier))
-                              .where(qTier.name.in(tierNameSet))
-                              .fetch();
+        return jpaQueryFactory
+                .select(qProblem.id)
+                .from(qProblem)
+                .join(qTier).on(qProblem.tier.eq(qTier))
+                .where(qTier.name.in(tierNameSet))
+                .fetch();
     }
 
     @Override
     public List<Long> findProblemIdByBojTagId(int bojTagId) {
-        return jpaQueryFactory.select(qProblemHasTag.problem.id)
-                              .distinct()
-                              .from(qProblemHasTag)
-                              .leftJoin(qTag).on(qProblemHasTag.tag.eq(qTag))
-                              .where(qTag.bojTagId.eq(bojTagId))
-                              .fetch();
+        return jpaQueryFactory
+                .select(qProblemHasTag.problem.id).distinct()
+                .from(qProblemHasTag)
+                .leftJoin(qTag).on(qProblemHasTag.tag.eq(qTag))
+                .where(qTag.bojTagId.eq(bojTagId))
+                .fetch();
     }
 
     @Override
     public List<ProblemRes> findProblemResByIdSet(Long memberId, Set<Long> idSet) {
-        return jpaQueryFactory.select(Projections.constructor(ProblemRes.class,
-                                      qProblem.id,
-                                      qProblem.bojId,
-                                      qProblem.title,
-                                      qTier.level,
-                                      qTier.name,
-                                      qProblem.acceptedCount,
-                                      qProblem.averageTryCount,
-                                      isMarked(memberId)
-                              ))
-                              .from(qProblem)
-                              .join(qTier).on(qProblem.tier.eq(qTier))
-                              .where(qProblem.id.in(idSet))
-                              .fetch();
+        return jpaQueryFactory
+                .select(Projections.constructor(ProblemRes.class,
+                        qProblem.id,
+                        qProblem.bojId,
+                        qProblem.title,
+                        qTier.level,
+                        qTier.name,
+                        qProblem.acceptedCount,
+                        qProblem.averageTryCount,
+                        isMarked(memberId))
+                )
+                .from(qProblem)
+                .join(qTier).on(qProblem.tier.eq(qTier))
+                .where(qProblem.id.in(idSet))
+                .fetch();
     }
 
 }

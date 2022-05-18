@@ -79,4 +79,16 @@ public class AnalysisController {
         return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, ResponseMessage.GET_SOLVING_LOG_STATISTICS_SUCCESS, analysisService.getSolvingLogStatistics(memberId)));
     }
 
+    @GetMapping("/weaknesses")
+    @ApiOperation(value = "취약 태그 리스트 조회", notes = "취약 태그 리스트를 count 수만큼 조회하는 API 입니다.")
+    @ApiResponses({@ApiResponse(code = 200, message = ResponseMessage.GET_WEAKNESS_SUCCESS),
+            @ApiResponse(code = 400, message = ResponseMessage.BAD_REQUEST, response = ErrorResponse.class),
+            @ApiResponse(code = 401, message = ResponseMessage.UNAUTHORIZED, response = ErrorResponse.class),
+            @ApiResponse(code = 403, message = ResponseMessage.ACCESS_DENIED, response = ErrorResponse.class),
+            @ApiResponse(code = 404, message = ResponseMessage.NOT_FOUND, response = ErrorResponse.class)})
+    public ResponseEntity<BaseResponseBody> listWeakness(@RequestParam int count) {
+        Long memberId = JwtUtil.getCurrentId();
+        return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, ResponseMessage.GET_WEAKNESS_SUCCESS, analysisService.getWeaknessList(memberId, count)));
+    }
+
 }
