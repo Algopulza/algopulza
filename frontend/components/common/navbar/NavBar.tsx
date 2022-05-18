@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import Brand from './Brand'
 import NavItem from './NavItem'
+import NavItemRouter from './NavItemRouter'
 import styled from 'styled-components'
 import { useRecoilState } from 'recoil'
 import { pageState } from '../../../util/stateCollection'
@@ -32,10 +33,14 @@ export default function NavBar() {
       <Brand />
 
       <Pages>
-        <NavItem navItemAttr={{item: '추천', url: '/recommendation'}} isLocated={page} onClick={clickHandler} />
+        {/* <NavItem navItemAttr={{item: '추천', url: '/recommendation'}} isLocated={page} onClick={clickHandler} />
         <NavItem navItemAttr={{item: '랜덤', url: '/random'}} isLocated={page} onClick={clickHandler} />
         <NavItem navItemAttr={{item: '검색', url: '/search'}} isLocated={page} onClick={clickHandler} />
-        <NavItem navItemAttr={{item: '마이페이지', url: '/mypage'}} isLocated={page} onClick={clickHandler} />
+        <NavItem navItemAttr={{item: '마이페이지', url: '/mypage'}} isLocated={page} onClick={clickHandler} /> */}
+        <NavItemRouter navItemAttr={{item: '추천', url: '/recommendation'}} isLocated={page} onClick={clickHandler} />
+        <NavItemRouter navItemAttr={{item: '랜덤', url: '/random'}} isLocated={page} onClick={clickHandler} />
+        <NavItemRouter navItemAttr={{item: '검색', url: '/search'}} isLocated={page} onClick={clickHandler} />
+        <NavItemRouter navItemAttr={{item: '마이페이지', url: '/mypage'}} isLocated={page} onClick={clickHandler} />
       </Pages>
 
       <Logout />
