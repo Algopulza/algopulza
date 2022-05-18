@@ -1,7 +1,8 @@
-import { axiosInfo, axiosSignup, axiosStopwatch } from "./axiosCollection"
-import { getCurrentTime } from "./getCurrentTime"
-import { checkStopwatch, checkStopwatchMin } from "./validationCollection"
+import { axiosInfo, axiosSignup, axiosStopwatch } from './axiosCollection'
+import { getCurrentTime } from './getCurrentTime'
+import { checkStopwatch} from './validationCollection'
 
+// 예외 처리 결과 메시지 출력
 export const sendMessage = (id: string, message: string) => {
   const result = document.getElementById(id)
   result!.innerText = message
@@ -13,6 +14,8 @@ export const sendLongMessage = (id: string, message: string) => {
   result!.innerText = message
 }
 
+
+// 이벤트 핸들러
 export const handleSignupClick = (
     event: any, id: string, bojId: string, password: string, pwConfirm: string, solvedProblems: string, triedProblems: string, isCheck: boolean, router: any
   ) => {

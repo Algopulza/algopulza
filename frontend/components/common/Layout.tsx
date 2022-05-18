@@ -9,7 +9,7 @@ export default function Layout({ children }: Props) {
   return (
     <>
       <NavBar />
-      <main>
+      <main style={{ paddingTop: '8vh' }}>
         {children}
       </main>
     </>

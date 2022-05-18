@@ -4,11 +4,10 @@ import ButtonSubmitting from '../common/button/ButtonSubmitting'
 import styled from 'styled-components'
 import { axiosLogin } from '../../util/axiosCollection'
 import { useRecoilState, useSetRecoilState } from 'recoil'
-import {
-  bojIdState, memberIdState, algoIdState, accessTokenState, refreshTokenState, idState, passwordState, loginState
-} from '../../util/stateCollection'
+import { bojIdState, memberIdState, algoIdState, accessTokenState, refreshTokenState, idState, passwordState } from '../../util/stateCollection'
 import { checkSpace } from '../../util/validationCollection'
 import { sendLongMessage } from '../../util/inputHandlerCollection'
+import ButtonRouting from '../common/button/ButtonRouting'
 
 const Container = styled.section`
   display: flex;
@@ -21,9 +20,9 @@ const Container = styled.section`
 export default function Form() {
   const [id, setId] = useRecoilState(idState)
   const [password, setPassword] = useRecoilState(passwordState)
-  const setBoj = useSetRecoilState(bojIdState)
-  const setMember = useSetRecoilState(memberIdState)
-  const setAlgo = useSetRecoilState(algoIdState)
+  const setAlgoId = useSetRecoilState(algoIdState)
+  const setBojId = useSetRecoilState(bojIdState)
+  const setMemberId = useSetRecoilState(memberIdState)
   const setAccessToken = useSetRecoilState(accessTokenState)
   const setRefreshToken = useSetRecoilState(refreshTokenState)
   const router = useRouter()
@@ -31,9 +30,9 @@ export default function Form() {
   const handleClick = () => {
     axiosLogin(id, password)
       .then(res => {
-        setBoj(res.data.data.member.bojId)
-        setMember(res.data.data.member.memberId)
-        setAlgo(res.data.data.member.algopluzaId)
+        setAlgoId(res.data.data.member.algopluzaId)
+        setBojId(res.data.data.member.bojId)
+        setMemberId(res.data.data.member.memberId)
         setAccessToken(res.data.data.token.accessToken)
         setRefreshToken(res.data.data.token.refreshToken)
         router.push('/recommendation')
@@ -67,21 +66,22 @@ export default function Form() {
         />
       </div>
 
-      <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <p
+          id="loginResult"
+          style={{fontSize: '0.9vw', marginTop: '0px', marginBottom: '15px', color: 'red', textAlign: 'center'}}
+        />
         <ButtonSubmitting
-          submittingAttr={{text: '로그인', width: '10vw', height: '2.3vw', marBot: '0px', fontSize: '1.1vw'}}
+          submittingAttr={{text: '로그인', width: '10vw', height: '2.3vw', marBot: '10px', fontSize: '1.1vw'}}
           isImportant={true}
           onClick={handleClick}
         />
-        <p
-          id="loginResult"
-          style={{fontSize: '0.9vw', marginTop: '5px', marginBottom: '15px', color: 'red', textAlign: 'center'}}
-        />
         <ButtonSubmitting
-          submittingAttr={{text: '회원가입', width: '10vw', height: '2.3vw', marBot: '0px', fontSize: '1vw'}}
+          submittingAttr={{text: '비회원으로 이용하기', width: '10vw', height: '2.3vw', marBot: '10px', fontSize: '1vw'}}
           isImportant={false}
-          onClick={() => {router.push('/signup')}}
+          onClick={() => {router.push('/random')}}
         />
+        <ButtonRouting routingAttr={{url: '/signup', text: '회원가입'}}  />
       </div>
     </Container>
   )

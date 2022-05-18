@@ -13,6 +13,8 @@ export type RoutingAttr = { url: string, text: string }
 export default function Routing() {
   const [isLogin, setIsLogin] = useState(false)
   useEffect(() => {
+    console.log('recoil-persist', window.localStorage.getItem('recoil-persist'))
+    console.log('isLogin', window.localStorage.getItem('recoil-persist'))
     setIsLogin(window.localStorage.getItem('recoil-persist') !== null ? true : false)
   }, [])
 

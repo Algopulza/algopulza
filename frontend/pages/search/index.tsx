@@ -35,8 +35,10 @@ export default function Search() {
     await getSearchProblems(accessToken, 10, 0, tier, level, tag, searched)
       .then(res => {
         // console.log(res.data.data)
+        console.log('검색 api')
         setTotalPage(res.data.data.totalPages)
         setRows(res.data.data.content)
+        setPage(0)
       })
       .catch(err => console.log(err))
   }
@@ -47,9 +49,10 @@ export default function Search() {
   // page 검색 api
   const problemListPage = async (page: any) => {
     setPage(page)
-    await getSearchProblems(accessToken, 10, currentPage, undefined, undefined, undefined, searched)
+    await getSearchProblems(accessToken, 10, currentPage, tier, level, tag, searched)
       .then(res => {
         // console.log(res.data.data)
+        console.log('페이지 api', currentPage)
         setRows(res.data.data.content)
       })
       .catch(err => console.log(err))
@@ -58,6 +61,11 @@ export default function Search() {
     problemListPage(currentPage)
   }, [currentPage])
 
+  // const submitPage = (event: any, page: any) => {
+  //   console.log(event)
+  //   console.log('SubmitPage:', page)
+  //   setPage(page-1)
+  // }
 
   return (
     <Container>
