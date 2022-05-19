@@ -16,11 +16,6 @@ align-items: center;
 export default function Weakness({accessToken, bojId}:User) {
   const [word, setWord] = useState<Array<any>>([]);
   const count=55
-  const options = {
-    rotations: 1,
-    rotationAngles: [0],
-    fontSizes:[10,50]
-  };
   const AnalUser = async () => {
     await getAnalyWeak(accessToken, count)
       .then((res) => {
@@ -52,7 +47,8 @@ export default function Weakness({accessToken, bojId}:User) {
         options={{ 
             rotations: 1,
             rotationAngles: [0,0],
-            fontSizes:[10,50]
+            fontSizes:[10,60],
+            enableTooltip: false,
           }}
         minSize={[0, 460]}
         />
