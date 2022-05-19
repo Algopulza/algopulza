@@ -58,8 +58,8 @@ export const handleStopwatchClick = (event: any, problemBojId: string, language:
 
   if (checkStopwatch(problemBojId)) {
     axiosStopwatch(info, accessToken)
-      .then(res => {
-        console.log(res)
+      .then((res:any) => {
+        // console.log(res)
         // sendMessage('stopwatchResult', '감사합니다!')
       })
   } else if (problemBojId === '' || Number(problemBojId) < 1000) {
