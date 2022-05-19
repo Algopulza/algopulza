@@ -38,7 +38,8 @@ export default function Popup() {
   return (
     <div>
       <Button
-        variant="outlined"
+        variant="contained"
+        color="success"
         onClick={handleClickOpen}
         style={{padding: 0, fontSize: '1.1vw', width: '3.5vw', height: '2.2vw', marginRight: 20}}
       >

@@ -10,7 +10,7 @@ export default function Check() {
 
   return (
     <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-      <Checkbox {...label} onClick={() => {setIsCheck(prev => !prev)}} style={{padding: 0, marginRight: '5px'}}/>
+      <Checkbox {...label} onClick={() => {setIsCheck(prev => !prev)}} style={{padding: 0, marginRight: '5px'}} color="success"/>
       <span>해결</span>
     </div>
   );
