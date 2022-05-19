@@ -2,6 +2,8 @@ package com.algopulza.backend.api.response;
 
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,5 +22,9 @@ public class SolvingLogRes {
     private int memory;
 
     private int runTime;
+
+    private int solvingTime;
+
+    private LocalDateTime submitTime;
 
 }

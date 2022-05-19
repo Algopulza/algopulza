@@ -35,7 +35,9 @@ public class SolvingLogRepositoryCustomImpl implements  SolvingLogRepositoryCust
                         qSolvingLog.status,
                         qSolvingLog.language,
                         qSolvingLog.memory,
-                        qSolvingLog.runTime
+                        qSolvingLog.runTime,
+                        qSolvingLog.solvingTime,
+                        qSolvingLog.submitTime
                 ))
                 .from(qSolvingLog)
                 .where(qSolvingLog.member.id.eq(memberId))
