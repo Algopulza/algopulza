@@ -12,7 +12,7 @@ import { getSolvingLog } from "../../../api/back/analysis/SolvedTable"
 const Row = styled.div`
   display: flex;
   justify-content: center;
-align-items: center;
+  align-items: center;
   gap: 2em;
 `;
 
