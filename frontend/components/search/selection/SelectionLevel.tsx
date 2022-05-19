@@ -15,7 +15,7 @@ export default function SelectionLevel() {
 
   return (
     <FormControl sx={{ marginRight: '10px', width: '9vw' }} size="small">
-      <InputLabel id="level">Level</InputLabel>
+      <InputLabel id="level">레벨</InputLabel>
       <Select
         labelId="level"
         id="level"

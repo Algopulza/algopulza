@@ -39,6 +39,10 @@ export default function PopupLogin() {
     setOpen(true)
   }
 
+  const handleClickClose = () => {
+    setOpen(false)
+  }
+
   const handleCloseWithAgree = () => {
     router.push('/random')
     setOpen(false)
@@ -62,7 +66,7 @@ export default function PopupLogin() {
         open={open}
         TransitionComponent={Transition}
         keepMounted
-        onClose={handleCloseWithDisgree}
+        onClose={handleClickClose}
       >
         <DialogTitle>{"잠시만요!"}</DialogTitle>
         <DialogContent>
