@@ -127,3 +127,8 @@ export const checkState = atom({
   key: 'checkState',
   default: false,
 })
+
+export const solvedRowState = atom({
+  key: 'solvedRowState',
+  default: 0,
+})
