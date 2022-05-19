@@ -60,12 +60,12 @@ export default function SolvedTable(props: any) {
       <Table stickyHeader aria-label="solved table">
         <TableHead sx={{ background: "#FFC94D" }}>
           <TableRow>
-            <StyledTableCell align="center" style={{ width: "15%" }}>문제번호</StyledTableCell>
-            <StyledTableCell align="center" style={{ width: "40%" }}>문제제목</StyledTableCell>
+            <StyledTableCell align="center" style={{ width: "15%" }}>문제 번호</StyledTableCell>
+            <StyledTableCell align="center" style={{ width: "40%" }}>문제 제목</StyledTableCell>
             <StyledTableCell align="center" style={{ width: "5%" }}>상태</StyledTableCell>
             <StyledTableCell align="center" style={{ width: "5%" }}>언어</StyledTableCell>
-            <StyledTableCell align="center" style={{ width: "15%" }}>풀이시간</StyledTableCell>
-            <StyledTableCell align="center" style={{ width: "20%" }}>제출시간</StyledTableCell>
+            <StyledTableCell align="center" style={{ width: "15%" }}>풀이 시간</StyledTableCell>
+            <StyledTableCell align="center" style={{ width: "20%" }}>제출 시간</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>

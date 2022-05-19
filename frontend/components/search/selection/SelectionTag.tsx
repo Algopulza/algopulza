@@ -14,7 +14,7 @@ export default function SelectionTag() {
 
   return (
     <FormControl sx={{ marginRight: "10px", width: "9vw" }} size="small">
-      <InputLabel id="tag">태그</InputLabel>
+      <InputLabel id="tag">유형</InputLabel>
       <Select
         labelId="tag"
         id="tag"
@@ -23,14 +23,14 @@ export default function SelectionTag() {
         onChange={handleChange}
       >
         <MenuItem value={""}>전체</MenuItem>
-        <MenuItem value={46}>구현</MenuItem>
-        <MenuItem value={16}>DP</MenuItem>
-        <MenuItem value={4}>그래프</MenuItem>
-        <MenuItem value={21}>그리디</MenuItem>
-        <MenuItem value={43}>정렬</MenuItem>
-        <MenuItem value={54}>BFS</MenuItem>
-        <MenuItem value={55}>DFS</MenuItem>
-        <MenuItem value={3}>조합론</MenuItem>
+        <MenuItem value={305}>구현</MenuItem>
+        <MenuItem value={204}>DP</MenuItem>
+        <MenuItem value={193}>그래프</MenuItem>
+        <MenuItem value={210}>그리디</MenuItem>
+        <MenuItem value={209}>정렬</MenuItem>
+        <MenuItem value={224}>BFS</MenuItem>
+        <MenuItem value={227}>DFS</MenuItem>
+        <MenuItem value={192}>조합론</MenuItem>
       </Select>
     </FormControl>
   )
