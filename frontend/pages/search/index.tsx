@@ -35,7 +35,7 @@ export default function Search() {
     await getSearchProblems(accessToken, 10, 0, tier, level, tag, searched)
       .then(res => {
         // console.log(res.data.data)
-        console.log('검색 api')
+        // console.log('검색 api')
         setTotalPage(res.data.data.totalPages)
         setRows(res.data.data.content)
         setPage(0)
@@ -44,7 +44,6 @@ export default function Search() {
   }
   useEffect(() => { 
     problemListSearch(searched)
-    console.log(1)
   }, [searched, tier, level, tag])
 
   // page 검색 api

@@ -18,7 +18,7 @@ export default function Eight({accessToken, bojId}:User) {
   const AnalUser = async () => {
     await getAnalyEight(accessToken, bojId)
       .then((res) => {
-        console.log(res)
+        // console.log(res)
         const week = res.data;
         let label_temp = [];
         let solved_temp = [];

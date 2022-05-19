@@ -21,7 +21,6 @@ export default function Weakness({accessToken, bojId}:User) {
     rotationAngles: [0],
     fontSizes:[10,50]
   };
-  const minSize = [0, 460]
   const AnalUser = async () => {
     await getAnalyWeak(accessToken, count)
       .then((res) => {
@@ -48,7 +47,15 @@ export default function Weakness({accessToken, bojId}:User) {
   return (
     <Container>
       <div style={{ width: "100%", height: "100%" }}>
-      <ReactWordcloud words={words} options={options} minSize={minSize} />
+        <ReactWordcloud
+        words={words}
+        options={{ 
+            rotations: 1,
+            rotationAngles: [0,0],
+            fontSizes:[10,50]
+          }}
+        minSize={[0, 460]}
+        />
       </div>
     </Container>
   );
