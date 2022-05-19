@@ -1,5 +1,6 @@
 package com.algopulza.backend.api.service;
 
+import com.algopulza.backend.api.request.AddDetailSolvingLogReq;
 import com.algopulza.backend.api.request.AddSolvingLogReq;
 import com.algopulza.backend.api.response.SolvingLogRes;
 import com.algopulza.backend.common.exception.NotFoundException;
@@ -52,25 +53,25 @@ public class SolvingLogServiceImpl implements SolvingLogService {
     }
 
     @Override
-    public void addSolvingLog(Long memberId, AddSolvingLogReq addSolvingLogReq) {
-        String status = addSolvingLogReq.getStatus() == 0 ? "tried" : "solved";
+    public void addDetailSolvingLog(Long memberId, AddDetailSolvingLogReq addDetailSolvingLogReq) {
+        String status = addDetailSolvingLogReq.getStatus() == 0 ? "tried" : "solved";
         Member member = memberRepository.findById(memberId).orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND_MEMBER));
-        Problem problem = problemRepository.findByBojId(addSolvingLogReq.getProblemBojId())
+        Problem problem = problemRepository.findByBojId(addDetailSolvingLogReq.getProblemBojId())
                                            .orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND_PROBLEM));
 
         // member가 problem 문제를 language로 푼 기록이 있다면 업데이트, 없다면 새로 추가
-        SolvingLog solvingLog = solvingLogRepository.findByProblemAndLanguage(member, problem, addSolvingLogReq.getLanguage())
+        SolvingLog solvingLog = solvingLogRepository.findByProblemAndLanguage(member, problem, addDetailSolvingLogReq.getLanguage())
                                                     .orElse(new SolvingLog());
 
         solvingLog.setMember(member);
         solvingLog.setProblem(problem);
         solvingLog.setStatus(status);
-        solvingLog.setMemory(addSolvingLogReq.getMemory());
-        solvingLog.setRunTime(addSolvingLogReq.getRunTime());
-        solvingLog.setLanguage(addSolvingLogReq.getLanguage());
-        solvingLog.setCodeLength(addSolvingLogReq.getCodeLength());
-        solvingLog.setSolvingTime(addSolvingLogReq.getSolvingTime());
-        solvingLog.setSubmitTime(addSolvingLogReq.getSubmitTime());
+        solvingLog.setMemory(addDetailSolvingLogReq.getMemory());
+        solvingLog.setRunTime(addDetailSolvingLogReq.getRunTime());
+        solvingLog.setLanguage(addDetailSolvingLogReq.getLanguage());
+        solvingLog.setCodeLength(addDetailSolvingLogReq.getCodeLength());
+        solvingLog.setSolvingTime(addDetailSolvingLogReq.getSolvingTime());
+        solvingLog.setSubmitTime(addDetailSolvingLogReq.getSubmitTime());
         solvingLog.setUpdatedTime(ZonedDateTime.now().toLocalDateTime());
         solvingLogRepository.save(solvingLog);
     }
