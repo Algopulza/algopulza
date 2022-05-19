@@ -60,7 +60,6 @@ export const loginState = atom({
 export const idState = atom({
   key: 'idState',
   default: '',
-  effects_UNSTABLE: [persistAtom]
 })
 export const bojIdSignupState = atom({
   key: 'bojIdSignupState',
@@ -70,7 +69,6 @@ export const bojIdSignupState = atom({
 export const passwordState = atom({
   key: 'passwordState',
   default: '',
-  effects_UNSTABLE: [persistAtom]
 })
 export const pwConfirmState = atom({
   key: 'pwConfirmState',

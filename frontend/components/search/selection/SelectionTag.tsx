@@ -15,7 +15,7 @@ export default function SelectionTag() {
 
   return (
     <FormControl sx={{ marginRight: '10px', width: '9vw' }} size="small">
-      <InputLabel id="tag">Tag</InputLabel>
+      <InputLabel id="tag">태그</InputLabel>
       <Select
         labelId="tag"
         id="tag"

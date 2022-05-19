@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
-import { useRecoilValue } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import { accessTokenState, memberIdState } from '../../../util/stateCollection'
 import { axiosLogout } from '../../../util/axiosCollection'
 import { useEffect, useState } from 'react'
@@ -24,17 +24,18 @@ const Text = styled.span`
 export default function Logout() {
   const router = useRouter()
   const memberId = useRecoilValue(memberIdState)
-  const accessToken = useRecoilValue(accessTokenState)
+  const [accessToken, setAccessToken] = useRecoilState(accessTokenState)
   const [isLogin, setIsLogin] = useState(true)
 
   useEffect(() => {
-    setIsLogin(window.localStorage.getItem('recoil-persist') !== null ? true : false)
+    setIsLogin(accessToken==='' ? false : true)
   }, [])
 
   const handleClick = () => {
     axiosLogout(memberId, accessToken)
       .then(res => {
         localStorage.removeItem('recoil-persist')
+        setAccessToken('')
         router.push('/')
       })
   }
