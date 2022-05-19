@@ -68,11 +68,11 @@ export default function Result(props: any) {
         <TableHead>
           <TableRow>
             <StylesProvider injectFirst>
-              <StyledTableCell align="center" style={{ width: "10%" }}>문제번호</StyledTableCell>
-              <StyledTableCell align="center" style={{ width: "45%" }}>문제제목</StyledTableCell>
+              <StyledTableCell align="center" style={{ width: "10%" }}>문제 번호</StyledTableCell>
+              <StyledTableCell align="center" style={{ width: "45%" }}>문제 제목</StyledTableCell>
               <StyledTableCell align="center" style={{ width: "10%" }}>티어</StyledTableCell>
               <StyledTableCell align="center" style={{ width: "10%" }}>레벨</StyledTableCell>
-              <StyledTableCell align="center" style={{ width: "25%" }}>태그</StyledTableCell>
+              <StyledTableCell align="center" style={{ width: "25%" }}>유형</StyledTableCell>
             </StylesProvider>
           </TableRow>
         </TableHead>
