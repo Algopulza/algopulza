@@ -24,6 +24,9 @@ def recomm_mf(app, mongodb, userid):
     solving_log = collection.find({'memberId': user_id }, {'_id':0, 'problemId':1})
     solved_id_list = [s['problemId'] for s in list(solving_log)]
 
+    if len(solved_id_list) < 10:
+        return 'empty'
+
 
     #############
     # 문제 추천 #
@@ -41,6 +44,9 @@ def recomm_mf(app, mongodb, userid):
             # {'data.predicted_r': {'$gte': 0.5}},
     ]})
     problem_tag_list = list(problem_tag)
+
+    if len(problem_tag_list) == 0:
+        return 'empty'
     
     # 푼 문제 제외
     problem_id_list = []
