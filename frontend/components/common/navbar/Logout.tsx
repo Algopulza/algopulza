@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
-import { useRecoilState, useRecoilValue } from 'recoil'
-import { accessTokenState, memberIdState } from '../../../util/stateCollection'
+import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil'
+import { accessTokenState, algoIdState, bojIdState, idState, memberIdState, refreshTokenState } from '../../../util/stateCollection'
 import { axiosLogout } from '../../../util/axiosCollection'
 import { useEffect, useState } from 'react'
 import { delCookie } from '../../../util/cookieHandler'
@@ -24,19 +24,31 @@ const Text = styled.span`
 
 export default function Logout() {
   const router = useRouter()
-  const memberId = useRecoilValue(memberIdState)
-  const [accessToken, setAccessToken] = useRecoilState(accessTokenState)
   const [isLogin, setIsLogin] = useState(true)
+  const [accessToken, setAccessToken] = useRecoilState(accessTokenState)
+  const [bojId, setbojId] = useRecoilState(bojIdState)
+  const [memberId, setMemberId] = useRecoilState(memberIdState)
+  // reset
+  const resetId = useResetRecoilState(idState)
+  const resetUserId = useResetRecoilState(bojIdState)
+  const resetAlgoId = useResetRecoilState(algoIdState)
+  const resetAccssToken = useResetRecoilState(accessTokenState)
+  const resetRefreshToken = useResetRecoilState(refreshTokenState)
+
 
   useEffect(() => {
-    setIsLogin(accessToken==='' ? false : true)
+    setIsLogin(accessToken === '' ? false : true)
   }, [])
 
   const handleClick = () => {
     axiosLogout(memberId, accessToken)
       .then(res => {
         localStorage.removeItem('recoil-persist')
-        setAccessToken('')
+        resetId()
+        resetUserId()
+        resetAlgoId()
+        resetAccssToken()
+        resetRefreshToken()
         delCookie('accessToken')
         router.push('/')
       })

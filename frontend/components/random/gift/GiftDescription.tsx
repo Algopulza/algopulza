@@ -23,7 +23,7 @@ const Title = styled.p`
 export default function GiftDescription() {
   return (
     <Container>
-      <Text>문제를 고르는 것마저 귀찮은 당신을 위한 선물</Text>
+      <Text>문제 고르기가 어려운 당신을 위한 선물</Text>
       <Title>하루 한 문제 습관 들이기!</Title>
     </Container>
   )
