@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from "styled-components"
 
 const Container = styled.section`
   display: flex;
@@ -11,13 +11,13 @@ const Container = styled.section`
 const Text = styled.p`
   margin: 0;
   font-size: 1.1vw;
-  color: #FFFFFF;
+  color: #ffffff;
 `
 
 const Title = styled.p`
   margin: 0;
   font-size: 2vw;
-  color: #FFFFFF;
+  color: #ffffff;
 `
 
 export default function GiftDescription() {

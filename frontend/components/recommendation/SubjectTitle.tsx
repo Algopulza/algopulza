@@ -1,5 +1,5 @@
-import { SubjectAttr } from '../../util/dto'
-import styled from 'styled-components'
+import { SubjectAttr } from "../../util/dto"
+import styled from "styled-components"
 
 const Container = styled.section`
   display: flex;
@@ -21,7 +21,9 @@ export default function SubjectTitle({ children }: SubjectProps) {
   return (
     <Container>
       <Title>{children.title}</Title>
-      <span style={{fontSize: "1.3vw", color:"#818080"}}>{children.englishTitle}</span>
+      <span style={{ fontSize: "1.3vw", color: "#818080" }}>
+        {children.englishTitle}
+      </span>
     </Container>
   )
 }

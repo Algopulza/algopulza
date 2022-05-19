@@ -1,9 +1,9 @@
-import Box from '@mui/material/Box'
-import TextField from '@mui/material/TextField'
-import { useState } from 'react'
-import { TextFieldAttr } from '../../../util/dto'
+import Box from "@mui/material/Box"
+import TextField from "@mui/material/TextField"
+import { useState } from "react"
+import { TextFieldAttr } from "../../../util/dto"
 
-type TextFieldProps = { 
+type TextFieldProps = {
   textFieldAttr: TextFieldAttr
   valid(item: any): boolean
   errorMessage: string
@@ -18,36 +18,38 @@ export default function InputTextField({ textFieldAttr, valid, errorMessage, set
     setter(event.target.value.trim())
     setIsValid(valid(event.target.value))
   }
+
   const handleSubmit = (event: any) => {
     event.preventDefault()
   }
 
   return (
     <Box component="form" onSubmit={handleSubmit}>
-      {isValid ?
+      {isValid ? (
         <TextField
-          sx={{width: textFieldAttr.width, marginBottom: textFieldAttr.marBot, marginRight: textFieldAttr.marRig}}
+          sx={{ width: textFieldAttr.width, marginBottom: textFieldAttr.marBot, marginRight: textFieldAttr.marRig }}
           id={textFieldAttr.id}
           label={textFieldAttr.label}
-          type={textFieldAttr.isPw ? 'password' : ""}
+          type={textFieldAttr.isPw ? "password" : ""}
           autoFocus={textFieldAttr.isAf ? true : false}
           variant="outlined"
           size="small"
           onChange={handleChange}
           onKeyDown={onKeyDown}
-        /> :
+        />
+      ) : (
         <TextField
           error
-          sx={{width: textFieldAttr.width, marginBottom: textFieldAttr.marBot, marginRight: textFieldAttr.marRig}}
+          sx={{ width: textFieldAttr.width, marginBottom: textFieldAttr.marBot, marginRight: textFieldAttr.marRig }}
           id={textFieldAttr.id}
           label={textFieldAttr.label}
-          type={textFieldAttr.isPw ? 'password' : ""}
+          type={textFieldAttr.isPw ? "password" : ""}
           helperText={errorMessage}
           size="small"
           onChange={handleChange}
           onKeyDown={onKeyDown}
         />
-      }
+      )}
     </Box>
   )
 }

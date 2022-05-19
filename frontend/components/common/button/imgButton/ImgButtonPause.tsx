@@ -1,6 +1,6 @@
-import styled from 'styled-components'
-import { SubmittingAttr } from '../../../../util/dto'
-import PauseIcon from '@mui/icons-material/Pause'
+import styled from "styled-components"
+import { SubmittingAttr } from "../../../../util/dto"
+import PauseIcon from "@mui/icons-material/Pause"
 
 const Button = styled.button<{ cond: boolean }>`
   display: flex;
@@ -8,8 +8,8 @@ const Button = styled.button<{ cond: boolean }>`
   align-items: center;
   border: none;
   border-radius: 5px;
-  background-color: ${(props) => (props.cond ? "#FFC94D" : "#545454")}; //#FAFBED
-  color: #FFFFFF;
+  background-color: ${(props) => (props.cond ? "#FFC94D" : "#545454")};
+  color: #ffffff;
   cursor: pointer;
   &:hover {
     background-color: ${(props) => (props.cond ? "#FFCF62" : "#5C5C5C")};
@@ -17,8 +17,8 @@ const Button = styled.button<{ cond: boolean }>`
 `
 
 type SubmittingProps = {
-  submittingAttr: SubmittingAttr,
-  isImportant: boolean,
+  submittingAttr: SubmittingAttr
+  isImportant: boolean
   onClick(event: any): void
 }
 

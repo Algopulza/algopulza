@@ -1,11 +1,11 @@
-import Brand from './Brand'
-import NavItem from './NavItem'
-import NavItemMenu from './NavItemMenu'
-import Logout from './Logout'
-import styled from 'styled-components'
-import { useEffect } from 'react'
-import { useRecoilState } from 'recoil'
-import { pageState } from '../../../util/stateCollection'
+import Brand from "./Brand"
+import NavItem from "./NavItem"
+import NavItemMenu from "./NavItemMenu"
+import Logout from "./Logout"
+import styled from "styled-components"
+import { useEffect } from "react"
+import { useRecoilState } from "recoil"
+import { pageState } from "../../../util/stateCollection"
 
 const Container = styled.section`
   position: fixed;
@@ -28,7 +28,7 @@ export default function NavBar() {
   const clickHandler = (path: string) => setPage(path)
 
   useEffect(() => {
-    clickHandler('/' + window.location.href.split('/').pop())
+    clickHandler("/" + window.location.href.split("/").pop())
   }, [])
 
   return (
@@ -36,10 +36,19 @@ export default function NavBar() {
       <Brand />
 
       <Section>
-        <NavItem navItemAttr={{page: '추천', url: '/recommendation'}} currentUrl={page} onClick={clickHandler} />
-        <NavItemMenu url='/random' currentUrl={page} onClick={clickHandler} />
-        <NavItem navItemAttr={{page: '검색', url: '/search'}} currentUrl={page} onClick={clickHandler} />
-        <NavItem navItemAttr={{page: '마이페이지', url: '/mypage'}} currentUrl={page} onClick={clickHandler} />
+        <NavItem
+          navItemAttr={{ page: "추천", url: "/recommendation" }}
+          currentUrl={page}
+          onClick={clickHandler} />
+        <NavItemMenu url="/random" currentUrl={page} onClick={clickHandler} />
+        <NavItem
+          navItemAttr={{ page: "검색", url: "/search" }}
+          currentUrl={page}
+          onClick={clickHandler} />
+        <NavItem
+          navItemAttr={{ page: "마이페이지", url: "/mypage" }}
+          currentUrl={page}
+          onClick={clickHandler} />
       </Section>
 
       <Logout />

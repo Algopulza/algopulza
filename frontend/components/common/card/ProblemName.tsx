@@ -40,10 +40,10 @@ const Core = styled.span`
 `
 
 type HeaderProps = {
-  title: string,
-  id: number,
-  problemId: number,
-  tier: string,
+  title: string
+  id: number
+  problemId: number
+  tier: string
   bookmark: boolean
 }
 
@@ -70,7 +70,6 @@ export default function ProblemName({ title, id, problemId, tier, bookmark }: He
   const handleBookmarkDeleteClick = () => {
     axiosDeleteBookmark(problemId, accessToken)
       .then(res => {
-        // console.log(res)
         setIsBookmark(false)
       })
       .catch(err => {

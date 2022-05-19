@@ -1,9 +1,9 @@
-import Box from '@mui/material/Box'
-import TextField from '@mui/material/TextField'
-import { useState } from 'react'
-import { TextFieldAttr } from '../../../util/dto'
+import Box from "@mui/material/Box"
+import TextField from "@mui/material/TextField"
+import { useState } from "react"
+import { TextFieldAttr } from "../../../util/dto"
 
-type TextFieldProps = { 
+type TextFieldProps = {
   textFieldAttr: TextFieldAttr
   valid(item: string): boolean
   errorMessage: string
@@ -12,7 +12,7 @@ type TextFieldProps = {
 }
 
 export default function InputTextArea({ textFieldAttr, valid, errorMessage, setter, onKeyDown }: TextFieldProps) {
-  const [isValid, setIsValid] = useState(true)
+  const [isValid, setIsValid] = useState(true);
 
   const handleChange = (event: any) => {
     setter(event.target.value.trim())
@@ -24,12 +24,12 @@ export default function InputTextArea({ textFieldAttr, valid, errorMessage, sett
 
   return (
     <Box component="form" onSubmit={handleSubmit}>
-      {isValid ?
+      {isValid ? (
         <TextField
-          sx={{width: textFieldAttr.width, marginBottom: textFieldAttr.marBot, marginRight: textFieldAttr.marRig}}
+          sx={{ width: textFieldAttr.width, marginBottom: textFieldAttr.marBot, marginRight: textFieldAttr.marRig }}
           id={textFieldAttr.id}
           label={textFieldAttr.label}
-          type={textFieldAttr.isPw ? 'password' : ""}
+          type={textFieldAttr.isPw ? "password" : ""}
           autoFocus={textFieldAttr.isAf ? true : false}
           variant="outlined"
           size="small"
@@ -38,13 +38,14 @@ export default function InputTextArea({ textFieldAttr, valid, errorMessage, sett
           multiline
           rows={2}
           maxRows={2}
-        /> :
+        />
+      ) : (
         <TextField
           error
-          sx={{width: textFieldAttr.width, marginBottom: textFieldAttr.marBot, marginRight: textFieldAttr.marRig}}
+          sx={{ width: textFieldAttr.width,  marginBottom: textFieldAttr.marBot, marginRight: textFieldAttr.marRig }}
           id={textFieldAttr.id}
           label={textFieldAttr.label}
-          type={textFieldAttr.isPw ? 'password' : ""}
+          type={textFieldAttr.isPw ? "password" : ""}
           helperText={errorMessage}
           size="small"
           onChange={handleChange}
@@ -53,7 +54,7 @@ export default function InputTextArea({ textFieldAttr, valid, errorMessage, sett
           rows={2}
           maxRows={2}
         />
-      }
+      )}
     </Box>
   )
 }
