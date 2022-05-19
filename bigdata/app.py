@@ -175,8 +175,11 @@ def create_app(test_config=None):
     # 자신 티어 +-1 level 문제 1개 랜덤추천
     @app.route('/random-level/<userid>')
     def rand_lv(userid):
-        rand_problem = random_level.random_one(app, mongodb, userid)
-        return rand_problem
+        res = random_level.random_one(app, mongodb, userid)
+        if res == 'empty':
+            print('empty solving log')
+            return ''
+        return res
 
     # 아직 안 푼 자신 티어 +-1 level 문제 10개 랜덤추천
     @app.route('/random/<userid>')
