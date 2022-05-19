@@ -128,7 +128,6 @@ public class ProblemServiceImpl implements ProblemService {
                     .subscribe(solvedAcProblemRes -> {
                         // 2. 수집한 정보로 Entity 생성
                         addEntitiesFromSolvedAcProblemRes(solvedAcProblemRes, problemList, problemHasTagList, tagMapByBojTagId);
-
                         countDownLatch.countDown();
                     });
         }
@@ -136,6 +135,7 @@ public class ProblemServiceImpl implements ProblemService {
         countDownLatch.await();
 
         // 3. 수집한 정보 DB에 저장 or 업데이트
+        log.info("DB save 시작");
         problemRepository.saveAll(problemList);
         tagRepository.saveAll(tagMapByBojTagId.values());
         problemHasTagRepository.saveAll(problemHasTagList);

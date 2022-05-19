@@ -47,15 +47,15 @@
 
 🎨  컨셉 : (작성 예정)
 
-- 메인컬러1 : (작성 예정) (로고, 글씨색 등)
+- 메인컬러1 : #FDC33E (로고, 버튼, 글씨색 등)
 
-- 메인컬러2: (작성 예정) (버튼 등)
+- 메인컬러2: #282828 (버튼, 배너, nav바 등)
 
-- 컬러1 : (작성 예정) (배경 등)
+- 컬러1 : (#FFFFFF) (배경, 글씨 색 등)
 
-- 컬러2 : (작성 예정)  (예비, 카드 배경 등)
+- 컬러2 : (#AD5600, #435F7A, #EC9A00, #27E2A4, #00B4FC, #FF0062, #444444)  (카드 배경)
 
-- 컬러3 : (작성 예정) (후터 등)
+- 컬러3 : (#FFC94D, #FFFFFF, #F4F4F4, #FFCF62) (분석 버튼)
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -99,7 +99,7 @@
 
 1. 이슈관리 : Jira
 2. 형상관리 : Gitlab
-3. 커뮤니케이션 : Mattermost, Gather, Notion
+3. 커뮤니케이션 : Mattermost, Gather, Notion, Figma
 4. 개발 환경
    - OS
      - Windows10
@@ -108,8 +108,10 @@
      - IntelliJ
      - Visual Studio Code
    - Frontend
-     - React
-     - Next.js
+     - React 18.0.8
+     - Next.js 12.1.5
+     - TypeScript 4.6.3
+     - Recoil 0.7.2
    - Backend
      - Java 11
      - SpringBoot 2.6.x
