@@ -1,9 +1,9 @@
-import { toast } from "react-toastify";
+import { toast } from 'react-toastify'
 
-export const Alert = (msg:any) => {
+export const showToast = (msg: string) => {
   toast(msg, {
-    position: toast.POSITION.TOP_CENTER,
-    autoClose: 3000,
-    hideProgressBar : true,
-  });
-};
+    position: toast.POSITION.TOP_RIGHT,
+    autoClose: 1000,
+    hideProgressBar : true
+  })
+}

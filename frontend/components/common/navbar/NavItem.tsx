@@ -1,8 +1,10 @@
 import { NavItemAttr } from '../../../util/dto'
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
+import { useEffect, useState } from 'react'
+import { showToast } from '../alert/Alert'
 
-const Text = styled.span<{ cond: boolean }>`
+const Text = styled.div<{ cond: boolean }>`
   margin: 0 3vw 0 3vw;
   font-size: 1.3vw;
   color: ${(props) => (props.cond ? "#FFC94D" : "#cdcaca")};
@@ -20,11 +22,16 @@ type NavItemProps = {
 
 export default function NavItem({ navItemAttr, currentUrl, onClick }: NavItemProps) {
   const router = useRouter()
+  const [isLogin, setIsLogin] = useState(true)
+
+  useEffect(() => {
+    setIsLogin(window.localStorage.getItem('recoil-persist') !== null ? true : false)
+  }, [])
 
   return (
     <Text
       cond={navItemAttr.url == currentUrl ? true : false}
-      onClick={() => { onClick(navItemAttr.url); router.push(navItemAttr.url)}}
+      onClick={isLogin ? () => { onClick(navItemAttr.url); router.push(navItemAttr.url)} : () => showToast('회원 가입한 유저만 사용 가능합니다.')}
     >
       {navItemAttr.page}
     </Text>

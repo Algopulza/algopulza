@@ -28,7 +28,11 @@ export default function Condition(props: any) {
   const handleChange = (event: any) => {
     setKeyword(event.target.value.trim())
   }
-
+  const onKeyPress = (e:any) => {
+    if (e.key === 'Enter') {
+      props.propFunction(keyword)
+    }
+  }
   return (
     <Container>
       <Subcontainer cond={true}>
@@ -45,6 +49,7 @@ export default function Condition(props: any) {
           size="small"
           value={keyword}
           onChange={handleChange}
+          onKeyPress={onKeyPress}
           InputProps={{endAdornment:
             <IconButton
               onClick={submitSearched}

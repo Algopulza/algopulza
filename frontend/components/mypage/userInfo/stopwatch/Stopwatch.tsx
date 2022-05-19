@@ -4,11 +4,12 @@ import InputTextField from '../../../common/input/InputTextField'
 import Time from './Time'
 import ButtonSubmitting from '../../../common/button/ButtonSubmitting'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { accessTokenState, stopwatchLangauge, stopwatchProbIdState } from '../../../../util/stateCollection'
+import { accessTokenState, checkState, stopwatchLangauge, stopwatchProbIdState } from '../../../../util/stateCollection'
 import { checkStopwatch } from '../../../../util/validationCollection'
 import { handleStopwatchClick } from '../../../../util/inputHandlerCollection'
 import SelectionLanguage from './SelectionLanguage'
 import Popup from '../../../common/alert/Popup'
+import Check from '../../../common/input/Check'
 
 const Container = styled.section`
   width: 100%;
@@ -30,9 +31,9 @@ export default function Stopwatch() {
 
         <div>
           <InputTextField
-            textFieldAttr={{width: '15vw', id: 'problemBojId', label: '문제 번호', marBot: '0px', marRig: '20px', isPw: false, isAf: false}}
+            textFieldAttr={{width: '11vw', id: 'problemBojId', label: '문제 번호', marBot: '0px', marRig: '20px', isPw: false, isAf: false}}
             valid={checkStopwatch}
-            errorMessage='문제 번호(1000 이상의 수)를 입력해주세요.'
+            errorMessage='올바르게 입력해주세요.'
             setter={setStopwatchProbId}
             onKeyDown={() => {}}
           />
@@ -41,12 +42,9 @@ export default function Stopwatch() {
 
         <Time />
 
-        {/* <ButtonSubmitting
-          submittingAttr={{text: '제출', width: '3.5vw', height: '2.2vw', marBot: '0px', fontSize: '1.1vw'}}
-          isImportant={true}
-          onClick={() => {handleStopwatchClick(event, stopwatchProbId, language, accessToken)}}
-        /> */}
         <Popup />
+
+        <Check />
       </Container>
     </AnalyCard>
   )

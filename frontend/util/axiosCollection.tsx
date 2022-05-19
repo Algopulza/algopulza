@@ -49,15 +49,13 @@ export const axiosId = (id: string) => axios({
   }
 })
 
-export const axiosSignup = ( id: string, bojId: string, password: string, solved: string, tried: string ) => axios({
+export const axiosSignup = ( id: string, bojId: string, password: string ) => axios({
     url: `https://k6a408.p.ssafy.io/api/v1/members/join`,
     method: 'post',
     params: {
       'id': id,
       'bojId': bojId,
-      'password': password,
-      'solvedProblems': solved,
-      'triedProblems': tried
+      'password': password
     }
 })
 

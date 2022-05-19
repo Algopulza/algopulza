@@ -1,40 +1,32 @@
+import { showToast } from '../components/common/alert/Alert'
 import { axiosInfo, axiosSignup, axiosStopwatch } from './axiosCollection'
 import { getCurrentTime } from './getCurrentTime'
-import { checkStopwatch} from './validationCollection'
-
-// 예외 처리 결과 메시지 출력
-export const sendMessage = (id: string, message: string) => {
-  const result = document.getElementById(id)
-  result!.innerText = message
-  setTimeout(() => {result!.innerText = ''}, 1000)
-}
-
-export const sendLongMessage = (id: string, message: string) => {
-  const result = document.getElementById(id)
-  result!.innerText = message
-}
-
+import { checkId, checkPassword, checkStopwatch} from './validationCollection'
 
 // 이벤트 핸들러
 export const handleSignupClick = (
-    event: any, id: string, bojId: string, password: string, pwConfirm: string, solvedProblems: string, triedProblems: string, isCheck: boolean, router: any
+    event: any, id: string, bojId: string, password: string, pwConfirm: string, isCheck: boolean, isSame: boolean, router: any
   ) => {
-    if (isCheck) {
-      // console.log('not valid')
-      sendLongMessage('signupResult', '아이디 중복체크를 먼저 해주세요!')
+    if (id.trim() === '' || bojId.trim() === '' || password.trim() === '') {
+      showToast('입력 폼을 완성해주세요.')
+    } else if (!checkId(id)) {
+      showToast('유효하지 않은 아이디입니다.')
+    } else if (!checkPassword(password)) {
+      showToast('유효하지 않은 비밀번호입니다.')
     } else if (password !== pwConfirm) {
-      // console.log('not same')
-      sendLongMessage('signupResult', '비밀번호가 일치하지 않습니다.')
+      showToast('비밀번호가 일치하지 않습니다.')
+    } else if (!isCheck) {
+      showToast('아이디 중복 검사를 실시해주세요.')
+    } else if (isSame) {
+      showToast('중복된 아이디입니다.')
     } else {
-      axiosSignup(id, bojId, password, solvedProblems, triedProblems)
+      axiosSignup(id, bojId, password)
         .then(res => {
-          // console.log(res.data.data)
           router.push('/')
         })
         .catch(err => {
-          // console.log(err.response.data.errorCode === 'M002')
           if (err.response.data.errorCode === 'M002') {
-            sendLongMessage('signupResult', '백준 ID를 입력해 주세요.')
+            showToast('먼저 solved.ac에 가입해주세요!')
           }
         })
     }
@@ -47,12 +39,12 @@ export const handleInfoClick = (event: any, info: any, accessToken: string) => {
     axiosInfo(info, accessToken)
       .then(res => {
         // console.log(res)
-        sendMessage('resultInfo', '감사합니다!')
+        // sendMessage('resultInfo', '감사합니다!')
       })
   }
 }
 
-export const handleStopwatchClick = (event: any, problemBojId: string, language: string, accessToken: string) => {
+export const handleStopwatchClick = (event: any, problemBojId: string, language: string, solved: boolean, accessToken: string) => {
   const min = document.getElementById('min')!.textContent
   const currentTime = getCurrentTime()
 
@@ -60,16 +52,17 @@ export const handleStopwatchClick = (event: any, problemBojId: string, language:
     'problemBojId': problemBojId,
     'solvingTime': Number(min),
     'language': language,
-    'submitTime': currentTime
+    'submitTime': currentTime,
+    'status': Number(solved)
   }
 
   if (checkStopwatch(problemBojId)) {
     axiosStopwatch(info, accessToken)
       .then(res => {
         console.log(res)
-        sendMessage('stopwatchResult', '감사합니다!')
+        // sendMessage('stopwatchResult', '감사합니다!')
       })
   } else if (problemBojId === '' || Number(problemBojId) < 1000) {
-    sendLongMessage('stopwatchResult', '문제 번호를 입력해주세요.')
+    // sendLongMessage('stopwatchResult', '문제 번호를 입력해주세요.')
   }
 }

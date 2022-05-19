@@ -124,3 +124,8 @@ export const stopwatchSecState = atom({
   key: 'stopwatchSecState',
   default: 0,
 })
+
+export const checkState = atom({
+  key: 'checkState',
+  default: false,
+})

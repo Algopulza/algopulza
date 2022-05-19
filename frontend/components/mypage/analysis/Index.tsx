@@ -86,8 +86,8 @@ const Index = ({accessToken, memberId, bojId}:User) => {
   return (
     <Container>
       <Select>
-        <CategoryButton onClick={showEight} color={eight?"white":"black"} bg={eight?"#8F8F8F":"white"} hbg={eight?"#898989":"#F4F4F4"} hc={eight?"white":"black"}>핵심 태그 분석</CategoryButton>
-        <CategoryButton onClick={showTag} color={tag?"white":"black"} bg={tag?"#8F8F8F":"white"} hbg={tag?"#898989":"#F4F4F4"} hc={tag?"white":"black"}>태그 별 해결 문제 수</CategoryButton>
+        <CategoryButton onClick={showEight} color={eight?"white":"black"} bg={eight?"#8F8F8F":"white"} hbg={eight?"#898989":"#F4F4F4"} hc={eight?"white":"black"}>핵심 유형 분석</CategoryButton>
+        <CategoryButton onClick={showTag} color={tag?"white":"black"} bg={tag?"#8F8F8F":"white"} hbg={tag?"#898989":"#F4F4F4"} hc={tag?"white":"black"}>유형 별 해결 문제 수</CategoryButton>
         <CategoryButton onClick={showLanguage} color={language?"white":"black"} bg={language?"#8F8F8F":"white"} hbg={language?"#898989":"#F4F4F4"} hc={language?"white":"black"}>사용언어 비율</CategoryButton>
         <CategoryButton onClick={showMonth} color={month?"white":"black"} bg={month?"#8F8F8F":"white"} hbg={month?"#898989":"#F4F4F4"} hc={month?"white":"black"}>월 별 문제 풀이 갯수</CategoryButton>
         <CategoryButton onClick={showWeakness} color={weakness?"white":"black"} bg={weakness?"#8F8F8F":"white"} hbg={weakness?"#898989":"#F4F4F4"} hc={weakness?"white":"black"}>취약점</CategoryButton>

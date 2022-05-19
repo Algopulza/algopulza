@@ -8,7 +8,7 @@ import DialogTitle from '@mui/material/DialogTitle'
 import Slide from '@mui/material/Slide'
 import { TransitionProps } from '@mui/material/transitions'
 import { useRecoilValue } from 'recoil'
-import { accessTokenState, stopwatchHourState, stopwatchLangauge, stopwatchMinState, stopwatchProbIdState, stopwatchSecState } from '../../../util/stateCollection'
+import { accessTokenState, checkState, stopwatchHourState, stopwatchLangauge, stopwatchMinState, stopwatchProbIdState, stopwatchSecState } from '../../../util/stateCollection'
 import { handleStopwatchClick } from '../../../util/inputHandlerCollection'
 
 const Transition = React.forwardRef(function Transition(
@@ -27,6 +27,7 @@ export default function Popup() {
   const hour = useRecoilValue(stopwatchHourState)
   const min = useRecoilValue(stopwatchMinState)
   const sec = useRecoilValue(stopwatchSecState)
+  const isCheck = useRecoilValue(checkState)
   const accessToken = useRecoilValue(accessTokenState)
 
   const handleClickOpen = () => {
@@ -34,7 +35,7 @@ export default function Popup() {
   }
 
   const handleCloseWithAgree = () => {
-    handleStopwatchClick(event, stopwatchProbId, language, accessToken)
+    handleStopwatchClick(event, stopwatchProbId, language, isCheck, accessToken)
     setOpen(false)
   }
 
@@ -47,7 +48,7 @@ export default function Popup() {
       <Button
         variant="outlined"
         onClick={handleClickOpen}
-        style={{padding: 0, fontSize: '1.1vw', width: '3.5vw', height: '2.2vw'}}
+        style={{padding: 0, fontSize: '1.1vw', width: '3.5vw', height: '2.2vw', marginRight: 20}}
       >
         제출
       </Button>
@@ -63,11 +64,12 @@ export default function Popup() {
             <p>문제 번호: {stopwatchProbId}</p>
             <p>사용 언어: {language}</p>
             <p>풀이 시간: {`${hour}시간 ${min}분 ${sec}초`}</p>
+            <p>해결 여부: {isCheck ? '해결' : '시도'}</p>
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCloseWithDisgree}>Disagree</Button>
-          <Button onClick={handleCloseWithAgree}>Agree</Button>
+          <Button onClick={handleCloseWithDisgree}>뒤로</Button>
+          <Button onClick={handleCloseWithAgree}>제출</Button>
         </DialogActions>
       </Dialog>
     </div>

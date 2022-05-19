@@ -15,7 +15,7 @@ export default function SelectionLanguage() {
 
   return (
     <FormControl sx={{ marginRight: '10px', width: '8vw' }} size="small">
-      <InputLabel id="language">Level</InputLabel>
+      <InputLabel id="language">사용 언어</InputLabel>
       <Select
         labelId="language"
         id="language"
