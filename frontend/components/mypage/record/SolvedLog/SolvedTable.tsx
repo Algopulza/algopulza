@@ -7,6 +7,7 @@ import TableRow from "@mui/material/TableRow"
 import Paper from "@mui/material/Paper"
 import { styled as muistyled } from "@mui/material/styles"
 import styled from "styled-components"
+import { setTimeFormatByDate, setTimeFormatFromHour } from "../../../../util/getLocalTime"
 
 const StyledTableCell = muistyled(TableCell)(() => ({
   [`&.${tableCellClasses.head}`]: {
@@ -49,7 +50,7 @@ export default function SolvedTable(props: any) {
   }
   const handleClick = (bojId: any) => {
     const problemUrl = `https://www.acmicpc.net/problem/${bojId}`
-    window.open(problemUrl)
+    window.open(problemUrl, '', 'width=900, height=600')
   }
 
   return (
@@ -90,11 +91,12 @@ export default function SolvedTable(props: any) {
                 </StyledTableCell>
                 <StyledTableCell align="center">{row.language}</StyledTableCell>
                 <StyledTableCell align="center">
-                  {row.runTime}
-                  <span style={{ color: "#E45624" }}> ms</span>
+                  {row.solvingTime}
+                  <span style={{ color: "#E45624" }}> min</span>
                 </StyledTableCell>
                 <StyledTableCell align="center">
-                  {row.submitTime}
+                  <span>{setTimeFormatByDate(row.submitTime)}</span>
+                  <span>{setTimeFormatFromHour(row.submitTime)}</span>
                 </StyledTableCell>
               </TableRow>
             ))}

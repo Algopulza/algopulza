@@ -18,3 +18,11 @@ export const getLocalTime = () => {
 
   return currKTime
 }
+
+export const setTimeFormatByDate = (timestring: string) => {
+  return timestring.slice(2, 4) + '년' + timestring.slice(5, 7) + '월' + timestring.slice(8, 10) + '일'
+}
+
+export const setTimeFormatFromHour = (timestring: string) => {
+  return timestring.slice(11, 13) + '시' + timestring.slice(14, 16) + '분'
+}
