@@ -17,7 +17,7 @@ class CustomJSONEncoder(JSONEncoder):
         return JSONEncoder.default(self, obj)
 
 def empty_res():
-    res = json.dumps({
+    res = json.dumps([{
         '_id': '',
         'level': 0,
         'tierLevel': 0,
@@ -29,7 +29,7 @@ def empty_res():
         'averageTryCount': 0,
         'tagList': [{'problemId': '', 'name': ''}],
         'problemMark': False
-        })
+        }])
     return res
 
 
