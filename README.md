@@ -220,4 +220,4 @@ CICD <br/>
 
 ### 5️⃣  프로젝트 빌드
 
-- [포팅 메뉴얼]()
+- [포팅 메뉴얼](https://lab.ssafy.com/s06-final/S06P31A408/-/tree/develop/exec/%ED%8F%AC%ED%8C%85%EB%A9%94%EB%89%B4%EC%96%BC)
