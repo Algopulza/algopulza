@@ -1,27 +1,19 @@
-import * as React from 'react'
+
 import Button from '@mui/material/Button'
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
-import Slide from '@mui/material/Slide'
-import { TransitionProps } from '@mui/material/transitions'
 import { useRecoilValue } from 'recoil'
 import { accessTokenState, checkState, stopwatchHourState, stopwatchLangauge, stopwatchMinState, stopwatchProbIdState, stopwatchSecState } from '../../../util/stateCollection'
 import { handleStopwatchClick } from '../../../util/inputHandlerCollection'
+import { Transition } from '../../../util/Transition'
+import { useState } from 'react'
 
-const Transition = React.forwardRef(function Transition(
-  props: TransitionProps & {
-    children: React.ReactElement<any, any>
-  },
-  ref: React.Ref<unknown>,
-) {
-  return <Slide direction="up" ref={ref} {...props} />
-})
 
 export default function Popup() {
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = useState(false)
   const stopwatchProbId = useRecoilValue(stopwatchProbIdState)
   const language = useRecoilValue(stopwatchLangauge)
   const hour = useRecoilValue(stopwatchHourState)

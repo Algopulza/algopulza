@@ -1,31 +1,11 @@
 import styled from "styled-components"
-import Image from "next/image"
-import { getBadgeImage } from "../../../util/BadgeImage"
 import AnalyCard from "../../common/card/AnalyCard"
+import BadgeImage from './BadgeImage'
 
 const TopContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-`
-
-const ProfileImage = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  justify-content: center;
-  align-items: flex-end;
-  border-radius: 4rem;
-  width: 4rem;
-  height: 3rem;
-`
-
-const EXP = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  font-weight: bold;
-  margin-left: 0.1rem;
-  font-size: 0.8rem;
 `
 
 const NickName = styled.div`
@@ -59,16 +39,13 @@ type User = {
   exp: number
 }
 
-export default function Userinfo({algopluzaId, time, exp}: User) {
-  const badge = getBadgeImage(exp).image
 
+
+export default function Userinfo({algopluzaId, time, exp}: User) {
   return (
     <AnalyCard> 
       <TopContainer>
-        <ProfileImage>
-          <Image src={badge} layout="responsive" width={300} height={300}  alt="뱃지 사진이 이상해요" />
-          <EXP>{exp}xp</EXP>
-        </ProfileImage>
+        <BadgeImage exp={exp}/>
         <NickName>{algopluzaId}</NickName>
       </TopContainer>
 

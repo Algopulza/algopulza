@@ -1,13 +1,14 @@
 import styled from "styled-components";
-import { ReactElement } from "react";
+import { ReactElement, useEffect } from "react";
 import Layout from "../../components/common/Layout";
 import UserInfo from "../../components/mypage/userInfo/Index";
 import Analysis from "../../components/mypage/analysis/Index";
 import Record from "../../components/mypage/record/Index";
-import { useRecoilValue } from "recoil";
-import { memberIdState, bojIdState, accessTokenState } from "../../util/stateCollection";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { memberIdState, bojIdState, accessTokenState, solvedRowState } from "../../util/stateCollection";
 import ButtonFloating from "../../components/common/button/ButtonFloating";
 import { GetServerSideProps } from "next";
+import { getSolvingLog } from "../../api/back/analysis/SolvedTable"
 
 const Container = styled.div`
   display: grid;
@@ -26,6 +27,19 @@ export default function Mypage() {
   const accessToken = useRecoilValue(accessTokenState)
   const memberId = useRecoilValue(memberIdState)
   const bojId = useRecoilValue(bojIdState)
+
+  const setRow=useSetRecoilState(solvedRowState)
+  const SolvingLogPage = async () => {
+    await getSolvingLog(accessToken, 0, 5)
+      .then(res => {
+        setRow(res.data.data.content.length)
+        // console.log(res.data.data.content.length)
+      })
+      .catch(err => console.log(err))
+  }
+  useEffect(() => { 
+    SolvingLogPage()
+  }, [])
 
   return (
     
