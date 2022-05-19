@@ -24,8 +24,7 @@ export default function FormTried() {
     .then(res => {
       showToast('제출해주셔서 감사합니다.')
     })
-}
-
+  }
 
   return (
     <Container>

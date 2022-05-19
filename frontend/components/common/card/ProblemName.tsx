@@ -7,6 +7,7 @@ import { useRecoilValue } from 'recoil'
 import { accessTokenState } from '../../../util/stateCollection'
 import { axiosPutBookmark, axiosDeleteBookmark } from '../../../util/axiosCollection'
 import { useState } from 'react'
+import { showToast } from '../alert/Alert'
 
 const Container = styled.section`
   height: 14vh;
@@ -59,8 +60,10 @@ export default function ProblemName({ title, id, problemId, tier, bookmark }: He
   const handleBookmarkPutClick = () => {
     axiosPutBookmark(problemId, accessToken)
       .then(res => {
-        // console.log(res)
         setIsBookmark(true)
+      })
+      .catch(err => {
+        showToast('회원 가입한 유저만 사용 가능합니다.')
       })
   }
 
@@ -69,6 +72,9 @@ export default function ProblemName({ title, id, problemId, tier, bookmark }: He
       .then(res => {
         // console.log(res)
         setIsBookmark(false)
+      })
+      .catch(err => {
+        showToast('회원 가입한 유저만 사용 가능합니다.')
       })
   }
 
