@@ -78,13 +78,23 @@ def recomm_random_solved(app, mongodb, userid):
     # tiers = [tier-1, tier, tier+1]
     
     # 유저의 solving log 불러오기
-    collection = mongodb.solving_log
-    solving_log = collection.find(
-        {'$and': [{'memberId': user_id }, {'status': 'solved'}]},
-        {'_id':0, 'problemId':1}
-    )
-    solved_id_list = [s['problemId'] for s in list(solving_log)]
-
+    # collection = mongodb.solving_log
+    # solving_log = collection.find(
+    #     {'$and': [{'memberId': user_id }, {'status': 'solved'}]},
+    #     {'_id':0, 'problemId':1}
+    # )
+    solving_log = app.mysql_db.execute(text("""
+        SELECT s.problem_id
+        FROM solving_log s
+        JOIN (
+            SELECT id, member_id
+            FROM solving_log
+            WHERE member_id = :user_id
+            AND status = 'solved'
+        ) AS r ON s.id = r.id 
+    """), {'user_id': user_id}).fetchall()
+    solved_id_list = [s[0] for s in list(solving_log)]
+    
     if len(solved_id_list) == 0:
         print('no solved problem')
         return 'empty'
