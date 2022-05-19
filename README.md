@@ -201,7 +201,7 @@ CICD <br/>
 
 - 프로젝트 관리 : [Notion](https://2dend.notion.site/b02854c5d8d04c6eaeac11b767be14a3)
 
-- [기획서]()
+- [기획서(중간발표)](https://lab.ssafy.com/s06-final/S06P31A408/-/blob/develop/exec/%EA%B8%B0%ED%9A%8D%EC%84%9C(%EC%A4%91%EA%B0%84%EB%B0%9C%ED%91%9C)/algopulza_%E1%84%8C%E1%85%AE%E1%86%BC%E1%84%80%E1%85%A1%E1%86%AB%E1%84%87%E1%85%A1%E1%86%AF%E1%84%91%E1%85%AD.pdf)
 
 - [와이어프레임(figma)](https://www.figma.com/file/dKmIaVcWei43K9BTvlIFg6/SSAFY_3rd_%EC%95%8C%EA%B3%A0%ED%92%80%EC%9E%90?node-id=0%3A1)
 
