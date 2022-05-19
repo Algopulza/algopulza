@@ -9,6 +9,7 @@ import { checkSpace } from '../../util/validationCollection'
 import ButtonRouting from '../common/button/ButtonRouting'
 import { showToast } from '../common/alert/Alert'
 import PopupLogin from '../common/alert/PopupLogin'
+import { setCookie } from '../../util/cookieHandler'
 
 const Container = styled.section`
   display: flex;
@@ -36,9 +37,8 @@ export default function Form() {
           setBojId(res.data.data.member.bojId)
           setMemberId(res.data.data.member.memberId)
           setAccessToken(res.data.data.token.accessToken)
-          const cookieKV = 'accessToken=' + res.data.data.token.accessToken
-          document.cookie=cookieKV
           setRefreshToken(res.data.data.token.refreshToken)
+          setCookie('accessToken', res.data.data.token.accessToken, 1)
           router.push('/recommendation')
         })
         .catch(err => {

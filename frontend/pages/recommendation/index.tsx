@@ -118,8 +118,8 @@ Recommendation.getLayout = function getLayout(recommendation: ReactElement) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { req, res } = context;
-  const token = req.cookies.accessToken;
+  const { req, res } = context
+  const token = req.cookies.accessToken
 
   if (!token) {
     return {
@@ -132,5 +132,5 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   return {
     props: {},
-  };
-};
+  }
+}

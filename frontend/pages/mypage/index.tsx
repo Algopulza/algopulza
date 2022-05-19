@@ -35,7 +35,7 @@ export default function Mypage() {
       <Record />
       <ButtonFloating />
     </Container>
-  );
+  )
 }
 
 Mypage.getLayout = function getLayout(analysis: ReactElement) {
@@ -43,8 +43,8 @@ Mypage.getLayout = function getLayout(analysis: ReactElement) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { req, res } = context;
-  const token = req.cookies.accessToken;
+  const { req, res } = context
+  const token = req.cookies.accessToken
 
   if (!token) {
     return {
@@ -52,10 +52,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         destination: "/",
         statusCode: 302,
       },
-    };
+    }
   }
 
   return {
     props: {},
-  };
-};
+  }
+}
