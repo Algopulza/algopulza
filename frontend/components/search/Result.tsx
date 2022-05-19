@@ -1,24 +1,27 @@
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
-import TableCell from '@mui/material/TableCell'
+import TableCell, { tableCellClasses } from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
 import { StylesProvider } from '@mui/styles';
+import { styled as muistyled} from '@mui/material/styles'
 import styled from "styled-components";
 import ResultTag from './ResultTag'
 
 
-const StyledTableCell = styled(TableCell)`
-  background-color: #282828;
-  color: #FFFFFF;
-  font-weight: 'bold';
-`;
+const StyledTableCell = muistyled(TableCell)(() => ({
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor: '#282828',
+    color: '#FFFFFF',
+    fontWeight: 'bold',
+  },
+}));
 
 const Grid = styled.div`
   text-align: center;
-`;
+`
 
 const TextRow = styled.div`
   display: inline-block;
@@ -30,7 +33,7 @@ const TextRow = styled.div`
   &:hover{
     color: #c4c4c4;
   }
-`;
+`
 
 export default function Result(props: any) {
   const { rows } = props
@@ -61,7 +64,7 @@ export default function Result(props: any) {
   return (
     <TableContainer component={Paper} sx={{ marginBottom: '15px' }}>
       <Table aria-label="search" stickyHeader>
-        <TableHead sx={{ background: '#FFC94D' }}>
+        <TableHead>
           <TableRow>
             <StylesProvider injectFirst>
               <StyledTableCell align="center" style={{ width: "10%" }}>문제번호</StyledTableCell>

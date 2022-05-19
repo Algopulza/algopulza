@@ -8,11 +8,13 @@ import AnalyCard from "../../common/card/AnalyCard";
 import { useRecoilValue } from 'recoil'
 import { accessTokenState } from "../../../util/stateCollection"
 import { getSolvingLog } from "../../../api/back/analysis/SolvedTable"
+import FormSolved from "../../recommendation/form/FormSolved"
+import FormTried from "../../recommendation/form/FormTried"
 
 const Row = styled.div`
   display: flex;
   justify-content: center;
-align-items: center;
+  align-items: center;
   gap: 2em;
 `;
 
@@ -59,23 +61,28 @@ const Solved = () => {
   return (
     <AnalyCard>
       <AnalyTitle>풀이 기록</AnalyTitle>
-      {rows.length==0?
-      <Sub>
-        <None><span onClick={handleClick} style={{color:"blue", cursor:"pointer"}}>acmicpc.net</span> 에 제출한 문제가 없어요</None>
-      </Sub>:
-      <>
-      <Row>
-        <SolvedTable rows={rows}/>
-      </Row>
-      <Row>
-        <SolvedPagination
-          page={currentPage}
-          setPage={setPage}
-          total={totalpage}
-        />
-      </Row>
-      </>
-    }
+      { rows.length==0 ?
+        <Sub>
+          <None><span onClick={handleClick} style={{color:"blue", cursor:"pointer"}}>acmicpc.net</span> 에 제출한 문제가 없어요</None>
+        </Sub> :
+        <>
+          <Row>
+            <SolvedTable rows={rows} />
+          </Row>
+          <Row>
+            <SolvedPagination
+              page={currentPage}
+              setPage={setPage}
+              total={totalpage}
+            />
+          </Row>
+        </>
+      }
+
+      <div style={{display: 'flex', justifyContent: 'space-evenly', marginTop: 30}}>
+        <FormSolved />
+        <FormTried />
+      </div>
     </AnalyCard>
   )
 }

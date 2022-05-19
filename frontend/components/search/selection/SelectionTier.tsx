@@ -14,7 +14,7 @@ export default function SelectionTier() {
 
   return (
     <FormControl sx={{ marginRight: '10px', width: '9vw' }} size="small">
-      <InputLabel id="tier">Tier</InputLabel>
+      <InputLabel id="tier">티어</InputLabel>
       <Select
         labelId="tier"
         id="tier"

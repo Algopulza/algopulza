@@ -3,10 +3,9 @@ import NavItem from './NavItem'
 import NavItemMenu from './NavItemMenu'
 import Logout from './Logout'
 import styled from 'styled-components'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useRecoilState } from 'recoil'
 import { pageState } from '../../../util/stateCollection'
-import { showToast } from '../alert/Alert'
 
 const Container = styled.section`
   position: fixed;
