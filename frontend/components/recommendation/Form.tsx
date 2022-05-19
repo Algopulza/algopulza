@@ -59,7 +59,7 @@ export default function Form() {
 
       <InputContainer>
         <Board>
-          <FormSolved />
+          {/* <FormSolved /> */}
           <FormTried />
         </Board>
       </InputContainer>
