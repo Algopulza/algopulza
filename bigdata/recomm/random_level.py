@@ -66,6 +66,7 @@ def random_one(app, mongodb, userid):
         else:
             r['problemMark'] = False
 
+    print(problem)
     problem = dumps(problem)
     
     return problem

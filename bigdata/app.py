@@ -6,6 +6,7 @@ from sqlalchemy import create_engine, text
 from recomm import vulnerability, user_vulnerability, freq_tag, user_freq_tag, save_data, random, random_level
 from recomm.mf import train, recomm_mf
 from algo import analysis, recomm
+import json
 
 
 # set을 list로 변환 후 JSON으로 변환할 수 있도록 커스텀 엔코더 작성
@@ -14,6 +15,22 @@ class CustomJSONEncoder(JSONEncoder):
         if isinstance(obj, set):
             return list(obj)
         return JSONEncoder.default(self, obj)
+
+def empty_res():
+    res = json.dumps({
+        '_id': '',
+        'level': 0,
+        'tierLevel': 0,
+        'tierName': '',
+        'problemId': 0,
+        'bojId': 0,
+        'title': ' ',
+        'acceptedCount': 0,
+        'averageTryCount': 0,
+        'tagList': [{'problemId': '', 'name': ''}],
+        'problemMark': False
+        })
+    return res
 
 
 def create_app(test_config=None):
@@ -128,7 +145,7 @@ def create_app(test_config=None):
         res = freq_tag.recomm_freq_tag(app, mongodb, userid)
         if res == 'empty':
             print('empty mf recomm problems list')
-            return ''
+            return empty_res()
         return res
 
     # 적게 푼 유형 문제 추천
@@ -143,7 +160,7 @@ def create_app(test_config=None):
         res = vulnerability.recomm_vulnerability(app, mongodb, userid)
         if res == 'empty':
             print('empty vulnerable recomm problems list')
-            return ''
+            return empty_res()
         return res
 
     # 풀었던 문제 무작위 추천
@@ -156,7 +173,7 @@ def create_app(test_config=None):
         res = random.recomm_random_solved(app, mongodb, userid)
         if res == 'empty':
             print('empty solved problems list')
-            return ''
+            return empty_res()
         return res
 
     # 유사티어 유저 문제 추천
@@ -165,7 +182,7 @@ def create_app(test_config=None):
         res = recomm_mf.recomm_mf(app, mongodb, userid)
         if res == 'empty':
             print('empty mf recomm problems list')
-            return ''
+            return empty_res()
         return res
 
 
@@ -178,7 +195,7 @@ def create_app(test_config=None):
         res = random_level.random_one(app, mongodb, userid)
         if res == 'empty':
             print('empty solving log')
-            return ''
+            return empty_res()
         return res
 
     # 아직 안 푼 자신 티어 +-1 level 문제 10개 랜덤추천
