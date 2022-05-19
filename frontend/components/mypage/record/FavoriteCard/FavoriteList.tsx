@@ -3,7 +3,7 @@ import FavoriteCard from "../FavoriteCard/FavoriteCard";
 import styled from "styled-components";
 
 const Grid = styled.div`
-  max-height:57vh;
+  max-height: 80vh;
   padding: 0.5rem;
   overflow-y: auto;
   margin-bottom: 30px;

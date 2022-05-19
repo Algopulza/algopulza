@@ -4,6 +4,7 @@ import AnalyTitle from "../../common/AnalyTitle"
 import SolvedTable from "./SolvedLog/SolvedTable"
 import SolvedPagination from "./SolvedLog/SolvedPagination"
 import AnalyCard from "../../common/card/AnalyCard";
+import Divider from '@mui/material/Divider';
 
 import { useRecoilValue } from 'recoil'
 import { accessTokenState } from "../../../util/stateCollection"
@@ -19,17 +20,17 @@ const Row = styled.div`
 `;
 
 const Sub = styled.div`
-display: flex;
-align-items: center;
-justify-content: center;
-margin-top:5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top:5rem;
 `
 
 const None = styled.div`
-display: flex;
-align-items: center;
-justify-content: center;
-font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
 `
 
 const Solved = () => {
@@ -60,7 +61,7 @@ const Solved = () => {
 
   return (
     <AnalyCard>
-      <AnalyTitle>풀이 기록</AnalyTitle>
+      <AnalyTitle><b>풀이 기록</b></AnalyTitle>
       { rows.length==0 ?
         <Sub>
           <None><span onClick={handleClick} style={{color:"blue", cursor:"pointer"}}>acmicpc.net</span> 에 제출한 문제가 없어요</None>
@@ -79,7 +80,10 @@ const Solved = () => {
         </>
       }
 
-      <div style={{display: 'flex', justifyContent: 'space-evenly', marginTop: 30}}>
+      <Divider sx={{ paddingTop: '3em'}}/>
+
+      <AnalyTitle><b>풀이 기록 등록</b></AnalyTitle>
+      <div style={{display: 'flex', justifyContent: 'space-evenly', marginTop: 30, marginBottom: 30}}>
         <FormSolved />
         <FormTried />
       </div>
