@@ -64,7 +64,7 @@ export default function Popup() {
             <p>문제 번호: {stopwatchProbId}</p>
             <p>사용 언어: {language}</p>
             <p>풀이 시간: {`${hour}시간 ${min}분 ${sec}초`}</p>
-            <p>해결 여부: {isCheck ? '해결' : '시도'}</p>
+            <p>해결 여부: {isCheck ? '해결' : '해결 못함'}</p>
           </DialogContentText>
         </DialogContent>
         <DialogActions>
