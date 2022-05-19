@@ -1,5 +1,6 @@
 package com.algopulza.backend.api.controller;
 
+import com.algopulza.backend.api.request.AddDetailSolvingLogReq;
 import com.algopulza.backend.api.request.AddSolvingLogReq;
 import com.algopulza.backend.api.service.SolvingLogService;
 import com.algopulza.backend.common.exception.handler.ErrorResponse;
@@ -24,6 +25,32 @@ public class SolvingLogController {
 
     private final SolvingLogService solvingLogService;
 
+    @PostMapping("/solved")
+    @ApiOperation(value = "solved 풀이기록 등록하기", notes = "solved 풀이기록 등록 요청 API 입니다.")
+    @ApiResponses({@ApiResponse(code = 201, message = ResponseMessage.POST_SOLVED_PROBLEM_SUCCESS),
+            @ApiResponse(code = 400, message = ResponseMessage.BAD_REQUEST, response = ErrorResponse.class),
+            @ApiResponse(code = 401, message = ResponseMessage.UNAUTHORIZED, response = ErrorResponse.class),
+            @ApiResponse(code = 403, message = ResponseMessage.ACCESS_DENIED, response = ErrorResponse.class),
+            @ApiResponse(code = 404, message = ResponseMessage.NOT_FOUND, response = ErrorResponse.class)})
+    public ResponseEntity<BaseResponseBody> addSolvedProblem(@RequestBody AddSolvingLogReq addSolvingLogReq){
+        Long memberId = JwtUtil.getCurrentId();
+        solvingLogService.addSolvingLogFromString(memberId, "solved", addSolvingLogReq.getProblems());
+        return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, ResponseMessage.POST_SOLVED_PROBLEM_SUCCESS));
+    }
+
+    @PostMapping("/tried")
+    @ApiOperation(value = "tried 풀이기록 등록하기", notes = "tried 풀이기록 등록 요청 API 입니다.")
+    @ApiResponses({@ApiResponse(code = 201, message = ResponseMessage.POST_TRIED_PROBLEM_SUCCESS),
+            @ApiResponse(code = 400, message = ResponseMessage.BAD_REQUEST, response = ErrorResponse.class),
+            @ApiResponse(code = 401, message = ResponseMessage.UNAUTHORIZED, response = ErrorResponse.class),
+            @ApiResponse(code = 403, message = ResponseMessage.ACCESS_DENIED, response = ErrorResponse.class),
+            @ApiResponse(code = 404, message = ResponseMessage.NOT_FOUND, response = ErrorResponse.class)})
+    public ResponseEntity<BaseResponseBody> addTriedProblem(@RequestBody AddSolvingLogReq addSolvingLogReq){
+        Long memberId = JwtUtil.getCurrentId();
+        solvingLogService.addSolvingLogFromString(memberId, "tried", addSolvingLogReq.getProblems());
+        return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, ResponseMessage.POST_TRIED_PROBLEM_SUCCESS));
+    }
+
     @PostMapping("")
     @ApiOperation(value = "풀이기록 추가", notes = "풀이기록 등록 요청 API 입니다.")
     @ApiResponses({@ApiResponse(code = 201, message = ResponseMessage.POST_DETAIL_SOLVED_PROBLEM_SUCCESS),
@@ -31,9 +58,9 @@ public class SolvingLogController {
             @ApiResponse(code = 401, message = ResponseMessage.UNAUTHORIZED, response = ErrorResponse.class),
             @ApiResponse(code = 403, message = ResponseMessage.ACCESS_DENIED, response = ErrorResponse.class),
             @ApiResponse(code = 404, message = ResponseMessage.NOT_FOUND, response = ErrorResponse.class)})
-    public ResponseEntity<BaseResponseBody> addDetailSolvingLog(@RequestBody AddSolvingLogReq addSolvingLogReq) {
+    public ResponseEntity<BaseResponseBody> addDetailSolvingLog(@RequestBody AddDetailSolvingLogReq addDetailSolvingLogReq) {
         Long memberId = JwtUtil.getCurrentId();
-        solvingLogService.addSolvingLog(memberId, addSolvingLogReq);
+        solvingLogService.addDetailSolvingLog(memberId, addDetailSolvingLogReq);
         return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.CREATED, ResponseMessage.POST_DETAIL_SOLVED_PROBLEM_SUCCESS));
     }
 
