@@ -208,7 +208,7 @@ public class ProblemServiceImpl implements ProblemService {
      * 필터링 조건이 있다면 필터링해서 반환, 없다면 전체 문제 반환
      */
     @Override
-    public Page<ProblemRes> getProblemList(Long memberId, String tierName, Integer tierLevel, String title, String tagIds, Pageable pageable) {
+    public Page<ProblemRes> getProblemList(String tierName, Integer tierLevel, String title, String tagIds, Pageable pageable) {
         // 1,2,3 형태의 태그 ID 리스트를 Set<Long> 형태로 변환
         Set<Long> tagIdSet = null;
         if (tagIds != null) {
@@ -226,7 +226,7 @@ public class ProblemServiceImpl implements ProblemService {
         }
 
         // Problem List 조회
-        Page<ProblemRes> problemResList = problemRepository.findProblemRes(memberId, tierName, tierLevel, title, problemIdList, pageable);
+        Page<ProblemRes> problemResList = problemRepository.findProblemRes(null, tierName, tierLevel, title, problemIdList, pageable);
 
         // Problem별로 Tag List 조회
         for (ProblemRes problemRes : problemResList) {
@@ -266,27 +266,6 @@ public class ProblemServiceImpl implements ProblemService {
                             .goldList(getRandomProblemListByCondition(memberId, 1, "Gold", 5))
                             .platinumList(getRandomProblemListByCondition(memberId, 1, "Platinum", 5))
                             .build();
-    }
-
-    /**
-     * 풀었던 문제들 중 랜덤으로 5개를 반환
-     */
-    @Override
-    public List<ProblemRes> getRandomSolvedProblemList(Long memberId) {
-        // memberId가 푼 문제의 Id 리스트
-        List<Long> problemIdList = problemRepository.findProblemIdByStatus(memberId, "solved");
-        Set<Long> problemIdSet = new HashSet<>();
-
-        // 반환할 문제 정보 개수 (푼 문제의 수가 5개보다 적다면 푼 문제 모두 반환)
-        int selectCount = Math.min(problemIdList.size(), 5);
-
-        // 랜덤으로 5개 선택
-        while (problemIdSet.size() < selectCount) {
-            problemIdSet.add(problemIdList.get((int) (Math.random() * problemIdList.size())));
-        }
-
-        // 랜덤으로 선택된 5개의 문제 아이디로 문제 정보 조회
-        return problemRepository.findProblemResByIdSet(memberId, problemIdSet);
     }
 
     /**

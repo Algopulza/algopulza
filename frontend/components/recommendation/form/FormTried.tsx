@@ -5,7 +5,7 @@ import { axiosTried } from '../../../util/axiosCollection'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { accessTokenState, bojIdState, triedState } from '../../../util/stateCollection'
 import { checkSpace } from '../../../util/validationCollection'
-import { sendMessage } from '../../../util/inputHandlerCollection'
+// import { sendMessage } from '../../../util/inputHandlerCollection'
 
 const Container = styled.section`
   display: flex;
@@ -19,12 +19,12 @@ export default function FormTried() {
   const bojId = useRecoilValue(bojIdState)
   const accessToken = useRecoilValue(accessTokenState)
 
-  const handleClick = (event: any) => {
-    axiosTried(bojId, tried, accessToken)
-      .then(res => {
-        sendMessage('resultTried', '감사합니다!')
-      })
-  }
+  // const handleClick = (event: any) => {
+  //   axiosTried(bojId, tried, accessToken)
+  //     .then(res => {
+  //       sendMessage('resultTried', '감사합니다!')
+  //     })
+  // }
 
   return (
     <Container>
@@ -41,7 +41,7 @@ export default function FormTried() {
       <ButtonSubmitting
         submittingAttr={{text: '시도한 문제 제공', width: '12.5vw', height: '2.5vw', marBot: '0', fontSize: '1vw'}}
         isImportant={true}
-        onClick={handleClick}
+        onClick={() => {}}
       />
     </Container>
   )

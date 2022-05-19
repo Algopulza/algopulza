@@ -1,8 +1,8 @@
 package com.algopulza.backend.db.repository;
 
+import com.algopulza.backend.api.dto.CountDto;
 import com.algopulza.backend.api.response.*;
 import com.algopulza.backend.db.entity.*;
-import com.querydsl.core.Tuple;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -11,11 +11,7 @@ import java.util.Optional;
 
 public interface SolvingLogRepositoryCustom {
 
-    List<Problem> findProblemByMember(Member member);
-
     Page<SolvingLogRes> findByMemberId(Long memberId, Pageable pageable);
-
-    List<SolvingLog> findByProblem(Member member, Problem problem);
 
     Optional<SolvingLog> findByProblemAndLanguage(Member member, Problem problem, String language);
 
@@ -24,5 +20,7 @@ public interface SolvingLogRepositoryCustom {
     List<SolvedCountByYearAndMonthRes> countByStatusAndSubmitDate(Long memberId, String status);
 
     SolvingLogStatisticsRes findStatisticsByMemberId(Long memberId);
+
+    List<CountDto> countByTagAndStatus(Long memberId, String status);
 
 }
