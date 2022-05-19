@@ -202,7 +202,7 @@
 
 - [최종 발표물]()
 
-- [UCC]()
+- [UCC](https://www.youtube.com/watch?v=pg8k7BAyT4M)
 
 ---
 
