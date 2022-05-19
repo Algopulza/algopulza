@@ -12,7 +12,12 @@ const Container = styled.div`
 
 const Month = ({accessToken}:User) => {
   const ApexCharts = dynamic(() => import("react-apexcharts"), { ssr: false });
-  const [series, setSeries] = useState<Array<any>>([]);
+  const [series, setSeries] = useState<Array<any>>([
+    {
+      name: "2022년",
+      data:[0,0,0,0,0,0,0,0,0,0,0,0]
+    }
+  ]);
 
   const AnalUser = async () => {
     await getSolved(accessToken)
@@ -26,6 +31,7 @@ const Month = ({accessToken}:User) => {
             data: year[idx].solvedCount
           })
         }
+        if(year.length!==0)
         setSeries(temp);
       })
       .catch((err) => console.log(err));

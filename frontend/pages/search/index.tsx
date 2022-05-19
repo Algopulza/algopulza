@@ -52,7 +52,7 @@ export default function Search() {
     await getSearchProblems(accessToken, 10, currentPage, tier, level, tag, searched)
       .then(res => {
         // console.log(res.data.data)
-        console.log('페이지 api', currentPage)
+        // console.log('페이지 api', currentPage)
         setRows(res.data.data.content)
       })
       .catch(err => console.log(err))
