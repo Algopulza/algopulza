@@ -37,7 +37,7 @@
 
 🧑 강동원 : Frontend, Data Analysis
 
-🧑 장준섭 : Frontend
+🧑 장준범 : Frontend
 
 👩 김혜지 : Backend, Server
 
@@ -97,9 +97,58 @@
 
 ### 2️⃣  기술 스택
 
-1. 이슈관리 : Jira
-2. 형상관리 : Gitlab
-3. 커뮤니케이션 : Mattermost, Gather, Notion, Figma
+
+<details><summary> <b> 상세 기술스택 및 버전</b> </summary>
+
+|     구분     |      기술스택     |     버전   |
+|--------------| ------------------|------------|
+| 이슈관리      | Jira              | \-         |
+| 형상관리      | Gitlab            | \-         |
+| 커뮤니케이션  | Mattermost        | \-         |
+|              | Gathertown        | \-         |
+|              | Notion            | \-         |
+|              | Figma             | \-         |
+| OS           | Window10          | \-         |
+|              | Mac               | \-         |
+| IDE          | IntelliJ          | \-         |
+|              | Visual Studio Code| 1.67.1     |
+| Frontend     | HTML5             | \-         |
+|              | CSS3              | \-         |
+|              | TypeScript        | 4.6.3      |
+|              | Next.js           | 12.1.5     |
+|              | React             | 18.0.8     |
+|              | Recoil            | 0.7.2      |
+|              | styled-components | 5.3.5      |
+|              | apexcharts        | 3.35.0     |
+|              | slick-carousel    | 1.8.1      |
+|              | mui/material      | 5.6.3      |
+| Backend      | Java              | 11         |
+|              | SpringBoot        | 2.6.x      |
+|              | Swagger           | 3.x.x      |
+|              | QueryDsl-JPA      | 5.x.x      |
+|              | JWT               | 0.9.       |
+|              | Lombok            | \-         |
+|              | Security          | 2.5.5      |
+|              | Validation        | 2.6.2      |
+|              | AWS               | 2.2.6      |
+| BigData      | Python            | 3.9.6      |
+|              | Flask             | 2.1.1      |
+|              | Numpy             | 1.22.3     |
+|              | Pandas            | 1.4.2      |
+|              | Scikit-learn      | 1.0.2      |
+|              | Scipy             | 1.8.0      |
+|              | Sklearn           | 0.0        |
+| Database     | MySQL Workbench   | 8.0.x      |
+|              | Mongo DB          | \-         |
+|              | SAWS S3           | \-         |
+|              | AWS RDS           | \-         |
+| CI/CD        | AWS EC2           | \-         |
+|              | Jenkins           | \-         |
+|              | Docker            | \-         |
+|              | Ngnix             | \-         |
+
+</details>
+
 4. 개발 환경
    - OS
      - Windows10
