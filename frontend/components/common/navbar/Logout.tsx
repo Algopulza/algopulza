@@ -33,6 +33,7 @@ export default function Logout() {
   const resetId = useResetRecoilState(idState)
   const resetUserId = useResetRecoilState(bojIdState)
   const resetAlgoId = useResetRecoilState(algoIdState)
+  const resetMemberId = useResetRecoilState(memberIdState)
   const resetAccssToken = useResetRecoilState(accessTokenState)
   const resetRefreshToken = useResetRecoilState(refreshTokenState)
 
@@ -48,6 +49,7 @@ export default function Logout() {
       resetAlgoId()
       resetAccssToken()
       resetRefreshToken()
+      resetMemberId()
       delCookie("accessToken")
       router.push("/")
     })
