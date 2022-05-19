@@ -5,7 +5,7 @@ import UserInfo from "../../components/mypage/userInfo/Index"
 import Analysis from "../../components/mypage/analysis/Index"
 import Record from "../../components/mypage/record/Index"
 import { useRecoilValue, useSetRecoilState } from "recoil"
-import { memberIdState, bojIdState, accessTokenState, solvedRowState } from "../../util/stateCollection"
+import { memberIdState, bojIdState, accessTokenState, solvedRowState, checkState } from "../../util/stateCollection"
 import ButtonFloating from "../../components/common/button/ButtonFloating"
 import { GetServerSideProps } from "next"
 import { getSolvingLog } from "../../api/back/analysis/SolvedTable"
@@ -27,6 +27,7 @@ export default function Mypage() {
   const accessToken = useRecoilValue(accessTokenState)
   const memberId = useRecoilValue(memberIdState)
   const bojId = useRecoilValue(bojIdState)
+  const setIsCheck = useSetRecoilState(checkState)
 
   const setRow = useSetRecoilState(solvedRowState)
   const SolvingLogPage = async () => {
@@ -39,6 +40,7 @@ export default function Mypage() {
 
   useEffect(() => {
     SolvingLogPage()
+    setIsCheck(false)
   }, [])
 
   return (

@@ -1,14 +1,7 @@
-<<<<<<< HEAD
 import { showToastSuccess, showToastError } from '../components/common/alert/Alert'
 import { axiosInfo, axiosSignup, axiosStopwatch } from './axiosCollection'
 import { getLocalTime } from './getLocalTime'
 import { checkId, checkPassword, checkStopwatch} from './validationCollection'
-=======
-import { showToast } from "../components/common/alert/Alert"
-import { axiosInfo, axiosSignup, axiosStopwatch } from "./axiosCollection"
-import { getLocalTime } from "./getLocalTime"
-import { checkId, checkPassword, checkStopwatch } from "./validationCollection"
->>>>>>> c71622d47cff5825d8254572bac95d9e54baaca9
 
 // 메시지 샌더
 export const sendLongMessage = (id: string, msg: string) => {
@@ -73,13 +66,13 @@ export const handleStopwatchClick = (
     submitTime: currentTime,
     status: Number(solved),
   }
+  
+  axiosStopwatch(info, accessToken)
+    .then((res: any) => {
+      showToastSuccess('제출해주셔서 감사합니다!')
+    })
+    .catch(err => {
+      showToastError('올바른 문제 번호를 입력해주세요.')
+    })
 
-  if (checkStopwatch(problemBojId)) {
-    axiosStopwatch(info, accessToken)
-      .then((res: any) => {
-        showToastSuccess('제출해주셔서 감사합니다!')
-      })
-  } else if (problemBojId === '' || Number(problemBojId) < 1000) {
-    showToastError('올바른 문제 번호를 입력해주세요.')
-  }
 }

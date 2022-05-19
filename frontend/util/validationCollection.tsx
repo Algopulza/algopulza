@@ -29,7 +29,3 @@ export const checkStopwatch = (probId: string) => {
     ? true
     : false
 }
-
-export const checkStopwatchMin = (min: string) => {
-  return min === "00" ? false : true
-}
