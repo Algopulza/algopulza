@@ -8,7 +8,7 @@ const Title = styled.span`
   margin-left: 40px;
   font-size: 1.8vw;
   font-weight: 700;
-  color: #FFFFFF;
+  color: #ffffff;
   cursor: pointer;
 `
 

@@ -9,13 +9,13 @@ const Text = styled.div<{ cond: boolean }>`
   color: ${(props) => (props.cond ? "#FFC94D" : "#cdcaca")};
   cursor: pointer;
   &:hover {
-    color: #FFC94D;
+    color: #ffc94d;
   }
 `
 
 type NavItemProps = {
-  navItemAttr: NavItemAttr,
-  currentUrl: String,
+  navItemAttr: NavItemAttr
+  currentUrl: String
   onClick(path: string): void
   isLogin: boolean
 }

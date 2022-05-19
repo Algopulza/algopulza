@@ -1,48 +1,47 @@
-import styled from "styled-components";
-import dynamic from "next/dynamic";
-import { useEffect, useState } from "react";
-import { getAnalyEight } from "../../../api/flask/analysis/AnalyEight";
-import { User } from "../../../pages/mypage";
+import styled from "styled-components"
+import dynamic from "next/dynamic"
+import { useEffect, useState } from "react"
+import { getAnalyEight } from "../../../api/flask/analysis/AnalyEight"
+import { User } from "../../../pages/mypage"
 
 const Container = styled.div`
-display: flex;
-justify-content: center;
-align-items: center;
-`;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
 
-export default function Eight({accessToken, bojId}:User) {
-  const ApexCharts = dynamic(() => import("react-apexcharts"), { ssr: false });
-  const [label, setLabel] = useState<Array<string>>([]);
-  const [solved, setSolved] = useState<Array<number>>([]);
+export default function Eight({ accessToken, bojId }: User) {
+  const ApexCharts = dynamic(() => import("react-apexcharts"), { ssr: false })
+  const [label, setLabel] = useState<Array<string>>([])
+  const [solved, setSolved] = useState<Array<number>>([])
 
   const AnalUser = async () => {
     await getAnalyEight(accessToken, bojId)
       .then((res) => {
-        // console.log(res)
-        const week = res.data;
-        let label_temp = [];
-        let solved_temp = [];
-        let idx = 0;
+        const week = res.data
+        let label_temp = []
+        let solved_temp = []
+        let idx = 0
         for (idx; idx < week.length; idx++) {
-          label_temp.push(week[idx].name);
-          solved_temp.push(week[idx].solvedcnt);
+          label_temp.push(week[idx].name)
+          solved_temp.push(week[idx].solvedcnt)
         }
-        setLabel(label_temp);
-        setSolved(solved_temp);
+        setLabel(label_temp)
+        setSolved(solved_temp)
       })
-      .catch((err) => console.log(err));
-  };
+      .catch((err) => console.log(err))
+  }
 
   useEffect(() => {
     AnalUser();
-  }, []);
-  
+  }, [])
+
   return (
     <Container>
       <ApexCharts
         type="radar"
         height={500}
-        width= {750}
+        width={750}
         series={[
           {
             name: "Tag",
@@ -50,57 +49,65 @@ export default function Eight({accessToken, bojId}:User) {
           },
         ]}
         options={{
-          responsive:[{
-            breakpoint : 1290,
-            options: {
-              chart:{
-                width: 450,
-                height: 300,
-              },
-              xaxis:{
-                labels:{
-                  show:true,
-                  style:{
-                   fontSize:"10px" 
-                  }
-                }
-              },
-              plotOptions: {
-                radar: {
-                  size: 100
+          responsive: [
+            {
+              breakpoint: 1290,
+              options: {
+                chart: {
+                  width: 450,
+                  height: 300,
+                },
+                xaxis: {
+                  labels: {
+                    show: true,
+                    style: {
+                      fontSize: "10px",
+                    },
+                  },
+                },
+                plotOptions: {
+                  radar: {
+                    size: 100,
+                  },
                 },
               },
-            },   
-        },
-        {
-          breakpoint : 780,
-          options: {
-            chart:{
-              width: 350,
-              height: 250,
             },
-            xaxis:{
-              labels:{
-                show:false,
-              }
+            {
+              breakpoint: 780,
+              options: {
+                chart: {
+                  width: 350,
+                  height: 250,
+                },
+                xaxis: {
+                  labels: {
+                    show: false,
+                  },
+                },
+              },
             },
-          },   
-      }
-      ],
-      tooltip: {
-        custom: function({series, seriesIndex, dataPointIndex, w}) {
-          return '<span style="font-size:15px">' +  w.globals.labels[dataPointIndex] + "문제 중" + series[seriesIndex][dataPointIndex] + "%를 푸셨습니다!" + '</span>'
-        }
-      },
+          ],
+          tooltip: {
+            custom: function ({ series, seriesIndex, dataPointIndex, w }) {
+              return (
+                '<span style="font-size:15px">' +
+                w.globals.labels[dataPointIndex] +
+                "문제 중" +
+                series[seriesIndex][dataPointIndex] +
+                "%를 푸셨습니다!" +
+                "</span>"
+              );
+            },
+          },
           theme: {
             mode: "light",
           },
           chart: {
             type: "radar",
             background: "transparent",
-            toolbar:{
-              show:false
-            }
+            toolbar: {
+              show: false,
+            },
           },
           stroke: {
             curve: "smooth",
@@ -113,12 +120,12 @@ export default function Eight({accessToken, bojId}:User) {
           },
           xaxis: {
             categories: label,
-            labels:{
-              style:{
-                fontSize:'15px',
-                fontWeight:'bold'
-              }
-            }
+            labels: {
+              style: {
+                fontSize: "15px",
+                fontWeight: "bold",
+              },
+            },
           },
           plotOptions: {
             radar: {
@@ -135,5 +142,5 @@ export default function Eight({accessToken, bojId}:User) {
         }}
       />
     </Container>
-  );
+  )
 }

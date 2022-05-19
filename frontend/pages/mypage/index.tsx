@@ -1,13 +1,13 @@
-import styled from "styled-components";
-import { ReactElement, useEffect } from "react";
-import Layout from "../../components/common/Layout";
-import UserInfo from "../../components/mypage/userInfo/Index";
-import Analysis from "../../components/mypage/analysis/Index";
-import Record from "../../components/mypage/record/Index";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { memberIdState, bojIdState, accessTokenState, solvedRowState } from "../../util/stateCollection";
-import ButtonFloating from "../../components/common/button/ButtonFloating";
-import { GetServerSideProps } from "next";
+import styled from "styled-components"
+import { ReactElement, useEffect } from "react"
+import Layout from "../../components/common/Layout"
+import UserInfo from "../../components/mypage/userInfo/Index"
+import Analysis from "../../components/mypage/analysis/Index"
+import Record from "../../components/mypage/record/Index"
+import { useRecoilValue, useSetRecoilState } from "recoil"
+import { memberIdState, bojIdState, accessTokenState, solvedRowState } from "../../util/stateCollection"
+import ButtonFloating from "../../components/common/button/ButtonFloating"
+import { GetServerSideProps } from "next"
 import { getSolvingLog } from "../../api/back/analysis/SolvedTable"
 
 const Container = styled.div`
@@ -18,9 +18,9 @@ const Container = styled.div`
 `
 
 export type User = {
-  accessToken : string
-  memberId : number
-  bojId : string
+  accessToken: string
+  memberId: number
+  bojId: string
 }
 
 export default function Mypage() {
@@ -28,24 +28,23 @@ export default function Mypage() {
   const memberId = useRecoilValue(memberIdState)
   const bojId = useRecoilValue(bojIdState)
 
-  const setRow=useSetRecoilState(solvedRowState)
+  const setRow = useSetRecoilState(solvedRowState)
   const SolvingLogPage = async () => {
     await getSolvingLog(accessToken, 0, 5)
-      .then(res => {
-        setRow(res.data.data.content.length)
-        // console.log(res.data.data.content.length)
+      .then((res) => {
+        setRow(res.data.data.content.length);
       })
-      .catch(err => console.log(err))
+      .catch((err) => console.log(err))
   }
-  useEffect(() => { 
+
+  useEffect(() => {
     SolvingLogPage()
   }, [])
 
   return (
-    
     <Container>
-      <UserInfo accessToken={accessToken} memberId={memberId} bojId={bojId}/>
-      <Analysis accessToken={accessToken} memberId={memberId} bojId={bojId}/> 
+      <UserInfo accessToken={accessToken} memberId={memberId} bojId={bojId} />
+      <Analysis accessToken={accessToken} memberId={memberId} bojId={bojId} />
       <Record />
       <ButtonFloating />
     </Container>

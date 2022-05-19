@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import AnalyCard from "../../common/card/AnalyCard"
-import BadgeImage from './BadgeImage'
+import BadgeImage from "./BadgeImage"
 
 const TopContainer = styled.div`
   display: flex;
@@ -27,8 +27,8 @@ const BottomContainer = styled.div`
 
 const Text = styled.span`
   font-weight: bold;
-  color: #0864B9;
-  margin-left:5px;
+  color: #0864b9;
+  margin-left: 5px;
 `
 
 type User = {
@@ -37,15 +37,13 @@ type User = {
   tierName: string
   time: number
   exp: number
-}
+};
 
-
-
-export default function Userinfo({algopluzaId, time, exp}: User) {
+export default function Userinfo({ algopluzaId, time, exp }: User) {
   return (
-    <AnalyCard> 
+    <AnalyCard>
       <TopContainer>
-        <BadgeImage exp={exp}/>
+        <BadgeImage exp={exp} />
         <NickName>{algopluzaId}</NickName>
       </TopContainer>
 

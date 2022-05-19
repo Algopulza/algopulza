@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from "react";
-import styled from "styled-components";
-import dynamic from "next/dynamic";
-import { getLanguages } from "../../../api/back/analysis/Language";
-import { User } from "../../../pages/mypage";
+import { useEffect, useState } from "react"
+import styled from "styled-components"
+import dynamic from "next/dynamic"
+import { getLanguages } from "../../../api/back/analysis/Language"
+import { User } from "../../../pages/mypage"
 
 const Container = styled.div`
-display: flex;
-justify-content: center;
-align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `
 
-const Language = ({accessToken}:User) => {
+const Language = ({ accessToken }: User) => {
   const ApexCharts = dynamic(() => import("react-apexcharts"), { ssr: false })
   const [language, setLanguage] = useState<Array<string>>([])
   const [percent, setPercent] = useState<Array<number>>([])
@@ -20,7 +20,7 @@ const Language = ({accessToken}:User) => {
       .then((res) => {
         const lan = res.data.data
         let lan_temp = []
-        let  per_temp = []
+        let per_temp = []
         let idx = 0
         for (idx; idx < lan.length; idx++) {
           lan_temp.push(lan[idx].language)
@@ -30,111 +30,112 @@ const Language = ({accessToken}:User) => {
         setPercent(per_temp)
       })
       .catch((err) => console.log(err))
-  };
+  }
 
   useEffect(() => {
-    AnalUser();
-  }, []);
+    AnalUser()
+  }, [])
+
   return (
     <Container>
       <ApexCharts
         type="donut"
         series={percent}
         height={500}
-        width= {750}
+        width={750}
         options={{
-          responsive:[{
-            breakpoint : 1290,
-            options: {
-              chart:{
-                width: 450,
-                height: 300,
-              },
-              xaxis:{
-                label:{
-                  show:false,
-                }
-              },             
-              dataLabels:{
-                enabled: true,
-                style:{
-                  fontSize:"15px"
-                }
-              },
-              legend:{
-                show:true,
-                fontSize:'15px',
-              },
-              plotOptions: {
-                pie: {
-                  customScale: 0.8,
-                  donut: {
-                    size: "60%",
+          responsive: [
+            {
+              breakpoint: 1290,
+              options: {
+                chart: {
+                  width: 450,
+                  height: 300,
                 },
-              }
-                
+                xaxis: {
+                  label: {
+                    show: false,
+                  },
+                },
+                dataLabels: {
+                  enabled: true,
+                  style: {
+                    fontSize: "15px",
+                  },
+                },
+                legend: {
+                  show: true,
+                  fontSize: "15px",
+                },
+                plotOptions: {
+                  pie: {
+                    customScale: 0.8,
+                    donut: {
+                      size: "60%",
+                    },
+                  },
+                },
               },
-            },   
-        },
-        {
-          breakpoint : 780,
-          options: {
-            chart:{
-              width: 350,
-              height: 250,
             },
-            dataLabels:{
-              enabled: true,
-              style:{
-                fontSize:"10px"
-              }
+            {
+              breakpoint: 780,
+              options: {
+                chart: {
+                  width: 350,
+                  height: 250,
+                },
+                dataLabels: {
+                  enabled: true,
+                  style: {
+                    fontSize: "10px",
+                  },
+                },
+                legend: {
+                  show: true,
+                  fontSize: "10px",
+                },
+              },
             },
-            legend:{
-              show:true,
-              fontSize:'10px',
-            },
-          },   
-      }
-      ],
-          dataLabels:{
+          ],
+          dataLabels: {
             enabled: true,
-            style:{
-              fontSize:"25px"
-            }
+            style: {
+              fontSize: "25px",
+            },
           },
-          legend:{
-            show:true,
-            fontSize:'25px',
+          legend: {
+            show: true,
+            fontSize: "25px",
           },
-          chart:{
-            toolbar:{
-              show:false
-            }
+          chart: {
+            toolbar: {
+              show: false,
+            },
           },
           plotOptions: {
             pie: {
               customScale: 0.9,
               donut: {
                 size: "60%",
-                labels:{
+                labels: {
                   show: true,
-                  name:{
-                    fontSize: '60px',
+                  name: {
+                    fontSize: "60px",
                   },
-                  value:{
+                  value: {
                     show: true,
-                    fontSize: '40px',
-                    offsetY: 50
+                    fontSize: "40px",
+                    offsetY: 50,
                   },
-                }
-              }
+                },
+              },
             },
           },
-            labels: language
+          labels: language,
         }}
       />
     </Container>
-  );
-};
+  )
+}
 
-export default Language;
+export default Language

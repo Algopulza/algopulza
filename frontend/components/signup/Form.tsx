@@ -61,22 +61,38 @@ export default function Form() {
   }
 
   return (
-    <Container>     
+    <Container>
       <Row>
         <CellLeft>
           <InputTextField
-            textFieldAttr={{width: '14vw', id: 'id', label: '아이디', marBot: '0', marRig: '0px', isPw: false, isAf: true}}
+            textFieldAttr={{
+              width: "14vw",
+              id: "id",
+              label: "아이디",
+              marBot: "0",
+              marRig: "0px",
+              isPw: false,
+              isAf: true,
+            }}
             valid={checkId}
-            errorMessage='2 글자 이상의 영문자 및 숫자이어야 합니다.'
+            errorMessage="2 글자 이상의 영문자 및 숫자이어야 합니다."
             setter={setId}
             onKeyDown={() => {}}
           />
         </CellLeft>
         <CellRight>
           <ButtonSubmittingOutlined
-            submittingAttr={{text: '중복확인', width: '4.3vw', height: '2.6vw', marBot: '0px', fontSize: '0.8vw'}}
+            submittingAttr={{
+              text: "중복확인",
+              width: "4.3vw",
+              height: "2.6vw",
+              marBot: "0px",
+              fontSize: "0.8vw",
+            }}
             isImportant={false}
-            onClick={() => {handleIdClick(event, id)}}
+            onClick={() => {
+              handleIdClick(event, id);
+            }}
           />
         </CellRight>
       </Row>
@@ -84,9 +100,17 @@ export default function Form() {
       <Row>
         <CellLeft>
           <InputTextField
-            textFieldAttr={{width: '14vw', id: 'bojId', label: '백준 아이디', marBot: '0', marRig: '0px', isPw: false, isAf: false}}
+            textFieldAttr={{
+              width: "14vw",
+              id: "bojId",
+              label: "백준 아이디",
+              marBot: "0",
+              marRig: "0px",
+              isPw: false,
+              isAf: false,
+            }}
             valid={nothing}
-            errorMessage='백준 아이디를 입력해주세요.'
+            errorMessage="백준 아이디를 입력해주세요."
             setter={setBojId}
             onKeyDown={() => {}}
           />
@@ -96,9 +120,17 @@ export default function Form() {
       <Row>
         <CellLeft>
           <InputTextField
-            textFieldAttr={{width: '14vw', id: 'password', label: '비밀번호', marBot: '0px', marRig: '0px', isPw: true, isAf: false}}
+            textFieldAttr={{
+              width: "14vw",
+              id: "password",
+              label: "비밀번호",
+              marBot: "0px",
+              marRig: "0px",
+              isPw: true,
+              isAf: false,
+            }}
             valid={checkPassword}
-            errorMessage='8~14 글자의 영문자 및 특수문자이어야 합니다.'
+            errorMessage="8~14 글자의 영문자 및 특수문자이어야 합니다."
             setter={setPassword}
             onKeyDown={() => {}}
           />
@@ -122,9 +154,15 @@ export default function Form() {
 
       <Row style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
         <ButtonSubmitting
-          submittingAttr={{text: '회원 가입', width: '10vw', height: '2.3vw', marBot: '0px', fontSize: '1.1vw'}}
+          submittingAttr={{
+            text: "회원 가입",
+            width: "10vw",
+            height: "2.3vw",
+            marBot: "0px",
+            fontSize: "1.1vw",
+          }}
           isImportant={true}
-          onClick={() => {handleSignupClick(event, id, bojId, password, pwConfirm, isCheck, isSame, router)}}
+          onClick={() => { handleSignupClick( event, id, bojId, password, pwConfirm, isCheck, isSame, router) }}
         />
       </Row>
     </Container>

@@ -30,7 +30,7 @@ export default function Form() {
   const router = useRouter()
 
   const handleClick = () => {
-    if (id.trim() !== '' || password.trim() !== '') {
+    if (id.trim() !== "" || password.trim() !== "") {
       axiosLogin(id, password)
         .then(res => {
           setAlgoId(res.data.data.member.algopluzaId)
@@ -44,45 +44,49 @@ export default function Form() {
         .catch(err => {
           sendLongMessage('loginMessage', '아이디와 비밀번호를 정확히 입력해주세요.')
         })
+        .catch((err) => {
+          sendLongMessage('loginMessage', '아이디와 비밀번호를 정확히 입력해주세요.')
+        })
     } else {
       sendLongMessage('loginMessage', '아이디와 비밀번호를 정확히 입력해주세요.')
     }
   }
+
   const handleKeyDown = (event: any) => {
-    if (event.key === 'Enter') {
+    if (event.key === "Enter") {
       handleClick()
     }
   }
 
   return (
     <Container>
-      <div style={{marginBottom: 40}}>
+      <div style={{ marginBottom: 40 }}>
         <InputTextField
-          textFieldAttr={{width: '20vw', id: 'id', label: '아이디', marBot: '15px', marRig: '0px', isPw: false, isAf: true}}
+          textFieldAttr={{ width: "20vw", id: "id", label: "아이디", marBot: "15px", marRig: "0px", isPw: false, isAf: true }}
           valid={checkSpace}
-          errorMessage='알고풀자 아이디를 입력해 주세요.'
+          errorMessage="알고풀자 아이디를 입력해 주세요."
           setter={setId}
           onKeyDown={() => {}}
         />
         <InputTextField
-          textFieldAttr={{width: '20vw', id: 'password', label: '비밀번호', marBot: '0px', marRig: '0px', isPw: true, isAf: false}}
+          textFieldAttr={{ width: "20vw", id: "password", label: "비밀번호", marBot: "0px", marRig: "0px", isPw: true, isAf: false }}
           valid={checkSpace}
-          errorMessage='비밀번호를 입력해 주세요.'
+          errorMessage="비밀번호를 입력해 주세요."
           setter={setPassword}
           onKeyDown={handleKeyDown}
         />
         <p id='loginMessage' style={{textAlign: 'center', fontSize: '0.9vw', color: 'red', margin: '10px 0 0 0'}}></p>
       </div>
 
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
         <ButtonSubmitting
-          submittingAttr={{text: '로그인', width: '12vw', height: '2.3vw', marBot: '10px', fontSize: '1.1vw'}}
+          submittingAttr={{ text: "로그인", width: "12vw", height: "2.3vw", marBot: "10px", fontSize: "1.1vw" }}
           isImportant={true}
           onClick={handleClick}
         />
         <PopupLogin />
-        
-        <ButtonRouting routingAttr={{url: '/signup', text: '회원가입'}}  />
+
+        <ButtonRouting routingAttr={{ url: "/signup", text: "회원가입" }} />
       </div>
     </Container>
   )

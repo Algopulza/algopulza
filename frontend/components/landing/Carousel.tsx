@@ -1,10 +1,10 @@
-import Image from 'next/image'
-import Slider from 'react-slick'
-import IntroImg1 from '../../public/contents/introduction1.png'
-import IntroImg2 from '../../public/contents/introduction2.png'
-import styled from 'styled-components'
-import 'slick-carousel/slick/slick.css'
-import 'slick-carousel/slick/slick-theme.css'
+import Image from "next/image"
+import Slider from "react-slick"
+import IntroImg1 from "../../public/contents/introduction1.png"
+import IntroImg2 from "../../public/contents/introduction2.png"
+import styled from "styled-components"
+import "slick-carousel/slick/slick.css"
+import "slick-carousel/slick/slick-theme.css"
 
 const Container = styled.section`
   display: flex;
@@ -19,7 +19,7 @@ export default function Carousel() {
     autoplay: true,
     autoplaySpeed: 5000,
     infinite: true,
-    speed: 1000
+    speed: 1000,
   }
 
   return (

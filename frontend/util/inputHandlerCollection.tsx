@@ -1,7 +1,14 @@
+<<<<<<< HEAD
 import { showToastSuccess, showToastError } from '../components/common/alert/Alert'
 import { axiosInfo, axiosSignup, axiosStopwatch } from './axiosCollection'
 import { getLocalTime } from './getLocalTime'
 import { checkId, checkPassword, checkStopwatch} from './validationCollection'
+=======
+import { showToast } from "../components/common/alert/Alert"
+import { axiosInfo, axiosSignup, axiosStopwatch } from "./axiosCollection"
+import { getLocalTime } from "./getLocalTime"
+import { checkId, checkPassword, checkStopwatch } from "./validationCollection"
+>>>>>>> c71622d47cff5825d8254572bac95d9e54baaca9
 
 // 메시지 샌더
 export const sendLongMessage = (id: string, msg: string) => {
@@ -42,28 +49,29 @@ export const handleSignupClick = (
 }
 
 export const handleInfoClick = (event: any, info: any, accessToken: string) => {
-  if (info.problemBojId.trim() === '') {
-    // console.log('not valid')
+  if (info.problemBojId.trim() === "") {
   } else {
-    axiosInfo(info, accessToken)
-      .then(res => {
-        // console.log(res)
-        // sendMessage('resultInfo', '감사합니다!')
-      })
+    axiosInfo(info, accessToken).then((res) => {
+    })
   }
 }
 
-export const handleStopwatchClick = (event: any, problemBojId: string, language: string, solved: boolean, accessToken: string) => {
-  const min = document.getElementById('min')!.textContent
+export const handleStopwatchClick = (
+  event: any,
+  problemBojId: string,
+  language: string,
+  solved: boolean,
+  accessToken: string
+) => {
+  const min = document.getElementById("min")!.textContent
   const currentTime = getLocalTime()
-  console.log(currentTime)
 
   const info = {
-    'problemBojId': problemBojId,
-    'solvingTime': Number(min),
-    'language': language,
-    'submitTime': currentTime,
-    'status': Number(solved)
+    problemBojId: problemBojId,
+    solvingTime: Number(min),
+    language: language,
+    submitTime: currentTime,
+    status: Number(solved),
   }
 
   if (checkStopwatch(problemBojId)) {

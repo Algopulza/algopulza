@@ -12,26 +12,28 @@ const Container = styled.section`
   justify-content: center;
   align-items: start;
 `
+
 const AreaTitle = styled.span`
   font-size: 1.3em;
   font-weight: bold;
   color: #009874;
   padding-bottom: 0.3em;
 `
+
 const SubmitButton = styled.button`
   background-color: #545454;
-  color: #FFFFFF;
+  color: #ffffff;
   font-size: 0.8em;
   font-weight: bold;
   padding: 0.3em 1.5em;
   border: none;
   border-radius: 0.25em;
   cursor: pointer;
-  &:hover{
+  &:hover {
     transition: 0.25s ease-out;
     opacity: 0.7;
   }
-  &:not(:hover){
+  &:not(:hover) {
     transition: 0.25s ease-out;
   }
 `
@@ -52,9 +54,17 @@ export default function FormSolved() {
     <Container>
       <AreaTitle>solved</AreaTitle>
       <InputTextArea
-        textFieldAttr={{width: '20vw', id: 'solved', label: '해결한 문제', marBot: '10px', marRig: '0px', isPw: false, isAf: false}}
+        textFieldAttr={{
+          width: "20vw",
+          id: "solved",
+          label: "해결한 문제",
+          marBot: "10px",
+          marRig: "0px",
+          isPw: false,
+          isAf: false,
+        }}
         valid={checkSpace}
-        errorMessage='해결한 문제들을 입력해주세요.'
+        errorMessage="해결한 문제들을 입력해주세요."
         setter={setSolved}
         onKeyDown={() => {}}
       />
