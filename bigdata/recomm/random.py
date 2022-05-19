@@ -16,8 +16,8 @@ def recomm_random(app, mongodb, userid):
         'tier': i['tier'],
     } for i in id_tier]
     user_id = id_tier[0]['user_id']
-    tier = id_tier[0]['tier']
-    tiers = [tier-1, tier, tier+1]
+    # tier = id_tier[0]['tier']
+    # tiers = [tier-1, tier, tier+1]
     
     # 유저의 solving log 불러오기
     collection = mongodb.solving_log
@@ -36,7 +36,7 @@ def recomm_random(app, mongodb, userid):
     collection = mongodb.problem_tag_nest
     problem = collection.aggregate([
         {'$match': {'problemId': { '$nin': solved_id_list}}},
-        {'$match': {'level': {'$in': tiers}}},
+        # {'$match': {'level': {'$in': tiers}}},
         {'$sample': {'size': 10}},
         ])
 
@@ -84,7 +84,7 @@ def recomm_random_solved(app, mongodb, userid):
         {'_id':0, 'problemId':1}
     )
     solved_id_list = [s['problemId'] for s in list(solving_log)]
-    
+
     if len(solved_id_list) == 0:
         print('no solved problem')
         return 'empty'
@@ -106,7 +106,7 @@ def recomm_random_solved(app, mongodb, userid):
     problem = list(problem)
     print(len(problem))
     if len(problem) == 0: return 'empty'
-    if len(problem) >= 10: random.sample(problem, 10)
+    # if len(problem) >= 10: random.sample(problem, 10)
     
     # 즐겨찾기 정보 추가
     for r in problem:

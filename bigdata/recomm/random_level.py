@@ -37,18 +37,21 @@ def random_one(app, mongodb, userid):
     } for s in solving_log]
     solving_log = json.dumps(solving_log, ensure_ascii=False)
     solved_df = pd.read_json(solving_log)
-    
-    if len(solved_df) == 0:
-        return 'empty'
 
     # 문제-태그 정보(problem_tag) 불러오기
     # 아직 안풀었고 내 티어 +-1 난이도 하나 랜덤 추출
     collection = mongodb.problem_tag_nest
-    problem = collection.aggregate([
-        {'$match': {'problemId': { '$nin': solved_df['problemId'].tolist()}}},
-        {'$match': {'level': {'$in': tiers}}},
-        {'$sample': {'size': 1}},
-        ])
+    if len(solved_df) == 0:
+        problem = collection.aggregate([
+            {'$match': {'level': {'$in': tiers}}},
+            {'$sample': {'size': 1}},
+            ])
+    else:
+        problem = collection.aggregate([
+            {'$match': {'problemId': { '$nin': solved_df['problemId'].tolist()}}},
+            {'$match': {'level': {'$in': tiers}}},
+            {'$sample': {'size': 1}},
+            ])
 
     # json으로 형태변환
     problem = list(problem)
