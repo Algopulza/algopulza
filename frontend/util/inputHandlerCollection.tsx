@@ -44,7 +44,7 @@ export const handleInfoClick = (event: any, info: any, accessToken: string) => {
   }
 }
 
-export const handleStopwatchClick = (event: any, problemBojId: string, language: string, accessToken: string) => {
+export const handleStopwatchClick = (event: any, problemBojId: string, language: string, solved: boolean, accessToken: string) => {
   const min = document.getElementById('min')!.textContent
   const currentTime = getCurrentTime()
 
@@ -52,7 +52,8 @@ export const handleStopwatchClick = (event: any, problemBojId: string, language:
     'problemBojId': problemBojId,
     'solvingTime': Number(min),
     'language': language,
-    'submitTime': currentTime
+    'submitTime': currentTime,
+    'status': Number(solved)
   }
 
   if (checkStopwatch(problemBojId)) {

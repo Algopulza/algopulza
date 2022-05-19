@@ -32,9 +32,6 @@ public class MemberRes {
     @ApiModelProperty(name = "티어레벨", example = "2")
     private int tierLevel;
 
-    @ApiModelProperty(name = "푼 문제 수", example = "10")
-    private int solveCount;
-
     @ApiModelProperty(name = "경험치", example = "3")
     private int exp;
 
