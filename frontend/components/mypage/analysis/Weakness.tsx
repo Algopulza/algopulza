@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useEffect, useState } from "react";
-import { getAnalyWeak } from "../../../api/flask/analysis/AnalyWeek";
+import { getAnalyWeak } from "../../../api/back/analysis/AnalyWeek";
 import { User } from "../../../pages/mypage";
 import React from 'react';
 import ReactWordcloud from 'react-wordcloud';
@@ -15,9 +15,9 @@ align-items: center;
 
 export default function Weakness({accessToken, bojId}:User) {
   const [word, setWord] = useState<Array<any>>([]);
-
+  const count=55
   const AnalUser = async () => {
-    await getAnalyWeak(accessToken, bojId)
+    await getAnalyWeak(accessToken, count)
       .then((res) => {
         const year = res.data.data;
         let idx = 0;
@@ -34,14 +34,25 @@ export default function Weakness({accessToken, bojId}:User) {
   };
 
   useEffect(() => {
-    // AnalUser();
+    AnalUser();
   }, []);
   
   const words = word
 
   return (
     <Container>
-      {/* <ReactWordcloud words={words} /> */}
+      <div style={{ width: "100%", height: "100%" }}>
+        <ReactWordcloud
+        words={words}
+        options={{ 
+            rotations: 1,
+            rotationAngles: [0,0],
+            fontSizes:[10,60],
+            enableTooltip: false,
+          }}
+        minSize={[0, 460]}
+        />
+      </div>
     </Container>
   );
 }

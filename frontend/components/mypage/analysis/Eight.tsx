@@ -18,7 +18,7 @@ export default function Eight({accessToken, bojId}:User) {
   const AnalUser = async () => {
     await getAnalyEight(accessToken, bojId)
       .then((res) => {
-        console.log(res)
+        // console.log(res)
         const week = res.data;
         let label_temp = [];
         let solved_temp = [];
@@ -87,6 +87,11 @@ export default function Eight({accessToken, bojId}:User) {
           },   
       }
       ],
+      tooltip: {
+        custom: function({series, seriesIndex, dataPointIndex, w}) {
+          return '<span style="font-size:15px">' +  w.globals.labels[dataPointIndex] + "문제 중" + series[seriesIndex][dataPointIndex] + "%를 푸셨습니다!" + '</span>'
+        }
+      },
           theme: {
             mode: "light",
           },

@@ -59,8 +59,7 @@ export const handleStopwatchClick = (event: any, problemBojId: string, language:
 
   if (checkStopwatch(problemBojId)) {
     axiosStopwatch(info, accessToken)
-      .then(res => {
-        // console.log(res)
+      .then((res: any) => {
         showToast('제출해주셔서 감사합니다!')
       })
   } else if (problemBojId === '' || Number(problemBojId) < 1000) {
