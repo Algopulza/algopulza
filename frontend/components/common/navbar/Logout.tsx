@@ -4,6 +4,7 @@ import { useRecoilState, useRecoilValue } from 'recoil'
 import { accessTokenState, memberIdState } from '../../../util/stateCollection'
 import { axiosLogout } from '../../../util/axiosCollection'
 import { useEffect, useState } from 'react'
+import { delCookie } from '../../../util/cookieHandler'
 
 const Container = styled.section`
   display: flex;
@@ -36,6 +37,7 @@ export default function Logout() {
       .then(res => {
         localStorage.removeItem('recoil-persist')
         setAccessToken('')
+        delCookie('accessToken')
         router.push('/')
       })
   }
