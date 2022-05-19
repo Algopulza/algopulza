@@ -4,7 +4,7 @@ import ImgButtonPause from "../../../common/button/imgButton/ImgButtonPause"
 import ImgButtonReset from "../../../common/button/imgButton/ImgButtonReset"
 import styled from "styled-components"
 import { useSetRecoilState } from "recoil"
-import { stopwatchHourState, stopwatchMinState, stopwatchSecState } from "../../../../util/stateCollection"
+import { stopwatchHourState, stopwatchMinState, stopwatchMisecState, stopwatchSecState } from "../../../../util/stateCollection"
 
 const Container = styled.div`
   display: flex;
@@ -25,6 +25,7 @@ export default function Time() {
   const setHour = useSetRecoilState(stopwatchHourState)
   const setMin = useSetRecoilState(stopwatchMinState)
   const setSec = useSetRecoilState(stopwatchSecState)
+  const setMillisec = useSetRecoilState(stopwatchMisecState)
 
   useEffect(() => {
     let interval: any
@@ -43,15 +44,18 @@ export default function Time() {
     const hour = Number(document.getElementById("hour")!.textContent)
     const min = Number(document.getElementById("min")!.textContent)
     const sec = Number(document.getElementById("sec")!.textContent)
+    const millisec = Number(document.getElementById("millisec")!.textContent)
     setHour(hour)
     setMin(min)
     setSec(sec)
+    setMillisec(millisec)
   }
 
   const resetTimeInfo = () => {
     setHour(0)
     setMin(0)
     setSec(0)
+    setMillisec(0)
   }
 
   return (
@@ -69,7 +73,7 @@ export default function Time() {
           {("0" + Math.floor((time / 1000) % 60)).slice(-2)}
         </Digit>
         <Digit>:</Digit>
-        <Digit>{("0" + ((time / 10) % 100)).slice(-2)}</Digit>
+        <Digit id="millisec">{("0" + ((time / 10) % 100)).slice(-2)}</Digit>
       </Container>
 
       <Container>

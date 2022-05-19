@@ -1,10 +1,11 @@
-import InputTextArea from "../../common/input/InputTextArea"
-import styled from "styled-components"
-import { axiosTried } from "../../../util/axiosCollection"
-import { useRecoilState, useRecoilValue } from "recoil"
-import { accessTokenState, bojIdState, triedState } from "../../../util/stateCollection"
-import { checkSpace } from "../../../util/validationCollection"
-import { showToast } from "../../common/alert/Alert"
+import InputTextArea from '../../common/input/InputTextArea'
+import ButtonSubmitting from '../../common/button/ButtonSubmitting'
+import styled from 'styled-components'
+import { axiosTried } from '../../../util/axiosCollection'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { accessTokenState, bojIdState, triedState } from '../../../util/stateCollection'
+import { checkSpace } from '../../../util/validationCollection'
+import { showToastSuccess } from '../../common/alert/Alert'
 
 const Container = styled.section`
   display: flex;
@@ -44,8 +45,9 @@ export default function FormTried() {
   const accessToken = useRecoilValue(accessTokenState)
 
   const handleClick = (event: any) => {
-    axiosTried(bojId, tried, accessToken).then((res) => {
-      showToast("제출해주셔서 감사합니다.")
+  axiosTried(bojId, tried, accessToken)
+    .then(res => {
+      showToastSuccess('제출해주셔서 감사합니다.')
     })
   }
 

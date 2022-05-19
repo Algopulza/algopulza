@@ -1,16 +1,15 @@
-import { useRouter } from "next/router"
-import InputTextField from "../common/input/InputTextField"
-import ButtonSubmitting from "../common/button/ButtonSubmitting"
-import styled from "styled-components"
-import { axiosLogin } from "../../util/axiosCollection"
-import { useRecoilState, useSetRecoilState } from "recoil"
-import { bojIdState, memberIdState, algoIdState, accessTokenState,
-  refreshTokenState, idState, passwordState } from "../../util/stateCollection"
-import { checkSpace } from "../../util/validationCollection"
-import ButtonRouting from "../common/button/ButtonRouting"
-import { showToast } from "../common/alert/Alert"
-import PopupLogin from "../common/alert/PopupLogin"
-import { setCookie } from "../../util/cookieHandler"
+import { useRouter } from 'next/router'
+import InputTextField from '../common/input/InputTextField'
+import ButtonSubmitting from '../common/button/ButtonSubmitting'
+import styled from 'styled-components'
+import { axiosLogin } from '../../util/axiosCollection'
+import { useRecoilState, useSetRecoilState } from 'recoil'
+import { bojIdState, memberIdState, algoIdState, accessTokenState, refreshTokenState, idState, passwordState } from '../../util/stateCollection'
+import { checkSpace } from '../../util/validationCollection'
+import ButtonRouting from '../common/button/ButtonRouting'
+import PopupLogin from '../common/alert/PopupLogin'
+import { setCookie } from '../../util/cookieHandler'
+import { sendLongMessage } from '../../util/inputHandlerCollection'
 
 const Container = styled.section`
   display: flex;
@@ -33,26 +32,29 @@ export default function Form() {
   const handleClick = () => {
     if (id.trim() !== "" || password.trim() !== "") {
       axiosLogin(id, password)
-        .then((res) => {
-          setAlgoId(res.data.data.member.algopluzaId);
-          setBojId(res.data.data.member.bojId);
-          setMemberId(res.data.data.member.memberId);
-          setAccessToken(res.data.data.token.accessToken);
-          setRefreshToken(res.data.data.token.refreshToken);
-          setCookie("accessToken", res.data.data.token.accessToken, 1);
-          router.push("/recommendation");
+        .then(res => {
+          setAlgoId(res.data.data.member.algopluzaId)
+          setBojId(res.data.data.member.bojId)
+          setMemberId(res.data.data.member.memberId)
+          setAccessToken(res.data.data.token.accessToken)
+          setRefreshToken(res.data.data.token.refreshToken)
+          setCookie('accessToken', res.data.data.token.accessToken, 1)
+          router.push('/recommendation')
+        })
+        .catch(err => {
+          sendLongMessage('loginMessage', '아이디와 비밀번호를 정확히 입력해주세요.')
         })
         .catch((err) => {
-          showToast("아이디와 비밀번호를 정확히 입력해주세요.");
-        });
+          sendLongMessage('loginMessage', '아이디와 비밀번호를 정확히 입력해주세요.')
+        })
     } else {
-      showToast("아이디와 비밀번호를 정확히 입력해주세요.");
+      sendLongMessage('loginMessage', '아이디와 비밀번호를 정확히 입력해주세요.')
     }
   }
 
   const handleKeyDown = (event: any) => {
     if (event.key === "Enter") {
-      handleClick();
+      handleClick()
     }
   }
 
@@ -73,6 +75,7 @@ export default function Form() {
           setter={setPassword}
           onKeyDown={handleKeyDown}
         />
+        <p id='loginMessage' style={{textAlign: 'center', fontSize: '0.9vw', color: 'red', margin: '10px 0 0 0'}}></p>
       </div>
 
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>

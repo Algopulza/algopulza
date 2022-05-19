@@ -4,7 +4,7 @@ import DialogActions from "@mui/material/DialogActions"
 import DialogContent from "@mui/material/DialogContent"
 import DialogContentText from "@mui/material/DialogContentText"
 import DialogTitle from "@mui/material/DialogTitle"
-import { useRecoilValue } from "recoil"
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil"
 import { accessTokenState, checkState, stopwatchHourState, stopwatchLangauge,
   stopwatchMinState, stopwatchProbIdState, stopwatchSecState } from "../../../util/stateCollection"
 import { handleStopwatchClick } from "../../../util/inputHandlerCollection"
@@ -15,9 +15,10 @@ export default function Popup() {
   const [open, setOpen] = useState(false)
   const stopwatchProbId = useRecoilValue(stopwatchProbIdState)
   const language = useRecoilValue(stopwatchLangauge)
-  const hour = useRecoilValue(stopwatchHourState)
-  const min = useRecoilValue(stopwatchMinState)
-  const sec = useRecoilValue(stopwatchSecState)
+  const [hour, setHour] = useRecoilState(stopwatchHourState)
+  const [min, setMin] = useRecoilState(stopwatchMinState)
+  const [sec, setSec] = useRecoilState(stopwatchSecState)
+  const setMillisec = useSetRecoilState(stopwatchSecState)
   const isCheck = useRecoilValue(checkState)
   const accessToken = useRecoilValue(accessTokenState)
 
@@ -33,6 +34,16 @@ export default function Popup() {
       isCheck,
       accessToken
     )
+
+    document.getElementById("hour")!.textContent = '00'
+    document.getElementById("min")!.textContent = '00'
+    document.getElementById("sec")!.textContent = '00'
+    document.getElementById("millisec")!.textContent = '00'
+
+    setHour(0)
+    setMin(0)
+    setSec(0)
+    setMillisec(0)
     setOpen(false)
   }
 
