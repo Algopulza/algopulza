@@ -37,7 +37,7 @@
 
 🧑 강동원 : Frontend, Data Analysis
 
-🧑 장준섭 : Frontend
+🧑 장준범 : Frontend
 
 👩 김혜지 : Backend, Server
 
@@ -45,17 +45,17 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-🎨  컨셉 : (작성 예정)
+🎨  컨셉 : 차분한 느낌을 주는 흑색계열의 색을 메인컬러로 사용 / 눈에 띄는 노란색을 포인트컬러로 사용
 
 - 메인컬러1 : #FDC33E (로고, 버튼, 글씨색 등)
 
 - 메인컬러2: #282828 (버튼, 배너, nav바 등)
 
-- 컬러1 : (#FFFFFF) (배경, 글씨 색 등)
+- 컬러1 : #FFFFFF (배경, 글씨 색 등)
 
-- 컬러2 : (#AD5600, #435F7A, #EC9A00, #27E2A4, #00B4FC, #FF0062, #444444)  (카드 배경)
+- 컬러2 : #AD5600, #435F7A, #EC9A00, #27E2A4, #00B4FC, #FF0062, #444444  (카드 배경)
 
-- 컬러3 : (#FFC94D, #FFFFFF, #F4F4F4, #FFCF62) (분석 버튼)
+- 컬러3 : #FFC94D, #FFFFFF, #F4F4F4, #FFCF62 (분석 버튼)
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -96,50 +96,93 @@
 ---
 
 ### 2️⃣  기술 스택
+Communication <br/>
+<img src="https://img.shields.io/badge/Jira-0052CC?style=for-the-badge&logo=JiraSoftware&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
+<img src="https://img.shields.io/badge/GitLab-FC6D26?style=for-the-badge&logo=GitLab&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
+<img src="https://img.shields.io/badge/Mattermost-0058CC?style=for-the-badge&logo=Mattermost&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
+<img src="https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=Notion&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
+<img src="https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=Figma&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
 
-1. 이슈관리 : Jira
-2. 형상관리 : Gitlab
-3. 커뮤니케이션 : Mattermost, Gather, Notion, Figma
-4. 개발 환경
-   - OS
-     - Windows10
-     - Mac
-   - IDE
-     - IntelliJ
-     - Visual Studio Code
-   - Frontend
-     - React 18.0.8
-     - Next.js 12.1.5
-     - TypeScript 4.6.3
-     - Recoil 0.7.2
-   - Backend
-     - Java 11
-     - SpringBoot 2.6.x
-     - Swagger 3.x.x
-     - QueryDsl-JPA 5.x.x
-     - JWT 0.9.1
-     - Lombok
-     - Security 2.5.5
-     - Validation 2.6.2
-     - AWS 2.2.6
-   - BigData
-     - Python 3.9.6
-     - Flask 2.1.1
-     - Numpy 1.22.3
-     - Pandas 1.4.2
-     - Scikit-learn 1.0.2
-     - Scipy 1.8.0
-     - Sklearn 0.0
-   - Database
-     - MySQL Workbench 8.0.x
-     - Mongo DB
-     - AWS S3
-     - AWS RDS
-   - CI/CD
-     - AWS EC2
-     - Jenkins
-     - Docker
-     - Ngnix
+Frontend <br/>
+<img src="https://img.shields.io/badge/Visual Studio Code-007ACC?style=for-the-badge&logo=Visual Studio Code&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
+<img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=HTML5&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
+<img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=CSS3&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
+<img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=TypeScript&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
+<img src="https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=Next.js&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
+<img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
+
+Backend <br/>
+<img src="https://img.shields.io/badge/IntelliJ-000000?style=for-the-badge&logo=IntelliJ&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
+<img src="https://img.shields.io/badge/styled-components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
+<img src="https://img.shields.io/badge/MUI-007FFF?style=for-the-badge&logo=MUI&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
+<img src="https://img.shields.io/badge/Java-007396?style=for-the-badge&logo=Java&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
+<img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=for-the-badge&logo=Spring Boot&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
+<img src="https://img.shields.io/badge/Swagger-85EA2D?style=for-the-badge&logo=Swagger&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
+<img src="https://img.shields.io/badge/JSON Web Tokens-000000?style=for-the-badge&logo=JSON Web Tokens&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
+<img src="https://img.shields.io/badge/Spring Security-6DB33F?style=for-the-badge&logo=Spring Security&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
+<img src="https://img.shields.io/badge/Gradle-02303A?style=for-the-badge&logo=Gradle&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
+<img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=Python&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
+<img src="https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=Flask&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
+<img src="https://img.shields.io/badge/NumPy-013243?style=for-the-badge&logo=NumPy&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
+<img src="https://img.shields.io/badge/pandas-150458?style=for-the-badge&logo=pandas&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
+<img src="https://img.shields.io/badge/scikit-learn-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
+<img src="https://img.shields.io/badge/SciPy-8CAAE6?style=for-the-badge&logo=SciPy&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
+<img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=MySQL&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
+<img src="https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=MongoDB&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
+<img src="https://img.shields.io/badge/Amazon AWS-232F3E?style=for-the-badge&logo=Amazon AWS&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
+<img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=Docker&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
+<img src="https://img.shields.io/badge/NGINX-009639?style=for-the-badge&logo=NGINX&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
+<details><summary> <b> 상세 기술스택 및 버전</b> </summary>
+
+|     구분     |      기술스택     |     버전   |
+|--------------| ------------------|------------|
+| 이슈관리      | Jira              | \-         |
+| 형상관리      | Gitlab            | \-         |
+| 커뮤니케이션  | Mattermost        | \-         |
+|              | Gathertown        | \-         |
+|              | Notion            | \-         |
+|              | Figma             | \-         |
+| OS           | Window10          | \-         |
+|              | Mac               | \-         |
+| IDE          | IntelliJ          | \-         |
+|              | Visual Studio Code| 1.67.1     |
+| Frontend     | HTML5             | \-         |
+|              | CSS3              | \-         |
+|              | TypeScript        | 4.6.3      |
+|              | Next.js           | 12.1.5     |
+|              | React             | 18.0.8     |
+|              | Recoil            | 0.7.2      |
+|              | styled-components | 5.3.5      |
+|              | apexcharts        | 3.35.0     |
+|              | slick-carousel    | 1.8.1      |
+|              | mui/material      | 5.6.3      |
+| Backend      | Java              | 11         |
+|              | SpringBoot        | 2.6.x      |
+|              | Swagger           | 3.x.x      |
+|              | QueryDsl-JPA      | 5.x.x      |
+|              | JWT               | 0.9.       |
+|              | Lombok            | \-         |
+|              | Security          | 2.5.5      |
+|              | Validation        | 2.6.2      |
+|              | AWS               | 2.2.6      |
+|              | Gradle            | 7.4.2      |
+| BigData      | Python            | 3.9.6      |
+|              | Flask             | 2.1.1      |
+|              | Numpy             | 1.22.3     |
+|              | Pandas            | 1.4.2      |
+|              | Scikit-learn      | 1.0.2      |
+|              | Scipy             | 1.8.0      |
+|              | Sklearn           | 0.0        |
+| Database     | MySQL Workbench   | 8.0.x      |
+|              | Mongo DB          | \-         |
+|              | AWS S3            | \-         |
+|              | AWS RDS           | \-         |
+| CI/CD        | AWS EC2           | \-         |
+|              | Jenkins           | \-         |
+|              | Docker            | \-         |
+|              | Ngnix             | \-         |
+
+</details>
 
 ---
 
@@ -166,7 +209,7 @@
 
 - [최종 발표물]()
 
-- [UCC]()
+- [UCC](https://www.youtube.com/watch?v=pg8k7BAyT4M)
 
 ---
 
