@@ -1,6 +1,6 @@
 import { showToast } from '../components/common/alert/Alert'
 import { axiosInfo, axiosSignup, axiosStopwatch } from './axiosCollection'
-import { getCurrentTime } from './getCurrentTime'
+import { getLocalTime } from './getLocalTime'
 import { checkId, checkPassword, checkStopwatch} from './validationCollection'
 
 // 이벤트 핸들러
@@ -46,7 +46,8 @@ export const handleInfoClick = (event: any, info: any, accessToken: string) => {
 
 export const handleStopwatchClick = (event: any, problemBojId: string, language: string, solved: boolean, accessToken: string) => {
   const min = document.getElementById('min')!.textContent
-  const currentTime = getCurrentTime()
+  const currentTime = getLocalTime()
+  console.log(currentTime)
 
   const info = {
     'problemBojId': problemBojId,
@@ -59,10 +60,10 @@ export const handleStopwatchClick = (event: any, problemBojId: string, language:
   if (checkStopwatch(problemBojId)) {
     axiosStopwatch(info, accessToken)
       .then(res => {
-        console.log(res)
-        // sendMessage('stopwatchResult', '감사합니다!')
+        // console.log(res)
+        showToast('제출해주셔서 감사합니다!')
       })
   } else if (problemBojId === '' || Number(problemBojId) < 1000) {
-    // sendLongMessage('stopwatchResult', '문제 번호를 입력해주세요.')
+    showToast('올바른 문제 번호를 입력해주세요.')
   }
 }

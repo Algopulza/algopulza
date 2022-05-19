@@ -18,25 +18,23 @@ export const axiosLogout = (memberId: string, accessToken: string) => axios({
 })
 
 export const axiosSolved = (bojId: string, problems: string, accessToken: string) => axios({
-  url: `https://k6a408.p.ssafy.io/api/v1/members/solved/`,
+  url: `https://k6a408.p.ssafy.io/api/v1/solving-log/solved/`,
   method: 'post',
   headers: {
     Authorization: `Bearer ${accessToken}`
   },
   data: {
-    'bojId': bojId,
     'problems': problems
   }
 })
 
 export const axiosTried = (bojId: string, problems: string, accessToken: string) => axios({
-  url: `https://k6a408.p.ssafy.io/api/v1/members/tried/`,
+  url: `https://k6a408.p.ssafy.io/api/v1/solving-log/tried/`,
   method: 'post',
   headers: {
     Authorization: `Bearer ${accessToken}`
   },
   data: {
-    'bojId': bojId,
     'problems': problems
   }
 })
