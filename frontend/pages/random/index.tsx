@@ -46,21 +46,21 @@ export default function Random() {
   }, [])
 
   const subjectTag = [
-    { title: '구현', englishTitle: 'Simulation', list: data.simulationList },
-    { title: '다이내믹 프로그래밍', englishTitle: 'Dynamic Programming', list: data.dpList },
-    { title: '그래프', englishTitle: 'Graph', list: data.graphList },
-    { title: '그리디', englishTitle: 'Greedy', list: data.greedyList },
-    { title: '정렬', englishTitle: 'Sorting', list: data.sortingList },
-    { title: '너비 우선 탐색', englishTitle: 'BFS', list: data.bfsList },
-    { title: '깊이 우선 탐색', englishTitle: 'DFS', list: data.dfsList },
-    { title: '조합론', englishTitle: 'Combinatorics', list: data.combinationList }
+    { title: '# 구현', englishTitle: 'Simulation', list: data.simulationList },
+    { title: '# 다이내믹 프로그래밍', englishTitle: 'Dynamic Programming', list: data.dpList },
+    { title: '# 그래프', englishTitle: 'Graph', list: data.graphList },
+    { title: '# 그리디', englishTitle: 'Greedy', list: data.greedyList },
+    { title: '# 정렬', englishTitle: 'Sorting', list: data.sortingList },
+    { title: '# 너비 우선 탐색', englishTitle: 'BFS', list: data.bfsList },
+    { title: '# 깊이 우선 탐색', englishTitle: 'DFS', list: data.dfsList },
+    { title: '# 조합론', englishTitle: 'Combinatorics', list: data.combinationList }
   ]
 
   const subjectLevel = [
-    { title: '브론즈', englishTitle: 'Bronze', list: data.bronzeList },
-    { title: '실버', englishTitle: 'Silver', list: data.silverList },
-    { title: '골드', englishTitle: 'Gold', list: data.goldList },
-    { title: '플래티넘', englishTitle: 'Platinum', list: data.platinumList }
+    { title: '# 브론즈', englishTitle: 'Bronze', list: data.bronzeList },
+    { title: '# 실버', englishTitle: 'Silver', list: data.silverList },
+    { title: '# 골드', englishTitle: 'Gold', list: data.goldList },
+    { title: '# 플래티넘', englishTitle: 'Platinum', list: data.platinumList }
   ]
 
   return (
