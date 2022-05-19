@@ -206,10 +206,7 @@ CICD <br/>
 - [와이어프레임(figma)](https://www.figma.com/file/dKmIaVcWei43K9BTvlIFg6/SSAFY_3rd_%EC%95%8C%EA%B3%A0%ED%92%80%EC%9E%90?node-id=0%3A1)
 
 - [ERD(erd cloud)](https://www.erdcloud.com/d/we74NfuvTHumNZza9)
-- 시스템 아키텍처
-
-  ![image](https://user-images.githubusercontent.com/38188374/167995185-e30056b1-8250-465a-8160-ac1451864d15.png)
-
+- [시스템 아키텍처](https://lab.ssafy.com/s06-final/S06P31A408/-/blob/develop/exec/%EC%8B%9C%EC%8A%A4%ED%85%9C%EC%95%84%ED%82%A4%ED%85%8D%EC%B3%90/system_architecture.png)
 - [화면 정의서]()
 
 - [최종 발표물]()
