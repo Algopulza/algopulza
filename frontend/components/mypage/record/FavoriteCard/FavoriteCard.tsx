@@ -10,11 +10,11 @@ import { accessTokenState } from '../../../../util/stateCollection'
 import { axiosDeleteBookmark, axiosPutBookmark } from '../../../../util/axiosCollection';
 
 const Container = styled.div`
-  width: 15vw;
+  width: 18vw;
   background: #ffffff;
   box-shadow: 3px 5px 12px 2px rgba(0, 0, 0, 0.25);
-  border-radius: 15px;
-  padding: 1rem;
+  border-radius: 10px;
+  padding: 0.7rem 1rem;
   margin-bottom:1rem;
 `;
 
@@ -22,7 +22,7 @@ const HeaderContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.2rem;
 `;
 
 const SubContainer = styled.div`
@@ -47,15 +47,28 @@ const Canvas = styled.div`
   cursor: pointer;
 `
 
-const Tier = styled.div<{bg : string}>`
-  border-radius: 10px;
-  height: 2rem;
-  width: 2rem;
-  color: white;
+// const Tier = styled.div<{bg : string}>`
+//   border-radius: 0.5rem;
+//   color: white;
+//   font-weight: bold;
+//   background-color: ${(props) => (props.bg ? props.bg : "")};
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   padding: 0.2rem 0.65rem
+// `;
+
+const Tier2 = styled.div<{bg : string}>`
+  display: inline;
+  border-radius: 1rem;
   background-color: ${(props) => (props.bg ? props.bg : "")};
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  color: white;
+  font-size: 0.2rem;
+  font-weight: 550;
+  letter-spacing: 0.03rem;
+  text-align: center;
+  padding: 0.1rem 1rem;
+  margin: 0.7rem 0 0 -0.2rem;
 `;
 
 const ProblemTitle = styled.div`
@@ -64,9 +77,26 @@ const ProblemTitle = styled.div`
   align-items: center;
   font-weight: bold;
   font-size: 1rem;
-  margin-left: 0.5rem;
   text-overflow: ellipsis;
   cursor: pointer;
+`;
+
+const Grid = styled.div`
+  /* text-align: center; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+const TextRow = styled.div`
+  display: inline-block;
+  width: 14rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  &:hover{
+    color: #c4c4c4;
+  }
 `;
 
 const FavoriteCard = (props: any) => {
@@ -112,13 +142,16 @@ const FavoriteCard = (props: any) => {
         </Canvas>
       </HeaderContainer>
       <SubContainer>
-        <Tier bg={backgroundColor}>{props.tierLevel}</Tier>
         <ProblemTitle onClick={handleClick}>
-          {props.title}
+          <Grid><TextRow>{props.title}</TextRow></Grid>
         </ProblemTitle>
+      </SubContainer>
+      <SubContainer>
+        <Tier2 bg={backgroundColor}>{props.tierName} {props.tierLevel}</Tier2>
       </SubContainer>
     </Container>
   );
 };
 
 export default FavoriteCard;
+/* <Tier bg={backgroundColor}>{props.tierLevel}</Tier> */
