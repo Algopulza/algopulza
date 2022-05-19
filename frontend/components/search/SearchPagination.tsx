@@ -3,10 +3,10 @@ import Stack from '@mui/material/Stack'
 import { useEffect } from 'react'
 
 export default function SearchPagination(props: any) {
-  console.log('propsPage:', props.page)
+  // console.log('propsPage:', props.page)
   
   const submitPage = (event: any, page: any) => {
-    console.log('SubmitPage:', page)
+    // console.log('SubmitPage:', page)
     props.setPage(page-1)
   }
 
