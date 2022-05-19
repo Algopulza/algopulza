@@ -12,6 +12,7 @@ import { getSolvedTear } from '../../api/flask/recommend/RecoSolvedTear'
 import { getRecoTear } from '../../api/flask/recommend/RecoTear'
 import { CircularProgress } from "@mui/material"
 import ButtonFloating from '../../components/common/button/ButtonFloating'
+import { GetServerSideProps } from "next";
 
 const Container = styled.section`
   padding: 0vh 5vw;
@@ -114,4 +115,22 @@ export default function Recommendation() {
 
 Recommendation.getLayout = function getLayout(recommendation: ReactElement) {
   return <Layout>{recommendation}</Layout>
+}
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { req, res } = context
+  const token = req.cookies.accessToken
+
+  if (!token) {
+    return {
+      redirect: {
+        destination: "/",
+        statusCode: 302,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  }
 }

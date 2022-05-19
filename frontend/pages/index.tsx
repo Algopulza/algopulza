@@ -4,12 +4,8 @@ import Content from '../components/landing/Content'
 import Form from '../components/landing/Form'
 import styled from 'styled-components'
 import 'react-toastify/dist/ReactToastify.css'
-import { useEffect } from 'react'
 import { useRouter } from 'next/router'
-import { showToast } from '../components/common/alert/Alert'
 import { GetServerSideProps } from 'next'
-import { useRecoilValue } from 'recoil'
-import { accessTokenState } from '../util/stateCollection'
 
 const Container = styled.section`
   display: grid;
@@ -37,13 +33,6 @@ const FormArea = styled.div`
 export default function Landing() {
   const router = useRouter()
 
-  // useEffect(() => {
-  //   if (window.localStorage.getItem('recoil-persist') !== null) {
-  //     showToast('로그인 중입니다!')
-  //     router.push('/recommendation')
-  //   }
-  // }, [])
-
   return (
     <>
       <Container>
@@ -64,4 +53,22 @@ export default function Landing() {
       <ToastContainer limit={1} style={{ width: '25vw', fontSize: '1.1vw', color: '#282828' }} />
     </>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { req, res } = context
+  const token = req.cookies.accessToken
+
+  if (token) {
+    return {
+      redirect: {
+        destination: "/recommendation",
+        statusCode: 302,
+      },
+    }
+  }
+
+  return {
+    props: {},
+  }
 }

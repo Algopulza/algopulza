@@ -7,6 +7,7 @@ import Record from "../../components/mypage/record/Index";
 import { useRecoilValue } from "recoil";
 import { memberIdState, bojIdState, accessTokenState } from "../../util/stateCollection";
 import ButtonFloating from "../../components/common/button/ButtonFloating";
+import { GetServerSideProps } from "next";
 
 const Container = styled.div`
   display: grid;
@@ -34,9 +35,27 @@ export default function Mypage() {
       <Record />
       <ButtonFloating />
     </Container>
-  );
+  )
 }
 
 Mypage.getLayout = function getLayout(analysis: ReactElement) {
   return <Layout>{analysis}</Layout>
+}
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { req, res } = context
+  const token = req.cookies.accessToken
+
+  if (!token) {
+    return {
+      redirect: {
+        destination: "/",
+        statusCode: 302,
+      },
+    }
+  }
+
+  return {
+    props: {},
+  }
 }
