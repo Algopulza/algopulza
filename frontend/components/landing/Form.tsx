@@ -10,6 +10,7 @@ import ButtonRouting from '../common/button/ButtonRouting'
 import { showToast } from '../common/alert/Alert'
 import PopupLogin from '../common/alert/PopupLogin'
 import { setCookie } from '../../util/cookieHandler'
+// import Divider from '@mui/material/Divider';
 
 const Container = styled.section`
   display: flex;
@@ -80,6 +81,7 @@ export default function Form() {
           onClick={handleClick}
         />
         <PopupLogin />
+        
         <ButtonRouting routingAttr={{url: '/signup', text: '회원가입'}}  />
       </div>
     </Container>

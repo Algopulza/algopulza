@@ -6,12 +6,36 @@ import { accessTokenState, bojIdState, solvedState } from '../../../util/stateCo
 import { checkSpace } from '../../../util/validationCollection'
 import { axiosSolved } from '../../../util/axiosCollection'
 import { showToast } from '../../common/alert/Alert'
+import Button from '@mui/material/Button';
 
 const Container = styled.section`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: start;
+`
+const AreaTitle = styled.span`
+  font-size: 1.3em;
+  font-weight: bold;
+  color: #009874;
+  padding-bottom: 0.3em;
+`
+const SubmitButton = styled.button`
+  background-color: #545454;
+  color: #FFFFFF;
+  font-size: 0.8em;
+  font-weight: bold;
+  padding: 0.3em 1.5em;
+  border: none;
+  border-radius: 0.25em;
+  cursor: pointer;
+  &:hover{
+    transition: 0.25s ease-out;
+    opacity: 0.7;
+  }
+  &:not(:hover){
+    transition: 0.25s ease-out;
+  }
 `
 
 export default function FormSolved() {
@@ -28,6 +52,7 @@ export default function FormSolved() {
 
   return (
     <Container>
+      <AreaTitle>solved</AreaTitle>
       <InputTextArea
         textFieldAttr={{width: '20vw', id: 'solved', label: '해결한 문제', marBot: '10px', marRig: '0px', isPw: false, isAf: false}}
         valid={checkSpace}
@@ -35,12 +60,7 @@ export default function FormSolved() {
         setter={setSolved}
         onKeyDown={() => {}}
       />
-
-      <ButtonSubmitting
-        submittingAttr={{text: '해결한 문제 제공', width: '10vw', height: '2.5vw', marBot: '0px', fontSize: '0.9vw'}}
-        isImportant={false}
-        onClick={handleClick}
-      />
+      <SubmitButton onClick={handleClick}>제출</SubmitButton>
     </Container>
   )
 }

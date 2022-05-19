@@ -13,8 +13,9 @@ const None = styled.div`
   justify-content: center;
   margin-top: 5rem;
   min-height: 8rem;
-font-size: 1.5rem;
+  font-size: 1.5rem;
 `
+
 const Favorite = () => {
   const accessToken = useRecoilValue(accessTokenState)
   const [rows, setRows] = useState([])
@@ -32,7 +33,7 @@ const Favorite = () => {
   }, [])
   return (
     <AnalyCard>
-      <AnalyTitle>즐겨찾기</AnalyTitle>
+      <AnalyTitle><b>즐겨찾기</b></AnalyTitle>
       {rows.length==0?
       <None>즐겨찾기한 문제가 없어요</None>:
       <FavoriteList

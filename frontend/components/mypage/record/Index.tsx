@@ -14,8 +14,8 @@ const Grid = styled.div``;
 const Index = () => {
   return (
     <Container>
-        <Favorite />
-        <Solved />
+      <Favorite />
+      <Solved />
     </Container>
   );
 };

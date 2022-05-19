@@ -40,7 +40,7 @@ const TextRow = styled.div`
 `;
 
 export default function SolvedTable(props: any) {
-  console.log(props)
+  // console.log(props)
   const { rows } = props
   const statusColor = (status: string) => {
     const coloredStatus = status
@@ -65,8 +65,6 @@ export default function SolvedTable(props: any) {
             <StyledTableCell align="center" style={{ width: "5%" }}>언어</StyledTableCell>
             <StyledTableCell align="center" style={{ width: "15%" }}>풀이시간</StyledTableCell>
             <StyledTableCell align="center" style={{ width: "20%" }}>제출시간</StyledTableCell>
-            {/* <StyledTableCell align="center" style={{ width: "10%" }}>메모리</StyledTableCell> */}
-            {/* <StyledTableCell align="center" style={{ width: "10%" }}>런타임</StyledTableCell> */}
           </TableRow>
         </TableHead>
         <TableBody>
@@ -88,15 +86,6 @@ export default function SolvedTable(props: any) {
                 <span style={{color: '#E45624'}}> ms</span>
               </StyledTableCell>
               <StyledTableCell align="center">{row.submitTime}</StyledTableCell>
-              
-              {/* <StyledTableCell align="center">
-                {row.memory} 
-                <span style={{color: '#E45624'}}> KB</span>
-              </StyledTableCell>
-              <StyledTableCell align="center">
-                {row.runTime} 
-                <span style={{color: '#E45624'}}> ms</span>
-              </StyledTableCell> */}
             </TableRow>
           ))}
         </TableBody>
