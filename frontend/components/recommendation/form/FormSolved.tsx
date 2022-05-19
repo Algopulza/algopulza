@@ -1,10 +1,10 @@
-import InputTextArea from "../../common/input/InputTextArea"
-import styled from "styled-components"
-import { useRecoilState, useRecoilValue } from "recoil"
-import { accessTokenState, bojIdState, solvedState } from "../../../util/stateCollection"
-import { checkSpace } from "../../../util/validationCollection"
-import { axiosSolved } from "../../../util/axiosCollection"
-import { showToast } from "../../common/alert/Alert"
+import InputTextArea from '../../common/input/InputTextArea'
+import styled from 'styled-components'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { accessTokenState, bojIdState, solvedState } from '../../../util/stateCollection'
+import { checkSpace } from '../../../util/validationCollection'
+import { axiosSolved } from '../../../util/axiosCollection'
+import { showToastSuccess } from '../../common/alert/Alert'
 
 const Container = styled.section`
   display: flex;
@@ -44,9 +44,10 @@ export default function FormSolved() {
   const accessToken = useRecoilValue(accessTokenState)
 
   const handleClick = (event: any) => {
-    axiosSolved(bojId, solved, accessToken).then((res) => {
-      showToast("제출해주셔서 감사합니다.")
-    })
+    axiosSolved(bojId, solved, accessToken)
+      .then(res => {
+        showToastSuccess('제출해주셔서 감사합니다.')
+      })
   }
 
   return (
