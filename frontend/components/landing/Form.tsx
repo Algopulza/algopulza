@@ -7,10 +7,9 @@ import { useRecoilState, useSetRecoilState } from 'recoil'
 import { bojIdState, memberIdState, algoIdState, accessTokenState, refreshTokenState, idState, passwordState } from '../../util/stateCollection'
 import { checkSpace } from '../../util/validationCollection'
 import ButtonRouting from '../common/button/ButtonRouting'
-import { showToast } from '../common/alert/Alert'
 import PopupLogin from '../common/alert/PopupLogin'
 import { setCookie } from '../../util/cookieHandler'
-// import Divider from '@mui/material/Divider';
+import { sendLongMessage } from '../../util/inputHandlerCollection'
 
 const Container = styled.section`
   display: flex;
@@ -43,10 +42,10 @@ export default function Form() {
           router.push('/recommendation')
         })
         .catch(err => {
-          showToast('아이디와 비밀번호를 정확히 입력해주세요.')
+          sendLongMessage('loginMessage', '아이디와 비밀번호를 정확히 입력해주세요.')
         })
     } else {
-      showToast('아이디와 비밀번호를 정확히 입력해주세요.')
+      sendLongMessage('loginMessage', '아이디와 비밀번호를 정확히 입력해주세요.')
     }
   }
   const handleKeyDown = (event: any) => {
@@ -72,6 +71,7 @@ export default function Form() {
           setter={setPassword}
           onKeyDown={handleKeyDown}
         />
+        <p id='loginMessage' style={{textAlign: 'center', fontSize: '0.9vw', color: 'red', margin: '10px 0 0 0'}}></p>
       </div>
 
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>

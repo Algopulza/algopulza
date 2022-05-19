@@ -5,7 +5,7 @@ import { axiosTried } from '../../../util/axiosCollection'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { accessTokenState, bojIdState, triedState } from '../../../util/stateCollection'
 import { checkSpace } from '../../../util/validationCollection'
-import { showToast } from '../../common/alert/Alert'
+import { showToastSuccess } from '../../common/alert/Alert'
 
 const Container = styled.section`
   display: flex;
@@ -45,7 +45,7 @@ export default function FormTried() {
   const handleClick = (event: any) => {
   axiosTried(bojId, tried, accessToken)
     .then(res => {
-      showToast('제출해주셔서 감사합니다.')
+      showToastSuccess('제출해주셔서 감사합니다.')
     })
   }
 

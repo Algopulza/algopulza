@@ -1,12 +1,10 @@
 import InputTextArea from '../../common/input/InputTextArea'
-import ButtonSubmitting from '../../common/button/ButtonSubmitting'
 import styled from 'styled-components'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { accessTokenState, bojIdState, solvedState } from '../../../util/stateCollection'
 import { checkSpace } from '../../../util/validationCollection'
 import { axiosSolved } from '../../../util/axiosCollection'
-import { showToast } from '../../common/alert/Alert'
-import Button from '@mui/material/Button';
+import { showToastSuccess } from '../../common/alert/Alert'
 
 const Container = styled.section`
   display: flex;
@@ -46,7 +44,7 @@ export default function FormSolved() {
   const handleClick = (event: any) => {
     axiosSolved(bojId, solved, accessToken)
       .then(res => {
-        showToast('제출해주셔서 감사합니다.')
+        showToastSuccess('제출해주셔서 감사합니다.')
       })
   }
 

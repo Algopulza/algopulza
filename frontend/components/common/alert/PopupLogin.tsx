@@ -60,7 +60,7 @@ export default function PopupLogin() {
         onClick={handleClickOpen}
         style={{padding: 0, fontSize: '1.1vw', width: '12vw', height: '2.3vw'}}
       >
-        비회원으로 로그인
+        비회원으로 이용
       </CustomButton>
       <Dialog
         open={open}

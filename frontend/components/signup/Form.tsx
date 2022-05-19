@@ -5,11 +5,10 @@ import ButtonSubmitting from '../common/button/ButtonSubmitting'
 import ButtonSubmittingOutlined from '../common/button/ButtonSubmittingOutlined'
 import styled from 'styled-components'
 import { axiosId } from '../../util/axiosCollection'
-import { handleSignupClick } from '../../util/inputHandlerCollection'
+import { handleSignupClick, sendLongMessage } from '../../util/inputHandlerCollection'
 import { useRecoilState } from 'recoil'
 import { bojIdSignupState, idState, passwordState, pwConfirmState } from '../../util/stateCollection'
 import { checkId, checkPassword, nothing } from '../../util/validationCollection'
-import { showToast } from '../common/alert/Alert'
 
 const Container = styled.section`
   display: flex;
@@ -47,15 +46,15 @@ export default function Form() {
 
   const handleIdClick = (event: any, id: string) => {
     if (id.trim() === '') {
-      showToast('아이디를 먼저 입력해주세요.')
+      sendLongMessage('signupMessage', '아이디를 먼저 입력해주세요.')
     } else {
       axiosId(id)
         .then(res => {
           setIsCheck(true)
           setIsSame(res.data.data)
           { res.data.data ?
-            showToast('중복된 아이디입니다.') :
-            showToast('가능한 아이디입니다.')
+            sendLongMessage('signupMessage', '중복된 아이디입니다.') :
+            sendLongMessage('signupMessage', '가능한 아이디입니다.')
           }
         })
     }
@@ -106,19 +105,22 @@ export default function Form() {
         </CellLeft>
       </Row>
 
-      <Row>
+      <Row style={{marginBottom: '20px'}}>
         <CellLeft>
-          <InputTextField
-            textFieldAttr={{width: '14vw', id: 'pwConfirm', label: '비밀번호 확인', marBot: '20px', marRig: '0px', isPw: true, isAf: false}}
-            valid={nothing}
-            errorMessage='동일한 비밀번호를 입력해주세요.'
-            setter={setPwConfirm}
-            onKeyDown={() => {}}
-          />
+          <div>
+            <InputTextField
+              textFieldAttr={{width: '14vw', id: 'pwConfirm', label: '비밀번호 확인', marBot: '20px', marRig: '0px', isPw: true, isAf: false}}
+              valid={nothing}
+              errorMessage='동일한 비밀번호를 입력해주세요.'
+              setter={setPwConfirm}
+              onKeyDown={() => {}}
+            />
+          <p id='signupMessage' style={{textAlign: 'center', fontSize: '0.9vw', color: 'red', margin: '10px 0 0 0'}}></p>
+          </div>
         </CellLeft>
       </Row>
 
-      <Row style={{display: 'flex', justifyContent: 'center'}}>
+      <Row style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
         <ButtonSubmitting
           submittingAttr={{text: '회원 가입', width: '10vw', height: '2.3vw', marBot: '0px', fontSize: '1.1vw'}}
           isImportant={true}
