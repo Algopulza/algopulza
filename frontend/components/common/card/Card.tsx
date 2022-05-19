@@ -12,13 +12,13 @@ const Container = styled.section`
 `
 
 type CardProps = {
-  key: number,
-  id: number,
-  problemId: number,
-  title: string,
-  tier: string,
-  level: number,
-  accept: number,
+  key: number
+  id: number
+  problemId: number
+  title: string
+  tier: string
+  level: number
+  accept: number
   bookmark: boolean
 }
 

@@ -1,8 +1,7 @@
-import Image from 'next/image'
-import GuideImg from '../../public/contents/signup.png'
-import FormSolved from './form/FormSolved'
-import FormTried from './form/FormTried'
-import styled from 'styled-components'
+import Image from "next/image"
+import GuideImg from "../../public/contents/signup.png"
+import FormTried from "./form/FormTried"
+import styled from "styled-components"
 
 const Container = styled.section`
   display: grid;
@@ -10,7 +9,7 @@ const Container = styled.section`
   height: 600px;
   margin-bottom: 80px;
   padding: 0vw 5vw;
-  background: #FFC94D;
+  background: #ffc94d;
 `
 
 const InputContainer = styled.div`
@@ -28,7 +27,7 @@ const Board = styled.div`
   height: 500px;
   box-shadow: 0px 2px 10px 5px rgba(0, 0, 0, 0.25);
   border-radius: 15px;
-  background: #FAFBED;
+  background: #fafbed;
 `
 
 const GuideContainer = styled.div`
@@ -46,23 +45,26 @@ export default function Form() {
   return (
     <Container>
       <GuideContainer>
-        <Image src={GuideImg} layout="responsive" alt="풀이기록 제공방법 가이드 콘텐츠" />
+        <Image
+          src={GuideImg}
+          layout="responsive"
+          alt="풀이기록 제공방법 가이드 콘텐츠"
+        />
         <Title>
-          1. 맞은 문제는 <span style={{color: 'black', fontWeight: '700'}}>해결한 문제</span>에 붙여넣기 해주세요.
+          1. 맞은 문제는{" "}
+          <span style={{ color: "black", fontWeight: "700" }}>해결한 문제</span>에 붙여넣기 해주세요.
         </Title>
         <Title>
-          2. 시도했지만 맞지 못한 문제는 <span style={{color: 'black', fontWeight: '700'}}>시도한 문제</span>에 붙여넣기 해주세요.
+          2. 시도했지만 맞지 못한 문제는{" "}
+          <span style={{ color: "black", fontWeight: "700" }}>시도한 문제</span>에 붙여넣기 해주세요.
         </Title>
       </GuideContainer>
-
       <div></div>
-
       <InputContainer>
         <Board>
-          {/* <FormSolved /> */}
           <FormTried />
         </Board>
       </InputContainer>
     </Container>
-  )
+  );
 }

@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import styled from "styled-components"
 import AnalyTitle from "../../common/AnalyTitle"
 import SolvedTable from "./SolvedLog/SolvedTable"
 import SolvedPagination from "./SolvedLog/SolvedPagination"
-import AnalyCard from "../../common/card/AnalyCard";
-import Divider from '@mui/material/Divider';
-
-import { useRecoilValue } from 'recoil'
+import AnalyCard from "../../common/card/AnalyCard"
+import Divider from "@mui/material/Divider"
+import { useRecoilValue } from "recoil"
 import { accessTokenState } from "../../../util/stateCollection"
 import { getSolvingLog } from "../../../api/back/analysis/SolvedTable"
 import FormSolved from "../../recommendation/form/FormSolved"
@@ -17,13 +16,13 @@ const Row = styled.div`
   justify-content: center;
   align-items: center;
   gap: 2em;
-`;
+`
 
 const Sub = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top:5rem;
+  margin-top: 5rem;
 `
 
 const None = styled.div`
@@ -44,28 +43,34 @@ const Solved = () => {
     window.open(problemUrl)
   }
 
-  // page 검색 api
   const SolvingLogPage = async (page: any) => {
     setPage(page)
     await getSolvingLog(accessToken, currentPage, 5)
-      .then(res => {
-        // console.log(res)
+      .then((res) => {
         setRows(res.data.data.content)
         setTotalPage(res.data.data.totalPages)
       })
-      .catch(err => console.log(err))
-  }
-  useEffect(() => { 
+      .catch((err) => console.log(err))
+  };
+  useEffect(() => {
     SolvingLogPage(currentPage)
   }, [currentPage])
 
   return (
     <AnalyCard>
-      <AnalyTitle><b>풀이 기록</b></AnalyTitle>
-      { rows.length==0 ?
+      <AnalyTitle>
+        <b>풀이 기록</b>
+      </AnalyTitle>
+      {rows.length == 0 ? (
         <Sub>
-          <None><span onClick={handleClick} style={{color:"blue", cursor:"pointer"}}>acmicpc.net</span> 에 제출한 문제가 없어요</None>
-        </Sub> :
+          <None>
+            <span
+              onClick={handleClick}
+              style={{ color: "blue", cursor: "pointer" }}
+            > acmicpc.net</span>{" "}에 제출한 문제가 없어요
+          </None>
+        </Sub>
+      ) : (
         <>
           <Row>
             <SolvedTable rows={rows} />
@@ -78,12 +83,14 @@ const Solved = () => {
             />
           </Row>
         </>
-      }
+      )}
 
-      <Divider sx={{ paddingTop: '3em'}}/>
+      <Divider sx={{ paddingTop: "3em" }} />
 
-      <AnalyTitle><b>풀이 기록 등록</b></AnalyTitle>
-      <div style={{display: 'flex', justifyContent: 'space-evenly', marginTop: 30, marginBottom: 30}}>
+      <AnalyTitle>
+        <b>풀이 기록 등록</b>
+      </AnalyTitle>
+      <div style={{ display: "flex", justifyContent: "space-evenly", marginTop: 30, marginBottom: 30 }}>
         <FormSolved />
         <FormTried />
       </div>

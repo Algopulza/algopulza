@@ -1,5 +1,5 @@
-import ButtonRouting from '../common/button/ButtonRouting'
-import styled from 'styled-components'
+import ButtonRouting from "../common/button/ButtonRouting"
+import styled from "styled-components"
 
 const Container = styled.section`
   display: flex;
@@ -11,7 +11,7 @@ const Container = styled.section`
 export default function Routing() {
   return (
     <Container>
-      <ButtonRouting routingAttr={{url: '/', text: '이전으로'}}  />
+      <ButtonRouting routingAttr={{ url: "/", text: "이전으로" }} />
     </Container>
   )
 }

@@ -1,9 +1,9 @@
-import InputLabel from '@mui/material/InputLabel'
-import MenuItem from '@mui/material/MenuItem'
-import FormControl from '@mui/material/FormControl'
-import Select, { SelectChangeEvent } from '@mui/material/Select'
-import { useRecoilState } from 'recoil'
-import { filterTierState } from '../../../util/stateCollection'
+import InputLabel from "@mui/material/InputLabel"
+import MenuItem from "@mui/material/MenuItem"
+import FormControl from "@mui/material/FormControl"
+import Select, { SelectChangeEvent } from "@mui/material/Select"
+import { useRecoilState } from "recoil"
+import { filterTierState } from "../../../util/stateCollection"
 
 export default function SelectionTier() {
   const [tier, setTier] = useRecoilState(filterTierState)
@@ -13,7 +13,7 @@ export default function SelectionTier() {
   }
 
   return (
-    <FormControl sx={{ marginRight: '10px', width: '9vw' }} size="small">
+    <FormControl sx={{ marginRight: "10px", width: "9vw" }} size="small">
       <InputLabel id="tier">티어</InputLabel>
       <Select
         labelId="tier"
@@ -22,12 +22,12 @@ export default function SelectionTier() {
         label="Tier"
         onChange={handleChange}
       >
-        <MenuItem value={''}>전체</MenuItem>
-        <MenuItem value={'Bronze'}>브론즈</MenuItem>
-        <MenuItem value={'Silver'}>실버</MenuItem>
-        <MenuItem value={'Gold'}>골드</MenuItem>
-        <MenuItem value={'Platinum'}>플래티넘</MenuItem>
+        <MenuItem value={""}>전체</MenuItem>
+        <MenuItem value={"Bronze"}>브론즈</MenuItem>
+        <MenuItem value={"Silver"}>실버</MenuItem>
+        <MenuItem value={"Gold"}>골드</MenuItem>
+        <MenuItem value={"Platinum"}>플래티넘</MenuItem>
       </Select>
     </FormControl>
-  );
+  )
 }

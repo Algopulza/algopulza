@@ -1,10 +1,8 @@
-import styled from 'styled-components'
+import styled from "styled-components"
 
 const Button = styled.button`
-  /* background: #FFC94D; */
   border: none;
   border-radius: 50%;
-  /* box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.25); */
   font-size: 1vw;
   font-weight: 700;
   padding: 0.8em;
@@ -22,14 +20,18 @@ const Button = styled.button`
 `
 
 type SubmittingProps = {
-  submittingAttr: any,
-  onClick(event: any): void,
-  onKeyDown(event: any): void,
+  submittingAttr: any;
+  onClick(event: any): void;
+  onKeyDown(event: any): void;
 }
 
 export default function ButtonSearching({ submittingAttr, onClick, onKeyDown }: SubmittingProps) {
   return (
-    <Button style={{width: `${submittingAttr.width}`}} onClick={onClick} onKeyDown={onKeyDown}>
+    <Button
+      style={{ width: `${submittingAttr.width}` }}
+      onClick={onClick}
+      onKeyDown={onKeyDown}
+    >
       {submittingAttr.text}
     </Button>
   )

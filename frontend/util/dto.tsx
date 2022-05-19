@@ -1,47 +1,46 @@
 // navbar
 export type NavItemAttr = {
-  page: string,
+  page: string
   url: string
 }
 
 // TextInput Data Object
 export type TextFieldAttr = {
-  width: string,
-  marBot: string,
-  marRig: string,
-  id: string,
-  label: string,
-  isPw: boolean,
+  width: string
+  marBot: string
+  marRig: string
+  id: string
+  label: string
+  isPw: boolean
   isAf: boolean
 }
 
 // Submitting Button Data Object
 export type SubmittingAttr = {
-  text: string,
-  width: string,
-  height: string,
-  marBot: string,
+  text: string
+  width: string
+  height: string
+  marBot: string
   fontSize: string
 }
 
-
 // Subject Data Object
 export type SubjectAttr = {
-  title: string,
-  englishTitle: string,
+  title: string
+  englishTitle: string
   list: any
 }
 
 // Problem Data Object
 export type ProblemAttr = {
-  key: number,
-  title: string,
-  bojId: number,
-  problemId: number,
-  tierName: string,
-  tierLevel: number,
-  acceptedCount: number,
-  markFlag: boolean,
-  averageTryCount: number,
-  tagList: any,
+  key: number
+  title: string
+  bojId: number
+  problemId: number
+  tierName: string
+  tierLevel: number
+  acceptedCount: number
+  markFlag: boolean
+  averageTryCount: number
+  tagList: any
 }

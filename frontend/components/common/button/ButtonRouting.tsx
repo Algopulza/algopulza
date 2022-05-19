@@ -1,13 +1,13 @@
-import { useRouter } from 'next/router'
-import { RoutingAttr } from '../../landing/Routing'
-import styled from 'styled-components'
+import { useRouter } from "next/router"
+import { RoutingAttr } from "../../landing/Routing"
+import styled from "styled-components"
 
 const Container = styled.section`
   padding: 0 2.5vw;
   color: #545454;
   cursor: pointer;
   &:hover {
-    color: #FFC94D;
+    color: #ffc94d;
   }
 `
 
@@ -19,7 +19,5 @@ export default function ButtonRouting({ routingAttr }: routingProps) {
     router.push(routingAttr.url)
   }
 
-  return (
-    <Container onClick={clickHandler}>{routingAttr.text}</Container>
-  )
+  return <Container onClick={clickHandler}>{routingAttr.text}</Container>
 }
