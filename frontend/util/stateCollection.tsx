@@ -15,27 +15,21 @@ export const menuState = atom({
   default: '',
 })
 
-export const userInfoState = atom({
-  key: 'userInfoState',
-  default: {},
-  effects_UNSTABLE: [persistAtom]
-})
-
 export const bojIdState = atom({
   key: 'bojIdState',
-  default: {},
+  default: '',
   effects_UNSTABLE: [persistAtom]
 })
 
 export const memberIdState = atom({
   key: 'memberIdState',
-  default: {},
+  default: '',
   effects_UNSTABLE: [persistAtom]
 })
 
 export const algoIdState = atom({
   key: 'algoIdState',
-  default: {},
+  default: '',
   effects_UNSTABLE: [persistAtom]
 })
 

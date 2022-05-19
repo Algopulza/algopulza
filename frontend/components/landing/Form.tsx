@@ -33,7 +33,6 @@ export default function Form() {
     if (id.trim() !== '' || password.trim() !== '') {
       axiosLogin(id, password)
         .then(res => {
-          console.log(res)
           setAlgoId(res.data.data.member.algopluzaId)
           setBojId(res.data.data.member.bojId)
           setMemberId(res.data.data.member.memberId)
