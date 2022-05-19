@@ -1,10 +1,10 @@
 package com.algopulza.backend.db.repository;
 
+import com.algopulza.backend.api.dto.CountDto;
 import com.algopulza.backend.api.response.*;
 import com.algopulza.backend.db.entity.*;
 import com.querydsl.core.types.Projections;
-import com.querydsl.core.types.dsl.BooleanExpression;
-import com.querydsl.core.types.dsl.Expressions;
+import com.querydsl.core.types.dsl.*;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -22,15 +22,7 @@ public class SolvingLogRepositoryCustomImpl implements  SolvingLogRepositoryCust
     private final JPAQueryFactory jpaQueryFactory;
 
     QSolvingLog qSolvingLog = QSolvingLog.solvingLog;
-
-    @Override
-    public List<Problem> findProblemByMember(Member member) {
-        return jpaQueryFactory
-                .select(qSolvingLog.problem)
-                .from(qSolvingLog)
-                .where(qSolvingLog.member.eq(member))
-                .fetch();
-    }
+    QProblemHasTag qProblemHasTag = QProblemHasTag.problemHasTag;
 
     @Override
     public Page<SolvingLogRes> findByMemberId(Long memberId, Pageable pageable) {
@@ -59,16 +51,6 @@ public class SolvingLogRepositoryCustomImpl implements  SolvingLogRepositoryCust
                 .where(qSolvingLog.member.id.eq(memberId));
 
         return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchCount);
-    }
-
-    @Override
-    public List<SolvingLog> findByProblem(Member member, Problem problem) {
-        return jpaQueryFactory
-                .select(qSolvingLog)
-                .from(qSolvingLog)
-                .where(qSolvingLog.member.eq(member))
-                .where(qSolvingLog.problem.eq(problem))
-                .fetch();
     }
 
     @Override
@@ -136,6 +118,21 @@ public class SolvingLogRepositoryCustomImpl implements  SolvingLogRepositoryCust
                 .from(qSolvingLog)
                 .where(qSolvingLog.member.id.eq(memberId), qSolvingLog.status.eq("solved"))
                 .fetchOne();
+    }
+
+    @Override
+    public List<CountDto> countByTagAndStatus(Long memberId, String status) {
+        return jpaQueryFactory
+                .select(Projections.constructor(CountDto.class,
+                        qProblemHasTag.tag.id,
+                        Expressions.asString("temp"),
+                        qSolvingLog.count()
+                ))
+                .from(qSolvingLog)
+                .leftJoin(qProblemHasTag).on(qSolvingLog.problem.eq(qProblemHasTag.problem))
+                .where(qSolvingLog.member.id.eq(memberId), eqStatus(status))
+                .groupBy(qProblemHasTag.tag)
+                .fetch();
     }
 
 }

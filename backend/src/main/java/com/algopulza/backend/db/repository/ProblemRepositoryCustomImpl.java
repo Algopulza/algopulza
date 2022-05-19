@@ -4,6 +4,7 @@ import com.algopulza.backend.api.response.ProblemRes;
 import com.algopulza.backend.db.entity.*;
 import com.querydsl.core.types.*;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -32,6 +33,10 @@ public class ProblemRepositoryCustomImpl implements ProblemRepositoryCustom {
      * 즐겨찾기 문제로 표시되어있는지 여부 반환
      */
     private Expression<Boolean> isMarked(Long memberId) {
+        // memberId가 없을때(비회원)는 무조건 false로 반환
+        if (memberId == null) {
+            return Expressions.asBoolean(false);
+        }
         return ExpressionUtils.as(
                 JPAExpressions.select(qProblemMark.count().eq(1L))
                               .from(qProblemMark)
@@ -108,66 +113,60 @@ public class ProblemRepositoryCustomImpl implements ProblemRepositoryCustom {
 
     @Override
     public ProblemRes findProblemResById(Long memberId, Long id) {
-        return jpaQueryFactory.select(Projections.constructor(ProblemRes.class,
-                                      qProblem.id,
-                                      qProblem.bojId,
-                                      qProblem.title,
-                                      qTier.level,
-                                      qTier.name,
-                                      qProblem.acceptedCount,
-                                      qProblem.averageTryCount,
-                                      isMarked(memberId)
-                              ))
-                              .from(qProblem)
-                              .join(qTier).on(qProblem.tier.eq(qTier))
-                              .where(qProblem.id.eq(id))
-                              .fetchOne();
+        return jpaQueryFactory
+                .select(Projections.constructor(ProblemRes.class,
+                        qProblem.id,
+                        qProblem.bojId,
+                        qProblem.title,
+                        qTier.level,
+                        qTier.name,
+                        qProblem.acceptedCount,
+                        qProblem.averageTryCount,
+                        isMarked(memberId))
+                )
+                .from(qProblem)
+                .join(qTier).on(qProblem.tier.eq(qTier))
+                .where(qProblem.id.eq(id))
+                .fetchOne();
     }
 
     @Override
     public List<Long> findProblemIdByTierNameSet(Set<String> tierNameSet) {
-        return jpaQueryFactory.select(qProblem.id)
-                              .from(qProblem)
-                              .join(qTier).on(qProblem.tier.eq(qTier))
-                              .where(qTier.name.in(tierNameSet))
-                              .fetch();
+        return jpaQueryFactory
+                .select(qProblem.id)
+                .from(qProblem)
+                .join(qTier).on(qProblem.tier.eq(qTier))
+                .where(qTier.name.in(tierNameSet))
+                .fetch();
     }
 
     @Override
     public List<Long> findProblemIdByBojTagId(int bojTagId) {
-        return jpaQueryFactory.select(qProblemHasTag.problem.id)
-                              .distinct()
-                              .from(qProblemHasTag)
-                              .leftJoin(qTag).on(qProblemHasTag.tag.eq(qTag))
-                              .where(qTag.bojTagId.eq(bojTagId))
-                              .fetch();
-    }
-
-    @Override
-    public List<Long> findProblemIdByStatus(Long memberId, String status) {
-        return jpaQueryFactory.select(qSolvingLog.problem.id)
-                              .distinct()
-                              .from(qSolvingLog)
-                              .where(qSolvingLog.member.id.eq(memberId), qSolvingLog.status.eq(status))
-                              .fetch();
+        return jpaQueryFactory
+                .select(qProblemHasTag.problem.id).distinct()
+                .from(qProblemHasTag)
+                .leftJoin(qTag).on(qProblemHasTag.tag.eq(qTag))
+                .where(qTag.bojTagId.eq(bojTagId))
+                .fetch();
     }
 
     @Override
     public List<ProblemRes> findProblemResByIdSet(Long memberId, Set<Long> idSet) {
-        return jpaQueryFactory.select(Projections.constructor(ProblemRes.class,
-                                      qProblem.id,
-                                      qProblem.bojId,
-                                      qProblem.title,
-                                      qTier.level,
-                                      qTier.name,
-                                      qProblem.acceptedCount,
-                                      qProblem.averageTryCount,
-                                      isMarked(memberId)
-                              ))
-                              .from(qProblem)
-                              .join(qTier).on(qProblem.tier.eq(qTier))
-                              .where(qProblem.id.in(idSet))
-                              .fetch();
+        return jpaQueryFactory
+                .select(Projections.constructor(ProblemRes.class,
+                        qProblem.id,
+                        qProblem.bojId,
+                        qProblem.title,
+                        qTier.level,
+                        qTier.name,
+                        qProblem.acceptedCount,
+                        qProblem.averageTryCount,
+                        isMarked(memberId))
+                )
+                .from(qProblem)
+                .join(qTier).on(qProblem.tier.eq(qTier))
+                .where(qProblem.id.in(idSet))
+                .fetch();
     }
 
 }
