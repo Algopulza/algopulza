@@ -33,7 +33,7 @@ def user_freq_tag(app, mongodb, userid):
     # 내가 푼 문제-태그 정보(problem_tag) 불러오기
     collection = mongodb.problem_tag
     problem_tag = collection.find({'problemId': { '$in': solved_df['problemId'].tolist() }})
-    problem_tag_df = pd.DataFrame(problem_tag)
+    problem_tag_df = pd.DataFrame(problem_tag).fillna(0)
     problem_tag_df = problem_tag_df.astype({'bojTagId': 'int'})
     print(problem_tag_df)
 
