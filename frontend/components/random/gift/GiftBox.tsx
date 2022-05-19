@@ -1,8 +1,8 @@
-import { useState } from 'react'
-import Image, { StaticImageData } from 'next/image'
-import GiftButton from './GiftButton'
-import Card from '../../common/card/Card'
-import styled from 'styled-components'
+import { useState } from "react"
+import Image, { StaticImageData } from "next/image"
+import GiftButton from "./GiftButton"
+import Card from "../../common/card/Card"
+import styled from "styled-components"
 
 const Container = styled.section`
   display: flex;
@@ -19,17 +19,17 @@ const Canvas = styled.div`
 `
 
 type TextProps = {
-  text: string,
-  img: StaticImageData,
-  data: any,
-  random: any,
-}
+  text: string
+  img: StaticImageData
+  data: any
+  random: any
+};
 
 export default function GiftBox({ text, img, data, random }: TextProps) {
-  const [isToggled, setIsToggled] = useState(false)
+  const [isToggled, setIsToggled] = useState(false);
   return (
     <Container>
-      {isToggled ?
+      {isToggled ? (
         <Card
           key={data.bojId}
           id={data.bojId}
@@ -39,13 +39,20 @@ export default function GiftBox({ text, img, data, random }: TextProps) {
           level={data.tierLevel}
           accept={data.acceptedCount}
           bookmark={data.markFlag}
-        /> :
+        />
+      ) : (
         <Canvas onClick={() => setIsToggled(true)}>
           <Image src={img} layout="responsive" alt="gift box image" />
         </Canvas>
-      }
-      
-      <GiftButton onClick={() => {isToggled && random(), setIsToggled(!isToggled)}}>{text}</GiftButton>
+      )}
+
+      <GiftButton
+        onClick={() => {
+          isToggled && random(), setIsToggled(!isToggled);
+        }}
+      >
+        {text}
+      </GiftButton>
     </Container>
-  )
+  );
 }

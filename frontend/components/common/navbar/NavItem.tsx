@@ -1,10 +1,10 @@
-import { NavItemAttr } from '../../../util/dto'
-import { useRouter } from 'next/router'
-import styled from 'styled-components'
-import { useEffect, useState } from 'react'
-import { showToast } from '../alert/Alert'
-import { useRecoilValue } from 'recoil'
-import { accessTokenState } from '../../../util/stateCollection'
+import { NavItemAttr } from "../../../util/dto"
+import { useRouter } from "next/router"
+import styled from "styled-components"
+import { useEffect, useState } from "react"
+import { showToast } from "../alert/Alert"
+import { useRecoilValue } from "recoil"
+import { accessTokenState } from "../../../util/stateCollection"
 
 const Text = styled.div<{ cond: boolean }>`
   margin: 0 3vw 0 3vw;
@@ -12,13 +12,13 @@ const Text = styled.div<{ cond: boolean }>`
   color: ${(props) => (props.cond ? "#FFC94D" : "#cdcaca")};
   cursor: pointer;
   &:hover {
-    color: #FFC94D;
+    color: #ffc94d;
   }
 `
 
 type NavItemProps = {
-  navItemAttr: NavItemAttr,
-  currentUrl: String,
+  navItemAttr: NavItemAttr
+  currentUrl: String
   onClick(path: string): void
 }
 
@@ -28,13 +28,19 @@ export default function NavItem({ navItemAttr, currentUrl, onClick }: NavItemPro
   const accessToken = useRecoilValue(accessTokenState)
 
   useEffect(() => {
-    setIsLogin(accessToken !== '' ? true : false)
+    setIsLogin(accessToken !== "" ? true : false)
   }, [])
 
   return (
     <Text
       cond={navItemAttr.url == currentUrl ? true : false}
-      onClick={isLogin ? () => { onClick(navItemAttr.url); router.push(navItemAttr.url)} : () => showToast('회원 가입한 유저만 사용 가능합니다.')}
+      onClick={
+        isLogin ? () => {
+              onClick(navItemAttr.url)
+              router.push(navItemAttr.url)
+            }
+          : () => showToast("회원 가입한 유저만 사용 가능합니다.")
+      }
     >
       {navItemAttr.page}
     </Text>

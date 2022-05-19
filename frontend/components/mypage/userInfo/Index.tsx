@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import styled from "styled-components"
 import Userinfo from "./Userinfo"
 import Stopwatch from "./stopwatch/Stopwatch"
@@ -12,15 +12,15 @@ const Container = styled.div`
   gap: 2rem;
 `
 
-const Index = ({accessToken, memberId}:User) => {
+const Index = ({ accessToken, memberId }: User) => {
   const [userInfo, setUserInfo] = useState({
-    algopluzaId:"",
-    tierLevel:0,
-    tierName:"",
-    exp:0
+    algopluzaId: "",
+    tierLevel: 0,
+    tierName: "",
+    exp: 0,
   })
-  
-  const [timeInfo, setTimeInfo] = useState({totalSolvingTime:0})
+
+  const [timeInfo, setTimeInfo] = useState({ totalSolvingTime: 0 })
   const time = timeInfo.totalSolvingTime
 
   const AnalUser = async () => {
@@ -29,7 +29,7 @@ const Index = ({accessToken, memberId}:User) => {
         setUserInfo(res.data.data)
       })
       .catch((err) => console.log(err))
-  };
+  }
 
   const Time = async () => {
     await getStatistic(accessToken)
@@ -37,7 +37,7 @@ const Index = ({accessToken, memberId}:User) => {
         setTimeInfo(res.data.data)
       })
       .catch((err) => console.log(err))
-  };
+  }
 
   useEffect(() => {
     AnalUser()
@@ -46,7 +46,15 @@ const Index = ({accessToken, memberId}:User) => {
 
   return (
     <Container>
-      {userInfo?<Userinfo algopluzaId={userInfo.algopluzaId} tierLevel={userInfo.tierLevel} tierName={userInfo.tierName} time={time} exp={userInfo.exp}/>:null}
+      {userInfo ? (
+        <Userinfo
+          algopluzaId={userInfo.algopluzaId}
+          tierLevel={userInfo.tierLevel}
+          tierName={userInfo.tierName}
+          time={time}
+          exp={userInfo.exp}
+        />
+      ) : null}
       <Stopwatch />
     </Container>
   )

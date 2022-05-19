@@ -1,11 +1,11 @@
-import { ToastContainer } from 'react-toastify'
-import Carousel from '../components/landing/Carousel'
-import Content from '../components/landing/Content'
-import Form from '../components/landing/Form'
-import styled from 'styled-components'
-import 'react-toastify/dist/ReactToastify.css'
-import { useRouter } from 'next/router'
-import { GetServerSideProps } from 'next'
+import { ToastContainer } from "react-toastify"
+import Carousel from "../components/landing/Carousel"
+import Content from "../components/landing/Content"
+import Form from "../components/landing/Form"
+import styled from "styled-components"
+import "react-toastify/dist/ReactToastify.css"
+import { useRouter } from "next/router"
+import { GetServerSideProps } from "next"
 
 const Container = styled.section`
   display: grid;
@@ -27,7 +27,7 @@ const FormArea = styled.div`
   height: 75vh;
   padding: 5vh 0;
   border-radius: 5px;
-  background: #FFFFFF;
+  background: #ffffff;
 `
 
 export default function Landing() {
@@ -42,15 +42,14 @@ export default function Landing() {
             <Form />
           </FormArea>
         </Subcontainer>
-
         <div></div>
-
         <Carousel />
-
         <div></div>
-        
       </Container>
-      <ToastContainer limit={1} style={{ width: '25vw', fontSize: '1.1vw', color: '#282828' }} />
+      <ToastContainer
+        limit={1}
+        style={{ width: "25vw", fontSize: "1.1vw", color: "#282828" }}
+      />
     </>
   )
 }

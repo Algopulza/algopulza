@@ -1,5 +1,5 @@
 export const checkSpace = (item: string) => {
-  if (item.trim() === '') {
+  if (item.trim() === "") {
     return false
   } else {
     return true
@@ -25,9 +25,11 @@ export const nothing = (item: string) => {
 export const checkStopwatch = (probId: string) => {
   const probIdReg = /^[0-9]/
   const probIdTrimmed = probId.trim()
-  return probIdReg.test(probIdTrimmed) && Number(probIdTrimmed) >= 1000 ? true : false
+  return probIdReg.test(probIdTrimmed) && Number(probIdTrimmed) >= 1000
+    ? true
+    : false
 }
 
 export const checkStopwatchMin = (min: string) => {
-  return min === '00' ? false : true
+  return min === "00" ? false : true
 }

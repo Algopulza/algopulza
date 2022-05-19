@@ -1,15 +1,13 @@
-import styled from 'styled-components'
-import AnalyCard from '../../../common/card/AnalyCard'
-import InputTextField from '../../../common/input/InputTextField'
-import Time from './Time'
-import ButtonSubmitting from '../../../common/button/ButtonSubmitting'
-import { useRecoilState, useRecoilValue } from 'recoil'
-import { accessTokenState, checkState, stopwatchLangauge, stopwatchProbIdState } from '../../../../util/stateCollection'
-import { checkStopwatch } from '../../../../util/validationCollection'
-import { handleStopwatchClick } from '../../../../util/inputHandlerCollection'
-import SelectionLanguage from './SelectionLanguage'
-import Popup from '../../../common/alert/Popup'
-import Check from '../../../common/input/Check'
+import styled from "styled-components";
+import AnalyCard from "../../../common/card/AnalyCard";
+import InputTextField from "../../../common/input/InputTextField";
+import Time from "./Time";
+import { useRecoilState } from "recoil";
+import { stopwatchProbIdState } from "../../../../util/stateCollection"
+import { checkStopwatch } from "../../../../util/validationCollection";
+import SelectionLanguage from "./SelectionLanguage"
+import Popup from "../../../common/alert/Popup"
+import Check from "../../../common/input/Check"
 
 const Container = styled.section`
   width: 100%;
@@ -20,9 +18,7 @@ const Container = styled.section`
 `
 
 export default function Stopwatch() {
-  const [stopwatchProbId, setStopwatchProbId] = useRecoilState(stopwatchProbIdState)
-  const language = useRecoilValue(stopwatchLangauge)
-  const accessToken = useRecoilValue(accessTokenState)
+  const [stopwatchProbId, setStopwatchProbId] = useRecoilState(stopwatchProbIdState);
 
   return (
     <AnalyCard>
@@ -31,19 +27,32 @@ export default function Stopwatch() {
 
         <div>
           <InputTextField
-            textFieldAttr={{width: '11vw', id: 'problemBojId', label: '문제 번호', marBot: '0px', marRig: '20px', isPw: false, isAf: false}}
+            textFieldAttr={{
+              width: "11vw",
+              id: "problemBojId",
+              label: "문제 번호",
+              marBot: "0px",
+              marRig: "20px",
+              isPw: false,
+              isAf: false,
+            }}
             valid={checkStopwatch}
-            errorMessage='올바르게 입력해주세요.'
+            errorMessage="올바르게 입력해주세요."
             setter={setStopwatchProbId}
             onKeyDown={() => {}}
           />
-          <p id="stopwatchResult" style={{fontSize: '0.9vw', marginTop: 0, marginBottom: 0, color: 'red'}}></p>
+          <p
+            id="stopwatchResult"
+            style={{
+              fontSize: "0.9vw",
+              marginTop: 0,
+              marginBottom: 0,
+              color: "red",
+            }}
+          ></p>
         </div>
-
         <Time />
-
         <Popup />
-
         <Check />
       </Container>
     </AnalyCard>

@@ -1,10 +1,9 @@
-import { useState } from 'react'
-import InputLabel from '@mui/material/InputLabel'
-import MenuItem from '@mui/material/MenuItem'
-import FormControl from '@mui/material/FormControl'
-import Select, { SelectChangeEvent } from '@mui/material/Select'
-import { useRecoilState } from 'recoil'
-import { filterTagState } from '../../../util/stateCollection'
+import InputLabel from "@mui/material/InputLabel"
+import MenuItem from "@mui/material/MenuItem"
+import FormControl from "@mui/material/FormControl"
+import Select, { SelectChangeEvent } from "@mui/material/Select"
+import { useRecoilState } from "recoil"
+import { filterTagState } from "../../../util/stateCollection"
 
 export default function SelectionTag() {
   const [tag, setTag] = useRecoilState(filterTagState)
@@ -14,7 +13,7 @@ export default function SelectionTag() {
   }
 
   return (
-    <FormControl sx={{ marginRight: '10px', width: '9vw' }} size="small">
+    <FormControl sx={{ marginRight: "10px", width: "9vw" }} size="small">
       <InputLabel id="tag">태그</InputLabel>
       <Select
         labelId="tag"
@@ -23,7 +22,7 @@ export default function SelectionTag() {
         label="Tag"
         onChange={handleChange}
       >
-        <MenuItem value={''}>전체</MenuItem>
+        <MenuItem value={""}>전체</MenuItem>
         <MenuItem value={46}>구현</MenuItem>
         <MenuItem value={16}>DP</MenuItem>
         <MenuItem value={4}>그래프</MenuItem>
