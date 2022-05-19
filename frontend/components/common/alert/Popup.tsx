@@ -1,16 +1,15 @@
-
-import Button from '@mui/material/Button'
-import Dialog from '@mui/material/Dialog'
-import DialogActions from '@mui/material/DialogActions'
-import DialogContent from '@mui/material/DialogContent'
-import DialogContentText from '@mui/material/DialogContentText'
-import DialogTitle from '@mui/material/DialogTitle'
-import { useRecoilValue } from 'recoil'
-import { accessTokenState, checkState, stopwatchHourState, stopwatchLangauge, stopwatchMinState, stopwatchProbIdState, stopwatchSecState } from '../../../util/stateCollection'
-import { handleStopwatchClick } from '../../../util/inputHandlerCollection'
-import { Transition } from '../../../util/Transition'
-import { useState } from 'react'
-
+import Button from "@mui/material/Button"
+import Dialog from "@mui/material/Dialog"
+import DialogActions from "@mui/material/DialogActions"
+import DialogContent from "@mui/material/DialogContent"
+import DialogContentText from "@mui/material/DialogContentText"
+import DialogTitle from "@mui/material/DialogTitle"
+import { useRecoilValue } from "recoil"
+import { accessTokenState, checkState, stopwatchHourState, stopwatchLangauge,
+  stopwatchMinState, stopwatchProbIdState, stopwatchSecState } from "../../../util/stateCollection"
+import { handleStopwatchClick } from "../../../util/inputHandlerCollection"
+import { Transition } from "../../../util/Transition"
+import { useState } from "react"
 
 export default function Popup() {
   const [open, setOpen] = useState(false)
@@ -27,7 +26,13 @@ export default function Popup() {
   }
 
   const handleCloseWithAgree = () => {
-    handleStopwatchClick(event, stopwatchProbId, language, isCheck, accessToken)
+    handleStopwatchClick(
+      event,
+      stopwatchProbId,
+      language,
+      isCheck,
+      accessToken
+    )
     setOpen(false)
   }
 
@@ -41,10 +46,14 @@ export default function Popup() {
         variant="contained"
         color="success"
         onClick={handleClickOpen}
-        style={{padding: 0, fontSize: '1.1vw', width: '3.5vw', height: '2.2vw', marginRight: 20}}
-      >
-        제출
-      </Button>
+        style={{
+          padding: 0,
+          fontSize: "1.1vw",
+          width: "3.5vw",
+          height: "2.2vw",
+          marginRight: 20,
+        }}
+      >제출</Button>
       <Dialog
         open={open}
         TransitionComponent={Transition}
@@ -57,7 +66,7 @@ export default function Popup() {
             <p>문제 번호: {stopwatchProbId}</p>
             <p>사용 언어: {language}</p>
             <p>풀이 시간: {`${hour}시간 ${min}분 ${sec}초`}</p>
-            <p>해결 여부: {isCheck ? '해결' : '해결 못함'}</p>
+            <p>해결 여부: {isCheck ? "해결" : "해결 못함"}</p>
           </DialogContentText>
         </DialogContent>
         <DialogActions>

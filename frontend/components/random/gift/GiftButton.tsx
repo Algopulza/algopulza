@@ -1,13 +1,12 @@
-import { access } from 'fs'
-import { useRecoilValue } from 'recoil'
-import styled from 'styled-components'
-import { accessTokenState } from '../../../util/stateCollection'
-import { showToast } from '../../common/alert/Alert'
+import { useRecoilValue } from "recoil"
+import styled from "styled-components"
+import { accessTokenState } from "../../../util/stateCollection"
+import { showToast } from "../../common/alert/Alert"
 
 const Button = styled.button`
   width: 20vw;
   height: 40px;
-  background: #FFFFFF;
+  background: #ffffff;
   border: none;
   border-radius: 10px;
   font-size: 1.1vw;
@@ -17,21 +16,19 @@ const Button = styled.button`
 
 type TextProps = {
   onClick(): void
-  children: string,
+  children: string
 }
 
 export default function GiftButton({ onClick, children }: TextProps) {
-  const accessToken = useRecoilValue(accessTokenState)
+  const accessToken = useRecoilValue(accessTokenState);
 
   const clickHandler = () => {
-    if (accessToken === '' && children.includes('고려')) {
-      showToast('회원 가입한 유저만 사용 가능합니다.')
+    if (accessToken === "" && children.includes("고려")) {
+      showToast("회원 가입한 유저만 사용 가능합니다.")
     } else {
       onClick()
     }
   }
 
-  return (
-    <Button onClick={clickHandler}>{children}</Button>
-  )
+  return <Button onClick={clickHandler}>{children}</Button>
 }

@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react'
-import ImgButtonPlay from '../../../common/button/imgButton/ImgButtonPlay'
-import ImgButtonPause from '../../../common/button/imgButton/ImgButtonPause'
-import ImgButtonReset from '../../../common/button/imgButton/ImgButtonReset'
+import { useState, useEffect } from "react"
+import ImgButtonPlay from "../../../common/button/imgButton/ImgButtonPlay"
+import ImgButtonPause from "../../../common/button/imgButton/ImgButtonPause"
+import ImgButtonReset from "../../../common/button/imgButton/ImgButtonReset"
 import styled from "styled-components"
-import { useSetRecoilState } from 'recoil'
-import { stopwatchHourState, stopwatchMinState, stopwatchSecState } from '../../../../util/stateCollection'
+import { useSetRecoilState } from "recoil"
+import { stopwatchHourState, stopwatchMinState, stopwatchSecState } from "../../../../util/stateCollection"
 
 const Container = styled.div`
   display: flex;
@@ -40,9 +40,9 @@ export default function Time() {
   }, [isRunning])
 
   const setTimeInfo = () => {
-    const hour = Number(document.getElementById('hour')!.textContent)
-    const min = Number(document.getElementById('min')!.textContent)
-    const sec = Number(document.getElementById('sec')!.textContent)
+    const hour = Number(document.getElementById("hour")!.textContent)
+    const min = Number(document.getElementById("min")!.textContent)
+    const sec = Number(document.getElementById("sec")!.textContent)
     setHour(hour)
     setMin(min)
     setSec(sec)
@@ -56,39 +56,64 @@ export default function Time() {
 
   return (
     <>
-      <Container style={{marginRight: 10}}>
-        <Digit id="hour">{("0" + Math.floor((time / 3600000) % 60)).slice(-2)}</Digit>
+      <Container style={{ marginRight: 10 }}>
+        <Digit id="hour">
+          {("0" + Math.floor((time / 3600000) % 60)).slice(-2)}
+        </Digit>
         <Digit>:</Digit>
-        <Digit id="min">{("0" + Math.floor((time / 60000) % 60)).slice(-2)}</Digit>
+        <Digit id="min">
+          {("0" + Math.floor((time / 60000) % 60)).slice(-2)}
+        </Digit>
         <Digit>:</Digit>
-        <Digit id="sec">{("0" + Math.floor((time / 1000) % 60)).slice(-2)}</Digit>
+        <Digit id="sec">
+          {("0" + Math.floor((time / 1000) % 60)).slice(-2)}
+        </Digit>
         <Digit>:</Digit>
         <Digit>{("0" + ((time / 10) % 100)).slice(-2)}</Digit>
       </Container>
 
       <Container>
-        {isRunning ?
-          <div style={{marginRight: 10}}>
+        {isRunning ? (
+          <div style={{ marginRight: 10 }}>
             <ImgButtonPause
-              submittingAttr={{text: 'pause', width: '2.2vw', height: '2.2vw', marBot: '0px', fontSize: '1.1vw'}}
+              submittingAttr={{
+                text: "pause",
+                width: "2.2vw",
+                height: "2.2vw",
+                marBot: "0px",
+                fontSize: "1.1vw",
+              }}
               isImportant={false}
               onClick={() => {
-                setIsRunning(false)
-                setTimeInfo()
+                setIsRunning(false);
+                setTimeInfo();
               }}
             />
-          </div> :
-          <div style={{marginRight: 10}}>
+          </div>
+        ) : (
+          <div style={{ marginRight: 10 }}>
             <ImgButtonPlay
-              submittingAttr={{text: 'play', width: '2.2vw', height: '2.2vw', marBot: '0px', fontSize: '1.1vw'}}
+              submittingAttr={{
+                text: "play",
+                width: "2.2vw",
+                height: "2.2vw",
+                marBot: "0px",
+                fontSize: "1.1vw",
+              }}
               isImportant={false}
-              onClick={() => {setIsRunning(true)}}
+              onClick={() => { setIsRunning(true) }}
             />
           </div>
-        }
-        <div style={{marginRight: 20}}>
+        )}
+        <div style={{ marginRight: 20 }}>
           <ImgButtonReset
-            submittingAttr={{text: 'reset', width: '2.2vw', height: '2.2vw', marBot: '0px', fontSize: '1.1vw'}}
+            submittingAttr={{
+              text: "reset",
+              width: "2.2vw",
+              height: "2.2vw",
+              marBot: "0px",
+              fontSize: "1.1vw",
+            }}
             isImportant={false}
             onClick={() => {
               setIsRunning(false)
