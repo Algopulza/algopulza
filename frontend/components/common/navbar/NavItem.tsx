@@ -28,7 +28,7 @@ export default function NavItem({ navItemAttr, currentUrl, onClick }: NavItemPro
   const accessToken = useRecoilValue(accessTokenState)
 
   useEffect(() => {
-    setIsLogin(accessToken==='' ? false : true)
+    setIsLogin(accessToken !== '' ? true : false)
   }, [])
 
   return (

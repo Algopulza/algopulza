@@ -68,21 +68,22 @@ export default function PopupLogin() {
         keepMounted
         onClose={handleClickClose}
       >
-        <DialogTitle>{"잠시만요!"}</DialogTitle>
+        <DialogTitle style={{margin: '0 0 20px 0'}}>{"✋잠시만요!"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="stopwatch">
-            <p>
-              <span style={{color: 'black', fontWeight: 700}}>회원 가입</span>하시면 풀이기록에 기반하여
+            <p style={{margin: '0 0 10px 0'}}>
+              유저의 <span style={{color: 'black', fontWeight: 700}}>풀이기록</span>을 반영한
             </p>
-            <p>
-              <span style={{color: 'black', fontWeight: 700}}>맞춤 문제</span>와 <span style={{color: 'black', fontWeight: 700}}>실력 분석 서비스</span>를 제공 받을 수 있어요!
+            <p style={{margin: '0 0 20px 0'}}>
+              <span style={{color: 'black', fontWeight: 700}}>맞춤 문제</span>와 <span style={{color: 'black', fontWeight: 700}}>실력 분석 서비스</span>를 제공해드립니다!
             </p>
-            <p>정말 비회원으로 로그인하시겠어요?</p>
+            <p style={{margin: 0, cursor: 'pointer', fontSize: '1vw'}}>
+              👉 <span onClick={handleCloseWithDisgree} style={{color: 'black', fontWeight: 700}}>회원 가입</span>하러 가기
+            </p>
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCloseWithDisgree}>회원가입</Button>
-          <Button onClick={handleCloseWithAgree}>계속하기</Button>
+          <Button onClick={handleCloseWithAgree}>다음에 할게요</Button>
         </DialogActions>
       </Dialog>
     </div>
