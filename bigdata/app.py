@@ -23,7 +23,7 @@ def empty_res():
         'tierLevel': 0,
         'tierName': '',
         'problemId': 0,
-        'bojId': '',
+        'bojId': 0,
         'title': '풀이기록이 아직 없어요...',
         'acceptedCount': 0,
         'averageTryCount': 0,
