@@ -130,3 +130,8 @@ export const solvedRowState = atom({
   key: "solvedRowState",
   default: 0,
 })
+
+export const runningState = atom({
+  key: "runningState",
+  default: false,
+})
