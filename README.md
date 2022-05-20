@@ -207,9 +207,9 @@ CICD <br/>
 
 - [ERD](https://lab.ssafy.com/s06-final/S06P31A408/-/blob/develop/exec/DB_dump/algopulza_erd.png)
 - [시스템 아키텍처](https://lab.ssafy.com/s06-final/S06P31A408/-/blob/develop/exec/%EC%8B%9C%EC%8A%A4%ED%85%9C%EC%95%84%ED%82%A4%ED%85%8D%EC%B3%90/system_architecture.png)
-- [화면 정의서]()
+- [화면 정의서](https://lab.ssafy.com/s06-final/S06P31A408/-/blob/develop/exec/%ED%99%94%EB%A9%B4%EC%A0%95%EC%9D%98%EC%84%9C/%E1%84%92%E1%85%AA%E1%84%86%E1%85%A7%E1%86%AB%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%8B%E1%85%B4%E1%84%89%E1%85%A5PDF.pdf)
 
-- [최종 발표물]()
+- [최종 발표물](https://lab.ssafy.com/s06-final/S06P31A408/-/blob/develop/exec/%EC%B5%9C%EC%A2%85%EB%B0%9C%ED%91%9C%EC%9E%90%EB%A3%8C/%E1%84%8B%E1%85%A1%E1%86%AF%E1%84%80%E1%85%A9%E1%84%91%E1%85%AE%E1%86%AF%E1%84%8C%E1%85%A1_%E1%84%8E%E1%85%AC%E1%84%8C%E1%85%A9%E1%86%BC%E1%84%87%E1%85%A1%E1%86%AF%E1%84%91%E1%85%ADPDF.pdf)
 
 - [UCC](https://www.youtube.com/watch?v=pg8k7BAyT4M)
 
@@ -218,3 +218,5 @@ CICD <br/>
 ### 5️⃣  프로젝트 빌드
 
 - [포팅 메뉴얼](https://lab.ssafy.com/s06-final/S06P31A408/-/blob/develop/exec/%ED%8F%AC%ED%8C%85%EB%A9%94%EB%89%B4%EC%96%BC/%ED%8F%AC%ED%8C%85_%EB%A9%94%EB%89%B4%EC%96%BC.pdf)
+
+- [시연 시나리오]()
