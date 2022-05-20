@@ -258,4 +258,4 @@ CICD <br/>
 
 - [포팅 메뉴얼](https://lab.ssafy.com/s06-final/S06P31A408/-/blob/develop/exec/%ED%8F%AC%ED%8C%85%EB%A9%94%EB%89%B4%EC%96%BC/%ED%8F%AC%ED%8C%85_%EB%A9%94%EB%89%B4%EC%96%BC.pdf)
 
-- [시연 시나리오]()
+- [시연 시나리오](https://lab.ssafy.com/s06-final/S06P31A408/-/blob/develop/exec/%EC%8B%9C%EC%97%B0%EC%8B%9C%EB%82%98%EB%A6%AC%EC%98%A4/%E1%84%89%E1%85%B5%E1%84%8B%E1%85%A7%E1%86%AB%E1%84%89%E1%85%B5%E1%84%82%E1%85%A1%E1%84%85%E1%85%B5%E1%84%8B%E1%85%A9PDF.pdf)
