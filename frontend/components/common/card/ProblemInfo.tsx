@@ -42,12 +42,12 @@ export default function ProblemInfo({ id, tier, level, accept }: BodyProps) {
 
       <Item>
         <Title>티어</Title>
-        <Value>{level ? tier + " " + level.toString() : null}</Value>
+        <Value>{tier + " " + level.toString()}</Value>
       </Item>
 
       <Item>
         <Title>제출횟수</Title>
-        <Value>{accept ? accept.toLocaleString("ko-KR") : null}</Value>
+        <Value>{accept.toLocaleString("ko-KR")}</Value>
       </Item>
     </Container>
   )

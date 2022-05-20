@@ -53,8 +53,12 @@ export default function ProblemName({ title, id, problemId, tier, bookmark }: He
   const [isBookmark, setIsBookmark] = useState(bookmark)
 
   const handleClick = () => {
-    const problemUrl = `https://www.acmicpc.net/problem/${id}`
-    window.open(problemUrl)
+    if (id === 0) {
+      showToastError('아직 풀이 정보가 없습니다.')
+    } else {
+      const problemUrl = `https://www.acmicpc.net/problem/${id}`
+      window.open(problemUrl)
+    }
   }
 
   const handleBookmarkPutClick = () => {
