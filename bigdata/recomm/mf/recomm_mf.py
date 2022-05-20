@@ -14,7 +14,7 @@ def recomm_mf(app, mongodb, userid):
 
     # 유저의 id번호, tier 불러오기
     user_id_tier = app.mysql_db.execute(text("""
-        SELECT id, tier FROM member WHERE boj_id = :userid
+        SELECT id, tier FROM member WHERE id = :userid
     """), {'userid': userid}).fetchone()
     user_id = user_id_tier[0]
     user_tier = user_id_tier[1]
