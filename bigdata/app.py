@@ -16,7 +16,7 @@ class CustomJSONEncoder(JSONEncoder):
             return list(obj)
         return JSONEncoder.default(self, obj)
 
-def empty_res(lst, length):
+def empty_res():
     res = json.dumps([{
         '_id': '',
         'level': 0,
