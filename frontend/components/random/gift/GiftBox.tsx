@@ -3,6 +3,9 @@ import Image, { StaticImageData } from "next/image"
 import GiftButton from "./GiftButton"
 import Card from "../../common/card/Card"
 import styled from "styled-components"
+import { useRecoilValue } from "recoil"
+import { accessTokenState } from "../../../util/stateCollection"
+import { showToastError } from "../../common/alert/Alert"
 
 const Container = styled.section`
   display: flex;
@@ -26,6 +29,7 @@ type TextProps = {
 };
 
 export default function GiftBox({ text, img, data, random }: TextProps) {
+  const accessToken = useRecoilValue(accessTokenState);
   const [isToggled, setIsToggled] = useState(false);
   return (
     <Container>
@@ -41,7 +45,7 @@ export default function GiftBox({ text, img, data, random }: TextProps) {
           bookmark={data.markFlag}
         />
       ) : (
-        <Canvas onClick={() => setIsToggled(true)}>
+        <Canvas onClick={accessToken === '' && text.includes('고려') ? () => showToastError('회원 가입한 유저만 사용 가능합니다.') : () => setIsToggled(true)}>
           <Image src={img} layout="responsive" alt="gift box image" />
         </Canvas>
       )}
