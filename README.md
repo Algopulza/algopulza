@@ -31,7 +31,7 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-👨‍👨‍👦‍  인원 (총 5인)
+👨‍👨‍👦‍  <b>인원 (총 5인)</b>
 
 🧑 박상현 : 팀장, Frontend
 
@@ -45,7 +45,7 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-🎨  컨셉 : 차분한 느낌을 주는 흑색계열의 색을 메인컬러로 사용 / 눈에 띄는 노란색을 포인트컬러로 사용
+🎨  <b>컨셉</b> : 차분한 느낌을 주는 흑색계열의 색을 메인컬러로 사용 / 눈에 띄는 노란색을 포인트컬러로 사용
 
 - 메인컬러1 : #FDC33E (로고, 버튼, 글씨색 등)
 
@@ -59,7 +59,7 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-‼️  기획 배경 
+‼️  <b>기획 배경</b> 
 
 - 알고리즘 문제 뭐 풀지 고민하는데 소요되는 시간 아까움
 
@@ -69,7 +69,7 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-⚙️  주 기능
+⚙️  <b>주 기능</b>
 
 - 백준 사이트 알고리즘 문제 리스트 + 검색 기능
 
@@ -91,7 +91,7 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-🧐  추천 알고리즘 
+🧐  <b>추천 알고리즘</b> 
 
 - 많이 푼 주요유형 문제 추천
     1. 8개 문제 유형을 주요 유형으로 지정
@@ -104,6 +104,7 @@
         - 해당 난이도와 비슷한 난이도를 가진 문제 필터링
     5. 문제추천
         - 필터링된 문제 중 랜덤으로 5개 추천
+<br/>
 
 - 적게 푼 주요유형 문제 추천
     1. 8개 문제 유형을 주요 유형으로 지정
@@ -116,11 +117,13 @@
         - 해당 난이도와 비슷한 난이도를 가진 문제 필터링
     5. 문제추천
         - 필터링된 문제 중 랜덤으로 5개 추천
+<br/>
 
 - 풀었던 문제 랜덤 추천
     - 유저가 해결한 문제 조회
     - 문제 추천
         - 조회된 문제 중 랜덤으로 5개 추천
+<br/>
 
 - 유사티어유저가 푼 문제유형 추천
     - 협업 필터링 기반 추천
@@ -135,14 +138,14 @@
 ---
 
 ### 2️⃣  기술 스택
-Communication <br/>
+<b>Communication</b> <br/>
 <img src="https://img.shields.io/badge/Jira-0052CC?style=for-the-badge&logo=JiraSoftware&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
 <img src="https://img.shields.io/badge/GitLab-FC6D26?style=for-the-badge&logo=GitLab&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
 <img src="https://img.shields.io/badge/Mattermost-0058CC?style=for-the-badge&logo=Mattermost&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
 <img src="https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=Notion&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
 <img src="https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=Figma&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
 
-Frontend <br/>
+<b>Frontend</b> <br/>
 <img src="https://img.shields.io/badge/Visual Studio Code-007ACC?style=for-the-badge&logo=Visual Studio Code&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
 <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=HTML5&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
 <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=CSS3&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
@@ -152,7 +155,7 @@ Frontend <br/>
 <img src="https://img.shields.io/badge/styled-components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
 <img src="https://img.shields.io/badge/MUI-007FFF?style=for-the-badge&logo=MUI&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
 
-Backend <br/>
+<b>Backend</b> <br/>
 <img src="https://img.shields.io/badge/IntelliJ-000000?style=for-the-badge&logo=IntelliJ&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
 <img src="https://img.shields.io/badge/Java-007396?style=for-the-badge&logo=Java&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
 <img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=for-the-badge&logo=Spring Boot&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
@@ -162,7 +165,7 @@ Backend <br/>
 <img src="https://img.shields.io/badge/Gradle-02303A?style=for-the-badge&logo=Gradle&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
 <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=MySQL&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
 
-BigData <br/>
+<b>BigData</b> <br/>
 <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=Python&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
 <img src="https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=Flask&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
 <img src="https://img.shields.io/badge/NumPy-013243?style=for-the-badge&logo=NumPy&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
@@ -171,7 +174,7 @@ BigData <br/>
 <img src="https://img.shields.io/badge/SciPy-8CAAE6?style=for-the-badge&logo=SciPy&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
 <img src="https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=MongoDB&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
 
-CICD <br/>
+<b>CICD</b> <br/>
 <img src="https://img.shields.io/badge/Amazon AWS-232F3E?style=for-the-badge&logo=Amazon AWS&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
 <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=Docker&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
 <img src="https://img.shields.io/badge/NGINX-009639?style=for-the-badge&logo=NGINX&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
