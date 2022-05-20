@@ -8,7 +8,7 @@ import _ from "lodash"
 import { getRandomOne } from "../../api/back/ramdom/RandomOne"
 import { getRandBox } from "../../api/flask/random/RandBox"
 import { useRecoilValue } from "recoil"
-import { bojIdState, accessTokenState } from "../../util/stateCollection"
+import { bojIdState, accessTokenState, memberIdState } from "../../util/stateCollection"
 
 const Container = styled.section`
   display: flex;
@@ -34,9 +34,10 @@ function Gift() {
   const data = [dataBlue, dataRed]
   const accessToken = useRecoilValue(accessTokenState)
   const bojId = useRecoilValue(bojIdState)
+  const memberId = useRecoilValue(memberIdState)
 
   const RandomBlue = async () => {
-    await getRandBox(accessToken, bojId).then((res) => {
+    await getRandBox(accessToken, memberId).then((res) => {
       const data = res.data[0]
       setDataBlue(data)
     })

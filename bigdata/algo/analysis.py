@@ -8,9 +8,10 @@ def core_tag(app, mongodb, userid):
     ##################
 
     # 유저의 id번호 불러오기
-    user_id = app.mysql_db.execute(text("""
-        SELECT id FROM member WHERE boj_id = :userid
-    """), {'userid': userid}).fetchone()[0]
+    # user_id = app.mysql_db.execute(text("""
+    #     SELECT id FROM member WHERE boj_id = :userid
+    # """), {'userid': userid}).fetchone()[0]
+    user_id = userid
     
     # 유저의 solving 로그 불러오기
     solving_log = app.mysql_db.execute(text("""
