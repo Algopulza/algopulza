@@ -3,8 +3,8 @@ import ImgButtonPlay from "../../../common/button/imgButton/ImgButtonPlay"
 import ImgButtonPause from "../../../common/button/imgButton/ImgButtonPause"
 import ImgButtonReset from "../../../common/button/imgButton/ImgButtonReset"
 import styled from "styled-components"
-import { useSetRecoilState } from "recoil"
-import { stopwatchHourState, stopwatchMinState, stopwatchMisecState, stopwatchSecState } from "../../../../util/stateCollection"
+import { useRecoilState, useSetRecoilState } from "recoil"
+import { runningState, stopwatchHourState, stopwatchMinState, stopwatchMisecState, stopwatchSecState } from "../../../../util/stateCollection"
 
 const Container = styled.div`
   display: flex;
@@ -21,7 +21,7 @@ const Digit = styled.div`
 
 export default function Time() {
   const [time, setTime] = useState(0)
-  const [isRunning, setIsRunning] = useState(false)
+  const [isRunning, setIsRunning] = useRecoilState(runningState)
   const setHour = useSetRecoilState(stopwatchHourState)
   const setMin = useSetRecoilState(stopwatchMinState)
   const setSec = useSetRecoilState(stopwatchSecState)
