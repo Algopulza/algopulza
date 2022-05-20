@@ -20,9 +20,15 @@ export const getLocalTime = () => {
 }
 
 export const setTimeFormatByDate = (timestring: string) => {
+  if (timestring == null) {
+    return '-'
+  }
   return timestring.slice(2, 4) + '년' + timestring.slice(5, 7) + '월' + timestring.slice(8, 10) + '일'
 }
 
 export const setTimeFormatFromHour = (timestring: string) => {
+  if (timestring == null) {
+    return ''
+  }
   return timestring.slice(11, 13) + '시' + timestring.slice(14, 16) + '분'
 }
