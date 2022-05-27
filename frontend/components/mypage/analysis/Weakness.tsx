@@ -12,7 +12,7 @@ const Container = styled.div`
   align-items: center;
 `
 
-export default function Weakness({ accessToken, bojId }: User) {
+export default function Weakness({ accessToken }: User) {
   const [word, setWord] = useState<Array<any>>([])
   const count = 55
   const AnalUser = async () => {

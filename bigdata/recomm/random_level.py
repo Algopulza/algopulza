@@ -10,7 +10,7 @@ def random_one(app, mongodb, userid):
 
     # 유저의 id번호, 티어 불러오기
     id_tier = app.mysql_db.execute(text("""
-        SELECT id, tier FROM member WHERE boj_id = :userid
+        SELECT id, tier FROM member WHERE id = :userid
     """), {'userid': userid}).fetchall()
     id_tier = [{
         'user_id': i['id'],

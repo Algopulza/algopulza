@@ -10,13 +10,13 @@ const Container = styled.div`
   align-items: center;
 `
 
-export default function Solved({ accessToken, bojId }: User) {
+export default function Solved({ accessToken, memberId }: User) {
   const ApexCharts = dynamic(() => import("react-apexcharts"), { ssr: false })
   const [label, setLabel] = useState<Array<string>>([])
   const [solved, setSolved] = useState<Array<number>>([])
 
   const AnalUser = async () => {
-    await getAnalyTag(accessToken, bojId)
+    await getAnalyTag(accessToken, memberId)
       .then((res) => {
         const week = res.data
         let label_temp = []

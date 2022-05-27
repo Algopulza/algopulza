@@ -4,7 +4,7 @@ import Gift from "../../components/random/Gift"
 import Subject from "../../components/recommendation/Subject"
 import styled from "styled-components"
 import { useRecoilValue } from "recoil"
-import { bojIdState, accessTokenState, algoIdState } from "../../util/stateCollection"
+import { bojIdState, accessTokenState, algoIdState, memberIdState } from "../../util/stateCollection"
 import { getRecoVul } from "../../api/flask/recommend/RecoVul"
 import { getRecoTag } from "../../api/flask/recommend/RecoTag"
 import { getSolvedTear } from "../../api/flask/recommend/RecoSolvedTear"
@@ -39,10 +39,11 @@ export default function Recommendation() {
   const [cnt, setCnt] = useState(0)
   const accessToken = useRecoilValue(accessTokenState)
   const bojId = useRecoilValue(bojIdState)
+  const memberId = useRecoilValue(memberIdState)
   const algoId = useRecoilValue(algoIdState)
 
   const RecommendVul = async () => {
-    await getRecoVul(accessToken, bojId).then((res) => {
+    await getRecoVul(accessToken, memberId).then((res) => {
       setCnt((pre) => pre + 1)
       const list = res.data.slice(0, 5)
       setVulData(list)
@@ -50,7 +51,7 @@ export default function Recommendation() {
   }
 
   const RecommendTag = async () => {
-    await getRecoTag(accessToken, bojId).then((res) => {
+    await getRecoTag(accessToken, memberId).then((res) => {
       setCnt((pre) => pre + 1)
       const list = res.data.slice(0, 5)
       setTagData(list)
@@ -58,7 +59,7 @@ export default function Recommendation() {
   }
 
   const RecommendSolved = async () => {
-    await getSolvedTear(accessToken, bojId).then((res) => {
+    await getSolvedTear(accessToken, memberId).then((res) => {
       setCnt((pre) => pre + 1)
       const list = res.data.slice(0, 5)
       setSolvedData(list)
@@ -66,7 +67,7 @@ export default function Recommendation() {
   }
 
   const RecommendTear = async () => {
-    await getRecoTear(accessToken, bojId).then((res) => {
+    await getRecoTear(accessToken, memberId).then((res) => {
       setCnt((pre) => pre + 1)
       const list = res.data.slice(0, 5)
       setTearData(list)
