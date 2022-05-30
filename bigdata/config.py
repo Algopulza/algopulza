@@ -10,11 +10,11 @@ DB_URL = f"mysql+mysqlconnector://{mysql_db['user']}:{mysql_db['password']}@{mys
 
 
 mongodb = {
-    'user'     : 'ssafy',
-    'password' : 'dkfrhvnfwk123',
-    'host'     : 'k6a4081.p.ssafy.io',
+    'user'     : 'algopulza',
+    'password' : 'dkfrhvnfwk408',
+    'host'     : 'algopulza.day',
     'port'     : 27017,
     'collection' : 'algopulza_test'
 }
-MONGO_USER = 'ssafy'
-MONGO_PW = 'dkfrhvnfwk123'
+MONGO_USER = 'algopulza'
+MONGO_PW = 'dkfrhvnfwk408'
