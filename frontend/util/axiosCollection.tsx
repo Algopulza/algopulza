@@ -2,7 +2,7 @@ import axios from "axios"
 
 export const axiosLogin = (id: string, password: string) =>
   axios({
-    url: "https://k6a408.p.ssafy.io/api/v1/members/login",
+    url: "https://algopulza.day/api/v1/members/login",
     method: "post",
     params: {
       id: id,
@@ -12,7 +12,7 @@ export const axiosLogin = (id: string, password: string) =>
 
 export const axiosLogout = (memberId: string, accessToken: string) =>
   axios({
-    url: `https://k6a408.p.ssafy.io/api/v1/members/logout/${memberId}`,
+    url: `https://algopulza.day/api/v1/members/logout/${memberId}`,
     method: "get",
     headers: {
       Authorization: `Bearer ${accessToken}`,
@@ -25,7 +25,7 @@ export const axiosSolved = (
   accessToken: string
 ) =>
   axios({
-    url: `https://k6a408.p.ssafy.io/api/v1/solving-log/solved/`,
+    url: `https://algopulza.day/api/v1/solving-log/solved/`,
     method: "post",
     headers: {
       Authorization: `Bearer ${accessToken}`,
@@ -41,7 +41,7 @@ export const axiosTried = (
   accessToken: string
 ) =>
   axios({
-    url: `https://k6a408.p.ssafy.io/api/v1/solving-log/tried/`,
+    url: `https://algopulza.day/api/v1/solving-log/tried/`,
     method: "post",
     headers: {
       Authorization: `Bearer ${accessToken}`,
@@ -53,7 +53,7 @@ export const axiosTried = (
 
 export const axiosId = (id: string) =>
   axios({
-    url: `https://k6a408.p.ssafy.io/api/v1/members/checkId`,
+    url: `https://algopulza.day/api/v1/members/checkId`,
     method: "post",
     data: {
       id: id,
@@ -62,7 +62,7 @@ export const axiosId = (id: string) =>
 
 export const axiosSignup = (id: string, bojId: string, password: string) =>
   axios({
-    url: `https://k6a408.p.ssafy.io/api/v1/members/join`,
+    url: `https://algopulza.day/api/v1/members/join`,
     method: "post",
     params: {
       id: id,
@@ -73,7 +73,7 @@ export const axiosSignup = (id: string, bojId: string, password: string) =>
 
 export const axiosInfo = (info: object, accessToken: string) =>
   axios({
-    url: `https://k6a408.p.ssafy.io/api/v1/analysis`,
+    url: `https://algopulza.day/api/v1/analysis`,
     method: "post",
     headers: {
       Authorization: `Bearer ${accessToken}`,
@@ -83,7 +83,7 @@ export const axiosInfo = (info: object, accessToken: string) =>
 
 export const axiosPutBookmark = (id: number, accessToken: string) =>
   axios({
-    url: `https://k6a408.p.ssafy.io/api/v1/problems/${id}/mark`,
+    url: `https://algopulza.day/api/v1/problems/${id}/mark`,
     method: "post",
     headers: {
       Authorization: `Bearer ${accessToken}`,
@@ -93,7 +93,7 @@ export const axiosPutBookmark = (id: number, accessToken: string) =>
 
 export const axiosDeleteBookmark = (id: number, accessToken: string) =>
   axios({
-    url: `https://k6a408.p.ssafy.io/api/v1/problems/${id}/mark`,
+    url: `https://algopulza.day/api/v1/problems/${id}/mark`,
     method: "delete",
     headers: {
       Authorization: `Bearer ${accessToken}`,
@@ -103,7 +103,7 @@ export const axiosDeleteBookmark = (id: number, accessToken: string) =>
 
 export const axiosStopwatch = (info: object, accessToken: string) =>
   axios({
-    url: `https://k6a408.p.ssafy.io/api/v1/solving-log`,
+    url: `https://algopulza.day/api/v1/solving-log`,
     method: "post",
     headers: {
       Authorization: `Bearer ${accessToken}`,
