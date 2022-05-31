@@ -75,7 +75,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.addAllowedOrigin("http://localhost:3000");
         configuration.addAllowedOrigin("https://algopulza.day");
-        configuration.addAllowedOrigin("https://www.algopulza.day");
+        configuration.addAllowedOrigin("https://ci.algopulza.day");
+        configuration.addAllowedOrigin("https://api-docs.algopulza.day");
         configuration.addAllowedHeader("*");
         configuration.addAllowedMethod("*");
         configuration.setAllowCredentials(true);
