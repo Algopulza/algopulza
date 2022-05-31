@@ -1,5 +1,6 @@
 import Document, { Html, Head, Main, NextScript, DocumentContext } from "next/document"
 import { ServerStyleSheet } from "styled-components"
+import { HeadMeta } from "../util/HeadMeta";
 
 export default class CustomDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
@@ -31,14 +32,14 @@ export default class CustomDocument extends Document {
   render() {
     return (
       <Html>
-        <Head>
+        {/* <Head>
           <link rel="shortcut icon" href="/common/brand_logo.png" />
           <link
             href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;700&display=swap"
             rel="stylesheet"
           />
-        </Head>
-
+        </Head> */}
+        <HeadMeta />
         <body>
           <Main />
           <NextScript />
