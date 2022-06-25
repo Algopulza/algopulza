@@ -16,7 +16,7 @@ class CustomJSONEncoder(JSONEncoder):
             return list(obj)
         return JSONEncoder.default(self, obj)
 
-def empty_res(lst, length):
+def empty_res():
     res = json.dumps([{
         '_id': '',
         'level': 0,
@@ -24,7 +24,7 @@ def empty_res(lst, length):
         'tierName': '',
         'problemId': 0,
         'bojId': 0,
-        'title': ' ',
+        'title': '풀이기록이 아직 없어요...',
         'acceptedCount': 0,
         'averageTryCount': 0,
         'tagList': [{'problemId': '', 'name': ''}],
