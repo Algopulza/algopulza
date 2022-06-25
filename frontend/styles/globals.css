@@ -1,0 +1,21 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 1.1vw;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+  width: 0;
+}
+
+a {
+  color: #000000;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
